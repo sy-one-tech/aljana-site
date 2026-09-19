@@ -6,10 +6,10 @@
 <title>aljana : vos prières et votre ciel, calculés pour l'endroit où vous êtes</title>
 <meta name="description" content="aljana réunit les horaires de prière, le ciel en direct, la Lune, le Hilal, la Qibla et les éclipses. Tout est calculé pour votre position et vérifié contre les éphémérides de la NASA.">
 <meta name="theme-color" content="#060B18">
-<link rel="icon" href="assets/emblem.png">
+<link rel="icon" href="assets/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #060B18; --bg2: #0A1224; --line: rgba(150, 165, 205, 0.16); --text: #EEF1FA; --dim: #97A3C4; --faint: #6B7698;
@@ -40,9 +40,9 @@
   /* en-tête */
   header { position: sticky; top: 0; z-index: 10; background: rgba(6, 11, 24, 0.72); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
   .bar { display: flex; align-items: center; justify-content: space-between; height: 68px; }
-  .logo { display: inline-flex; align-items: center; gap: 10px; }
-  .logo img { width: 38px; height: auto; filter: drop-shadow(0 0 10px rgba(120, 150, 255, 0.35)); }
-  .logo span { font-family: "Fredoka", "Plus Jakarta Sans", sans-serif; font-weight: 600; font-size: 27px; letter-spacing: -0.01em; color: #F4F5FB; line-height: 1; padding-bottom: 3px; }
+  /* logo officiel de l'app, utilisé tel quel (public/branding/aljana-lockup-dark.png), même lueur que dans l'en-tête de l'app */
+  .logo { display: inline-flex; align-items: center; }
+  .logo img { height: 40px; width: auto; filter: drop-shadow(0 0 8px rgba(232, 178, 58, 0.30)) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.45)); }
   nav { display: flex; align-items: center; gap: 30px; font-size: 15px; color: var(--dim); }
   nav a:hover { color: var(--text); }
   .btn { display: inline-flex; align-items: center; gap: 9px; height: 46px; padding: 0 22px; border-radius: 12px; font-weight: 700; font-size: 15.5px; }
@@ -112,7 +112,7 @@
 
   /* fin */
   .end { text-align: center; padding: 96px 0 110px; }
-  .end img { width: 92px; margin: 0 auto 26px; filter: drop-shadow(0 0 26px rgba(120, 150, 255, 0.4)); }
+  .end img { height: 78px; width: auto; margin: 0 auto 30px; filter: drop-shadow(0 0 14px rgba(232, 178, 58, 0.30)) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.45)); }
   .end p { color: var(--dim); max-width: 520px; margin: 18px auto 0; }
   .end .cta { justify-content: center; }
   footer { border-top: 1px solid var(--line); padding: 26px 0 40px; font-size: 14px; color: var(--faint); }
@@ -142,7 +142,7 @@
 
 <header>
   <div class="wrap bar">
-    <a class="logo" href="#top" aria-label="aljana, accueil"><img src="assets/emblem.png" alt=""><span>aljana</span></a>
+    <a class="logo" href="#top" aria-label="aljana, accueil"><img src="assets/aljana-lockup-dark.png" alt="aljana" width="1804" height="575"></a>
     <nav>
       <a href="#univers">Les sept univers</a>
       <a href="#precision">Précision</a>
@@ -298,7 +298,7 @@
   </section>
 
   <section class="wrap end" id="ouvrir">
-    <img src="assets/emblem.png" alt="">
+    <img src="assets/aljana-lockup-dark.png" alt="aljana" width="1804" height="575">
     <h2>Ouvrez aljana ce soir.</h2>
     <p>Regardez l'heure de la prochaine prière, puis levez les yeux : la Lune sera là où l'application vous l'indique.</p>
     <div class="cta">
