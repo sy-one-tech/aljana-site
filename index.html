@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>aljana : vos prières et votre ciel, calculés pour l'endroit où vous êtes</title>
+<meta name="description" content="aljana réunit les horaires de prière, le ciel en direct, la Lune, le Hilal, la Qibla et les éclipses. Tout est calculé pour votre position et vérifié contre les éphémérides de la NASA.">
+<meta name="theme-color" content="#060B18">
+<link rel="icon" href="assets/emblem.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #060B18; --bg2: #0A1224; --line: rgba(150, 165, 205, 0.16); --text: #EEF1FA; --dim: #97A3C4; --faint: #6B7698;
+    --gold: #E2B659; --gold-soft: #F3DFAE; --green: #34D399;
+    --w: 1180px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { width: min(var(--w), calc(100% - 48px)); margin-inline: auto; }
+
+  /* ciel de fond : deux lueurs très larges, quelques étoiles, rien d'autre */
+  .sky { position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background:
+      radial-gradient(900px 520px at 78% -8%, rgba(38, 60, 130, 0.42), transparent 70%),
+      radial-gradient(700px 480px at 8% 38%, rgba(226, 182, 89, 0.05), transparent 70%),
+      var(--bg); }
+  .sky::after { content: ""; position: absolute; inset: 0; opacity: 0.55;
+    background-image:
+      radial-gradient(1px 1px at 12% 18%, #cfd8ff 50%, transparent 51%), radial-gradient(1px 1px at 31% 62%, #cfd8ff 50%, transparent 51%),
+      radial-gradient(1.4px 1.4px at 47% 9%, #fff 50%, transparent 51%), radial-gradient(1px 1px at 63% 33%, #cfd8ff 50%, transparent 51%),
+      radial-gradient(1px 1px at 72% 71%, #cfd8ff 50%, transparent 51%), radial-gradient(1.4px 1.4px at 88% 22%, #fff 50%, transparent 51%),
+      radial-gradient(1px 1px at 94% 58%, #cfd8ff 50%, transparent 51%), radial-gradient(1px 1px at 5% 84%, #cfd8ff 50%, transparent 51%),
+      radial-gradient(1px 1px at 38% 91%, #cfd8ff 50%, transparent 51%), radial-gradient(1px 1px at 56% 79%, #cfd8ff 50%, transparent 51%); }
+
+  /* en-tête */
+  header { position: sticky; top: 0; z-index: 10; background: rgba(6, 11, 24, 0.72); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+  .bar { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .logo { display: inline-flex; align-items: center; gap: 10px; }
+  .logo img { width: 38px; height: auto; filter: drop-shadow(0 0 10px rgba(120, 150, 255, 0.35)); }
+  .logo span { font-family: "Fredoka", "Plus Jakarta Sans", sans-serif; font-weight: 600; font-size: 27px; letter-spacing: -0.01em; color: #F4F5FB; line-height: 1; padding-bottom: 3px; }
+  nav { display: flex; align-items: center; gap: 30px; font-size: 15px; color: var(--dim); }
+  nav a:hover { color: var(--text); }
+  .btn { display: inline-flex; align-items: center; gap: 9px; height: 46px; padding: 0 22px; border-radius: 12px; font-weight: 700; font-size: 15.5px; }
+  .btn-gold { background: var(--gold); color: #1B1405; }
+  .btn-gold:hover { background: #ECC46E; }
+  .btn-line { border: 1px solid var(--line); color: var(--text); }
+  .btn-line:hover { border-color: rgba(150, 165, 205, 0.4); }
+  nav .btn { height: 40px; padding: 0 16px; font-size: 14.5px; }
+
+  /* héros */
+  .hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: 48px; align-items: center; padding: 84px 0 72px; }
+  .kicker { display: inline-flex; align-items: center; gap: 9px; font-size: 13px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); }
+  .kicker i { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px rgba(52, 211, 153, 0.9); }
+  h1 { margin: 22px 0 0; font-size: clamp(38px, 5.2vw, 66px); line-height: 1.04; letter-spacing: -0.035em; font-weight: 800; }
+  h1 em { font-style: normal; color: var(--gold-soft); }
+  .lead { margin: 26px 0 0; max-width: 540px; font-size: 18.5px; color: var(--dim); }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+  .note { margin-top: 18px; font-size: 14px; color: var(--faint); }
+
+  .phones { position: relative; height: 640px; }
+  .phone { position: absolute; border-radius: 40px; overflow: hidden; border: 1px solid rgba(170, 185, 225, 0.22); background: #050b1a; box-shadow: 0 40px 90px rgba(0, 0, 0, 0.55), 0 0 0 7px #0B1224, 0 0 0 8px rgba(170, 185, 225, 0.14); }
+  .phone img { width: 100%; height: auto; }
+  .phone.main { width: 294px; left: 50%; top: 0; transform: translateX(-50%); z-index: 3; }
+  .phone.side { width: 232px; top: 74px; opacity: 0.62; z-index: 1; }
+  .phone.side.l { left: 0; }
+  .phone.side.r { right: 0; }
+
+  /* preuves */
+  .proof { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .proof div { padding: 30px 28px 30px 0; }
+  .proof div + div { padding-left: 28px; border-left: 1px solid var(--line); }
+  .proof b { display: block; font-size: 34px; letter-spacing: -0.03em; line-height: 1.1; color: var(--gold-soft); font-weight: 800; }
+  .proof span { display: block; margin-top: 8px; font-size: 15px; color: var(--dim); max-width: 300px; }
+
+  /* univers */
+  .section-head { padding: 110px 0 24px; max-width: 720px; }
+  h2 { margin: 14px 0 0; font-size: clamp(30px, 3.6vw, 46px); line-height: 1.1; letter-spacing: -0.03em; font-weight: 800; }
+  .section-head p { margin: 18px 0 0; color: var(--dim); font-size: 18px; }
+  .uni { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 64px; align-items: center; padding: 64px 0; border-top: 1px solid var(--line); }
+  .uni:first-of-type { border-top: 0; }
+  .uni.flip .shot { order: 2; }
+  .shot { display: flex; justify-content: center; }
+  .shot .phone { position: relative; width: 300px; }
+  .num { font-size: 13px; font-weight: 700; letter-spacing: 0.16em; color: var(--gold); }
+  h3 { margin: 10px 0 0; font-size: 32px; letter-spacing: -0.025em; line-height: 1.15; font-weight: 800; }
+  .uni p { margin: 16px 0 0; color: var(--dim); max-width: 480px; }
+  .uni ul { list-style: none; margin: 22px 0 0; padding: 0; max-width: 480px; }
+  .uni li { position: relative; padding: 11px 0 11px 22px; border-top: 1px solid var(--line); font-size: 15.5px; color: #C9D1EA; }
+  .uni li::before { content: ""; position: absolute; left: 2px; top: 21px; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
+
+  /* précision */
+  .precision { margin-top: 60px; padding: 72px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 64px; align-items: start; }
+  .precision p { color: var(--dim); margin: 18px 0 0; max-width: 460px; }
+  table { width: 100%; border-collapse: collapse; font-size: 15.5px; }
+  th { text-align: left; font-size: 12.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); font-weight: 600; padding: 0 0 12px; }
+  td { padding: 15px 0; border-top: 1px solid var(--line); vertical-align: top; }
+  td:first-child { color: var(--text); font-weight: 600; padding-right: 20px; width: 36%; }
+  td:last-child { color: var(--dim); }
+  td b { color: var(--gold-soft); font-weight: 700; }
+
+  /* langues */
+  .langs { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; align-items: center; padding: 96px 0 40px; }
+  .langs p { color: var(--dim); margin: 18px 0 0; max-width: 480px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 26px; max-width: 500px; font-size: 16px; color: #C9D1EA; }
+  .chips span { white-space: nowrap; }
+  .chips span + span::before { content: ""; display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: var(--faint); margin-right: 18px; vertical-align: middle; }
+
+  /* fin */
+  .end { text-align: center; padding: 96px 0 110px; }
+  .end img { width: 92px; margin: 0 auto 26px; filter: drop-shadow(0 0 26px rgba(120, 150, 255, 0.4)); }
+  .end p { color: var(--dim); max-width: 520px; margin: 18px auto 0; }
+  .end .cta { justify-content: center; }
+  footer { border-top: 1px solid var(--line); padding: 26px 0 40px; font-size: 14px; color: var(--faint); }
+  footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+  @media (max-width: 900px) {
+    body { font-size: 16px; }
+    nav a:not(.btn) { display: none; }
+    .hero { grid-template-columns: 1fr; gap: 44px; padding: 52px 0 56px; }
+    .phones { height: 560px; max-width: 420px; margin-inline: auto; width: 100%; }
+    .phone.main { width: 256px; }
+    .phone.side { width: 196px; top: 66px; }
+    .proof { grid-template-columns: 1fr; }
+    .proof div, .proof div + div { padding: 22px 0; border-left: 0; }
+    .proof div + div { border-top: 1px solid var(--line); }
+    .section-head { padding: 76px 0 8px; }
+    .uni, .precision, .langs { grid-template-columns: 1fr; gap: 34px; padding: 48px 0; }
+    .uni.flip .shot { order: 0; }
+    .shot .phone { width: 264px; }
+    h3 { font-size: 27px; }
+    .end { padding: 72px 0 84px; }
+  }
+</style>
+</head>
+<body>
+<div class="sky" aria-hidden="true"></div>
+
+<header>
+  <div class="wrap bar">
+    <a class="logo" href="#top" aria-label="aljana, accueil"><img src="assets/emblem.png" alt=""><span>aljana</span></a>
+    <nav>
+      <a href="#univers">Les sept univers</a>
+      <a href="#precision">Précision</a>
+      <a href="#langues">Langues</a>
+      <a class="btn btn-gold" href="#ouvrir">Ouvrir aljana</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="wrap hero">
+    <div>
+      <span class="kicker"><i></i>Calculé en direct pour votre position</span>
+      <h1>Vos prières et votre ciel, <em>à l'endroit exact où vous êtes.</em></h1>
+      <p class="lead">aljana réunit les horaires de prière, le ciel en direct, la Lune, le Hilal, la Qibla et les éclipses. Chaque valeur est calculée pour votre position, à la seconde, puis vérifiée contre les éphémérides de la NASA.</p>
+      <div class="cta">
+        <a class="btn btn-gold" href="#ouvrir">Ouvrir l'application</a>
+        <a class="btn btn-line" href="#univers">Voir les sept univers</a>
+      </div>
+      <p class="note">Gratuit. Sans compte. S'installe sur iPhone et Android depuis le navigateur.</p>
+    </div>
+    <div class="phones" aria-label="Trois écrans réels de l'application aljana">
+      <div class="phone side l"><img src="assets/prieres.webp" alt="Écran Prières : prière en cours et horaires du jour" width="880" height="1912"></div>
+      <div class="phone side r"><img src="assets/ciel.webp" alt="Écran Ciel : carte complète du ciel au-dessus de vous" width="880" height="1912"></div>
+      <div class="phone main"><img src="assets/accueil.webp" alt="Écran Accueil : prochaine prière, Soleil, Terre et Lune en direct, courbe du jour" width="880" height="1912"></div>
+    </div>
+  </section>
+
+  <section class="wrap proof" aria-label="Trois repères">
+    <div><b>12 s</b><span>d'écart maximal avec les éphémérides JPL Horizons de la NASA, sur sept villes et cinq dates de l'année.</span></div>
+    <div><b>20 méthodes</b><span>de calcul des horaires, de la Ligue islamique mondiale à Umm al-Qura, avec le choix de l'école pour l'Asr.</span></div>
+    <div><b>12 langues</b><span>dont l'arabe, l'ourdou et le persan, avec une interface entièrement inversée de droite à gauche.</span></div>
+  </section>
+
+  <div class="wrap section-head" id="univers">
+    <span class="kicker">Les sept univers</span>
+    <h2>Sept pages. Une seule question à chaque fois.</h2>
+    <p>L'Accueil résume votre journée. Les six autres pages répondent chacune à un besoin précis, avec les vrais écrans de l'application ci-dessous.</p>
+  </div>
+
+  <section class="wrap">
+    <article class="uni">
+      <div class="shot"><div class="phone"><img src="assets/prieres.webp" alt="Écran Prières de l'application" loading="lazy" width="880" height="1912"></div></div>
+      <div>
+        <span class="num">02 PRIÈRES</span>
+        <h3>Savoir où en est la prière, pas seulement à quelle heure elle commence.</h3>
+        <p>La page montre la prière en cours, le temps qu'il reste et le ciel de ce moment. Les horaires de la journée suivent en dessous, sans surcharge.</p>
+        <ul>
+          <li>Temps recommandé, tardif et limite, avec les hadiths qui les fondent</li>
+          <li>Débuts arrondis à la minute supérieure, jamais avant l'instant exact</li>
+          <li>Milieu de la nuit et dernier tiers calculés du Maghrib au Fajr</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="uni flip">
+      <div class="shot"><div class="phone"><img src="assets/ciel.webp" alt="Écran Ciel de l'application" loading="lazy" width="880" height="1912"></div></div>
+      <div>
+        <span class="num">03 CIEL</span>
+        <h3>Le ciel au-dessus de vous, maintenant.</h3>
+        <p>Une carte du ciel orientée sur votre horizon : étoiles, planètes, Lune, Voie lactée. Un mode « Œil nu » ne garde que ce que vous pouvez réellement voir ce soir.</p>
+        <ul>
+          <li>Vue en carte ou face à l'horizon, avec les constellations nommées</li>
+          <li>Liste « À observer » triée par visibilité réelle, heure par heure</li>
+          <li>Conditions du ciel estimées pour votre lieu</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="uni">
+      <div class="shot"><div class="phone"><img src="assets/lune.webp" alt="Écran Lune de l'application" loading="lazy" width="880" height="1912"></div></div>
+      <div>
+        <span class="num">04 LUNE</span>
+        <h3>La Lune telle qu'elle est ce soir.</h3>
+        <p>Phase, éclairement et orientation réels, à partir de l'imagerie de la sonde LRO. La page dit où la regarder, à quelle heure, et ce qui vient ensuite.</p>
+        <ul>
+          <li>Lever, passage au plus haut et coucher pour votre lieu</li>
+          <li>Meilleure fenêtre d'observation de la nuit</li>
+          <li>Prochaines phases à la minute près</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="uni flip">
+      <div class="shot"><div class="phone"><img src="assets/hilal.webp" alt="Écran Hilal de l'application" loading="lazy" width="880" height="1912"></div></div>
+      <div>
+        <span class="num">05 HILAL</span>
+        <h3>Le croissant sera-t-il visible, et d'où ?</h3>
+        <p>Une carte mondiale de visibilité et un avis clair pour votre ville, soir après soir. aljana prévoit, elle n'annonce pas : la décision revient aux autorités.</p>
+        <ul>
+          <li>Critères de Yallop et d'Odeh affichés côte à côte</li>
+          <li>Relief de votre horizon pris en compte</li>
+          <li>Rappel et entrée de calendrier pour le soir d'observation</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="uni">
+      <div class="shot"><div class="phone"><img src="assets/qibla.webp" alt="Écran Qibla de l'application" loading="lazy" width="880" height="1912"></div></div>
+      <div>
+        <span class="num">06 QIBLA</span>
+        <h3>La direction de la Kaaba, et le chemin qui y mène.</h3>
+        <p>Le cap exact depuis votre position, tracé sur le globe par la route la plus courte. La boussole corrige la déclinaison magnétique locale.</p>
+        <ul>
+          <li>Modèle magnétique mondial WMM2025</li>
+          <li>Méthode du Soleil quand la boussole du téléphone n'est pas fiable</li>
+          <li>Distance à La Mecque au kilomètre</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="uni flip">
+      <div class="shot"><div class="phone"><img src="assets/eclipses.webp" alt="Écran Éclipses de l'application" loading="lazy" width="880" height="1912"></div></div>
+      <div>
+        <span class="num">07 ÉCLIPSES</span>
+        <h3>Les prochaines éclipses, vues depuis chez vous.</h3>
+        <p>Pour chaque éclipse de Soleil ou de Lune : ce que vous verrez depuis votre ville, à quelle heure, et comment l'observer sans danger.</p>
+        <ul>
+          <li>Calcul local à partir des éléments besséliens de la NASA</li>
+          <li>Carte mondiale et simulation du ciel pour votre lieu</li>
+          <li>Consignes de sécurité toujours visibles pour le Soleil</li>
+        </ul>
+      </div>
+    </article>
+  </section>
+
+  <section class="wrap precision" id="precision">
+    <div>
+      <span class="kicker">Précision</span>
+      <h2>Exact, parce que vérifié.</h2>
+      <p>Nous ne comparons pas aljana à d'autres applications. Nous comparons ses calculs aux références astronomiques, avec les mêmes coordonnées et les mêmes hypothèses, puis nous publions l'écart.</p>
+    </div>
+    <table>
+      <thead><tr><th>Ce qui est calculé</th><th>Comment c'est vérifié</th></tr></thead>
+      <tbody>
+        <tr><td>Lever, coucher, midi solaire</td><td>JPL Horizons, à la seconde. Écart maximal mesuré : <b>12 secondes</b>, de La Mecque à Sydney.</td></tr>
+        <tr><td>Fajr, Isha, Asr</td><td>Angles et école de la méthode choisie, appliqués tels quels. aljana reproduit une méthode, pas une autre application.</td></tr>
+        <tr><td>Affichage des heures</td><td>Un début de prière n'est jamais affiché avant son instant exact. Le lever du Soleil n'est jamais affiché après.</td></tr>
+        <tr><td>Qibla</td><td>Route orthodromique et déclinaison du modèle WMM2025, validé sur les valeurs de test officielles.</td></tr>
+        <tr><td>Hilal, Lune, éclipses</td><td>Conjonctions et phases contrôlées sur Horizons, éclipses sur les éléments besséliens de la NASA.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="wrap langs" id="langues">
+    <div>
+      <span class="kicker">Langues</span>
+      <h2>Pensée pour être lue dans votre langue.</h2>
+      <p>L'interface complète existe en douze langues. En arabe, en ourdou et en persan, toute la mise en page s'inverse, chiffres et calendrier hijri compris.</p>
+      <div class="chips"><span>Français</span><span>English</span><span lang="ar">العربية</span><span>Español</span><span>Deutsch</span><span>Türkçe</span><span>Indonesia</span><span lang="ur">اردو</span><span lang="fa">فارسی</span><span>Русский</span><span>中文</span><span>हिन्दी</span></div>
+    </div>
+    <div class="shot"><div class="phone"><img src="assets/accueil-ar.webp" alt="Écran Accueil de l'application en arabe" loading="lazy" width="880" height="1912"></div></div>
+  </section>
+
+  <section class="wrap end" id="ouvrir">
+    <img src="assets/emblem.png" alt="">
+    <h2>Ouvrez aljana ce soir.</h2>
+    <p>Regardez l'heure de la prochaine prière, puis levez les yeux : la Lune sera là où l'application vous l'indique.</p>
+    <div class="cta">
+      <a class="btn btn-gold" href="#">Ouvrir l'application</a>
+      <a class="btn btn-line" href="#">Installer sur mon téléphone</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><span>aljana, 2026</span><span>Prévisions astronomiques. Les annonces religieuses relèvent des autorités compétentes.</span></div>
+</footer>
+</body>
+</html>
