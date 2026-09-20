@@ -112,6 +112,7 @@
   .stat.a .n { font-size: 120px; line-height: 0.86; } .stat.b .n, .stat.c .n { font-size: 62px; line-height: 0.9; }
   .stat .n small { font-size: 0.3em; font-weight: 600; color: var(--gold); letter-spacing: 0; }
   html[lang="ar"] .stat .n { letter-spacing: 0; } html[lang="ar"] .stat.a .n { line-height: 1.1; } html[lang="ar"] .stat.b .n, html[lang="ar"] .stat.c .n { line-height: 1.15; }
+  .stat .cap-m { display: none !important; }
   .stat .cap { display: block; margin-top: 14px; max-width: 290px; font-size: 15.5px; line-height: 1.5; color: var(--dim); }
   /* règle graduée : un trait par unité, les traits dorés se dévoilent pendant le décompte (13 sur 60 secondes ; 20 méthodes ; 12 langues) */
   .ticks { --s: calc(100% / var(--n)); position: relative; height: 11px; margin-top: 16px; max-width: 100%; overflow: hidden;
@@ -179,7 +180,7 @@
     /* mobile : titre, action, puis le produit tout de suite ; le texte long passe après l'image */
     .hero-grid { grid-template-columns: minmax(0,1fr); grid-template-rows: none; grid-template-areas: "a" "c" "fig" "b" "d"; padding-block: 26px 8px; }
     h1.hero-h { font-size: calc(35px * var(--hs)); }
-    .h-c { margin-top: 18px; gap: 18px; }
+    .h-c { margin-top: 18px; gap: 10px 13px; } .btn-text { font-size: 14.5px; gap: 5px; }
     .hero-fig { margin-top: 24px; }
     .hero-stage { height: 470px; }
     .hero-stage .p-main { width: 228px; margin-inline-start: -114px; }
@@ -195,6 +196,7 @@
     .stat.a .ticks { width: 100%; }
     .stat.b, .stat.c { padding-bottom: 0; } .stat.b { padding-inline-end: 16px; } .stat.c { padding-inline-start: 16px; }
     .stat.b .n, .stat.c .n { font-size: 48px; }
+    .stat .cap-d { display: none; } .stat .cap-m { display: block !important; font-size: 15px; color: var(--soft); }
     .stat.b .ticks { width: 100%; max-width: 160px; } .stat.c .ticks { width: 100%; max-width: 110px; }
     .sky-u { padding: 64px 0 70px; }
     .orbits { display: none; }
@@ -249,7 +251,7 @@
       <div class="h-b rv rv2"><p data-i="heroLead">aljana réunit les horaires de prière, le ciel en direct, la Lune, le Hilal, la Qibla et les éclipses. Chaque valeur est calculée pour votre position, à la seconde.</p></div>
       <div class="h-c rv rv2">
         <a class="btn btn-gold" data-i="ctaGold" href="https://beta.aljana.app">Accéder à la bêta</a>
-        <a class="btn-text" href="#ciel"><span data-i="ctaGhost">Voir un univers</span> <span class="arw" aria-hidden="true">→</span></a>
+        <a class="btn-text" href="#ciel"><span data-i="ctaGhost">Explorer les sept univers</span> <span class="arw" aria-hidden="true">→</span></a>
       </div>
       <div class="h-d rv rv3"><p data-i="heroNote">Application actuellement en bêta privée. Accès réservé aux bêta-testeurs invités.</p></div>
       <figure class="hero-fig">
@@ -276,12 +278,12 @@
         <div class="stat b rv rv2" data-count="20">
           <span class="n"><span class="v">0</span><small data-i="statBUnit"> méthodes</small></span>
           <div class="ticks" style="--n:20;--f:1;--d:1.1s" aria-hidden="true"><i></i></div>
-          <span class="cap" data-i="statBCap">Votre pratique, votre réglage : méthodes internationales et choix de l'école pour l'Asr.</span>
+          <span class="cap cap-d" data-i="statBCap">Votre pratique, votre réglage : méthodes internationales et choix de l'école pour l'Asr.</span><span class="cap cap-m" data-i="statBCapM">Internationales, avec le choix de l'école pour l'Asr.</span>
         </div>
         <div class="stat c rv rv3" data-count="12">
           <span class="n"><span class="v">0</span><small data-i="statCUnit"> langues</small></span>
           <div class="ticks" style="--n:12;--f:1;--d:1s" aria-hidden="true"><i></i></div>
-          <span class="cap" data-i="statCCap">Interface localisée, lecture de droite à gauche comprise.</span>
+          <span class="cap cap-d" data-i="statCCap">Interface localisée, lecture de droite à gauche comprise.</span><span class="cap cap-m" data-i="statCCapM">Droite à gauche comprise.</span>
         </div>
       </div>
     </div>
@@ -357,15 +359,15 @@
   var T = {
     fr: {
       navStats: "précision", navCiel: "le ciel", navCmp: "compagnon",
-      ctaGold: "Accéder à la bêta", ctaGhost: "Voir un univers",
+      ctaGold: "Accéder à la bêta", ctaGhost: "Explorer les sept univers",
       heroH1: "Vos prières et votre ciel, ", heroH1b: "à l'endroit exact où vous êtes.",
       heroLead: "aljana réunit les horaires de prière, le ciel en direct, la Lune, le Hilal, la Qibla et les éclipses. Chaque valeur est calculée pour votre position, à la seconde.",
       heroNote: "Application actuellement en bêta privée. Accès réservé aux bêta-testeurs invités.",
       kick: "Calculé en direct pour votre position",
       statsLead: "Nous ne comparons pas aljana à d'autres applications. Nous mesurons l'écart face au ciel lui-même.",
       statAUnit: " s", statACap: "Écart maximal mesuré, contrôlé face à JPL Horizons sur 120 instants de référence.",
-      statBUnit: " méthodes", statBCap: "Votre pratique, votre réglage : méthodes internationales et choix de l'école pour l'Asr.",
-      statCUnit: " langues", statCCap: "Interface localisée, lecture de droite à gauche comprise.",
+      statBUnit: " méthodes", statBCap: "Votre pratique, votre réglage : méthodes internationales et choix de l'école pour l'Asr.", statBCapM: "Internationales, avec le choix de l'école pour l'Asr.",
+      statCUnit: " langues", statCCap: "Interface localisée, lecture de droite à gauche comprise.", statCCapM: "Droite à gauche comprise.",
       skyNum: "03 Ciel", skyH: "Le ciel au-dessus de vous, maintenant.",
       skyP: "Une carte orientée sur votre horizon : étoiles, planètes, Lune, Voie lactée. Le mode Œil nu ne garde que ce que vous pouvez vraiment voir.",
       skyL1: "Vue en carte ou face à l'horizon", skyL2: "Liste « À observer » triée par visibilité réelle",
@@ -376,15 +378,15 @@
     },
     ar: {
       navStats: "الدقة", navCiel: "السماء", navCmp: "صاحبي",
-      ctaGold: "دخول النسخة التجريبية", ctaGhost: "اكتشف عالماً",
+      ctaGold: "دخول النسخة التجريبية", ctaGhost: "استكشف العوالم السبعة",
       heroH1: "صلاتك وسماؤك، ", heroH1b: "في المكان الذي أنت فيه تماماً.",
       heroLead: "يجمع aljana مواقيت الصلاة والسماء مباشرة والقمر والهلال والقبلة والكسوف. كل قيمة محسوبة لموقعك، بالثانية.",
       heroNote: "التطبيق حالياً في مرحلة تجريبية خاصة. الدخول متاح للمختبرين المدعوين فقط.",
       kick: "محسوب مباشرة لموقعك",
       statsLead: "لا نقارن aljana بتطبيقات أخرى. نقيس الفرق أمام السماء نفسها.",
       statAUnit: " ث", statACap: "أقصى فرق تم قياسه، مُراجَع على JPL Horizons في ١٢٠ لحظة مرجعية.",
-      statBUnit: " طريقة", statBCap: "ممارستك، إعدادك: طرق حساب عالمية مع اختيار المذهب لصلاة العصر.",
-      statCUnit: " لغة", statCCap: "واجهة مترجمة كاملة، ومنها الكتابة من اليمين إلى اليسار.",
+      statBUnit: " طريقة", statBCap: "ممارستك، إعدادك: طرق حساب عالمية مع اختيار المذهب لصلاة العصر.", statBCapM: "عالمية، مع اختيار المذهب لصلاة العصر.",
+      statCUnit: " لغة", statCCap: "واجهة مترجمة كاملة، ومنها الكتابة من اليمين إلى اليسار.", statCCapM: "ومنها الكتابة من اليمين إلى اليسار.",
       skyNum: "٠٣ السماء", skyH: "السماء فوقك، الآن.",
       skyP: "خريطة موجهة على أفقك: نجوم وكواكب والقمر ودرب التبانة. وضع العين المجردة يُبقي فقط ما يمكنك رؤيته فعلاً.",
       skyL1: "عرض الخريطة أو مواجهة الأفق", skyL2: "قائمة «للرصد» مرتبة حسب الرؤية الفعلية",
