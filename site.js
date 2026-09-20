@@ -26,18 +26,58 @@
     return "en-US";
   }
   function loadFont(code) {
-    if (!FONTS[code] || $("link[data-font='" + code + "']")) return;
-    var l = document.createElement("link"); l.rel = "stylesheet"; l.dataset.font = code; l.href = "https://fonts.googleapis.com/css2?family=" + FONTS[code] + "&display=swap"; document.head.appendChild(l);
+    var spec = FONTS[code], l = $("#aljana-lang-font");
+    if (!spec) { if (l) l.remove(); return; }
+    var href = "https://fonts.googleapis.com/css2?family=" + spec + "&display=swap";
+    if (!l) {
+      l = document.createElement("link");
+      l.id = "aljana-lang-font";
+      l.rel = "stylesheet";
+      document.head.appendChild(l);
+    }
+    if (l.getAttribute("href") !== href) l.setAttribute("href", href);
+    l.dataset.font = code;
   }
   function digits(code, n) {
     var loc = code === "ar" ? "ar-u-nu-arab" : code === "fa" ? "fa-u-nu-arabext" : "en";
     return new Intl.NumberFormat(loc, { minimumIntegerDigits: 2, useGrouping: false }).format(n);
   }
   function label(code, i) { return digits(code, i + 1) + " " + I18N[code].sn[i].toLocaleUpperCase(code); }
-  function setShot(img, url) {
-    if (img.getAttribute("src") === url) return;
-    if (img.complete && img.naturalWidth) { var n = new Image(); n.onload = function () { img.src = url; }; n.src = url; } /* pas de trou pendant la bascule */
-    else img.src = url;
+  var shotIO = null;
+  function nearViewport(img) {
+    var r = img.getBoundingClientRect(), h = window.innerHeight || document.documentElement.clientHeight || 800;
+    return r.bottom > -Math.round(h * 0.25) && r.top < Math.round(h * 1.5);
+  }
+  function loadShot(img) {
+    var url = img.dataset.pendingSrc;
+    if (!url || img.getAttribute("src") === url) return;
+    img.src = url;
+  }
+  function setShot(img, url, eager) {
+    if (img.getAttribute("src") === url) {
+      img.dataset.pendingSrc = url;
+      if (shotIO) shotIO.unobserve(img);
+      return;
+    }
+    if (img.dataset.pendingSrc === url) return;
+    img.dataset.pendingSrc = url;
+    img.decoding = "async";
+    img.loading = eager ? "eager" : "lazy";
+    if (eager || nearViewport(img)) {
+      if (shotIO) shotIO.unobserve(img);
+      loadShot(img);
+    } else if (shotIO) shotIO.observe(img);
+    else loadShot(img);
+  }
+  function initShotObserver() {
+    if (!("IntersectionObserver" in window)) return;
+    shotIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        shotIO.unobserve(entry.target);
+        loadShot(entry.target);
+      });
+    }, { rootMargin: "500px 0px 500px 0px" });
   }
   function meta(sel, v) { var m = $(sel); if (m) m.setAttribute("content", v); }
 
@@ -51,7 +91,7 @@
     });
     SHOTS.forEach(function (name, i) {
       var a = document.createElement("article"); a.className = "uni rv" + (i % 2 ? " flip" : "");
-      a.innerHTML = '<div class="shot"><div class="crop"><div class="phone"><img data-shot="' + name + '" data-sn="' + (i + 1) + '" alt="" loading="lazy" width="880" height="1912"></div></div></div>' +
+      a.innerHTML = '<div class="shot"><div class="crop"><div class="phone"><img data-shot="' + name + '" data-sn="' + (i + 1) + '" alt="" loading="lazy" decoding="async" width="880" height="1912"></div></div></div>' +
         '<div class="txt"><span class="num" data-num="' + (i + 1) + '"></span><h3></h3><p></p><ul><li></li><li></li></ul></div>';
       un.appendChild(a);
     });
@@ -76,11 +116,11 @@
     $$("#unis .uni").forEach(function (a, i) { var u = t.u[i]; $("h3", a).textContent = u[0]; $("p", a).textContent = u[1]; var li = $$("li", a); li[0].textContent = u[2]; li[1].textContent = u[3]; });
     $$("#cmpList div").forEach(function (d, i) { $("dt", d).textContent = t.cf[i][0]; $("dd", d).textContent = t.cf[i][1]; });
     /* Compagnon : trois écrans dans la langue du site. Index du Mushaf et hadith sont identiques en anglais US et UK (aucune donnée régionale) ; le tasbih affiche la Qibla de la ville, donc une capture par variante. */
-    $$("img[data-cmp]").forEach(function (img, i) { var k = img.dataset.cmp, v = k !== "tasbih" && code === "en-US" ? "en-GB" : code; img.alt = "aljana, " + t.cf[k === "mushaf" ? 0 : k === "hadith" ? 1 : 2][0]; setShot(img, "assets/companion/" + v + "/" + (k === "mushaf" ? "mushaf-index" : k) + ".webp"); });
+    $$("img[data-cmp]").forEach(function (img, i) { var k = img.dataset.cmp, v = k !== "tasbih" && code === "en-US" ? "en-GB" : code; img.alt = "aljana, " + t.cf[k === "mushaf" ? 0 : k === "hadith" ? 1 : 2][0]; setShot(img, "assets/companion/" + v + "/" + (k === "mushaf" ? "mushaf-index" : k) + ".webp", false); });
     $$("#checks div").forEach(function (d, i) { $("dt", d).textContent = t.pr[i][0]; $("dd", d).textContent = t.pr[i][1]; });
     /* captures dans la langue du site ; la section Langues montre une autre écriture que celle en cours */
     var other = code === "ar" ? "fr" : "ar";
-    $$("img[data-shot]").forEach(function (img) { var lc = img.hasAttribute("data-other") ? other : code; img.alt = "aljana, " + I18N[lc].sn[+img.dataset.sn]; setShot(img, "assets/screens/" + lc + "/" + img.dataset.shot + ".webp"); });
+    $$("img[data-shot]").forEach(function (img) { var lc = img.hasAttribute("data-other") ? other : code; img.alt = "aljana, " + I18N[lc].sn[+img.dataset.sn]; setShot(img, "assets/screens/" + lc + "/" + img.dataset.shot + ".webp", !!img.closest(".hero")); });
     $("#langFlag").textContent = L.flag; $("#langName").textContent = L.name; $("#langBtn").setAttribute("aria-label", t.pick + " (" + L.name + ")");
     $$(".lang-opt").forEach(function (b) { b.setAttribute("aria-current", b.dataset.lang === code ? "true" : "false"); });
     var c = $("[data-contact]"); if (c && CONTACT) c.setAttribute("href", "mailto:" + CONTACT);
@@ -91,6 +131,7 @@
   function menu(open) { $("#langMenu").classList.toggle("open", open); $("#langBtn").setAttribute("aria-expanded", open ? "true" : "false"); }
 
   build();
+  initShotObserver();
   apply(firstLang(), false);
   $("#langBtn").addEventListener("click", function (e) { e.stopPropagation(); menu(!$("#langMenu").classList.contains("open")); });
   document.addEventListener("click", function (e) { var b = e.target.closest(".lang-opt"); if (b) { apply(b.dataset.lang, true); menu(false); return; } if (!e.target.closest(".lang-menu")) menu(false); });
