@@ -425,6 +425,11 @@ window.I18N = {
       lv: "अंग्रेज़ी दो क्षेत्रीय रूपों में उपलब्ध है: संयुक्त राज्य अमेरिका और यूनाइटेड किंगडम।" },
   };
   Object.keys(C).forEach(function (k) { Object.assign(window.I18N[k], C[k]); });
+  /* Textes validés de la nouvelle direction, en français et en arabe : phrase d'ouverture des chiffres, légendes des chiffres
+     (p1c à p3c : bureau ; p2m, p3m : version courte mobile), lien « Explorer les sept univers ». Les autres langues gardent leurs
+     textes existants : intitulé + détail sous chaque chiffre, pas de phrase d'ouverture. En arabe, « في » reste liée à son nom. */
+  Object.assign(window.I18N.fr, {"statsLead":"Nous ne comparons pas aljana à d'autres applications. Nous mesurons l'écart face au ciel lui-même.","p1c":"Écart maximal mesuré, contrôlé face à JPL Horizons sur 120 instants de référence.","p2c":"Votre pratique, votre réglage : méthodes internationales et choix de l'école pour l'Asr.","p3c":"Interface localisée, lecture de droite à gauche comprise.","p2m":"Méthodes internationales et choix de l’école pour l’Asr.","p3m":"Lecture de droite à gauche comprise.","cta2":"Explorer les sept univers"});
+  Object.assign(window.I18N.ar, {"statsLead":"لا نقارن aljana بتطبيقات أخرى. نقيس الفرق أمام السماء نفسها.","p1c":"أقصى فرق تم قياسه، مُراجَع على JPL Horizons في ١٢٠ لحظة مرجعية.","p2c":"ممارستك، إعدادك: طرق حساب عالمية مع اختيار المذهب لصلاة العصر.","p3c":"واجهة مترجمة كاملة، ومنها الكتابة من اليمين إلى اليسار.","p2m":"عالمية، مع اختيار المذهب لصلاة العصر.","p3m":"ومنها الكتابة من اليمين إلى اليسار.","cta2":"استكشف العوالم السبعة","h1b":"في\u00A0المكان الذي أنت\u00A0فيه تماماً."});
   /* Anglais : une langue, deux variantes régionales. Seule différence lexicale réelle du site : localised / localized. */
   var gb = window.I18N.en; delete window.I18N.en;
   window.I18N["en-GB"] = gb;

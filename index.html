@@ -39,325 +39,371 @@
 <link rel="alternate" hreflang="hi" href="https://aljana.app/?lang=hi">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400..700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #060B18; --band: #0A1326; --text: #EEF1FA; --soft: #C9D1EA; --dim: #9AA6C6; --faint: #6F7A9C;
-    --gold: #E2B659; --gold-soft: #F3DFAE; --bezel: #0D1529;
-    --w: 1160px; --font: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --bg: #060B18; --band: #0A1326; --ink: #EEF1FA; --soft: #C9D1EA; --dim: #93A0C2; --faint: #6F7A9C;
+    --gold: #E2B659; --gold-soft: #F3DFAE; --leaf: #399f22; --leaf-wash: rgba(57,159,34,0.07);
+    --line: rgba(160,172,205,0.14); --tick: rgba(160,172,205,0.30);
+    /* titres en serif de lecture, romain ; texte et chiffres en grotesque humaniste */
+    --display: "Newsreader", Georgia, serif; --sans: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif; --hw: 500; --nw: 700; --hs: 1; --hl: -0.015em;
+    --w: 1180px; --sx: 1;
   }
+  /* une pile de polices par écriture ; hors alphabet latin, titres et texte partagent la même famille, sans interlettrage */
+  html[lang="ar"] { --display: "IBM Plex Sans Arabic", system-ui, sans-serif; --sans: "IBM Plex Sans Arabic", system-ui, sans-serif; --hw: 600; --hs: 0.9; --hl: 0; }
+  html[lang="fa"] { --display: "Vazirmatn", "Noto Sans Arabic", Tahoma, sans-serif; --sans: "Vazirmatn", "Noto Sans Arabic", Tahoma, sans-serif; --hw: 600; --hs: 0.9; --hl: 0; }
+  html[lang="ur"] { --display: "Noto Naskh Arabic", "Noto Sans Arabic", Tahoma, sans-serif; --sans: "Hanken Grotesk", "Noto Naskh Arabic", "Noto Sans Arabic", Tahoma, sans-serif; --hw: 600; --hs: 0.9; --hl: 0; } /* naskh simple : plus lisible que le nastaliq à 390 px, comparaison faite */
+  html[lang="hi"] { --display: "Noto Sans Devanagari", "Nirmala UI", sans-serif; --sans: "Noto Sans Devanagari", "Nirmala UI", sans-serif; --hw: 600; --hs: 0.86; --hl: 0; }
+  html[lang="zh"] { --display: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif; --sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif; --hw: 600; --hs: 0.9; --hl: 0; }
+  html[lang="ru"] { --display: "Manrope", "Hanken Grotesk", system-ui, sans-serif; --sans: "Manrope", "Hanken Grotesk", system-ui, sans-serif; --hw: 600; --hs: 0.86; --hl: -0.02em; }
+  html[dir="rtl"] { --sx: -1; }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: 84px; }
-  body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font); font-size: 17px; line-height: 1.65; font-weight: 400; -webkit-font-smoothing: antialiased; }
-  img { display: block; max-width: 100%; height: auto; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 17px; line-height: 1.62; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  html:is([lang="ar"], [lang="fa"], [lang="zh"]) body { line-height: 1.85; }
+  html[lang="ur"] body { line-height: 1.95; }
+  html[lang="hi"] body { line-height: 1.8; }
+  img { display: block; max-width: 100%; }
   a { color: inherit; text-decoration: none; }
   button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
-  .wrap { width: min(var(--w), calc(100% - 48px)); margin-inline: auto; }
-  .flag { font-family: "Apple Color Emoji", "Segoe UI Emoji", sans-serif; font-size: 1.15em; line-height: 1; }
-  :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 8px; }
+  .wrap { width: min(var(--w), calc(100% - 40px)); margin-inline: auto; }
+  ::selection { background: var(--gold); color: #1B1405; }
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 6px; }
+  h1, h2, h3 { text-wrap: balance; font-family: var(--display); font-weight: var(--hw); letter-spacing: var(--hl); color: var(--ink); margin: 0; }
+  html:is([lang="ar"], [lang="fa"], [lang="hi"]) :is(h1, h2, h3) { line-height: 1.4 !important; }
+  html[lang="ur"] :is(h1, h2, h3) { line-height: 1.55 !important; }
+  html[lang="zh"] :is(h1, h2, h3) { line-height: 1.35 !important; }
+  .accent { color: var(--gold-soft); }
+  /* arabe : la première ligne porte « صلاتك وسماؤك، », la suite forme un bloc à part ; « في » reste liée à son nom */
+  html[lang="ar"] .hero-h .accent { display: block; }
+  .ltr { direction: ltr; unicode-bidi: isolate; }
+  .lbl { font-size: 14px; font-weight: 500; color: var(--dim); }
 
-  /* une seule lumière de fond, chaude et très large, comme un ciel juste après le Maghrib */
-  .sky { position: fixed; inset: 0; z-index: -1; pointer-events: none;
-    background: radial-gradient(1100px 620px at 74% -12%, rgba(30, 52, 110, 0.40), transparent 70%), radial-gradient(900px 600px at 10% 30%, rgba(226, 182, 89, 0.045), transparent 70%), var(--bg); }
+  /* signature : logo officiel (image, cadre 3:1), jamais recomposé */
+  .brand { display: inline-flex; flex: none; }
+  .brand img { width: 126px; height: 42px; }
 
-  /* en-tête : plein, sans verre dépoli */
-  header { position: sticky; top: 0; z-index: 20; background: rgba(6, 11, 24, 0.95); }
-  .bar { display: flex; align-items: center; justify-content: space-between; gap: 14px; height: 74px; }
-  .logo { display: inline-flex; align-items: center; flex: none; }
-  .logo img { height: 47px; width: auto; filter: drop-shadow(0 0 8px rgba(232, 178, 58, 0.30)) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.45)); }
-  nav { display: flex; align-items: center; gap: 28px; font-size: 15px; font-weight: 500; color: var(--dim); }
-  nav a:not(.btn) { transition: color 0.2s; }
-  nav a:not(.btn):hover { color: var(--text); }
-  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 48px; padding: 0 24px; border-radius: 14px; font-weight: 600; font-size: 15.5px; white-space: nowrap; transition: background 0.2s, transform 0.2s, box-shadow 0.2s; }
-  .btn-gold { background: var(--gold); color: #1B1405; box-shadow: 0 8px 26px rgba(226, 182, 89, 0.16); }
-  .btn-gold:hover { background: #ECC46E; transform: translateY(-1px); box-shadow: 0 10px 30px rgba(226, 182, 89, 0.26); }
-  .btn-quiet { color: var(--soft); padding: 0 8px; }
-  .btn-quiet:hover { color: var(--text); }
-  .btn-quiet::after { content: "↓"; color: var(--gold); transition: transform 0.2s; }
-  .btn-quiet:hover::after { transform: translateY(2px); }
-  nav .btn { min-height: 42px; padding: 0 18px; font-size: 14.5px; border-radius: 12px; box-shadow: none; }
+  header { position: sticky; top: 0; z-index: 30; background: rgba(6,11,24,0.94); }
+  .bar { display: flex; align-items: center; justify-content: space-between; height: 76px; }
+  nav.top { display: flex; align-items: center; gap: 24px; }
+  nav.top a.nl { font-size: 15px; font-weight: 500; color: var(--dim); transition: color 0.2s; }
+  nav.top a.nl:hover { color: var(--ink); }
+  .btn { display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; border-radius: 11px; font-weight: 600; font-size: 14.5px; white-space: nowrap; transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease; }
+  .btn-gold { background: var(--gold); color: #1B1405; }
+  .btn-gold:hover { transform: translateY(-1px); background: #ECC46E; }
+  .btn-line { min-height: 40px; padding: 0 16px; box-shadow: inset 0 0 0 1px rgba(226,182,89,0.5); color: var(--gold-soft); font-size: 14px; }
+  .btn-line:hover { background: rgba(226,182,89,0.1); }
 
-  /* sélecteur de langue */
+  .flag { font-family: "Apple Color Emoji", "Segoe UI Emoji", sans-serif; font-size: 1.05em; line-height: 1; }
   .lang { position: relative; }
-  .lang-btn { display: inline-flex; align-items: center; gap: 8px; min-height: 42px; padding: 0 12px; border-radius: 12px; color: var(--soft); font-weight: 500; transition: background 0.2s, color 0.2s; }
-  .lang-btn:hover, .lang-btn[aria-expanded="true"] { background: rgba(255, 255, 255, 0.06); color: var(--text); }
-  .lang-btn svg { width: 12px; height: 12px; opacity: 0.7; transition: transform 0.2s; }
+  .lang-btn { display: inline-flex; align-items: center; gap: 7px; min-height: 42px; padding: 0 10px; border-radius: 11px; color: var(--soft); font-weight: 500; font-size: 14.5px; transition: background 0.2s; }
+  .lang-btn:hover, .lang-btn[aria-expanded="true"] { background: rgba(255,255,255,0.06); color: var(--ink); }
+  .lang-btn svg { width: 10px; height: 10px; opacity: 0.7; transition: transform 0.2s; }
   .lang-btn[aria-expanded="true"] svg { transform: rotate(180deg); }
-  .lang-menu { position: absolute; top: calc(100% + 10px); inset-inline-end: 0; width: 348px; padding: 8px; border-radius: 18px; background: #0E172D; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55); display: grid; grid-template-columns: 1fr 1fr; gap: 2px; opacity: 0; visibility: hidden; transform: translateY(-6px); transition: opacity 0.18s, transform 0.18s, visibility 0.18s; }
+  .lang-menu { position: absolute; top: calc(100% + 8px); inset-inline-end: 0; width: 320px; padding: 7px; border-radius: 16px; background: #0E172D; box-shadow: 0 22px 54px rgba(0,0,0,0.5); display: grid; grid-template-columns: 1fr 1fr; gap: 2px; opacity: 0; visibility: hidden; transform: translateY(-6px); transition: opacity 0.16s, transform 0.16s, visibility 0.16s; }
   .lang-menu.open { opacity: 1; visibility: visible; transform: none; }
-  .lang-opt { display: flex; align-items: center; gap: 11px; min-height: 48px; padding: 0 12px; border-radius: 12px; font-size: 15.5px; color: var(--soft); text-align: start; width: 100%; }
-  .lang-opt:hover { background: rgba(255, 255, 255, 0.06); color: var(--text); }
-  .lang-opt[aria-current="true"] { color: var(--gold-soft); background: rgba(226, 182, 89, 0.09); }
+  .lang-opt { display: flex; align-items: center; gap: 9px; min-height: 44px; padding: 0 10px; border-radius: 10px; font-size: 14.5px; color: var(--soft); text-align: start; width: 100%; min-width: 0; }
+  .lang-opt:hover { background: rgba(255,255,255,0.06); color: var(--ink); }
+  .lang-opt[aria-current="true"] { color: var(--gold-soft); background: rgba(226,182,89,0.08); }
 
-  /* héros */
-  .hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: 48px; align-items: center; padding: 64px 0 40px; }
-  .kicker { display: inline-block; font-size: 13px; font-weight: 600; letter-spacing: 0.13em; text-transform: uppercase; color: var(--gold); }
-  h1 { margin: 20px 0 0; font-size: clamp(36px, 4.7vw, 60px); line-height: 1.09; letter-spacing: -0.028em; font-weight: 700; text-wrap: balance; }
-  h1 em { font-style: normal; color: var(--gold-soft); }
-  .lead { margin: 24px 0 0; max-width: 520px; font-size: 18px; color: var(--dim); }
-  .cta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; margin-top: 32px; }
-  .note { margin: 16px 0 0; font-size: 14.5px; color: var(--faint); }
-  .stage { display: flex; flex-direction: column; align-items: center; }
-  .phones { position: relative; height: 640px; width: 100%; }
-  .phone { border-radius: 44px; padding: 7px; background: var(--bezel); box-shadow: 0 36px 80px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(190, 200, 235, 0.13); }
-  .phone img { width: 100%; border-radius: 37px; background: #050b1a; aspect-ratio: 880 / 1912; }
-  .phones .phone { position: absolute; }
-  .phone.main { width: 300px; left: 50%; top: 0; margin-left: -150px; z-index: 3; animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
-  .phone.side { width: 236px; top: 76px; opacity: 0.6; z-index: 1; animation: rise 0.9s 0.12s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
-  .phone.side.l { left: 0; }
-  .phone.side.r { right: 0; }
-  @keyframes rise { from { transform: translateY(18px); opacity: 0; } }
-  .u01 { margin: 22px 0 0; display: flex; align-items: baseline; gap: 12px; font-size: 15.5px; color: var(--soft); }
-  .num { font-size: 13px; font-weight: 600; letter-spacing: 0.15em; color: var(--gold); }
+  .rv { opacity: 0; transform: translateY(14px); transition: opacity 0.7s cubic-bezier(.2,.7,.15,1), transform 0.7s cubic-bezier(.2,.7,.15,1); }
+  .rv.in { opacity: 1; transform: none; }
+  .rv2 { transition-delay: 0.08s; } .rv3 { transition-delay: 0.16s; }
 
-  /* preuves : trois repères posés sur une courbe du jour, sans cadres ni traits */
-  .proof { position: relative; margin-top: 28px; padding: 72px 0 84px; background: radial-gradient(58% 90% at 50% 108%, rgba(226, 182, 89, 0.10), transparent 72%), linear-gradient(180deg, transparent, var(--band) 26%, var(--band) 74%, transparent); }
-  .proof .wrap { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
-  .arc { position: absolute; inset: -40px 4% auto; width: 92%; height: 120px; pointer-events: none; }
-  .fact { position: relative; text-align: center; padding: 8px 8px 0; transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1); }
-  .fact:nth-child(2), .fact:nth-child(4) { margin-top: 54px; }
-  .fact::before { content: ""; position: absolute; left: 50%; top: -18px; width: 240px; height: 150px; margin-left: -120px; border-radius: 50%; background: radial-gradient(closest-side, rgba(243, 223, 174, 0.16), transparent); opacity: 0.45; transition: opacity 0.35s; pointer-events: none; }
-  .fact:hover { transform: translateY(-4px); }
-  .fact:hover::before { opacity: 1; }
-  .fact b { position: relative; display: block; font-weight: 650; color: var(--gold-soft); font-size: 68px; line-height: 1; letter-spacing: -0.035em; }
-  .fact b small { font-size: 0.34em; font-weight: 600; letter-spacing: 0; margin-inline-start: 8px; color: var(--gold); }
-  .fact strong { position: relative; display: block; margin-top: 16px; font-size: 17.5px; font-weight: 600; color: var(--text); }
-  .fact span { position: relative; display: block; margin: 6px auto 0; max-width: 270px; font-size: 15px; line-height: 1.55; color: var(--dim); }
+  /* ================= HERO ================= */
+  .hero { position: relative; overflow: clip; }
+  .hero-sky { position: absolute; inset: 0 0 auto; height: 820px; z-index: -1; pointer-events: none;
+    background: radial-gradient(1100px 620px at 78% -12%, rgba(38,60,130,0.42), transparent 70%), radial-gradient(700px 480px at 8% 38%, rgba(226,182,89,0.05), transparent 70%), var(--bg); }
+  .hero-arc { position: absolute; left: 0; right: 0; width: 100%; top: 90px; height: 520px; z-index: -1; pointer-events: none; opacity: 0.55; }
+  .hero-grid { display: grid; grid-template-columns: minmax(0,1.05fr) minmax(0,0.95fr); grid-template-rows: 1fr auto auto auto auto 1fr; column-gap: 44px; padding-block: 50px 46px;
+    grid-template-areas: ". fig" "a fig" "b fig" "c fig" "d fig" ". fig"; }
+  .h-a { grid-area: a; } .h-b { grid-area: b; } .h-c { grid-area: c; } .h-d { grid-area: d; } .hero-fig { grid-area: fig; margin: 0; min-width: 0; }
+  h1.hero-h { font-size: calc(clamp(36px, 4.9vw, 62px) * var(--hs)); line-height: 1.1; }
+  .h-b p { margin: 22px 0 0; max-width: 480px; font-size: 17.5px; color: var(--soft); }
+  .h-c { display: flex; align-items: center; gap: 20px; margin-top: 28px; flex-wrap: wrap; }
+  .btn-text { color: var(--soft); font-weight: 500; font-size: 15px; display: inline-flex; align-items: center; gap: 6px; border-bottom: 1px solid var(--line); padding-bottom: 2px; transition: color 0.2s, border-color 0.2s; }
+  .btn-text:hover { color: var(--ink); border-color: var(--dim); }
+  html[dir="rtl"] .arw { display: inline-block; transform: scaleX(-1); }
+  .h-d p { margin: 16px 0 0; font-size: 13.5px; color: var(--faint); max-width: 420px; }
 
-  /* univers */
-  .section-head { padding: 72px 0 8px; }
-  .section-head h2 { max-width: 700px; }
-  h2 { margin: 12px 0 0; font-size: clamp(28px, 3.2vw, 42px); line-height: 1.15; letter-spacing: -0.024em; font-weight: 700; text-wrap: balance; }
-  .section-head p { margin: 16px 0 0; color: var(--dim); font-size: 17.5px; max-width: 600px; }
-  .uni { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px; align-items: center; padding: 22px 0; }
-  .uni.flip .shot { order: 2; }
-  .shot { display: flex; justify-content: center; }
-  /* la capture sort du cadre : on montre le haut de l'écran, plus grand, et le bas se fond dans la nuit */
-  .crop { padding: 22px 44px 0; height: 540px; overflow: hidden; -webkit-mask-image: linear-gradient(#000 78%, transparent 99%); mask-image: linear-gradient(#000 78%, transparent 99%); }
-  .crop .phone { width: 340px; box-shadow: 0 20px 44px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(190, 200, 235, 0.13); transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1); }
-  .uni:hover .crop .phone { transform: translateY(-6px); }
-  h3 { margin: 10px 0 0; font-size: 29px; letter-spacing: -0.02em; line-height: 1.2; font-weight: 650; text-wrap: balance; }
-  .uni .txt { max-width: 470px; }
-  .uni.flip .txt { justify-self: end; }
-  .uni p { margin: 14px 0 0; color: var(--dim); }
-  .uni ul { list-style: none; margin: 18px 0 0; padding: 0; }
-  .uni li { position: relative; padding: 5px 0; padding-inline-start: 22px; font-size: 15.5px; color: var(--soft); }
-  .uni li::before { content: ""; position: absolute; inset-inline-start: 2px; top: 0.92em; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
+  .hero-stage { position: relative; height: 600px; }
+  .hero-stage .glow { position: absolute; inset: -20px -10% auto; height: 480px; z-index: 0; pointer-events: none; background: radial-gradient(closest-side, rgba(226,182,89,0.10), transparent 72%); }
+  .phone { border-radius: 40px; padding: 6px; background: #0D1529; box-shadow: 0 40px 90px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(170,185,225,0.14); }
+  .phone img { width: 100%; height: auto; border-radius: 34px; background: #050b1a; aspect-ratio: 880/1912; }
+  .hero-stage .phone { position: absolute; inset-inline-start: 50%; animation: riseIn 0.9s cubic-bezier(.2,.7,.15,1) both; }
+  .hero-stage .p-main { width: 292px; margin-inline-start: -146px; top: 0; z-index: 3; animation-delay: .06s; }
+  .hero-stage .p-l { width: 228px; margin-inline-start: -348px; top: 74px; z-index: 1; opacity: 0.62; animation-delay: .18s; }
+  .hero-stage .p-r { width: 228px; margin-inline-start: 120px; top: 74px; z-index: 1; opacity: 0.62; animation-delay: .18s; }
+  @keyframes riseIn { from { opacity: 0; transform: translateY(20px); } }
+  /* légende de figure : l'information « en direct » dite comme une légende de photo, pas comme un badge */
+  .hero-fig figcaption { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 18px; font-size: 14px; color: var(--soft); }
+  .hero-fig figcaption::before { content: ""; width: 28px; height: 1px; background: var(--gold); opacity: 0.9; flex: none; }
 
-  /* Compagnon : trois vrais écrans, le Mushaf clair au premier plan, les deux autres en retrait et décalés */
-  .cmp { margin-top: 28px; padding: 64px 0 28px; background: radial-gradient(46% 60% at 72% 46%, rgba(243, 223, 174, 0.07), transparent 72%); }
-  .cmp .wrap { display: grid; grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr); gap: 40px; align-items: center; }
-  .cmp p { margin: 16px 0 0; color: var(--dim); font-size: 17.5px; max-width: 440px; }
-  .cmp-list { margin: 26px 0 0; max-width: 440px; }
-  .cmp-list div { padding: 9px 0; }
-  .cmp-list dt { font-weight: 600; color: var(--gold-soft); font-size: 16px; }
-  .cmp-list dd { margin: 2px 0 0; color: var(--soft); font-size: 15.5px; }
-  .cmp-stage { position: relative; height: 680px; }
-  .cmp-stage .phone { position: absolute; transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1); }
-  .c-mushaf { width: 292px; left: 212px; top: 0; z-index: 3; }
-  .c-hadith { width: 226px; left: 0; top: 124px; z-index: 2; }
-  .c-tasbih { width: 228px; right: 0; top: 64px; z-index: 1; opacity: 0.9; }
-  /* grand écran : le Tasbih sort un peu de la grille pour que son compteur reste lisible derrière le Mushaf */
-  @media (min-width: 1280px) { .c-tasbih { right: -34px; } [dir="rtl"] .c-tasbih { right: auto; left: -34px; } }
-  [dir="rtl"] .c-mushaf { left: auto; right: 212px; }
-  [dir="rtl"] .c-hadith { left: auto; right: 0; }
-  [dir="rtl"] .c-tasbih { right: auto; left: 0; }
-  .cmp-stage:hover .c-mushaf { transform: translateY(-6px); }
-  .cmp-stage:hover .c-hadith { transform: translateY(4px); }
-  .lv { font-size: 14.5px !important; color: var(--faint) !important; margin-top: 14px !important; }
+  /* ================= STATS : asymétrie + mesure ================= */
+  .stats { position: relative; overflow: clip; padding: 84px 0 82px; background: linear-gradient(180deg, transparent, var(--band) 18%, var(--band) 82%, transparent); }
+  .stats-lead { max-width: 560px; margin: 0 0 50px; color: var(--soft); font-family: var(--display); font-size: 22px; line-height: 1.45; }
+  .stats-lead:empty { display: none; }
+  html:not([lang="fr"]) .stats-lead { font-size: 19px; }
+  .stats-grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr; align-items: end; }
+  .stat { position: relative; padding-inline-end: 28px; min-width: 0; }
+  .stat + .stat { padding-inline-start: 28px; }
+  .stat.b { padding-bottom: 40px; } .stat.c { padding-bottom: 6px; }
+  .stat .n { display: flex; align-items: baseline; gap: 7px; font-weight: var(--nw); letter-spacing: -0.03em; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .stat.a .n { font-size: 120px; line-height: 0.86; } .stat.b .n, .stat.c .n { font-size: 62px; line-height: 0.9; }
+  .stat .n small { font-size: 0.3em; font-weight: 600; color: var(--gold); letter-spacing: 0; }
+  html:not(:is([lang="fr"], [lang^="en"], [lang="es"], [lang="de"], [lang="tr"], [lang="id"], [lang="ru"])) .stat .n { letter-spacing: 0; }
+  html:not(:is([lang="fr"], [lang^="en"], [lang="es"], [lang="de"], [lang="tr"], [lang="id"], [lang="ru"])) .stat.a .n { line-height: 1.1; }
+  html:not(:is([lang="fr"], [lang^="en"], [lang="es"], [lang="de"], [lang="tr"], [lang="id"], [lang="ru"])) :is(.stat.b, .stat.c) .n { line-height: 1.15; }
+  .stat .cap { display: block; margin-top: 14px; max-width: 290px; font-size: 15.5px; line-height: 1.5; color: var(--dim); }
+  .stat .cap b { display: block; font-weight: 500; color: var(--soft); }
+  .stat .cap-m { display: none; }
+  /* règle graduée : un trait par unité, les traits dorés se dévoilent pendant le décompte (13 sur 60 secondes ; 20 méthodes ; 12 langues) */
+  .ticks { --s: calc(100% / var(--n)); position: relative; height: 11px; margin-top: 16px; max-width: 100%; overflow: hidden;
+    background: repeating-linear-gradient(to right, transparent 0, transparent calc(var(--s) / 2 - 0.5px), var(--tick) calc(var(--s) / 2 - 0.5px), var(--tick) calc(var(--s) / 2 + 0.5px), transparent calc(var(--s) / 2 + 0.5px), transparent var(--s)); }
+  .stat.a .ticks { width: 360px; } .stat.b .ticks { width: 200px; } .stat.c .ticks { width: 132px; }
+  .ticks i { position: absolute; inset-block: 0; inset-inline-start: 0; width: calc(100% * var(--f)); overflow: hidden; transform: translateX(calc(-101% * var(--sx))); transition: transform var(--d, 0.9s) cubic-bezier(.2,.7,.2,1); }
+  .ticks i::before { content: ""; --s: calc(100% / var(--n)); position: absolute; inset-block: 0; inset-inline-start: 0; width: calc(100% / var(--f)); transform: translateX(calc(101% * var(--f) * var(--sx))); transition: inherit;
+    background: repeating-linear-gradient(to right, transparent 0, transparent calc(var(--s) / 2 - 0.75px), var(--gold) calc(var(--s) / 2 - 0.75px), var(--gold) calc(var(--s) / 2 + 0.75px), transparent calc(var(--s) / 2 + 0.75px), transparent var(--s)); }
+  .stat.counted .ticks i, .stat.counted .ticks i::before { transform: none; }
 
-  /* précision : lecture éditoriale, pas de tableau */
-  .precision { margin-top: 12px; padding: 72px 0; background: linear-gradient(180deg, transparent, var(--band) 22%, var(--band) 78%, transparent); }
-  .precision .wrap { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 64px; align-items: start; }
-  .precision p { color: var(--dim); margin: 16px 0 0; max-width: 440px; }
+  /* ================= LES SEPT UNIVERS ================= */
+  .uhead { padding: 96px 0 8px; }
+  .uhead h2 { margin-top: 12px; max-width: 720px; font-size: calc(clamp(30px, 3.8vw, 46px) * var(--hs)); line-height: 1.16; }
+  .uhead p { margin: 16px 0 0; max-width: 600px; color: var(--soft); }
+  .uhead .first { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; margin-top: 26px; color: var(--soft); font-size: 15.5px; }
+  .uni { position: relative; overflow: clip; padding: 74px 0 84px; }
+  .uni .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 10px; }
+  .uni .txt { max-width: 440px; }
+  .uni h3 { margin-top: 12px; font-size: calc(clamp(28px, 3.3vw, 42px) * var(--hs)); line-height: 1.16; }
+  .uni p { margin: 16px 0 0; color: var(--soft); max-width: 400px; }
+  .uni ul { list-style: none; margin: 20px 0 0; padding: 0; max-width: 400px; }
+  .uni li { position: relative; padding-block: 9px; padding-inline-start: 20px; font-size: 15px; color: var(--dim); }
+  .uni li::before { content: ""; position: absolute; inset-inline-start: 2px; top: 1.15em; width: 4px; height: 4px; border-radius: 999px; background: var(--gold); }
+  html:is([lang="ar"], [lang="fa"], [lang="ur"], [lang="hi"], [lang="zh"]) .uni li::before { top: 1.4em; }
+  .uni .frame { position: relative; justify-self: end; width: 336px; margin-inline-end: 40px; }
+  .uni .frame::after { content: ""; position: absolute; inset: -46px -46px 30%; z-index: -1; background: radial-gradient(closest-side, rgba(120,150,255,0.13), transparent 70%); }
+  .uni .phone { border-radius: 38px; -webkit-mask-image: linear-gradient(180deg, #000 82%, transparent 99%); mask-image: linear-gradient(180deg, #000 82%, transparent 99%); }
+  .uni .phone img { border-radius: 32px; }
+  .uni.flip .txt { order: 2; justify-self: end; }
+  .uni.flip .frame { justify-self: start; margin-inline: 40px 0; }
+  /* le Ciel : seul univers à porter son propre ciel, deux orbites centrées sur l'écran, un astre parcourt chacune très lentement */
+  .uni.sky { padding: 112px 0 122px; background: radial-gradient(1400px 780px at 50% 18%, #0B1330 0%, #070b16 62%, var(--bg) 100%); }
+  .uni.sky::before { content: ""; position: absolute; inset: 0; opacity: 0.9; pointer-events: none;
+    background-image: radial-gradient(1.3px 1.3px at 8% 22%, #dfe6ff 60%, transparent 61%), radial-gradient(1px 1px at 22% 68%, #cfd8ff 60%, transparent 61%), radial-gradient(1.6px 1.6px at 38% 12%, #fff 60%, transparent 61%), radial-gradient(1px 1px at 55% 44%, #cfd8ff 60%, transparent 61%), radial-gradient(1.2px 1.2px at 68% 78%, #dfe6ff 60%, transparent 61%), radial-gradient(1.5px 1.5px at 83% 30%, #fff 60%, transparent 61%), radial-gradient(1px 1px at 92% 60%, #cfd8ff 60%, transparent 61%), radial-gradient(1.2px 1.2px at 14% 88%, #dfe6ff 60%, transparent 61%); }
+  /* entrée et sortie de la section : le ciel se fond dans le fond nuit, sans arête */
+  .uni.sky::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, var(--bg) 0, transparent 190px, transparent calc(100% - 190px), var(--bg) 100%); }
+  .uni.sky .frame { margin-inline-end: -74px; }
+  .orbits { position: absolute; inset: 0; pointer-events: none; }
+  .orbit { position: absolute; top: 50%; inset-inline-start: 74%; width: var(--D); height: var(--D); margin-top: calc(var(--D) / -2); margin-inline-start: calc(var(--D) / -2); border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(170,185,235,0.13); animation: spin var(--T) linear infinite; animation-play-state: paused; }
+  .orbit.o2 { box-shadow: inset 0 0 0 1px rgba(226,182,89,0.12); animation-direction: reverse; }
+  .uni.sky.run .orbit { animation-play-state: running; }
+  .orbit b { position: absolute; top: -3px; left: 50%; width: 6px; height: 6px; margin-left: -3px; border-radius: 50%; background: #E8EDFF; }
+  .orbit.o2 b { background: var(--gold-soft); width: 5px; height: 5px; top: -2.5px; }
+  @keyframes spin { from { transform: rotate(var(--A, 0deg)); } to { transform: rotate(calc(var(--A, 0deg) + 360deg)); } }
+
+  /* ================= COMPAGNON ================= */
+  .cmp2 { position: relative; overflow: clip; padding: 122px 0 118px; background: radial-gradient(1200px 640px at 50% 36%, var(--leaf-wash), transparent 66%), var(--bg); }
+  .cmp2-head { max-width: 600px; margin: 0 auto; text-align: center; }
+  .cmp2-head .lk { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; color: #8fd96a; }
+  .cmp2-head .lk img { width: 17px; height: 16px; }
+  .cmp2-head h2 { margin-top: 18px; font-size: calc(clamp(30px, 4.2vw, 48px) * var(--hs)); line-height: 1.18; }
+  .cmp2-head p { margin: 18px auto 0; max-width: 430px; color: var(--soft); font-size: 16.5px; }
+  .cmp2-stage { position: relative; height: 600px; margin-top: 64px; }
+  .cmp2-stage .phone { position: absolute; inset-inline-start: 50%; border-radius: 34px; background: #14180F; box-shadow: 0 44px 96px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(210,220,200,0.12); }
+  .cmp2-stage .phone img { border-radius: 28px; }
+  /* trois écrans de même gabarit, trois places : devant, en retrait à gauche, en retrait à droite. Seuls transform et opacity bougent. */
+  .cmp2-stage { --bx: 227px; --by1: 126px; --by2: 184px; --bs: 0.7; }
+  .cmp2-stage .phone { top: 0; width: 266px; margin-inline-start: -133px; transform-origin: 50% 0; transition: transform 0.85s cubic-bezier(.45,.05,.2,1), opacity 0.85s ease; will-change: transform, opacity; }
+  .cmp2-stage .phone[data-slot="front"] { z-index: 3; transform: none; opacity: 1; }
+  .cmp2-stage .phone[data-slot="prev"] { z-index: 2; transform: translate(calc(var(--bx) * -1 * var(--sx)), var(--by1)) scale(var(--bs)); opacity: 0.8; }
+  .cmp2-stage .phone[data-slot="next"] { z-index: 2; transform: translate(calc((var(--bx) + 10px) * var(--sx)), var(--by2)) scale(var(--bs)); opacity: 0.8; }
+  .cmp2-stage .phone.behind { z-index: 1; opacity: 0; transition: opacity 0.3s ease; }
+  .cmp2-stage .phone.jump { transition: none; }
+  .cmp2-names { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 40px; margin: 36px 0 0; font-size: 15.5px; color: var(--faint); }
+  .cmp2-names span { transition: color 0.6s ease; } .cmp2-names span.on { color: var(--ink); }
+
+  /* ================= PRÉCISION ================= */
+  .precision { padding: 96px 0; background: linear-gradient(180deg, transparent, var(--band) 20%, var(--band) 80%, transparent); }
+  .precision .wrap { display: grid; grid-template-columns: minmax(0,0.85fr) minmax(0,1.15fr); gap: 64px; align-items: start; }
+  .precision h2, .langs h2, .end h2 { margin-top: 12px; font-size: calc(clamp(30px, 3.8vw, 46px) * var(--hs)); line-height: 1.16; }
+  .precision p { color: var(--soft); margin: 16px 0 0; max-width: 440px; }
   .checks { margin: 6px 0 0; }
   .checks div { padding: 15px 0; }
-  .checks dt { font-weight: 600; color: var(--text); font-size: 17px; display: flex; align-items: center; gap: 10px; }
-  .checks dt::after { content: "→"; color: var(--gold); font-weight: 400; }
-  [dir="rtl"] .checks dt::after { content: "←"; }
+  .checks dt { font-weight: 600; color: var(--ink); font-size: 17px; }
   .checks dd { margin: 4px 0 0; color: var(--dim); font-size: 16px; max-width: 540px; }
 
-  /* langues */
-  .langs { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; align-items: center; padding: 56px 0 8px; }
-  .langs p { color: var(--dim); margin: 16px 0 0; max-width: 480px; }
-  .chips { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; margin-top: 20px; max-width: 500px; margin-inline-start: -12px; }
-  .chips .lang-opt { font-size: 15.5px; }
+  /* ================= LANGUES ================= */
+  .langs { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 56px; align-items: center; padding: 84px 0 20px; }
+  .langs p { color: var(--soft); margin: 16px 0 0; max-width: 480px; }
+  .chips { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 4px; margin-top: 20px; max-width: 500px; margin-inline-start: -10px; }
+  .langs .lv { font-size: 14px; color: var(--faint); margin-top: 14px; }
+  .langs .frame { position: relative; justify-self: center; width: 320px; }
+  .langs .phone { border-radius: 38px; -webkit-mask-image: linear-gradient(180deg, #000 80%, transparent 99%); mask-image: linear-gradient(180deg, #000 80%, transparent 99%); }
+  .langs .phone img { border-radius: 32px; }
+  .langs .frame { height: 560px; overflow: hidden; }
 
-  /* fin */
-  .end { text-align: center; padding: 72px 0 88px; background: radial-gradient(50% 70% at 50% 100%, rgba(226, 182, 89, 0.08), transparent 70%); }
-  .end img { height: 84px; width: auto; margin: 0 auto 26px; filter: drop-shadow(0 0 14px rgba(232, 178, 58, 0.30)) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.45)); }
-  .end p { color: var(--dim); max-width: 520px; margin: 16px auto 0; }
-  .end .cta { justify-content: center; }
-  .end .note { margin-top: 18px; }
-  footer { padding: 30px 0 44px; font-size: 14.5px; color: var(--faint); }
+  /* ================= FIN ================= */
+  .end { text-align: center; padding: 104px 0 96px; background: radial-gradient(50% 70% at 50% 100%, rgba(226,182,89,0.07), transparent 70%); }
+  .end .brand img { width: 210px; height: 70px; margin-inline: auto; }
+  .end h2 { margin-top: 26px; }
+  .end p { color: var(--soft); max-width: 520px; margin: 16px auto 0; }
+  .end .btn { margin-top: 30px; min-height: 48px; padding: 0 26px; font-size: 15px; }
+  .end .note { margin-top: 18px; font-size: 13.5px; color: var(--faint); }
+  footer { padding: 30px 0 44px; font-size: 14px; color: var(--faint); }
   footer .wrap { display: flex; flex-direction: column; gap: 14px; }
   .f-links { display: flex; flex-wrap: wrap; gap: 8px 28px; color: var(--dim); }
-  .f-links a { padding: 6px 0; }
-  .f-links a:hover { color: var(--text); }
+  .f-links a { padding: 6px 0; transition: color 0.2s; }
+  .f-links a:hover { color: var(--ink); }
   .f-base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
 
-  /* apparition douce au défilement */
-  .rv { opacity: 0; transform: translateY(14px); transition: opacity 0.7s, transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1); }
-  .rv.in { opacity: 1; transform: none; }
-
-  /* écritures : une pile de polices par script, sans interlettrage ni capitales hors alphabet latin */
-  html[lang="ru"] { --font: "Manrope", "Plus Jakarta Sans", system-ui, sans-serif; }
-  html[lang="ar"] { --font: "Noto Sans Arabic", "Segoe UI", Tahoma, sans-serif; }
-  html[lang="fa"] { --font: "Vazirmatn", "Noto Sans Arabic", Tahoma, sans-serif; }
-  html[lang="ur"] { --font: "Plus Jakarta Sans", "Noto Naskh Arabic", "Noto Sans Arabic", Tahoma, sans-serif; } /* naskh simple : plus lisible que le nastaliq à 390 px, comparaison faite */
-  html[lang="hi"] { --font: "Noto Sans Devanagari", "Nirmala UI", sans-serif; }
-  html[lang="zh"] { --font: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif; }
-  html:is([lang="ar"], [lang="fa"], [lang="ur"], [lang="hi"], [lang="zh"]) :is(h1, h2, h3, .kicker, .num, .fact b) { letter-spacing: 0; text-transform: none; }
-  html:is([lang="ar"], [lang="fa"]) body { line-height: 1.85; }
-  html:is([lang="ar"], [lang="fa"]) :is(h1, h2, h3) { line-height: 1.4; }
-  html:is([lang="ar"], [lang="fa"], [lang="ur"], [lang="hi"]) :is(.kicker, .num) { font-size: 15px; }
-  html[lang="ur"] body { line-height: 1.95; font-size: 17px; }
-  html[lang="ur"] h1 { line-height: 1.5; font-size: clamp(34px, 4.3vw, 56px); }
-  html[lang="ur"] h2 { line-height: 1.5; }
-  html[lang="ur"] h3 { line-height: 1.55; }
-  html[lang="hi"] body { line-height: 1.8; }
-  html[lang="hi"] :is(h1, h2, h3) { line-height: 1.4; }
-  html[lang="zh"] body { line-height: 1.85; }
-  html[lang="zh"] :is(h1, h2, h3) { line-height: 1.35; }
-  .ltr { direction: ltr; unicode-bidi: isolate; }
-
   @media (max-width: 900px) {
-    body { font-size: 16px; }
+    body { font-size: 16.5px; }
     .wrap { width: calc(100% - 32px); }
-    nav a:not(.btn) { display: none; }
-    nav { gap: 6px; }
-    .bar { height: 64px; gap: 8px; }
-    .logo img { height: 40px; }
-    nav .btn { padding: 0 13px; font-size: 13.5px; }
-    .lang-btn { padding: 0 8px; min-height: 44px; }
-    .lang-btn .lang-name { display: none; }
-    .lang-menu { position: fixed; top: 70px; inset-inline: 12px; width: auto; }
-    .hero { grid-template-columns: 1fr; gap: 36px; padding: 36px 0 24px; }
-    .lead { font-size: 17px; }
-    .cta .btn-gold { flex: 1 1 100%; min-height: 52px; }
-    .phones { height: 540px; max-width: 400px; }
-    .phone { border-radius: 38px; padding: 6px; }
-    .phone img { border-radius: 32px; }
-    .phone.main { width: 250px; margin-left: -125px; }
-    .phone.side { width: 190px; top: 64px; }
-    .proof { padding: 48px 0 56px; margin-top: 16px; }
-    .proof .wrap { grid-template-columns: 1fr; gap: 34px; }
-    .arc { display: none; }
-    .fact, .fact:nth-child(2), .fact:nth-child(4) { margin-top: 0; text-align: start; padding: 0; }
-    .fact::before { left: 0; margin-left: -40px; }
-    [dir="rtl"] .fact::before { left: auto; right: 0; margin-right: -40px; }
-    .fact b { font-size: 56px; }
-    .fact span { margin-inline: 0; max-width: 340px; }
-    .section-head { padding: 52px 0 0; }
-    .uni, .langs { grid-template-columns: 1fr; gap: 22px; padding: 30px 0; }
-    .uni.flip .shot { order: 0; }
-    .uni.flip .txt { justify-self: start; }
-    .crop { height: 470px; padding: 18px 24px 0; }
-    .crop .phone { width: 300px; }
-    h3 { font-size: 25px; }
-    .cmp { padding: 48px 0 12px; margin-top: 16px; }
-    .cmp .wrap { grid-template-columns: 1fr; gap: 30px; }
-    .cmp-stage { height: 736px; max-width: 400px; width: 100%; margin-inline: auto; }
-    /* mobile : le hadith toujours à droite du Mushaf, pour que le début des lignes arabes reste visible */
-    /* mobile : le Mushaf en haut, Hadith et Tasbih posés devant son bas de page, entièrement lisibles */
-    .c-mushaf, [dir="rtl"] .c-mushaf { width: 240px; left: 50%; right: auto; margin-left: -120px; margin-right: 0; }
-    .c-hadith, [dir="rtl"] .c-hadith { width: 166px; top: 352px; left: auto; right: 2px; z-index: 4; }
-    .c-tasbih, [dir="rtl"] .c-tasbih { width: 166px; top: 376px; right: auto; left: 2px; z-index: 4; opacity: 1; }
-    .precision { padding: 52px 0; margin-top: 8px; }
-    .precision .wrap { grid-template-columns: 1fr; gap: 20px; }
-    .langs .shot { order: 2; }
-    .chips { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .end { padding: 56px 0 64px; }
-    .end img { height: 70px; }
+    .bar { height: 64px; }
+    .brand img { width: 105px; height: 35px; }
+    nav.top { gap: 6px; } nav.top a.nl { display: none; }
+    .lang-btn #langName { display: none; } .lang-btn { padding: 0 8px; min-height: 44px; }
+    .btn-line { min-height: 38px; padding: 0 13px; font-size: 13.5px; }
+    .lang-menu { position: fixed; top: 68px; inset-inline: 12px; width: calc(100vw - 24px); max-height: calc(100vh - 84px); overflow-y: auto; }
+    /* mobile : titre, action, puis le produit tout de suite ; le texte long passe après l'image */
+    .hero-grid { grid-template-columns: minmax(0,1fr); grid-template-rows: none; grid-template-areas: "a" "c" "fig" "b" "d"; padding-block: 26px 8px; }
+    h1.hero-h { font-size: calc(35px * var(--hs)); }
+    .h-c { margin-top: 18px; gap: 10px 13px; } .btn-text { font-size: 14.5px; gap: 5px; }
+    .hero-fig { margin-top: 24px; }
+    .hero-stage { height: 470px; }
+    .hero-stage .p-main { width: 228px; margin-inline-start: -114px; }
+    .hero-stage .p-l { width: 172px; margin-inline-start: -184px; top: 56px; }
+    .hero-stage .p-r { width: 172px; margin-inline-start: 12px; top: 56px; }
+    .hero-fig figcaption { margin-top: 12px; }
+    .h-b p { margin-top: 26px; font-size: 16.5px; }
+    .stats { padding: 58px 0 54px; }
+    .stats-lead { margin-bottom: 36px; font-size: 19px; }
+    html:not([lang="fr"]) .stats-lead { font-size: 17px; }
+    .stats-grid { grid-template-columns: minmax(0,1fr) minmax(0,1fr); row-gap: 32px; }
+    .stat.a { grid-column: 1 / -1; padding-inline: 0; } .stat.a .n { font-size: 88px; }
+    .stat.a .ticks { width: 100%; }
+    .stat.b, .stat.c { padding-bottom: 0; } .stat.b { padding-inline-end: 16px; } .stat.c { padding-inline-start: 16px; }
+    .stat.b .n, .stat.c .n { font-size: 48px; flex-wrap: wrap; }
+    :is(.stat.b, .stat.c) .cap-d { display: none; } :is(.stat.b, .stat.c) .cap-m { display: block; font-size: 15px; color: var(--soft); }
+    .stat.b .ticks { width: 100%; max-width: 160px; } .stat.c .ticks { width: 100%; max-width: 110px; }
+    .uhead { padding: 64px 0 0; }
+    .uni, .uni.sky { padding: 52px 0 58px; }
+    .uni.sky { padding: 64px 0 70px; }
+    .orbits { display: none; }
+    .uni .wrap { grid-template-columns: minmax(0,1fr); gap: 36px; text-align: center; }
+    .uni .txt, .uni.flip .txt { max-width: 460px; margin-inline: auto; order: 0; justify-self: auto; }
+    .uni p { margin-inline: auto; }
+    .uni ul { text-align: start; max-width: 320px; margin-inline: auto; }
+    .uni .frame, .uni.flip .frame, .uni.sky .frame { justify-self: center; width: 76%; max-width: 300px; margin-inline: 0; }
+    .cmp2 { padding: 70px 0 70px; }
+    .cmp2-stage { height: 440px; margin-top: 42px; --bx: 93px; --by1: 122px; --by2: 168px; --bs: 0.615; }
+    .cmp2-stage .phone { width: 192px; margin-inline-start: -96px; }
+    .cmp2-names { gap: 6px 28px; margin-top: 22px; font-size: 15px; }
+    .precision { padding: 64px 0; }
+    .precision .wrap { grid-template-columns: minmax(0,1fr); gap: 20px; }
+    .langs { grid-template-columns: minmax(0,1fr); gap: 30px; padding: 56px 0 8px; }
+    .chips { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .langs .frame { width: 76%; max-width: 300px; height: 480px; }
+    .end { padding: 72px 0 64px; }
+    .end .brand img { width: 180px; height: 60px; }
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .rv { opacity: 1; transform: none; transition: none; }
-    .phone.main, .phone.side { animation: none; }
-    .fact, .crop .phone, .btn, .cmp-stage .phone { transition: none; }
+    .rv, .rv2, .rv3 { opacity: 1; transform: none; transition: none; }
+    .hero-stage .phone, .orbit { animation: none; }
+    .ticks i, .ticks i::before { transform: none; transition: none; }
+    .cmp2-stage .phone, .cmp2-names span, .btn { transition: none; }
   }
 </style>
 </head>
 <body>
-<div class="sky" aria-hidden="true"></div>
 
 <header>
   <div class="wrap bar">
-    <a class="logo" href="#top" aria-label="aljana"><img src="assets/aljana-lockup-dark.png" alt="aljana" width="1804" height="575"></a>
-    <nav>
-      <a href="#univers" data-i="n1">Les sept univers</a>
-      <a href="#precision" data-i="n2">Précision</a>
+    <a class="brand" href="#top" aria-label="aljana"><img src="assets/brand/aljana-logo-v4.webp" alt="aljana" width="1086" height="362"></a>
+    <nav class="top">
+      <a class="nl" href="#univers" data-i="n1">Les sept univers</a>
+      <a class="nl" href="#compagnon" data-i="ck">Compagnon</a>
+      <a class="nl" href="#precision" data-i="n2">Précision</a>
       <div class="lang">
         <button type="button" class="lang-btn" id="langBtn" aria-haspopup="true" aria-expanded="false" aria-controls="langMenu" aria-label="Choisir la langue">
-          <span class="flag" id="langFlag" aria-hidden="true">🇫🇷</span><span class="lang-name" id="langName">Français</span>
+          <span class="flag" id="langFlag" aria-hidden="true">🇫🇷</span><span id="langName">Français</span>
           <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg>
         </button>
         <div class="lang-menu" id="langMenu"></div>
       </div>
-      <a class="btn btn-gold" data-app data-i="open" href="#ouvrir">Accéder à la bêta</a>
+      <a class="btn btn-line" data-app data-i="open" href="https://beta.aljana.app">Accéder à la bêta</a>
     </nav>
   </div>
 </header>
 
 <main id="top">
-  <section class="wrap hero">
-    <div>
-      <span class="kicker" data-i="kick">Calculé en direct pour votre position</span>
-      <h1><span data-i="h1a">Vos prières et votre ciel,</span> <em data-i="h1b">à l'endroit exact où vous êtes.</em></h1>
-      <p class="lead" data-i="lead">aljana réunit les horaires de prière, le ciel en direct, la Lune, le Hilal, la Qibla et les éclipses. Chaque valeur est calculée pour votre position, à la seconde.</p>
-      <div class="cta">
-        <a class="btn btn-gold" data-app data-cta href="#ouvrir">Accéder à la bêta</a>
-        <a class="btn btn-quiet" href="#univers" data-i="cta2">Voir les sept univers</a>
+  <section class="hero">
+    <div class="hero-sky" aria-hidden="true"></div>
+    <svg class="hero-arc" viewBox="0 0 1400 520" preserveAspectRatio="none" aria-hidden="true">
+      <defs><linearGradient id="hg" x1="0" x2="1"><stop offset="0" stop-color="#E2B659" stop-opacity="0"/><stop offset=".5" stop-color="#F3DFAE" stop-opacity=".5"/><stop offset="1" stop-color="#E2B659" stop-opacity="0"/></linearGradient></defs>
+      <path d="M-60 380 C 300 180, 680 90, 1460 340" fill="none" stroke="url(#hg)" stroke-width="1.2" vector-effect="non-scaling-stroke"/>
+    </svg>
+    <div class="wrap hero-grid">
+      <div class="h-a rv"><h1 class="hero-h"><span data-i="h1a">Vos prières et votre ciel,</span> <span class="accent" data-i="h1b">à l'endroit exact où vous êtes.</span></h1></div>
+      <div class="h-b rv rv2"><p data-i="lead">aljana réunit les horaires de prière, le ciel en direct, la Lune, le Hilal, la Qibla et les éclipses. Chaque valeur est calculée pour votre position, à la seconde.</p></div>
+      <div class="h-c rv rv2">
+        <a class="btn btn-gold" data-app data-cta href="https://beta.aljana.app">Accéder à la bêta</a>
+        <a class="btn-text" href="#univers"><span data-i="cta2">Explorer les sept univers</span> <span class="arw" aria-hidden="true">→</span></a>
       </div>
-      <p class="note" data-i="note">Application actuellement en bêta privée. Accès réservé aux bêta-testeurs invités.</p>
-    </div>
-    <div class="stage">
-      <div class="phones">
-        <div class="phone side l"><img data-shot="prieres" data-sn="1" alt="" width="880" height="1912"></div>
-        <div class="phone side r"><img data-shot="ciel" data-sn="2" alt="" width="880" height="1912"></div>
-        <div class="phone main"><img data-shot="accueil" data-sn="0" alt="" width="880" height="1912"></div>
-      </div>
-      <p class="u01"><span class="num" data-num="0">01 ACCUEIL</span><span data-i="u01">Votre journée en un regard</span></p>
+      <div class="h-d rv rv3"><p data-i="note">Application actuellement en bêta privée. Accès réservé aux bêta-testeurs invités.</p></div>
+      <figure class="hero-fig">
+        <div class="hero-stage">
+          <div class="glow" aria-hidden="true"></div>
+          <div class="phone p-l"><img data-shot="prieres" data-sn="1" alt="" width="880" height="1912"></div>
+          <div class="phone p-r"><img data-shot="ciel" data-sn="2" alt="" width="880" height="1912"></div>
+          <div class="phone p-main"><img data-shot="accueil" data-sn="0" alt="" width="880" height="1912"></div>
+        </div>
+        <figcaption data-i="kick">Calculé en direct pour votre position</figcaption>
+      </figure>
     </div>
   </section>
 
-  <section class="proof">
+  <section class="stats" id="stats">
     <div class="wrap">
-      <svg class="arc" viewBox="0 0 1000 150" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="ag" x1="0" x2="1"><stop offset="0" stop-color="#E2B659" stop-opacity="0"/><stop offset="0.5" stop-color="#F3DFAE" stop-opacity="0.5"/><stop offset="1" stop-color="#E2B659" stop-opacity="0"/></linearGradient></defs><path d="M0 104 C 250 104, 330 28, 500 28 S 750 104, 1000 104" fill="none" stroke="url(#ag)" stroke-width="1.2" vector-effect="non-scaling-stroke"/></svg>
-      <div class="fact rv" data-p="p1"><b></b><strong></strong><span></span></div>
-      <div class="fact rv" data-p="p2"><b></b><strong></strong><span></span></div>
-      <div class="fact rv" data-p="p3"><b></b><strong></strong><span></span></div>
+      <p class="stats-lead rv" data-i="statsLead"></p>
+      <div class="stats-grid">
+        <div class="stat a rv" data-p="p1"><span class="n"><span class="v">0</span><small></small></span><div class="ticks" style="--n:60;--f:0.21667" aria-hidden="true"><i></i></div><span class="cap cap-d"></span><span class="cap cap-m"></span></div>
+        <div class="stat b rv rv2" data-p="p2"><span class="n"><span class="v">0</span><small></small></span><div class="ticks" style="--n:20;--f:1;--d:1.1s" aria-hidden="true"><i></i></div><span class="cap cap-d"></span><span class="cap cap-m"></span></div>
+        <div class="stat c rv rv3" data-p="p3"><span class="n"><span class="v">0</span><small></small></span><div class="ticks" style="--n:12;--f:1;--d:1s" aria-hidden="true"><i></i></div><span class="cap cap-d"></span><span class="cap cap-m"></span></div>
+      </div>
     </div>
   </section>
 
-  <div class="wrap section-head rv" id="univers">
-    <span class="kicker" data-i="sk">Les sept univers</span>
+  <div class="wrap uhead rv" id="univers">
+    <span class="lbl" data-i="sk">Les sept univers</span>
     <h2 data-i="sh">Sept univers. Chacun répond à une question simple.</h2>
     <p data-i="sp">L'Accueil réunit l'essentiel. Les six autres univers répondent chacun à une question précise.</p>
+    <p class="first"><span class="lbl" data-num="0">01 Accueil</span><span data-i="u01">Votre journée en un regard</span></p>
   </div>
 
-  <section class="wrap" id="unis"></section>
+  <div id="unis"></div>
 
-  <section class="cmp" id="compagnon">
+  <section class="cmp2" id="compagnon">
     <div class="wrap">
-      <div class="cmp-txt rv">
-        <span class="kicker" data-i="ck">Compagnon</span>
+      <div class="cmp2-head rv">
+        <span class="lk"><img src="assets/brand/leaf-v4.png" alt="" width="256" height="245"><span data-i="ck">Compagnon</span></span>
         <h2 data-i="ch">Votre Compagnon, au quotidien.</h2>
         <p data-i="cp">Le ciel vous donne les repères. Votre Compagnon vous accompagne dans votre pratique.</p>
-        <dl class="cmp-list" id="cmpList"></dl>
       </div>
-      <div class="cmp-stage rv">
-        <div class="phone c-hadith"><img data-cmp="hadith" alt="" loading="lazy" width="880" height="1912"></div>
-        <div class="phone c-tasbih"><img data-cmp="tasbih" alt="" loading="lazy" width="880" height="1912"></div>
-        <div class="phone c-mushaf"><img data-cmp="mushaf" alt="" loading="lazy" width="880" height="1912"></div>
+      <div class="cmp2-stage rv rv2" id="cmpStage">
+        <div class="phone" data-k="mushaf" data-slot="front"><img data-cmp="mushaf" alt="" loading="lazy" width="880" height="1912"></div>
+        <div class="phone" data-k="hadith" data-slot="prev"><img data-cmp="hadith" alt="" loading="lazy" width="880" height="1912"></div>
+        <div class="phone" data-k="tasbih" data-slot="next"><img data-cmp="tasbih" alt="" loading="lazy" width="880" height="1912"></div>
       </div>
+      <p class="cmp2-names rv"><span data-k="hadith"></span><span data-k="mushaf" class="on"></span><span data-k="tasbih"></span></p>
     </div>
   </section>
 
   <section class="precision" id="precision">
     <div class="wrap">
       <div class="rv">
-        <span class="kicker" data-i="pk">Précision</span>
+        <span class="lbl" data-i="pk">Précision</span>
         <h2 data-i="ph">Exact, parce que vérifié.</h2>
         <p data-i="pp">Nous ne comparons pas aljana à d'autres applications. Nous comparons ses calculs aux références astronomiques, puis nous mesurons l'écart.</p>
       </div>
@@ -367,21 +413,21 @@
 
   <section class="wrap langs" id="langues">
     <div class="rv">
-      <span class="kicker" data-i="lk">Langues</span>
+      <span class="lbl" data-i="lk">Langues</span>
       <h2 data-i="lh">Pensée pour être lue dans votre langue.</h2>
       <p data-i="lp">Douze langues complètes. En arabe, en ourdou et en persan, toute l'interface s'inverse de droite à gauche. Choisissez la vôtre :</p>
       <div class="chips" id="chips"></div>
       <p class="lv" data-i="lv">L'anglais existe en deux variantes régionales : États-Unis et Royaume-Uni.</p>
     </div>
-    <div class="shot rv"><div class="crop"><div class="phone"><img data-shot="accueil" data-other data-sn="0" alt="" loading="lazy" width="880" height="1912"></div></div></div>
+    <div class="frame rv"><div class="phone"><img data-shot="accueil" data-other data-sn="0" alt="" loading="lazy" width="880" height="1912"></div></div>
   </section>
 
   <section class="end" id="ouvrir">
     <div class="wrap rv">
-      <img src="assets/aljana-lockup-dark.png" alt="aljana" width="1804" height="575" loading="lazy">
+      <span class="brand"><img src="assets/brand/aljana-logo-v4.webp" alt="aljana" width="1086" height="362" loading="lazy"></span>
       <h2 data-i="eh">Ouvrez aljana ce soir.</h2>
       <p data-i="ep">Regardez l'heure de la prochaine prière, puis levez les yeux : la Lune sera là où l'application vous l'indique.</p>
-      <div class="cta"><a class="btn btn-gold" data-app data-cta href="#">Accéder à la bêta</a></div>
+      <a class="btn btn-gold" data-app data-cta href="https://beta.aljana.app">Accéder à la bêta</a>
       <p class="note" data-i="note">Application actuellement en bêta privée. Accès réservé aux bêta-testeurs invités.</p>
     </div>
   </section>
