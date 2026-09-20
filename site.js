@@ -144,12 +144,68 @@
     $("#langFlag").textContent = L.flag; $("#langName").textContent = L.name; $("#langBtn").setAttribute("aria-label", t.pick + " (" + L.name + ")");
     $$(".lang-opt").forEach(function (b) { b.setAttribute("aria-current", b.dataset.lang === code ? "true" : "false"); });
     var c = $("[data-contact]"); if (c && CONTACT) c.setAttribute("href", "mailto:" + CONTACT);
+    if (NOW) NOW.render();
     /* recalage tout de suite, puis une fois la police de la nouvelle écriture arrivée, tant que le lecteur n'a pas défilé lui-même */
     if (anchor) { var lastY = null, fix = function () { if (lastY !== null && Math.abs(window.scrollY - lastY) > 2) return; var dy = anchor.getBoundingClientRect().top - top0; if (dy) { h.style.scrollBehavior = "auto"; window.scrollBy(0, dy); h.style.scrollBehavior = ""; } lastY = window.scrollY; };
       fix(); if (document.fonts && document.fonts.ready) { setTimeout(function () { document.fonts.ready.then(fix); }, 60); setTimeout(fix, 700); } }
     try { localStorage.setItem(KEY, code); } catch (e) { /* stockage indisponible */ }
   }
 
+  /* « Maintenant, chez vous » : trois valeurs calculées par live.js (moteurs de l'app). La position n'est jamais demandée d'office :
+     on ne la lit que si le visiteur l'a déjà accordée, ou s'il touche « Utiliser ma position ». Elle reste dans son navigateur,
+     arrondie au centième de degré. Sans position : date hégirienne à la place de la prière, et l'action discrète à la place du ciel. */
+  var NOW = (function () {
+    var LIVE = window.ALJANA_LIVE, grid = $("#nowGrid"); if (!LIVE || !grid) { var sec = $("#maintenant"); if (sec) sec.hidden = true; return { render: function () {} }; }
+    var PKEY = "aljana.site.pos", pos = null, geo = "geolocation" in navigator, denied = false, last = {}, tz;
+    try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC"; } catch (e) { tz = "UTC"; }
+    try { var s = JSON.parse(localStorage.getItem(PKEY) || "null"); if (s && isFinite(s.lat) && isFinite(s.lon)) pos = s; } catch (e) { /* stockage indisponible */ }
+    function nu(code) { return code === "ar" ? "arab" : code === "fa" ? "arabext" : "latn"; }
+    function loc(n, code) { var set = code === "ar" ? "٠١٢٣٤٥٦٧٨٩" : code === "fa" ? "۰۱۲۳۴۵۶۷۸۹" : null; return set ? String(n).replace(/\d/g, function (d) { return set[+d]; }) : String(n); }
+    function plural(code, n) { try { return new Intl.PluralRules(code).select(n); } catch (e) { return n === 1 ? "one" : "other"; } }
+    function form(forms, code, n) { return (n === 0 && forms.zero) || forms[plural(code, n)] || forms.other || forms.one; }
+    /* écrit un gabarit « {p} dans {t} » dans el : {t} et {n} deviennent la valeur mise en avant, le reste du texte simple */
+    function fill(el, tpl, vals, key) {
+      var sig = tpl + "|" + JSON.stringify(vals); if (last[key] === sig) return; var flip = last[key] != null && vals._flip !== false; last[key] = sig;
+      el.textContent = ""; tpl.split(/(\{[a-z]\})/).forEach(function (part) { var m = /^\{([a-z])\}$/.exec(part);
+        if (!m) { if (part) el.appendChild(document.createTextNode(part)); return; }
+        var k = m[1]; if (k === "t" || k === "n") { var b = document.createElement("b"); b.textContent = vals[k]; if (k === "t") b.className = "t"; else if (flip && !reduced) b.className = "fl"; el.appendChild(b); } else el.appendChild(document.createTextNode(vals[k])); });
+    }
+    function hms(ms) { var s = Math.max(0, Math.round(ms / 1000)), p = function (x) { return (x < 10 ? "0" : "") + x; }; return p(Math.floor(s / 3600)) + ":" + p(Math.floor(s / 60) % 60) + ":" + p(s % 60); }
+    function part(id) { var r = $(id); return { root: r, l: $(".lbl", r), v: $(".now-v", r), s: $(".now-s", r) }; }
+    var A = part("#nowA"), B = part("#nowB"), C = part("#nowC"), btn = $("#nowLoc");
+
+    function render() {
+      var code = curCode, t = I18N[code], now = new Date(), lang2 = code.slice(0, 2), tag = (/^en/.test(code) ? code : lang2) + "-u-ca-gregory-nu-" + nu(lang2); /* l'anglais garde sa région : 8 February 2027 au Royaume-Uni, February 8, 2027 aux États-Unis */
+      /* 1. prochaine prière, sinon date hégirienne */
+      var np = pos ? LIVE.nextPrayer(pos.lat, pos.lon, now) : null;
+      if (np) { A.l.textContent = t.npL; fill(A.v, t.npT, { p: t.pn[["fajr", "dhuhr", "asr", "maghrib", "isha"].indexOf(np.key)], t: loc(hms(np.at - now), lang2), _flip: false }, "a");
+        A.s.textContent = new Intl.DateTimeFormat(tag, { hour: "2-digit", minute: "2-digit" }).format(np.at); $("#nowM").textContent = t.mw; }
+      else { A.l.textContent = t.hjL; var hj = LIVE.hijriToday(now, tz, code); if (lang2 === "ur") hj = hj.replace(/[۰-۹]/g, function (d) { return "۰۱۲۳۴۵۶۷۸۹".indexOf(d); }); /* ourdou : chiffres latins, comme le reste du site */ fill(A.v, "{e}", { e: hj }, "a"); A.s.textContent = ""; $("#nowM").textContent = ""; }
+      /* 2. astres majeurs levés, sinon l'action « Utiliser ma position » (masquée si le navigateur la refuse) */
+      B.l.textContent = t.skL;
+      if (pos) { var n = LIVE.skyCount(pos.lat, pos.lon, now).n; B.v.hidden = false; btn.hidden = true; fill(B.v, form(t.sk, lang2, n), { n: loc(n, lang2) }, "b"); B.s.textContent = ""; B.root.hidden = false; }
+      else if (geo && !denied) { B.v.hidden = true; btn.hidden = false; btn.textContent = t.loc; B.s.textContent = t.locS; B.root.hidden = false; }
+      else B.root.hidden = true;
+      /* 3. prochain repère hégirien */
+      var ev = LIVE.nextEvent(now, tz);
+      if (ev) { var i = ["ramadan", "fitr", "adha", "muharram"].indexOf(ev.key); C.l.textContent = t.evL; C.root.hidden = false;
+        if (ev.days === 0) fill(C.v, t.evT, { e: t.en0[i] }, "c"); else fill(C.v, form(t.ev, lang2, ev.days), { n: loc(ev.days, lang2), e: t.en[i] }, "c");
+        var d = new Intl.DateTimeFormat(tag, { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(Date.UTC(ev.civil.y, ev.civil.m - 1, ev.civil.d, 12)));
+        C.s.textContent = ev.forecast ? d + " (" + t.fc + ")" : d; } else C.root.hidden = true;
+      grid.dataset.n = [A, B, C].filter(function (x) { return !x.root.hidden; }).length;
+    }
+    function setPos(p) { pos = { lat: Math.round(p.coords.latitude * 100) / 100, lon: Math.round(p.coords.longitude * 100) / 100 }; try { localStorage.setItem(PKEY, JSON.stringify(pos)); } catch (e) { /* stockage indisponible */ } render(); }
+    function ask() { navigator.geolocation.getCurrentPosition(setPos, function (err) { if (err && err.code === 1) denied = true; render(); }, { maximumAge: 3600000, timeout: 15000 }); }
+    btn.addEventListener("click", ask);
+    /* position déjà accordée à ce site : lecture silencieuse, aucune fenêtre ne s'ouvre */
+    if (!pos && geo && navigator.permissions && navigator.permissions.query) navigator.permissions.query({ name: "geolocation" }).then(function (st) { if (st.state === "granted") ask(); else if (st.state === "denied") { denied = true; render(); } }).catch(function () { /* non pris en charge */ });
+    /* une seconde de battement, seulement quand le bloc est à l'écran et l'onglet visible */
+    var seen = !hasIO, timer = null;
+    function play() { var on = seen && !document.hidden; if (on && !timer) { render(); timer = setInterval(render, 1000); } else if (!on && timer) { clearInterval(timer); timer = null; } }
+    if (hasIO) new IntersectionObserver(function (es) { es.forEach(function (x) { seen = x.isIntersecting; play(); }); }, { rootMargin: "200px 0px" }).observe(grid);
+    document.addEventListener("visibilitychange", play); play();
+    return { render: render };
+  })();
   function menu(open) { $("#langMenu").classList.toggle("open", open); $("#langBtn").setAttribute("aria-expanded", open ? "true" : "false"); }
 
   build();
