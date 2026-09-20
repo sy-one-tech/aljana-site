@@ -1,139 +1,281 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" dir="ltr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>aljana : vos prières et votre ciel, calculés pour l'endroit où vous êtes</title>
-<meta name="description" content="aljana réunit les horaires de prière, le ciel en direct, la Lune, le Hilal, la Qibla et les éclipses. Tout est calculé pour votre position et vérifié contre les éphémérides de la NASA.">
+<title>aljana : vos prières et votre ciel, là où vous êtes</title>
+<meta name="description" content="Horaires de prière, ciel en direct, Lune, Hilal, Qibla et éclipses. Tout est calculé pour votre position et contrôlé face aux éphémérides de la NASA.">
 <meta name="theme-color" content="#060B18">
+<link rel="canonical" href="https://aljana.app/">
 <link rel="icon" href="assets/icon-192.png">
+<link rel="apple-touch-icon" href="assets/icon-192.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="aljana">
+<meta property="og:url" content="https://aljana.app/">
+<meta property="og:title" content="aljana : vos prières et votre ciel, là où vous êtes">
+<meta property="og:description" content="Horaires de prière, ciel en direct, Lune, Hilal, Qibla et éclipses. Tout est calculé pour votre position et contrôlé face aux éphémérides de la NASA.">
+<meta property="og:image" content="https://aljana.app/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="fr_FR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="aljana : vos prières et votre ciel, là où vous êtes">
+<meta name="twitter:description" content="Horaires de prière, ciel en direct, Lune, Hilal, Qibla et éclipses, calculés pour votre position.">
+<meta name="twitter:image" content="https://aljana.app/assets/og.jpg">
+<link rel="alternate" hreflang="x-default" href="https://aljana.app/">
+<link rel="alternate" hreflang="fr" href="https://aljana.app/?lang=fr">
+<link rel="alternate" hreflang="en" href="https://aljana.app/?lang=en-US">
+<link rel="alternate" hreflang="en-US" href="https://aljana.app/?lang=en-US">
+<link rel="alternate" hreflang="en-GB" href="https://aljana.app/?lang=en-GB">
+<link rel="alternate" hreflang="ar" href="https://aljana.app/?lang=ar">
+<link rel="alternate" hreflang="es" href="https://aljana.app/?lang=es">
+<link rel="alternate" hreflang="de" href="https://aljana.app/?lang=de">
+<link rel="alternate" hreflang="tr" href="https://aljana.app/?lang=tr">
+<link rel="alternate" hreflang="id" href="https://aljana.app/?lang=id">
+<link rel="alternate" hreflang="ur" href="https://aljana.app/?lang=ur">
+<link rel="alternate" hreflang="fa" href="https://aljana.app/?lang=fa">
+<link rel="alternate" hreflang="ru" href="https://aljana.app/?lang=ru">
+<link rel="alternate" hreflang="zh" href="https://aljana.app/?lang=zh">
+<link rel="alternate" hreflang="hi" href="https://aljana.app/?lang=hi">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400..700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #060B18; --bg2: #0A1224; --line: rgba(150, 165, 205, 0.16); --text: #EEF1FA; --dim: #97A3C4; --faint: #6B7698;
-    --gold: #E2B659; --gold-soft: #F3DFAE; --green: #34D399;
-    --w: 1180px;
+    --bg: #060B18; --band: #0A1326; --text: #EEF1FA; --soft: #C9D1EA; --dim: #9AA6C6; --faint: #6F7A9C;
+    --gold: #E2B659; --gold-soft: #F3DFAE; --bezel: #0D1529;
+    --w: 1160px; --font: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   }
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-  body { margin: 0; background: var(--bg); color: var(--text); font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
-  img { display: block; max-width: 100%; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: 84px; }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font); font-size: 17px; line-height: 1.65; font-weight: 400; -webkit-font-smoothing: antialiased; }
+  img { display: block; max-width: 100%; height: auto; }
   a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
   .wrap { width: min(var(--w), calc(100% - 48px)); margin-inline: auto; }
+  .flag { font-family: "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", sans-serif; font-size: 1.15em; line-height: 1; }
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 8px; }
 
-  /* ciel de fond : deux lueurs très larges, quelques étoiles, rien d'autre */
+  /* une seule lumière de fond, chaude et très large, comme un ciel juste après le Maghrib */
   .sky { position: fixed; inset: 0; z-index: -1; pointer-events: none;
-    background:
-      radial-gradient(900px 520px at 78% -8%, rgba(38, 60, 130, 0.42), transparent 70%),
-      radial-gradient(700px 480px at 8% 38%, rgba(226, 182, 89, 0.05), transparent 70%),
-      var(--bg); }
-  .sky::after { content: ""; position: absolute; inset: 0; opacity: 0.55;
-    background-image:
-      radial-gradient(1px 1px at 12% 18%, #cfd8ff 50%, transparent 51%), radial-gradient(1px 1px at 31% 62%, #cfd8ff 50%, transparent 51%),
-      radial-gradient(1.4px 1.4px at 47% 9%, #fff 50%, transparent 51%), radial-gradient(1px 1px at 63% 33%, #cfd8ff 50%, transparent 51%),
-      radial-gradient(1px 1px at 72% 71%, #cfd8ff 50%, transparent 51%), radial-gradient(1.4px 1.4px at 88% 22%, #fff 50%, transparent 51%),
-      radial-gradient(1px 1px at 94% 58%, #cfd8ff 50%, transparent 51%), radial-gradient(1px 1px at 5% 84%, #cfd8ff 50%, transparent 51%),
-      radial-gradient(1px 1px at 38% 91%, #cfd8ff 50%, transparent 51%), radial-gradient(1px 1px at 56% 79%, #cfd8ff 50%, transparent 51%); }
+    background: radial-gradient(1100px 620px at 74% -12%, rgba(30, 52, 110, 0.40), transparent 70%), radial-gradient(900px 600px at 10% 30%, rgba(226, 182, 89, 0.045), transparent 70%), var(--bg); }
 
-  /* en-tête */
-  header { position: sticky; top: 0; z-index: 10; background: rgba(6, 11, 24, 0.72); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
-  .bar { display: flex; align-items: center; justify-content: space-between; height: 68px; }
-  /* logo officiel de l'app, utilisé tel quel (public/branding/aljana-lockup-dark.png), même lueur que dans l'en-tête de l'app */
-  .logo { display: inline-flex; align-items: center; }
-  .logo img { height: 40px; width: auto; filter: drop-shadow(0 0 8px rgba(232, 178, 58, 0.30)) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.45)); }
-  nav { display: flex; align-items: center; gap: 30px; font-size: 15px; color: var(--dim); }
-  nav a:hover { color: var(--text); }
-  .btn { display: inline-flex; align-items: center; gap: 9px; height: 46px; padding: 0 22px; border-radius: 12px; font-weight: 700; font-size: 15.5px; }
-  .btn-gold { background: var(--gold); color: #1B1405; }
-  .btn-gold:hover { background: #ECC46E; }
-  .btn-line { border: 1px solid var(--line); color: var(--text); }
-  .btn-line:hover { border-color: rgba(150, 165, 205, 0.4); }
-  nav .btn { height: 40px; padding: 0 16px; font-size: 14.5px; }
+  /* en-tête : plein, sans verre dépoli */
+  header { position: sticky; top: 0; z-index: 20; background: rgba(6, 11, 24, 0.95); }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 14px; height: 74px; }
+  .logo { display: inline-flex; align-items: center; flex: none; }
+  .logo img { height: 47px; width: auto; filter: drop-shadow(0 0 8px rgba(232, 178, 58, 0.30)) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.45)); }
+  nav { display: flex; align-items: center; gap: 28px; font-size: 15px; font-weight: 500; color: var(--dim); }
+  nav a:not(.btn) { transition: color 0.2s; }
+  nav a:not(.btn):hover { color: var(--text); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 48px; padding: 0 24px; border-radius: 14px; font-weight: 600; font-size: 15.5px; white-space: nowrap; transition: background 0.2s, transform 0.2s, box-shadow 0.2s; }
+  .btn-gold { background: var(--gold); color: #1B1405; box-shadow: 0 8px 26px rgba(226, 182, 89, 0.16); }
+  .btn-gold:hover { background: #ECC46E; transform: translateY(-1px); box-shadow: 0 10px 30px rgba(226, 182, 89, 0.26); }
+  .btn-quiet { color: var(--soft); padding: 0 8px; }
+  .btn-quiet:hover { color: var(--text); }
+  .btn-quiet::after { content: "↓"; color: var(--gold); transition: transform 0.2s; }
+  .btn-quiet:hover::after { transform: translateY(2px); }
+  nav .btn { min-height: 42px; padding: 0 18px; font-size: 14.5px; border-radius: 12px; box-shadow: none; }
+
+  /* sélecteur de langue */
+  .lang { position: relative; }
+  .lang-btn { display: inline-flex; align-items: center; gap: 8px; min-height: 42px; padding: 0 12px; border-radius: 12px; color: var(--soft); font-weight: 500; transition: background 0.2s, color 0.2s; }
+  .lang-btn:hover, .lang-btn[aria-expanded="true"] { background: rgba(255, 255, 255, 0.06); color: var(--text); }
+  .lang-btn svg { width: 12px; height: 12px; opacity: 0.7; transition: transform 0.2s; }
+  .lang-btn[aria-expanded="true"] svg { transform: rotate(180deg); }
+  .lang-menu { position: absolute; top: calc(100% + 10px); inset-inline-end: 0; width: 348px; padding: 8px; border-radius: 18px; background: #0E172D; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55); display: grid; grid-template-columns: 1fr 1fr; gap: 2px; opacity: 0; visibility: hidden; transform: translateY(-6px); transition: opacity 0.18s, transform 0.18s, visibility 0.18s; }
+  .lang-menu.open { opacity: 1; visibility: visible; transform: none; }
+  .lang-opt { display: flex; align-items: center; gap: 11px; min-height: 48px; padding: 0 12px; border-radius: 12px; font-size: 15.5px; color: var(--soft); text-align: start; width: 100%; }
+  .lang-opt:hover { background: rgba(255, 255, 255, 0.06); color: var(--text); }
+  .lang-opt[aria-current="true"] { color: var(--gold-soft); background: rgba(226, 182, 89, 0.09); }
 
   /* héros */
-  .hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: 48px; align-items: center; padding: 84px 0 72px; }
-  .kicker { display: inline-flex; align-items: center; gap: 9px; font-size: 13px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); }
-  .kicker i { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px rgba(52, 211, 153, 0.9); }
-  h1 { margin: 22px 0 0; font-size: clamp(38px, 5.2vw, 66px); line-height: 1.04; letter-spacing: -0.035em; font-weight: 800; }
+  .hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: 48px; align-items: center; padding: 64px 0 40px; }
+  .kicker { display: inline-block; font-size: 13px; font-weight: 600; letter-spacing: 0.13em; text-transform: uppercase; color: var(--gold); }
+  h1 { margin: 20px 0 0; font-size: clamp(36px, 4.7vw, 60px); line-height: 1.09; letter-spacing: -0.028em; font-weight: 700; text-wrap: balance; }
   h1 em { font-style: normal; color: var(--gold-soft); }
-  .lead { margin: 26px 0 0; max-width: 540px; font-size: 18.5px; color: var(--dim); }
-  .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
-  .note { margin-top: 18px; font-size: 14px; color: var(--faint); }
-
-  .phones { position: relative; height: 640px; }
-  .phone { position: absolute; border-radius: 40px; overflow: hidden; border: 1px solid rgba(170, 185, 225, 0.22); background: #050b1a; box-shadow: 0 40px 90px rgba(0, 0, 0, 0.55), 0 0 0 7px #0B1224, 0 0 0 8px rgba(170, 185, 225, 0.14); }
-  .phone img { width: 100%; height: auto; }
-  .phone.main { width: 294px; left: 50%; top: 0; transform: translateX(-50%); z-index: 3; }
-  .phone.side { width: 232px; top: 74px; opacity: 0.62; z-index: 1; }
+  .lead { margin: 24px 0 0; max-width: 520px; font-size: 18px; color: var(--dim); }
+  .cta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; margin-top: 32px; }
+  .note { margin: 16px 0 0; font-size: 14.5px; color: var(--faint); }
+  .stage { display: flex; flex-direction: column; align-items: center; }
+  .phones { position: relative; height: 640px; width: 100%; }
+  .phone { border-radius: 44px; padding: 7px; background: var(--bezel); box-shadow: 0 36px 80px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(190, 200, 235, 0.13); }
+  .phone img { width: 100%; border-radius: 37px; background: #050b1a; aspect-ratio: 880 / 1912; }
+  .phones .phone { position: absolute; }
+  .phone.main { width: 300px; left: 50%; top: 0; margin-left: -150px; z-index: 3; animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+  .phone.side { width: 236px; top: 76px; opacity: 0.6; z-index: 1; animation: rise 0.9s 0.12s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
   .phone.side.l { left: 0; }
   .phone.side.r { right: 0; }
+  @keyframes rise { from { transform: translateY(18px); opacity: 0; } }
+  .u01 { margin: 22px 0 0; display: flex; align-items: baseline; gap: 12px; font-size: 15.5px; color: var(--soft); }
+  .num { font-size: 13px; font-weight: 600; letter-spacing: 0.15em; color: var(--gold); }
 
-  /* preuves */
-  .proof { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-  .proof div { padding: 30px 28px 30px 0; }
-  .proof div + div { padding-left: 28px; border-left: 1px solid var(--line); }
-  .proof b { display: block; font-size: 34px; letter-spacing: -0.03em; line-height: 1.1; color: var(--gold-soft); font-weight: 800; }
-  .proof span { display: block; margin-top: 8px; font-size: 15px; color: var(--dim); max-width: 300px; }
+  /* preuves : trois repères posés sur une courbe du jour, sans cadres ni traits */
+  .proof { position: relative; margin-top: 28px; padding: 72px 0 84px; background: radial-gradient(58% 90% at 50% 108%, rgba(226, 182, 89, 0.10), transparent 72%), linear-gradient(180deg, transparent, var(--band) 26%, var(--band) 74%, transparent); }
+  .proof .wrap { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+  .arc { position: absolute; inset: -40px 4% auto; width: 92%; height: 120px; pointer-events: none; }
+  .fact { position: relative; text-align: center; padding: 8px 8px 0; transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1); }
+  .fact:nth-child(2), .fact:nth-child(4) { margin-top: 54px; }
+  .fact::before { content: ""; position: absolute; left: 50%; top: -18px; width: 240px; height: 150px; margin-left: -120px; border-radius: 50%; background: radial-gradient(closest-side, rgba(243, 223, 174, 0.16), transparent); opacity: 0.45; transition: opacity 0.35s; pointer-events: none; }
+  .fact:hover { transform: translateY(-4px); }
+  .fact:hover::before { opacity: 1; }
+  .fact b { position: relative; display: block; font-weight: 650; color: var(--gold-soft); font-size: 68px; line-height: 1; letter-spacing: -0.035em; }
+  .fact b small { font-size: 0.34em; font-weight: 600; letter-spacing: 0; margin-inline-start: 8px; color: var(--gold); }
+  .fact strong { position: relative; display: block; margin-top: 16px; font-size: 17.5px; font-weight: 600; color: var(--text); }
+  .fact span { position: relative; display: block; margin: 6px auto 0; max-width: 270px; font-size: 15px; line-height: 1.55; color: var(--dim); }
 
   /* univers */
-  .section-head { padding: 110px 0 24px; max-width: 720px; }
-  h2 { margin: 14px 0 0; font-size: clamp(30px, 3.6vw, 46px); line-height: 1.1; letter-spacing: -0.03em; font-weight: 800; }
-  .section-head p { margin: 18px 0 0; color: var(--dim); font-size: 18px; }
-  .uni { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 64px; align-items: center; padding: 64px 0; border-top: 1px solid var(--line); }
-  .uni:first-of-type { border-top: 0; }
+  .section-head { padding: 72px 0 8px; }
+  .section-head h2 { max-width: 700px; }
+  h2 { margin: 12px 0 0; font-size: clamp(28px, 3.2vw, 42px); line-height: 1.15; letter-spacing: -0.024em; font-weight: 700; text-wrap: balance; }
+  .section-head p { margin: 16px 0 0; color: var(--dim); font-size: 17.5px; max-width: 600px; }
+  .uni { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px; align-items: center; padding: 22px 0; }
   .uni.flip .shot { order: 2; }
   .shot { display: flex; justify-content: center; }
-  .shot .phone { position: relative; width: 300px; }
-  .num { font-size: 13px; font-weight: 700; letter-spacing: 0.16em; color: var(--gold); }
-  h3 { margin: 10px 0 0; font-size: 32px; letter-spacing: -0.025em; line-height: 1.15; font-weight: 800; }
-  .uni p { margin: 16px 0 0; color: var(--dim); max-width: 480px; }
-  .uni ul { list-style: none; margin: 22px 0 0; padding: 0; max-width: 480px; }
-  .uni li { position: relative; padding: 11px 0 11px 22px; border-top: 1px solid var(--line); font-size: 15.5px; color: #C9D1EA; }
-  .uni li::before { content: ""; position: absolute; left: 2px; top: 21px; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
+  /* la capture sort du cadre : on montre le haut de l'écran, plus grand, et le bas se fond dans la nuit */
+  .crop { padding: 22px 44px 0; height: 540px; overflow: hidden; -webkit-mask-image: linear-gradient(#000 78%, transparent 99%); mask-image: linear-gradient(#000 78%, transparent 99%); }
+  .crop .phone { width: 340px; box-shadow: 0 20px 44px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(190, 200, 235, 0.13); transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1); }
+  .uni:hover .crop .phone { transform: translateY(-6px); }
+  h3 { margin: 10px 0 0; font-size: 29px; letter-spacing: -0.02em; line-height: 1.2; font-weight: 650; text-wrap: balance; }
+  .uni .txt { max-width: 470px; }
+  .uni.flip .txt { justify-self: end; }
+  .uni p { margin: 14px 0 0; color: var(--dim); }
+  .uni ul { list-style: none; margin: 18px 0 0; padding: 0; }
+  .uni li { position: relative; padding: 5px 0; padding-inline-start: 22px; font-size: 15.5px; color: var(--soft); }
+  .uni li::before { content: ""; position: absolute; inset-inline-start: 2px; top: 0.92em; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
 
-  /* précision */
-  .precision { margin-top: 60px; padding: 72px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 64px; align-items: start; }
-  .precision p { color: var(--dim); margin: 18px 0 0; max-width: 460px; }
-  table { width: 100%; border-collapse: collapse; font-size: 15.5px; }
-  th { text-align: left; font-size: 12.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); font-weight: 600; padding: 0 0 12px; }
-  td { padding: 15px 0; border-top: 1px solid var(--line); vertical-align: top; }
-  td:first-child { color: var(--text); font-weight: 600; padding-right: 20px; width: 36%; }
-  td:last-child { color: var(--dim); }
-  td b { color: var(--gold-soft); font-weight: 700; }
+  /* Compagnon : trois vrais écrans, le Mushaf clair au premier plan, les deux autres en retrait et décalés */
+  .cmp { margin-top: 28px; padding: 64px 0 28px; background: radial-gradient(46% 60% at 72% 46%, rgba(243, 223, 174, 0.07), transparent 72%); }
+  .cmp .wrap { display: grid; grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr); gap: 40px; align-items: center; }
+  .cmp p { margin: 16px 0 0; color: var(--dim); font-size: 17.5px; max-width: 440px; }
+  .cmp-list { margin: 26px 0 0; max-width: 440px; }
+  .cmp-list div { padding: 9px 0; }
+  .cmp-list dt { font-weight: 600; color: var(--gold-soft); font-size: 16px; }
+  .cmp-list dd { margin: 2px 0 0; color: var(--soft); font-size: 15.5px; }
+  .cmp-stage { position: relative; height: 680px; }
+  .cmp-stage .phone { position: absolute; transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1); }
+  .c-mushaf { width: 292px; left: 212px; top: 0; z-index: 3; }
+  .c-hadith { width: 226px; left: 0; top: 124px; z-index: 2; }
+  .c-tasbih { width: 228px; right: 0; top: 64px; z-index: 1; opacity: 0.9; }
+  /* grand écran : le Tasbih sort un peu de la grille pour que son compteur reste lisible derrière le Mushaf */
+  @media (min-width: 1280px) { .c-tasbih { right: -34px; } [dir="rtl"] .c-tasbih { right: auto; left: -34px; } }
+  [dir="rtl"] .c-mushaf { left: auto; right: 212px; }
+  [dir="rtl"] .c-hadith { left: auto; right: 0; }
+  [dir="rtl"] .c-tasbih { right: auto; left: 0; }
+  .cmp-stage:hover .c-mushaf { transform: translateY(-6px); }
+  .cmp-stage:hover .c-hadith { transform: translateY(4px); }
+  .lv { font-size: 14.5px !important; color: var(--faint) !important; margin-top: 14px !important; }
+
+  /* précision : lecture éditoriale, pas de tableau */
+  .precision { margin-top: 12px; padding: 72px 0; background: linear-gradient(180deg, transparent, var(--band) 22%, var(--band) 78%, transparent); }
+  .precision .wrap { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 64px; align-items: start; }
+  .precision p { color: var(--dim); margin: 16px 0 0; max-width: 440px; }
+  .checks { margin: 6px 0 0; }
+  .checks div { padding: 15px 0; }
+  .checks dt { font-weight: 600; color: var(--text); font-size: 17px; display: flex; align-items: center; gap: 10px; }
+  .checks dt::after { content: "→"; color: var(--gold); font-weight: 400; }
+  [dir="rtl"] .checks dt::after { content: "←"; }
+  .checks dd { margin: 4px 0 0; color: var(--dim); font-size: 16px; max-width: 540px; }
 
   /* langues */
-  .langs { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; align-items: center; padding: 96px 0 40px; }
-  .langs p { color: var(--dim); margin: 18px 0 0; max-width: 480px; }
-  .chips { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 26px; max-width: 500px; font-size: 16px; color: #C9D1EA; }
-  .chips span { white-space: nowrap; }
-  .chips span + span::before { content: ""; display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: var(--faint); margin-right: 18px; vertical-align: middle; }
+  .langs { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; align-items: center; padding: 56px 0 8px; }
+  .langs p { color: var(--dim); margin: 16px 0 0; max-width: 480px; }
+  .chips { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; margin-top: 20px; max-width: 500px; margin-inline-start: -12px; }
+  .chips .lang-opt { font-size: 15.5px; }
 
   /* fin */
-  .end { text-align: center; padding: 96px 0 110px; }
-  .end img { height: 78px; width: auto; margin: 0 auto 30px; filter: drop-shadow(0 0 14px rgba(232, 178, 58, 0.30)) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.45)); }
-  .end p { color: var(--dim); max-width: 520px; margin: 18px auto 0; }
+  .end { text-align: center; padding: 72px 0 88px; background: radial-gradient(50% 70% at 50% 100%, rgba(226, 182, 89, 0.08), transparent 70%); }
+  .end img { height: 84px; width: auto; margin: 0 auto 26px; filter: drop-shadow(0 0 14px rgba(232, 178, 58, 0.30)) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.45)); }
+  .end p { color: var(--dim); max-width: 520px; margin: 16px auto 0; }
   .end .cta { justify-content: center; }
-  footer { border-top: 1px solid var(--line); padding: 26px 0 40px; font-size: 14px; color: var(--faint); }
-  footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .end .note { margin-top: 18px; }
+  footer { padding: 30px 0 44px; font-size: 14.5px; color: var(--faint); }
+  footer .wrap { display: flex; flex-direction: column; gap: 14px; }
+  .f-links { display: flex; flex-wrap: wrap; gap: 8px 28px; color: var(--dim); }
+  .f-links a { padding: 6px 0; }
+  .f-links a:hover { color: var(--text); }
+  .f-base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
+
+  /* apparition douce au défilement */
+  .rv { opacity: 0; transform: translateY(14px); transition: opacity 0.7s, transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1); }
+  .rv.in { opacity: 1; transform: none; }
+
+  /* écritures : une pile de polices par script, sans interlettrage ni capitales hors alphabet latin */
+  html[lang="ru"] { --font: "Manrope", "Plus Jakarta Sans", system-ui, sans-serif; }
+  html[lang="ar"] { --font: "Noto Sans Arabic", "Segoe UI", Tahoma, sans-serif; }
+  html[lang="fa"] { --font: "Vazirmatn", "Noto Sans Arabic", Tahoma, sans-serif; }
+  html[lang="ur"] { --font: "Plus Jakarta Sans", "Noto Naskh Arabic", "Noto Sans Arabic", Tahoma, sans-serif; } /* naskh simple : plus lisible que le nastaliq à 390 px, comparaison faite */
+  html[lang="hi"] { --font: "Noto Sans Devanagari", "Nirmala UI", sans-serif; }
+  html[lang="zh"] { --font: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif; }
+  html:is([lang="ar"], [lang="fa"], [lang="ur"], [lang="hi"], [lang="zh"]) :is(h1, h2, h3, .kicker, .num, .fact b) { letter-spacing: 0; text-transform: none; }
+  html:is([lang="ar"], [lang="fa"]) body { line-height: 1.85; }
+  html:is([lang="ar"], [lang="fa"]) :is(h1, h2, h3) { line-height: 1.4; }
+  html:is([lang="ar"], [lang="fa"], [lang="ur"], [lang="hi"]) :is(.kicker, .num) { font-size: 15px; }
+  html[lang="ur"] body { line-height: 1.95; font-size: 17px; }
+  html[lang="ur"] h1 { line-height: 1.5; font-size: clamp(34px, 4.3vw, 56px); }
+  html[lang="ur"] h2 { line-height: 1.5; }
+  html[lang="ur"] h3 { line-height: 1.55; }
+  html[lang="hi"] body { line-height: 1.8; }
+  html[lang="hi"] :is(h1, h2, h3) { line-height: 1.4; }
+  html[lang="zh"] body { line-height: 1.85; }
+  html[lang="zh"] :is(h1, h2, h3) { line-height: 1.35; }
+  .ltr { direction: ltr; unicode-bidi: isolate; }
 
   @media (max-width: 900px) {
     body { font-size: 16px; }
+    .wrap { width: calc(100% - 32px); }
     nav a:not(.btn) { display: none; }
-    .hero { grid-template-columns: 1fr; gap: 44px; padding: 52px 0 56px; }
-    .phones { height: 560px; max-width: 420px; margin-inline: auto; width: 100%; }
-    .phone.main { width: 256px; }
-    .phone.side { width: 196px; top: 66px; }
-    .proof { grid-template-columns: 1fr; }
-    .proof div, .proof div + div { padding: 22px 0; border-left: 0; }
-    .proof div + div { border-top: 1px solid var(--line); }
-    .section-head { padding: 76px 0 8px; }
-    .uni, .precision, .langs { grid-template-columns: 1fr; gap: 34px; padding: 48px 0; }
+    nav { gap: 6px; }
+    .bar { height: 64px; gap: 8px; }
+    .logo img { height: 40px; }
+    nav .btn { padding: 0 13px; font-size: 13.5px; }
+    .lang-btn { padding: 0 8px; min-height: 44px; }
+    .lang-btn .lang-name { display: none; }
+    .lang-menu { position: fixed; top: 70px; inset-inline: 12px; width: auto; }
+    .hero { grid-template-columns: 1fr; gap: 36px; padding: 36px 0 24px; }
+    .lead { font-size: 17px; }
+    .cta .btn-gold { flex: 1 1 100%; min-height: 52px; }
+    .phones { height: 540px; max-width: 400px; }
+    .phone { border-radius: 38px; padding: 6px; }
+    .phone img { border-radius: 32px; }
+    .phone.main { width: 250px; margin-left: -125px; }
+    .phone.side { width: 190px; top: 64px; }
+    .proof { padding: 48px 0 56px; margin-top: 16px; }
+    .proof .wrap { grid-template-columns: 1fr; gap: 34px; }
+    .arc { display: none; }
+    .fact, .fact:nth-child(2), .fact:nth-child(4) { margin-top: 0; text-align: start; padding: 0; }
+    .fact::before { left: 0; margin-left: -40px; }
+    [dir="rtl"] .fact::before { left: auto; right: 0; margin-right: -40px; }
+    .fact b { font-size: 56px; }
+    .fact span { margin-inline: 0; max-width: 340px; }
+    .section-head { padding: 52px 0 0; }
+    .uni, .langs { grid-template-columns: 1fr; gap: 22px; padding: 30px 0; }
     .uni.flip .shot { order: 0; }
-    .shot .phone { width: 264px; }
-    h3 { font-size: 27px; }
-    .end { padding: 72px 0 84px; }
+    .uni.flip .txt { justify-self: start; }
+    .crop { height: 470px; padding: 18px 24px 0; }
+    .crop .phone { width: 300px; }
+    h3 { font-size: 25px; }
+    .cmp { padding: 48px 0 12px; margin-top: 16px; }
+    .cmp .wrap { grid-template-columns: 1fr; gap: 30px; }
+    .cmp-stage { height: 736px; max-width: 400px; width: 100%; margin-inline: auto; }
+    /* mobile : le hadith toujours à droite du Mushaf, pour que le début des lignes arabes reste visible */
+    /* mobile : le Mushaf en haut, Hadith et Tasbih posés devant son bas de page, entièrement lisibles */
+    .c-mushaf, [dir="rtl"] .c-mushaf { width: 240px; left: 50%; right: auto; margin-left: -120px; margin-right: 0; }
+    .c-hadith, [dir="rtl"] .c-hadith { width: 166px; top: 352px; left: auto; right: 2px; z-index: 4; }
+    .c-tasbih, [dir="rtl"] .c-tasbih { width: 166px; top: 376px; right: auto; left: 2px; z-index: 4; opacity: 1; }
+    .precision { padding: 52px 0; margin-top: 8px; }
+    .precision .wrap { grid-template-columns: 1fr; gap: 20px; }
+    .langs .shot { order: 2; }
+    .chips { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .end { padding: 56px 0 64px; }
+    .end img { height: 70px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .rv { opacity: 1; transform: none; transition: none; }
+    .phone.main, .phone.side { animation: none; }
+    .fact, .crop .phone, .btn, .cmp-stage .phone { transition: none; }
   }
 </style>
 </head>
@@ -142,12 +284,18 @@
 
 <header>
   <div class="wrap bar">
-    <a class="logo" href="#top" aria-label="aljana, accueil"><img src="assets/aljana-lockup-dark.png" alt="aljana" width="1804" height="575"></a>
+    <a class="logo" href="#top" aria-label="aljana"><img src="assets/aljana-lockup-dark.png" alt="aljana" width="1804" height="575"></a>
     <nav>
-      <a href="#univers">Les sept univers</a>
-      <a href="#precision">Précision</a>
-      <a href="#langues">Langues</a>
-      <a class="btn btn-gold" href="#ouvrir">Ouvrir aljana</a>
+      <a href="#univers" data-i="n1">Les sept univers</a>
+      <a href="#precision" data-i="n2">Précision</a>
+      <div class="lang">
+        <button type="button" class="lang-btn" id="langBtn" aria-haspopup="true" aria-expanded="false" aria-controls="langMenu" aria-label="Choisir la langue">
+          <span class="flag" id="langFlag" aria-hidden="true">🇫🇷</span><span class="lang-name" id="langName">Français</span>
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg>
+        </button>
+        <div class="lang-menu" id="langMenu"></div>
+      </div>
+      <a class="btn btn-gold" data-app data-i="open" href="#ouvrir">Ouvrir aljana</a>
     </nav>
   </div>
 </header>
@@ -155,161 +303,102 @@
 <main id="top">
   <section class="wrap hero">
     <div>
-      <span class="kicker"><i></i>Calculé en direct pour votre position</span>
-      <h1>Vos prières et votre ciel, <em>à l'endroit exact où vous êtes.</em></h1>
-      <p class="lead">aljana réunit les horaires de prière, le ciel en direct, la Lune, le Hilal, la Qibla et les éclipses. Chaque valeur est calculée pour votre position, à la seconde, puis vérifiée contre les éphémérides de la NASA.</p>
+      <span class="kicker" data-i="kick">Calculé en direct pour votre position</span>
+      <h1><span data-i="h1a">Vos prières et votre ciel,</span> <em data-i="h1b">à l'endroit exact où vous êtes.</em></h1>
+      <p class="lead" data-i="lead">aljana réunit les horaires de prière, le ciel en direct, la Lune, le Hilal, la Qibla et les éclipses. Chaque valeur est calculée pour votre position, à la seconde.</p>
       <div class="cta">
-        <a class="btn btn-gold" href="#ouvrir">Ouvrir l'application</a>
-        <a class="btn btn-line" href="#univers">Voir les sept univers</a>
+        <a class="btn btn-gold" data-app data-cta href="#ouvrir">Ouvrir aljana</a>
+        <a class="btn btn-quiet" href="#univers" data-i="cta2">Voir les sept univers</a>
       </div>
-      <p class="note">Gratuit. Sans compte. S'installe sur iPhone et Android depuis le navigateur.</p>
+      <p class="note" data-i="note">Gratuit. Sans compte. S'installe sur iPhone et Android.</p>
     </div>
-    <div class="phones" aria-label="Trois écrans réels de l'application aljana">
-      <div class="phone side l"><img src="assets/prieres.webp" alt="Écran Prières : prière en cours et horaires du jour" width="880" height="1912"></div>
-      <div class="phone side r"><img src="assets/ciel.webp" alt="Écran Ciel : carte complète du ciel au-dessus de vous" width="880" height="1912"></div>
-      <div class="phone main"><img src="assets/accueil.webp" alt="Écran Accueil : prochaine prière, Soleil, Terre et Lune en direct, courbe du jour" width="880" height="1912"></div>
+    <div class="stage">
+      <div class="phones">
+        <div class="phone side l"><img data-shot="prieres" data-sn="1" alt="" width="880" height="1912"></div>
+        <div class="phone side r"><img data-shot="ciel" data-sn="2" alt="" width="880" height="1912"></div>
+        <div class="phone main"><img data-shot="accueil" data-sn="0" alt="" width="880" height="1912"></div>
+      </div>
+      <p class="u01"><span class="num" data-num="0">01 ACCUEIL</span><span data-i="u01">Votre journée en un regard</span></p>
     </div>
   </section>
 
-  <section class="wrap proof" aria-label="Trois repères">
-    <div><b>12 s</b><span>d'écart maximal avec les éphémérides JPL Horizons de la NASA, sur sept villes et cinq dates de l'année.</span></div>
-    <div><b>20 méthodes</b><span>de calcul des horaires, de la Ligue islamique mondiale à Umm al-Qura, avec le choix de l'école pour l'Asr.</span></div>
-    <div><b>12 langues</b><span>dont l'arabe, l'ourdou et le persan, avec une interface entièrement inversée de droite à gauche.</span></div>
+  <section class="proof">
+    <div class="wrap">
+      <svg class="arc" viewBox="0 0 1000 150" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="ag" x1="0" x2="1"><stop offset="0" stop-color="#E2B659" stop-opacity="0"/><stop offset="0.5" stop-color="#F3DFAE" stop-opacity="0.5"/><stop offset="1" stop-color="#E2B659" stop-opacity="0"/></linearGradient></defs><path d="M0 104 C 250 104, 330 28, 500 28 S 750 104, 1000 104" fill="none" stroke="url(#ag)" stroke-width="1.2" vector-effect="non-scaling-stroke"/></svg>
+      <div class="fact rv" data-p="p1"><b></b><strong></strong><span></span></div>
+      <div class="fact rv" data-p="p2"><b></b><strong></strong><span></span></div>
+      <div class="fact rv" data-p="p3"><b></b><strong></strong><span></span></div>
+    </div>
   </section>
 
-  <div class="wrap section-head" id="univers">
-    <span class="kicker">Les sept univers</span>
-    <h2>Sept pages. Une seule question à chaque fois.</h2>
-    <p>L'Accueil résume votre journée. Les six autres pages répondent chacune à un besoin précis, avec les vrais écrans de l'application ci-dessous.</p>
+  <div class="wrap section-head rv" id="univers">
+    <span class="kicker" data-i="sk">Les sept univers</span>
+    <h2 data-i="sh">Sept univers. Chacun répond à une question simple.</h2>
+    <p data-i="sp">L'Accueil réunit l'essentiel. Les six autres univers répondent chacun à une question précise.</p>
   </div>
 
-  <section class="wrap">
-    <article class="uni">
-      <div class="shot"><div class="phone"><img src="assets/prieres.webp" alt="Écran Prières de l'application" loading="lazy" width="880" height="1912"></div></div>
-      <div>
-        <span class="num">02 PRIÈRES</span>
-        <h3>Savoir où en est la prière, pas seulement à quelle heure elle commence.</h3>
-        <p>La page montre la prière en cours, le temps qu'il reste et le ciel de ce moment. Les horaires de la journée suivent en dessous, sans surcharge.</p>
-        <ul>
-          <li>Temps recommandé, tardif et limite, avec les hadiths qui les fondent</li>
-          <li>Débuts arrondis à la minute supérieure, jamais avant l'instant exact</li>
-          <li>Milieu de la nuit et dernier tiers calculés du Maghrib au Fajr</li>
-        </ul>
-      </div>
-    </article>
+  <section class="wrap" id="unis"></section>
 
-    <article class="uni flip">
-      <div class="shot"><div class="phone"><img src="assets/ciel.webp" alt="Écran Ciel de l'application" loading="lazy" width="880" height="1912"></div></div>
-      <div>
-        <span class="num">03 CIEL</span>
-        <h3>Le ciel au-dessus de vous, maintenant.</h3>
-        <p>Une carte du ciel orientée sur votre horizon : étoiles, planètes, Lune, Voie lactée. Un mode « Œil nu » ne garde que ce que vous pouvez réellement voir ce soir.</p>
-        <ul>
-          <li>Vue en carte ou face à l'horizon, avec les constellations nommées</li>
-          <li>Liste « À observer » triée par visibilité réelle, heure par heure</li>
-          <li>Conditions du ciel estimées pour votre lieu</li>
-        </ul>
+  <section class="cmp" id="compagnon">
+    <div class="wrap">
+      <div class="cmp-txt rv">
+        <span class="kicker" data-i="ck">Compagnon</span>
+        <h2 data-i="ch">Votre Compagnon, au quotidien.</h2>
+        <p data-i="cp">Le ciel vous donne les repères. Votre Compagnon vous accompagne dans votre pratique.</p>
+        <dl class="cmp-list" id="cmpList"></dl>
       </div>
-    </article>
-
-    <article class="uni">
-      <div class="shot"><div class="phone"><img src="assets/lune.webp" alt="Écran Lune de l'application" loading="lazy" width="880" height="1912"></div></div>
-      <div>
-        <span class="num">04 LUNE</span>
-        <h3>La Lune telle qu'elle est ce soir.</h3>
-        <p>Phase, éclairement et orientation réels, à partir de l'imagerie de la sonde LRO. La page dit où la regarder, à quelle heure, et ce qui vient ensuite.</p>
-        <ul>
-          <li>Lever, passage au plus haut et coucher pour votre lieu</li>
-          <li>Meilleure fenêtre d'observation de la nuit</li>
-          <li>Prochaines phases à la minute près</li>
-        </ul>
+      <div class="cmp-stage rv">
+        <div class="phone c-hadith"><img data-cmp="hadith" alt="" loading="lazy" width="880" height="1912"></div>
+        <div class="phone c-tasbih"><img data-cmp="tasbih" alt="" loading="lazy" width="880" height="1912"></div>
+        <div class="phone c-mushaf"><img data-cmp="mushaf" alt="" loading="lazy" width="880" height="1912"></div>
       </div>
-    </article>
-
-    <article class="uni flip">
-      <div class="shot"><div class="phone"><img src="assets/hilal.webp" alt="Écran Hilal de l'application" loading="lazy" width="880" height="1912"></div></div>
-      <div>
-        <span class="num">05 HILAL</span>
-        <h3>Le croissant sera-t-il visible, et d'où ?</h3>
-        <p>Une carte mondiale de visibilité et un avis clair pour votre ville, soir après soir. aljana prévoit, elle n'annonce pas : la décision revient aux autorités.</p>
-        <ul>
-          <li>Critères de Yallop et d'Odeh affichés côte à côte</li>
-          <li>Relief de votre horizon pris en compte</li>
-          <li>Rappel et entrée de calendrier pour le soir d'observation</li>
-        </ul>
-      </div>
-    </article>
-
-    <article class="uni">
-      <div class="shot"><div class="phone"><img src="assets/qibla.webp" alt="Écran Qibla de l'application" loading="lazy" width="880" height="1912"></div></div>
-      <div>
-        <span class="num">06 QIBLA</span>
-        <h3>La direction de la Kaaba, et le chemin qui y mène.</h3>
-        <p>Le cap exact depuis votre position, tracé sur le globe par la route la plus courte. La boussole corrige la déclinaison magnétique locale.</p>
-        <ul>
-          <li>Modèle magnétique mondial WMM2025</li>
-          <li>Méthode du Soleil quand la boussole du téléphone n'est pas fiable</li>
-          <li>Distance à La Mecque au kilomètre</li>
-        </ul>
-      </div>
-    </article>
-
-    <article class="uni flip">
-      <div class="shot"><div class="phone"><img src="assets/eclipses.webp" alt="Écran Éclipses de l'application" loading="lazy" width="880" height="1912"></div></div>
-      <div>
-        <span class="num">07 ÉCLIPSES</span>
-        <h3>Les prochaines éclipses, vues depuis chez vous.</h3>
-        <p>Pour chaque éclipse de Soleil ou de Lune : ce que vous verrez depuis votre ville, à quelle heure, et comment l'observer sans danger.</p>
-        <ul>
-          <li>Calcul local à partir des éléments besséliens de la NASA</li>
-          <li>Carte mondiale et simulation du ciel pour votre lieu</li>
-          <li>Consignes de sécurité toujours visibles pour le Soleil</li>
-        </ul>
-      </div>
-    </article>
+    </div>
   </section>
 
-  <section class="wrap precision" id="precision">
-    <div>
-      <span class="kicker">Précision</span>
-      <h2>Exact, parce que vérifié.</h2>
-      <p>Nous ne comparons pas aljana à d'autres applications. Nous comparons ses calculs aux références astronomiques, avec les mêmes coordonnées et les mêmes hypothèses, puis nous publions l'écart.</p>
+  <section class="precision" id="precision">
+    <div class="wrap">
+      <div class="rv">
+        <span class="kicker" data-i="pk">Précision</span>
+        <h2 data-i="ph">Exact, parce que vérifié.</h2>
+        <p data-i="pp">Nous ne comparons pas aljana à d'autres applications. Nous comparons ses calculs aux références astronomiques, puis nous mesurons l'écart.</p>
+      </div>
+      <dl class="checks rv" id="checks"></dl>
     </div>
-    <table>
-      <thead><tr><th>Ce qui est calculé</th><th>Comment c'est vérifié</th></tr></thead>
-      <tbody>
-        <tr><td>Lever, coucher, midi solaire</td><td>JPL Horizons, à la seconde. Écart maximal mesuré : <b>12 secondes</b>, de La Mecque à Sydney.</td></tr>
-        <tr><td>Fajr, Isha, Asr</td><td>Angles et école de la méthode choisie, appliqués tels quels. aljana reproduit une méthode, pas une autre application.</td></tr>
-        <tr><td>Affichage des heures</td><td>Un début de prière n'est jamais affiché avant son instant exact. Le lever du Soleil n'est jamais affiché après.</td></tr>
-        <tr><td>Qibla</td><td>Route orthodromique et déclinaison du modèle WMM2025, validé sur les valeurs de test officielles.</td></tr>
-        <tr><td>Hilal, Lune, éclipses</td><td>Conjonctions et phases contrôlées sur Horizons, éclipses sur les éléments besséliens de la NASA.</td></tr>
-      </tbody>
-    </table>
   </section>
 
   <section class="wrap langs" id="langues">
-    <div>
-      <span class="kicker">Langues</span>
-      <h2>Pensée pour être lue dans votre langue.</h2>
-      <p>L'interface complète existe en douze langues. En arabe, en ourdou et en persan, toute la mise en page s'inverse, chiffres et calendrier hijri compris.</p>
-      <div class="chips"><span>Français</span><span>English</span><span lang="ar">العربية</span><span>Español</span><span>Deutsch</span><span>Türkçe</span><span>Indonesia</span><span lang="ur">اردو</span><span lang="fa">فارسی</span><span>Русский</span><span>中文</span><span>हिन्दी</span></div>
+    <div class="rv">
+      <span class="kicker" data-i="lk">Langues</span>
+      <h2 data-i="lh">Pensée pour être lue dans votre langue.</h2>
+      <p data-i="lp">Douze langues complètes. En arabe, en ourdou et en persan, toute l'interface s'inverse de droite à gauche. Choisissez la vôtre :</p>
+      <div class="chips" id="chips"></div>
+      <p class="lv" data-i="lv">L'anglais existe en deux variantes régionales : États-Unis et Royaume-Uni.</p>
     </div>
-    <div class="shot"><div class="phone"><img src="assets/accueil-ar.webp" alt="Écran Accueil de l'application en arabe" loading="lazy" width="880" height="1912"></div></div>
+    <div class="shot rv"><div class="crop"><div class="phone"><img data-shot="accueil" data-other data-sn="0" alt="" loading="lazy" width="880" height="1912"></div></div></div>
   </section>
 
-  <section class="wrap end" id="ouvrir">
-    <img src="assets/aljana-lockup-dark.png" alt="aljana" width="1804" height="575">
-    <h2>Ouvrez aljana ce soir.</h2>
-    <p>Regardez l'heure de la prochaine prière, puis levez les yeux : la Lune sera là où l'application vous l'indique.</p>
-    <div class="cta">
-      <a class="btn btn-gold" href="#">Ouvrir l'application</a>
-      <a class="btn btn-line" href="#">Installer sur mon téléphone</a>
+  <section class="end" id="ouvrir">
+    <div class="wrap rv">
+      <img src="assets/aljana-lockup-dark.png" alt="aljana" width="1804" height="575" loading="lazy">
+      <h2 data-i="eh">Ouvrez aljana ce soir.</h2>
+      <p data-i="ep">Regardez l'heure de la prochaine prière, puis levez les yeux : la Lune sera là où l'application vous l'indique.</p>
+      <div class="cta"><a class="btn btn-gold" data-app data-cta href="#">Ouvrir aljana</a></div>
+      <p class="note" data-i="note">Gratuit. Sans compte. S'installe sur iPhone et Android.</p>
     </div>
   </section>
 </main>
 
 <footer>
-  <div class="wrap"><span>aljana, 2026</span><span>Prévisions astronomiques. Les annonces religieuses relèvent des autorités compétentes.</span></div>
+  <div class="wrap">
+    <div class="f-links">
+      <a href="mailto:contact@aljana.app" data-contact data-i="f3">Contact</a>
+      <a href="#ouvrir" data-i="f4">Installer aljana</a>
+    </div>
+    <div class="f-base"><span class="ltr">© 2026 aljana</span><span data-i="fd">Prévisions astronomiques. Les annonces religieuses relèvent des autorités compétentes.</span></div>
+  </div>
 </footer>
+
+<script src="i18n.js"></script>
+<script src="site.js"></script>
 </body>
 </html>

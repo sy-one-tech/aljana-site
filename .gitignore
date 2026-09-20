@@ -1,0 +1,6 @@
+# aperçus et planches de contrôle, jamais publiés
+_previews/
+_preview-*.png
+*.log
+.DS_Store
+Thumbs.db
