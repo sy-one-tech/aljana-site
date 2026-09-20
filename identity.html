@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>aljana — étude de direction artistique</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#07090F">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07090F; --bg-sky: #060B18; --ink: #F1EFE9; --soft: #C7CCDE; --dim: #8D96B4; --faint: #5E6884;
+    --gold: #E2B659; --gold-soft: #F3DFAE;
+    --leaf: #4C9560; --leaf-light: #B9E4C4; --leaf-deep: #16321F; --leaf-wash: rgba(76,149,96,0.08);
+    --line: rgba(160,172,205,0.13);
+    --serif: "Instrument Serif", serif; --sans: "Karla", system-ui, sans-serif;
+    --w: 1180px;
+  }
+  html[lang="ar"] { --serif: "Amiri", serif; --sans: "Noto Sans Arabic", "Karla", sans-serif; }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  img { display: block; max-width: 100%; height: auto; }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+  .wrap { width: min(var(--w), calc(100% - 40px)); margin-inline: auto; }
+  ::selection { background: var(--gold); color: #1B1405; }
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 6px; }
+  em, i.i { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--gold-soft); }
+  html[lang="ar"] em, html[lang="ar"] i.i { font-style: normal; }
+
+  /* ---------- signature : feuille + mot, une seule silhouette ---------- */
+  .mark { flex: none; display: block; }
+  .mark path { transition: none; }
+  .lockup { display: inline-flex; align-items: center; gap: 0.5em; }
+  .lockup .word { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--ink); white-space: nowrap; }
+  html[lang="ar"] .lockup .word { font-style: normal; font-family: var(--serif); }
+
+  /* ---------- bandeau ---------- */
+  header { position: sticky; top: 0; z-index: 30; padding: 0; background: rgba(7,9,15,0.82); }
+  .bar { display: flex; align-items: center; justify-content: space-between; height: 78px; }
+  .bar .lockup .word { font-size: 23px; }
+  .bar .mark { width: 34px; height: 24px; }
+  nav.top { display: flex; align-items: center; gap: 30px; }
+  nav.top a.nl { font-size: 15px; color: var(--dim); transition: color 0.2s; }
+  nav.top a.nl:hover { color: var(--ink); }
+  .langtoggle { display: flex; gap: 2px; padding: 3px; border-radius: 99px; background: rgba(255,255,255,0.05); }
+  .langtoggle button { padding: 7px 14px; border-radius: 99px; font-size: 13.5px; color: var(--dim); font-weight: 500; }
+  .langtoggle button[aria-pressed="true"] { background: var(--ink); color: #0A0D16; font-weight: 600; }
+  .studybadge { display: none; }
+
+  /* ---------- reveal : transform + opacity uniquement ---------- */
+  .rv { opacity: 0; transform: translateY(16px); transition: opacity 0.8s cubic-bezier(.2,.7,.15,1), transform 0.8s cubic-bezier(.2,.7,.15,1); will-change: opacity, transform; }
+  .rv.in { opacity: 1; transform: none; }
+  .rv2 { transition-delay: 0.09s; } .rv3 { transition-delay: 0.18s; } .rv4 { transition-delay: 0.27s; }
+  @media (prefers-reduced-motion: reduce) { .rv, .rv2, .rv3, .rv4 { opacity: 1; transform: none; transition: none; } }
+
+  /* ================= HERO ================= */
+  .hero { position: relative; padding: 64px 0 0; overflow: clip; }
+  .hero-sky { position: absolute; inset: -40px 0 auto; height: 900px; z-index: -1; pointer-events: none;
+    background:
+      radial-gradient(1200px 640px at 82% -14%, rgba(31,55,112,0.5), transparent 68%),
+      radial-gradient(760px 520px at 6% 30%, rgba(226,182,89,0.05), transparent 70%),
+      var(--bg-sky); }
+  .hero-arc { position: absolute; left: 0; right: 0; width: 100%; top: 210px; height: 420px; z-index: -1; pointer-events: none; opacity: 0.5; }
+  .hero-arc path { stroke-dasharray: 1 7; stroke-dashoffset: 0; }
+  .hero-top { max-width: 760px; margin: 0 auto; text-align: center; padding: 30px 0 6px; }
+  .hero-kicker { display: block; font-family: var(--serif); font-style: italic; font-size: 16.5px; color: var(--gold-soft); opacity: 0.9; }
+  html[lang="ar"] .hero-kicker { font-style: normal; }
+  h1.hero-h { margin: 14px 0 0; font-family: var(--serif); font-weight: 400; font-size: clamp(34px, 5.6vw, 62px); line-height: 1.12; letter-spacing: -0.01em; color: var(--ink); }
+  .hero-lead { margin: 22px auto 0; max-width: 490px; font-size: 17.5px; line-height: 1.65; color: var(--soft); }
+  .hero-cta { display: flex; justify-content: center; align-items: center; gap: 22px; margin-top: 30px; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; gap: 9px; min-height: 50px; padding: 0 26px; border-radius: 999px; font-weight: 600; font-size: 15.5px; transition: transform 0.25s ease, background 0.25s ease; }
+  .btn-gold { background: var(--gold); color: #1B1405; box-shadow: 0 10px 28px rgba(226,182,89,0.14); }
+  .btn-gold:hover { transform: translateY(-1px); background: #ECC46E; }
+  .btn-ghost { color: var(--soft); font-family: var(--serif); font-style: italic; font-size: 17px; font-weight: 400; border-bottom: 1px solid var(--line); padding-bottom: 2px; min-height: 0; }
+  html[lang="ar"] .btn-ghost { font-style: normal; }
+  .hero-note { text-align: center; margin: 18px 0 0; font-size: 13.5px; color: var(--faint); }
+
+  /* stage : composition en profondeur, pas une galerie symetrique */
+  .stage { position: relative; height: 640px; margin-top: 8px; }
+  .stage .phone { position: absolute; border-radius: 40px; padding: 6px; background: #0C1326; box-shadow: 0 40px 90px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(190,200,235,0.12); }
+  .stage .phone img { width: 100%; border-radius: 34px; background: #050a17; aspect-ratio: 880/1912; }
+  .stage .p-a { width: 300px; inset-inline-start: 50%; top: 10px; margin-inline-start: -230px; z-index: 3; transform: rotate(-3deg); }
+  .stage .p-b { width: 258px; inset-inline-start: 50%; top: 112px; margin-inline-start: 6px; z-index: 2; opacity: 0.92; transform: rotate(4deg); }
+  .stage .p-c { width: 190px; inset-inline-start: 50%; top: 300px; margin-inline-start: -430px; z-index: 1; opacity: 0.55; transform: rotate(-8deg); }
+  .stage-glow { position: absolute; inset: -60px -10% auto; height: 520px; z-index: 0; pointer-events: none;
+    background: radial-gradient(closest-side, rgba(226,182,89,0.10), transparent 72%); }
+  .u01 { display: flex; align-items: baseline; justify-content: center; gap: 10px; margin: -6px 0 60px; font-size: 14px; color: var(--dim); }
+  .u01 b { font-family: var(--serif); font-style: italic; color: var(--gold-soft); font-weight: 400; }
+  html[lang="ar"] .u01 b { font-style: normal; }
+
+  @keyframes riseIn { from { opacity: 0; transform: translateY(22px) scale(0.985); } }
+  .stage .phone { animation: riseIn 1s cubic-bezier(.2,.7,.15,1) both; }
+  .stage .p-a { animation-delay: .05s; } .stage .p-b { animation-delay: .16s; } .stage .p-c { animation-delay: .26s; }
+  @media (prefers-reduced-motion: reduce) { .stage .phone { animation: none; } }
+
+  /* ================= STATS — asymetrique, mesure, pas des cartes ================= */
+  .stats { position: relative; overflow: clip; padding: 96px 0 92px; background: linear-gradient(180deg, transparent, #0A0E18 18%, #0A0E18 82%, transparent); }
+  .stats-arc { position: absolute; left: 0; right: 0; width: 100%; top: 50%; height: 2px; z-index: 0; }
+  .stats-head { max-width: 560px; margin: 0 0 56px; }
+  .stats-head p.i { font-family: var(--serif); font-style: italic; font-size: 21px; color: var(--soft); line-height: 1.5; }
+  html[lang="ar"] .stats-head p.i { font-style: normal; }
+  .stats-grid { display: grid; grid-template-columns: 1.35fr 1fr 1fr; gap: 0; align-items: end; position: relative; }
+  .stat { position: relative; padding-inline-end: 30px; }
+  .stat + .stat { border-inline-start: 1px solid var(--line); padding-inline-start: 30px; }
+  .stat.b { padding-bottom: 44px; } .stat.c { padding-bottom: 8px; }
+  .stat .n { display: flex; align-items: baseline; gap: 8px; font-family: var(--sans); font-weight: 700; letter-spacing: -0.03em; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .stat.a .n { font-size: 128px; line-height: 0.86; }
+  .stat.b .n { font-size: 66px; line-height: 0.9; }
+  .stat.c .n { font-size: 66px; line-height: 0.9; }
+  .stat .n small { font-size: 0.28em; font-weight: 600; color: var(--gold); letter-spacing: 0; }
+  .stat .cap { display: block; margin-top: 16px; max-width: 300px; font-family: var(--serif); font-style: italic; font-size: 16px; line-height: 1.5; color: var(--dim); }
+  html[lang="ar"] .stat .cap { font-style: normal; }
+  .stat .dot { position: absolute; width: 6px; height: 6px; border-radius: 999px; background: var(--gold); top: -14px; opacity: 0; transition: opacity .5s ease .5s; }
+  .stat.in .dot { opacity: 1; }
+
+  /* ================= UN UNIVERS — CIEL : profondeur, bord perdu ================= */
+  .sky-u { position: relative; padding: 118px 0 128px; overflow: clip;
+    background: radial-gradient(1400px 780px at 50% 18%, #0B1330 0%, #070911 62%, #07090F 100%); }
+  .sky-u::before { content: ""; position: absolute; inset: 0; opacity: 0.9; pointer-events: none;
+    background-image:
+      radial-gradient(1.3px 1.3px at 8% 22%, #dfe6ff 60%, transparent 61%), radial-gradient(1px 1px at 22% 68%, #cfd8ff 60%, transparent 61%),
+      radial-gradient(1.6px 1.6px at 38% 12%, #fff 60%, transparent 61%), radial-gradient(1px 1px at 55% 44%, #cfd8ff 60%, transparent 61%),
+      radial-gradient(1.2px 1.2px at 68% 78%, #dfe6ff 60%, transparent 61%), radial-gradient(1.5px 1.5px at 83% 30%, #fff 60%, transparent 61%),
+      radial-gradient(1px 1px at 92% 60%, #cfd8ff 60%, transparent 61%), radial-gradient(1.2px 1.2px at 14% 88%, #dfe6ff 60%, transparent 61%); }
+  .sky-u .wrap { position: relative; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 10px; }
+  .sky-u .txt { max-width: 430px; }
+  .sky-u .num { font-family: var(--serif); font-style: italic; font-size: 15px; color: var(--dim); }
+  html[lang="ar"] .sky-u .num { font-style: normal; }
+  .sky-u h3 { margin: 12px 0 0; font-family: var(--serif); font-weight: 400; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.16; color: var(--ink); }
+  .sky-u p { margin: 18px 0 0; color: var(--soft); max-width: 400px; }
+  .sky-u ul { list-style: none; margin: 22px 0 0; padding: 0; }
+  .sky-u li { position: relative; padding-block: 9px; padding-inline-start: 20px; font-size: 15px; color: var(--dim); border-top: 1px solid var(--line); }
+  .sky-u li::before { content: ""; position: absolute; inset-inline-start: 2px; top: 1.15em; width: 4px; height: 4px; border-radius: 999px; background: var(--gold); }
+  .sky-u .frame { position: relative; justify-self: end; width: 340px; margin-inline-end: -80px; }
+  .sky-u .frame::after { content: ""; position: absolute; inset: -50px -50px 30% ; z-index: -1; background: radial-gradient(closest-side, rgba(120,150,255,0.16), transparent 70%); }
+  .sky-u .phone { border-radius: 38px; padding: 6px; background: #0C1326; box-shadow: 0 50px 110px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(190,200,235,0.14);
+    -webkit-mask-image: linear-gradient(180deg, #000 82%, transparent 99%); mask-image: linear-gradient(180deg, #000 82%, transparent 99%); }
+  .sky-u .phone img { border-radius: 32px; width: 100%; aspect-ratio: 880/1912; }
+
+  /* ================= COMPAGNON — rupture éditoriale, plus intime ================= */
+  .cmp2 { position: relative; overflow: clip; padding: 130px 0 132px; background: radial-gradient(1200px 640px at 50% 0%, var(--leaf-wash), transparent 62%), var(--bg); }
+  .cmp2::before { content: ""; position: absolute; left: 50%; top: 0; width: 1px; height: 74px; background: linear-gradient(180deg, transparent, var(--leaf)); transform: translateX(-50%); opacity: 0.55; }
+  .cmp2-head { max-width: 620px; margin: 0 auto; text-align: center; }
+  .cmp2-head .lk { display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--leaf-light); }
+  .cmp2-head .lk svg { width: 15px; height: 11px; }
+  .cmp2-head h2 { margin: 20px 0 0; font-family: var(--serif); font-weight: 400; font-style: italic; font-size: clamp(30px, 4.4vw, 48px); line-height: 1.2; color: var(--ink); }
+  html[lang="ar"] .cmp2-head h2 { font-style: normal; }
+  .cmp2-head p { margin: 20px auto 0; max-width: 440px; color: var(--soft); font-size: 17px; }
+  .cmp2-stage { position: relative; height: 620px; margin-top: 70px; display: flex; justify-content: center; }
+  .cmp2-stage .phone { position: absolute; border-radius: 34px; padding: 6px; background: #14180F; box-shadow: 0 46px 100px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(210,220,200,0.12); }
+  .cmp2-stage .phone img { border-radius: 28px; width: 100%; aspect-ratio: 880/1912; }
+  .cmp2-stage .m-mushaf { width: 272px; inset-inline-start: 50%; margin-inline-start: -136px; z-index: 3; top: 0; }
+  .cmp2-stage .m-hadith { width: 190px; inset-inline-start: 50%; margin-inline-start: -330px; top: 130px; z-index: 2; opacity: 0.85; }
+  .cmp2-stage .m-tasbih { width: 190px; inset-inline-start: 50%; margin-inline-start: 148px; top: 190px; z-index: 2; opacity: 0.85; }
+  .cmp2-list { display: flex; justify-content: center; gap: 46px; margin-top: 46px; flex-wrap: wrap; }
+  .cmp2-list div { max-width: 168px; text-align: center; }
+  .cmp2-list dt { font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--leaf-light); }
+  html[lang="ar"] .cmp2-list dt { font-style: normal; }
+  .cmp2-list dd { margin: 8px 0 0; font-size: 14px; color: var(--dim); line-height: 1.5; }
+
+  /* ================= fermeture d'étude ================= */
+  .studyend { padding: 90px 0 70px; text-align: center; border-top: 1px solid var(--line); }
+  .studyend .lockup { justify-content: center; }
+  .studyend .lockup .word { font-size: 30px; }
+  .studyend .mark { width: 42px; height: 30px; }
+  .studyend p { margin: 20px auto 0; max-width: 420px; color: var(--faint); font-size: 13.5px; }
+
+  @media (max-width: 900px) {
+    body { font-size: 16.5px; }
+    .wrap { width: calc(100% - 32px); }
+    .bar { height: 66px; }
+    .bar .lockup .word { font-size: 20px; } .bar .mark { width: 29px; height: 20px; }
+    nav.top a.nl { display: none; }
+    .hero { padding: 40px 0 0; }
+    .hero-top { padding: 10px 0 0; }
+    .hero-lead { font-size: 16.5px; }
+    .stage { height: 470px; margin-top: 26px; }
+    .stage .p-a { width: 208px; margin-inline-start: -104px; top: 0; }
+    .stage .p-b { width: 166px; margin-inline-start: 8px; top: 92px; }
+    .stage .p-c { width: 138px; margin-inline-start: -164px; top: 232px; }
+    .stats { padding: 64px 0 60px; }
+    .stats-head { margin-bottom: 40px; }
+    .stats-grid { grid-template-columns: 1fr; gap: 34px; }
+    .stat, .stat + .stat { padding-inline: 0; border-inline-start: 0; padding-bottom: 0 !important; }
+    .stat.a .n { font-size: 84px; } .stat.b .n, .stat.c .n { font-size: 52px; }
+    .sky-u { padding: 68px 0 76px; }
+    .sky-u .wrap { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+    .sky-u .txt { max-width: 460px; margin-inline: auto; }
+    .sky-u ul { text-align: start; max-width: 300px; margin-inline: auto; }
+    .sky-u .frame { justify-self: center !important; width: 78%; max-width: 300px; margin-inline: 0 !important; }
+    .cmp2 { padding: 76px 0 80px; }
+    .cmp2-stage { height: 420px; margin-top: 40px; }
+    .cmp2-stage .m-mushaf { width: 196px; margin-inline-start: -98px; }
+    .cmp2-stage .m-hadith { width: 122px; margin-inline-start: -158px; top: 128px; }
+    .cmp2-stage .m-tasbih { width: 122px; margin-inline-start: 40px; top: 176px; }
+    .cmp2-list { flex-direction: column; align-items: center; gap: 24px; margin-top: 34px; }
+    .cmp2-list div { max-width: 260px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="lockup" href="#top" aria-label="aljana">
+      <svg class="mark" viewBox="0 0 140 100" aria-hidden="true"><g transform="translate(4,22) rotate(-10)"><path d="M6,28 C22,3 64,-4 132,22 C99,47 42,53 6,28 Z" fill="var(--leaf)"/><path d="M9,27 C46,15 88,17 128,22" fill="none" stroke="var(--leaf-light)" stroke-width="2.4" stroke-linecap="round" opacity="0.9"/><path d="M6,28 C0,31 -6,33 -10,32" fill="none" stroke="var(--leaf)" stroke-width="4" stroke-linecap="round"/></g></svg>
+      <span class="word">aljana</span>
+    </a>
+    <nav class="top">
+      <a class="nl" href="#stats" data-i="navStats">précision</a>
+      <a class="nl" href="#ciel" data-i="navCiel">le ciel</a>
+      <a class="nl" href="#compagnon" data-i="navCmp">compagnon</a>
+      <div class="langtoggle" role="group" aria-label="langue de l'étude">
+        <button type="button" data-lang="fr" aria-pressed="true">FR</button>
+        <button type="button" data-lang="ar" aria-pressed="false">AR</button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="hero-sky" aria-hidden="true"></div>
+    <svg class="hero-arc" viewBox="0 0 1400 420" preserveAspectRatio="none" aria-hidden="true">
+      <defs><linearGradient id="hg" x1="0" x2="1"><stop offset="0" stop-color="#E2B659" stop-opacity="0"/><stop offset=".5" stop-color="#F3DFAE" stop-opacity=".65"/><stop offset="1" stop-color="#E2B659" stop-opacity="0"/></linearGradient></defs>
+      <path d="M-40 300 C 320 120, 700 40, 1440 260" fill="none" stroke="url(#hg)" stroke-width="1.3" vector-effect="non-scaling-stroke"/>
+    </svg>
+    <div class="wrap">
+      <div class="hero-top rv">
+        <span class="hero-kicker" data-i="heroKick">à l'instant, pour votre ciel</span>
+        <h1 class="hero-h" data-i="heroH1">Vos prières et votre ciel, <em>à l'endroit exact où vous êtes.</em></h1>
+        <p class="hero-lead" data-i="heroLead">aljana réunit les horaires de prière, le ciel en direct, la Lune, le Hilal, la Qibla et les éclipses — calculés pour votre position, à la seconde.</p>
+        <div class="hero-cta">
+          <a class="btn btn-gold" data-i="ctaGold" href="#">Accéder à la bêta</a>
+          <a class="btn btn-ghost" data-i="ctaGhost" href="#ciel">voir un univers ↓</a>
+        </div>
+        <p class="hero-note" data-i="heroNote">Application actuellement en bêta privée. Accès réservé aux bêta-testeurs invités.</p>
+      </div>
+      <div class="stage" aria-label="trois écrans réels de l'application">
+        <div class="stage-glow" aria-hidden="true"></div>
+        <div class="phone p-a"><img data-shot="accueil" alt="" width="880" height="1912"></div>
+        <div class="phone p-b"><img data-shot="prieres" alt="" width="880" height="1912"></div>
+        <div class="phone p-c"><img data-shot="ciel" alt="" width="880" height="1912"></div>
+      </div>
+      <p class="u01 rv"><b data-i="u01a">01 accueil</b><span data-i="u01b">— votre journée, en un regard</span></p>
+    </div>
+  </section>
+
+  <section class="stats" id="stats">
+    <div class="wrap">
+      <div class="stats-head rv">
+        <p class="i" data-i="statsHead">Nous ne comparons pas aljana à d'autres applications. Nous mesurons l'écart face au ciel lui-même.</p>
+      </div>
+      <svg class="stats-arc" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="var(--line)" stroke-width="1"/></svg>
+      <div class="stats-grid">
+        <div class="stat a rv" data-count="13" data-suffix=" s"><span class="dot" style="inset-inline-start:0"></span>
+          <span class="n"><span class="v">0</span><small data-i="statAUnit"> s</small></span>
+          <span class="cap" data-i="statACap">Écart maximal mesuré face à JPL Horizons, sur 120 instants de référence.</span>
+        </div>
+        <div class="stat b rv rv2" data-count="20"><span class="dot" style="inset-inline-start:30px"></span>
+          <span class="n"><span class="v">0</span></span>
+          <span class="cap" data-i="statBCap">méthodes de calcul — votre pratique, votre réglage.</span>
+        </div>
+        <div class="stat c rv rv3" data-count="12"><span class="dot" style="inset-inline-start:30px"></span>
+          <span class="n"><span class="v">0</span></span>
+          <span class="cap" data-i="statCCap">langues — droite à gauche comprise.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sky-u" id="ciel">
+    <div class="wrap">
+      <div class="txt rv">
+        <span class="num" data-i="skyNum">03 — ciel</span>
+        <h3 data-i="skyH">Le ciel, tel qu'il est, au-dessus de vous.</h3>
+        <p data-i="skyP">Une carte orientée sur votre horizon : étoiles, planètes, Lune, Voie lactée. Le mode Œil nu ne garde que ce que vous pouvez vraiment voir.</p>
+        <ul>
+          <li data-i="skyL1">Vue en carte ou face à l'horizon</li>
+          <li data-i="skyL2">Liste « à observer », triée par visibilité réelle</li>
+        </ul>
+      </div>
+      <div class="frame rv rv2">
+        <div class="phone"><img data-shot="ciel" alt="" loading="lazy" width="880" height="1912"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cmp2" id="compagnon">
+    <div class="wrap">
+      <div class="cmp2-head rv">
+        <span class="lk"><svg viewBox="0 0 140 100" aria-hidden="true"><path d="M6,28 C22,3 64,-4 132,22 C99,47 42,53 6,28 Z" fill="var(--leaf)"/></svg><span data-i="cmpKick">compagnon</span></span>
+        <h2 data-i="cmpH">Votre Compagnon, au quotidien.</h2>
+        <p data-i="cmpP">Le ciel vous donne les repères. Votre Compagnon vous accompagne dans votre pratique : lecture du Mushaf, dhikr et hadith du jour.</p>
+      </div>
+      <div class="cmp2-stage">
+        <div class="phone m-mushaf rv rv2"><img data-cmp="mushaf-index" alt="" loading="lazy" width="880" height="1912"></div>
+        <div class="phone m-hadith rv rv3"><img data-cmp="hadith" alt="" loading="lazy" width="880" height="1912"></div>
+        <div class="phone m-tasbih rv rv4"><img data-cmp="tasbih" alt="" loading="lazy" width="880" height="1912"></div>
+      </div>
+      <dl class="cmp2-list rv">
+        <div><dt data-i="cmpMushaf">Mushaf</dt><dd data-i="cmpMushafD">Ḥafṣ, page après page.</dd></div>
+        <div><dt data-i="cmpHadith">Hadith</dt><dd data-i="cmpHadithD">Un texte authentifié, chaque jour.</dd></div>
+        <div><dt data-i="cmpTasbih">Tasbih</dt><dd data-i="cmpTasbihD">Vos dhikr, comptés d'un geste.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="studyend">
+    <div class="wrap">
+      <span class="lockup rv">
+        <svg class="mark" viewBox="0 0 140 100" aria-hidden="true"><g transform="translate(4,22) rotate(-10)"><path d="M6,28 C22,3 64,-4 132,22 C99,47 42,53 6,28 Z" fill="var(--leaf)"/><path d="M9,27 C46,15 88,17 128,22" fill="none" stroke="var(--leaf-light)" stroke-width="2.4" stroke-linecap="round" opacity="0.9"/></g></svg>
+        <span class="word">aljana</span>
+      </span>
+      <p class="rv" data-i="studyEnd">Étude de direction artistique — page de travail, non indexée, non liée à la production.</p>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  var $ = function (s, r) { return (r || document).querySelector(s); }, $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
+  var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- textes FR / AR (étude uniquement) ---------- */
+  var T = {
+    fr: {
+      navStats: "précision", navCiel: "le ciel", navCmp: "compagnon",
+      heroKick: "à l'instant, pour votre ciel",
+      heroH1: 'Vos prières et votre ciel, <em>à l\'endroit exact où vous êtes.</em>',
+      heroLead: "aljana réunit les horaires de prière, le ciel en direct, la Lune, le Hilal, la Qibla et les éclipses — calculés pour votre position, à la seconde.",
+      ctaGold: "Accéder à la bêta", ctaGhost: "voir un univers ↓",
+      heroNote: "Application actuellement en bêta privée. Accès réservé aux bêta-testeurs invités.",
+      u01a: "01 accueil", u01b: "— votre journée, en un regard",
+      statsHead: "Nous ne comparons pas aljana à d'autres applications. Nous mesurons l'écart face au ciel lui-même.",
+      statAUnit: " s", statACap: "Écart maximal mesuré face à JPL Horizons, sur 120 instants de référence.",
+      statBCap: "méthodes de calcul — votre pratique, votre réglage.",
+      statCCap: "langues — droite à gauche comprise.",
+      skyNum: "03 — ciel", skyH: "Le ciel, tel qu'il est, au-dessus de vous.",
+      skyP: "Une carte orientée sur votre horizon : étoiles, planètes, Lune, Voie lactée. Le mode Œil nu ne garde que ce que vous pouvez vraiment voir.",
+      skyL1: "Vue en carte ou face à l'horizon", skyL2: "Liste « à observer », triée par visibilité réelle",
+      cmpKick: "compagnon", cmpH: "Votre Compagnon, au quotidien.",
+      cmpP: "Le ciel vous donne les repères. Votre Compagnon vous accompagne dans votre pratique : lecture du Mushaf, dhikr et hadith du jour.",
+      cmpMushaf: "Mushaf", cmpMushafD: "Ḥafṣ, page après page.", cmpHadith: "Hadith", cmpHadithD: "Un texte authentifié, chaque jour.",
+      cmpTasbih: "Tasbih", cmpTasbihD: "Vos dhikr, comptés d'un geste.",
+      studyEnd: "Étude de direction artistique — page de travail, non indexée, non liée à la production.",
+    },
+    ar: {
+      navStats: "الدقة", navCiel: "السماء", navCmp: "الصاحب",
+      heroKick: "الآن، لسمائك",
+      heroH1: 'صلاتك وسماؤك، <em>في المكان الذي أنت فيه تماماً.</em>',
+      heroLead: "يجمع aljana مواقيت الصلاة، والسماء المباشرة، والقمر، والهلال، والقبلة، والكسوف — محسوبة لموقعك، بالثانية.",
+      ctaGold: "دخول النسخة التجريبية", ctaGhost: "اكتشف عالماً ↓",
+      heroNote: "التطبيق حالياً في مرحلة تجريبية خاصة. الدخول متاح للمختبرين المدعوين فقط.",
+      u01a: "٠١ الرئيسية", u01b: "— يومك، في نظرة واحدة",
+      statsHead: "لا نقارن aljana بتطبيقات أخرى. نقيس الفرق أمام السماء نفسها.",
+      statAUnit: " ث", statACap: "أقصى فرق تم قياسه أمام JPL Horizons، في ١٢٠ لحظة مرجعية.",
+      statBCap: "طريقة حساب — ممارستك، إعدادك.",
+      statCCap: "لغة — ومنها الكتابة من اليمين إلى اليسار.",
+      skyNum: "٠٣ — السماء", skyH: "السماء، كما هي، فوقك.",
+      skyP: "خريطة موجهة على أفقك: نجوم، كواكب، القمر، درب التبانة. وضع العين المجردة يُبقي فقط ما يمكنك رؤيته فعلاً.",
+      skyL1: "عرض الخريطة أو مواجهة الأفق", skyL2: "قائمة «للرصد»، مرتبة حسب الرؤية الفعلية",
+      cmpKick: "الصاحب", cmpH: "صاحبك، في كل يوم.",
+      cmpP: "السماء تمنحك المعالم. وصاحبك يرافقك في عبادتك: قراءة المصحف، والذكر، وحديث اليوم.",
+      cmpMushaf: "المصحف", cmpMushafD: "برواية حفص، صفحة بعد صفحة.", cmpHadith: "الحديث", cmpHadithD: "نص موثَّق، كل يوم.",
+      cmpTasbih: "التسبيح", cmpTasbihD: "أذكارك، تُعدّ بلمسة واحدة.",
+      studyEnd: "دراسة هوية بصرية — صفحة عمل، غير مفهرسة، غير مرتبطة بالإنتاج.",
+    }
+  };
+
+  function shots(lang) {
+    $$('img[data-shot]').forEach(function (img) { img.src = 'assets/screens/' + lang + '/' + img.dataset.shot + '.webp'; img.alt = 'aljana, ' + img.dataset.shot; });
+    $$('img[data-cmp]').forEach(function (img) { img.src = 'assets/companion/' + lang + '/' + img.dataset.cmp + '.webp'; });
+  }
+  function apply(lang) {
+    var t = T[lang], html = document.documentElement;
+    html.lang = lang; html.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    $$('[data-i]').forEach(function (el) { var v = t[el.dataset.i]; if (v == null) return; if (el.hasAttribute('data-html')) el.innerHTML = v; else el.textContent = v; });
+    $('[data-i="heroH1"]').innerHTML = t.heroH1;
+    $('[data-i="cmpH"]').textContent = t.cmpH;
+    shots(lang);
+    $$('.langtoggle button').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.lang === lang ? 'true' : 'false'); });
+    resetCounts();
+  }
+  $$('.langtoggle button').forEach(function (b) { b.addEventListener('click', function () { apply(b.dataset.lang); }); });
+
+  /* ---------- reveal au scroll ---------- */
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) { es.forEach(function (x) { if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target); } }); }, { rootMargin: '0px 0px -10% 0px' });
+    $$('.rv').forEach(function (el) { io.observe(el); });
+  } else $$('.rv').forEach(function (el) { el.classList.add('in'); });
+
+  /* ---------- count-up sobre : rAF, ease-out cubic, ~800ms, une seule fois ---------- */
+  function resetCounts() { $$('.stat').forEach(function (s) { s.classList.remove('counted'); s.querySelector('.v').textContent = reduced ? s.dataset.count : '0'; }); }
+  function countUp(el, target, duration) {
+    if (reduced) { el.querySelector('.v').textContent = target; return; }
+    var start = null, v = el.querySelector('.v');
+    function step(ts) {
+      if (!start) start = ts;
+      var p = Math.min(1, (ts - start) / duration), e = 1 - Math.pow(1 - p, 3);
+      v.textContent = Math.round(e * target);
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  var statIO = new IntersectionObserver(function (es) {
+    es.forEach(function (x) {
+      if (!x.isIntersecting || x.target.classList.contains('counted')) return;
+      x.target.classList.add('counted');
+      var delay = x.target.classList.contains('rv3') ? 260 : x.target.classList.contains('rv2') ? 130 : 0;
+      setTimeout(function () { countUp(x.target, +x.target.dataset.count, 780); }, delay);
+    });
+  }, { threshold: 0.5 });
+  $$('.stat').forEach(function (s) { statIO.observe(s); });
+
+  apply('fr');
+})();
+</script>
+</body>
+</html>
