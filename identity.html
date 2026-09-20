@@ -36,6 +36,8 @@
   h1, h2, h3 { text-wrap: balance; font-family: var(--display); font-weight: var(--hw); letter-spacing: var(--hl); color: var(--ink); margin: 0; }
   html[lang="ar"] :is(h1, h2, h3) { line-height: 1.4 !important; }
   .accent { color: var(--gold-soft); }
+  /* arabe : la première ligne porte « صلاتك وسماؤك، », la suite forme un bloc à part ; « في » reste liée à son nom */
+  html[lang="ar"] .hero-h .accent { display: block; }
 
   /* signature : mot-symbole exact de la référence (image), variante claire */
   .brand { display: inline-flex; flex: none; }
@@ -95,8 +97,8 @@
   .hero-stage .p-r { width: 228px; margin-inline-start: 120px; top: 74px; z-index: 1; opacity: 0.62; animation-delay: .18s; }
   @keyframes riseIn { from { opacity: 0; transform: translateY(20px); } }
   /* légende de figure : l'information « en direct » dite comme une légende de photo, pas comme un badge */
-  .hero-fig figcaption { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 18px; font-size: 13.5px; color: var(--dim); }
-  .hero-fig figcaption::before { content: ""; width: 28px; height: 1px; background: var(--gold); opacity: 0.7; flex: none; }
+  .hero-fig figcaption { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 18px; font-size: 14px; color: var(--soft); }
+  .hero-fig figcaption::before { content: ""; width: 28px; height: 1px; background: var(--gold); opacity: 0.9; flex: none; }
 
   /* ================= STATS : asymétrie + mesure ================= */
   .stats { position: relative; overflow: clip; padding: 84px 0 82px; background: linear-gradient(180deg, transparent, var(--band) 18%, var(--band) 82%, transparent); }
@@ -375,7 +377,7 @@
     ar: {
       navStats: "الدقة", navCiel: "السماء", navCmp: "صاحبي",
       ctaGold: "دخول النسخة التجريبية", ctaGhost: "اكتشف عالماً",
-      heroH1: "صلاتك وسماؤك، ", heroH1b: "في المكان الذي أنت فيه تماماً.",
+      heroH1: "صلاتك وسماؤك، ", heroH1b: "في المكان الذي أنت فيه تماماً.",
       heroLead: "يجمع aljana مواقيت الصلاة والسماء مباشرة والقمر والهلال والقبلة والكسوف. كل قيمة محسوبة لموقعك، بالثانية.",
       heroNote: "التطبيق حالياً في مرحلة تجريبية خاصة. الدخول متاح للمختبرين المدعوين فقط.",
       kick: "محسوب مباشرة لموقعك",
