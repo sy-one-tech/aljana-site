@@ -1,21 +1,25 @@
-/* Site aljana : langue (détection, mémoire, bascule sans perdre la position), captures synchronisées, boutons selon l'appareil. */
+/* Site aljana : langue (détection, mémoire, bascule sans perdre la position), captures synchronisées et chargées à l'approche,
+   boutons selon l'appareil, décompte des trois chiffres, orbites du Ciel, ronde des trois écrans du Compagnon. */
 (function () {
   /* APP_URL pointe sur la bêta pour le moment ; à basculer vers https://aljana.app ou le lien de store définitif à la publication. */
   const APP_URL = "https://beta.aljana.app";
   const CONTACT = "contact@aljana.app";
 
   var LANGS = window.LANGS, I18N = window.I18N, KEY = "aljana.site.lang";
-  var FONTS = { ru: "Manrope:wght@400..700", ar: "Noto+Sans+Arabic:wght@400..700", fa: "Vazirmatn:wght@400..700", ur: "Noto+Naskh+Arabic:wght@400..700", hi: "Noto+Sans+Devanagari:wght@400..700", zh: "Noto+Sans+SC:wght@400..700" };
+  var FONTS = { ru: "Manrope:wght@400..700", ar: "IBM+Plex+Sans+Arabic:wght@400;500;600;700", fa: "Vazirmatn:wght@400..700", ur: "Noto+Naskh+Arabic:wght@400..700", hi: "Noto+Sans+Devanagari:wght@400..700", zh: "Noto+Sans+SC:wght@400..700" };
   var SHOTS = ["prieres", "ciel", "lune", "hilal", "qibla", "eclipses"];
+  var CMP = { mushaf: 0, hadith: 1, tasbih: 2 }; /* rang dans I18N[..].cf */
   var $ = function (s, r) { return (r || document).querySelector(s); }, $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
   var ua = navigator.userAgent || "", device = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1) ? "ios" : /Android/.test(ua) ? "and" : "open";
   var has = function (c) { return LANGS.some(function (l) { return l.code === c; }); };
+  var reduced = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var hasIO = "IntersectionObserver" in window;
 
   /* Anglais : une langue, deux variantes régionales. Un « en » sans région, ou d'une région non britannique, donne en-US. */
   var UK_STYLE = /^en-(GB|IE|AU|NZ|ZA|IN|SG|MT|HK)$/i;
   function resolve(tag) {
     tag = String(tag || ""); if (has(tag)) return tag;
-    if (/^en/i.test(tag)) return UK_STYLE.test(tag) ? "en-GB" : "en-US";
+    if (/^en/i.test(tag)) return UK_STYLE.test(tag) ? "en-GB" : "en-US";
     var c = tag.slice(0, 2).toLowerCase(); return has(c) ? c : null;
   }
   function firstLang() {
@@ -38,11 +42,9 @@
     if (l.getAttribute("href") !== href) l.setAttribute("href", href);
     l.dataset.font = code;
   }
-  function digits(code, n) {
-    var loc = code === "ar" ? "ar-u-nu-arab" : code === "fa" ? "fa-u-nu-arabext" : "en";
-    return new Intl.NumberFormat(loc, { minimumIntegerDigits: 2, useGrouping: false }).format(n);
-  }
-  function label(code, i) { return digits(code, i + 1) + " " + I18N[code].sn[i].toLocaleUpperCase(code); }
+  function numLocale(code) { return code === "ar" ? "ar-u-nu-arab" : code === "fa" ? "fa-u-nu-arabext" : "en"; }
+  function digits(code, n) { return new Intl.NumberFormat(numLocale(code), { minimumIntegerDigits: 2, useGrouping: false }).format(n); }
+  function label(code, i) { return digits(code, i + 1) + " " + I18N[code].sn[i]; }
   var shotIO = null;
   function nearViewport(img) {
     var r = img.getBoundingClientRect(), h = window.innerHeight || document.documentElement.clientHeight || 800;
@@ -70,7 +72,7 @@
     else loadShot(img);
   }
   function initShotObserver() {
-    if (!("IntersectionObserver" in window)) return;
+    if (!hasIO) return;
     shotIO = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
@@ -90,33 +92,51 @@
       });
     });
     SHOTS.forEach(function (name, i) {
-      var a = document.createElement("article"); a.className = "uni rv" + (i % 2 ? " flip" : "");
-      a.innerHTML = '<div class="shot"><div class="crop"><div class="phone"><img data-shot="' + name + '" data-sn="' + (i + 1) + '" alt="" loading="lazy" decoding="async" width="880" height="1912"></div></div></div>' +
-        '<div class="txt"><span class="num" data-num="' + (i + 1) + '"></span><h3></h3><p></p><ul><li></li><li></li></ul></div>';
-      un.appendChild(a);
+      var s = document.createElement("section"); s.className = "uni" + (name === "ciel" ? " sky" : "") + (i % 2 ? "" : " flip"); s.id = "u-" + name;
+      s.innerHTML = (name === "ciel" ? '<div class="orbits" aria-hidden="true"><div class="orbit" style="--D:820px;--T:150s;--A:250deg"><b></b></div><div class="orbit o2" style="--D:1240px;--T:260s;--A:290deg"><b></b></div></div>' : "") +
+        '<div class="wrap"><div class="txt rv"><span class="lbl" data-num="' + (i + 1) + '"></span><h3></h3><p></p><ul><li></li><li></li></ul></div>' +
+        '<div class="frame rv rv2"><div class="phone"><img data-shot="' + name + '" data-sn="' + (i + 1) + '" alt="" loading="lazy" decoding="async" width="880" height="1912"></div></div></div>';
+      un.appendChild(s);
     });
     for (var i = 0; i < 4; i++) { var d = document.createElement("div"); d.innerHTML = "<dt></dt><dd></dd>"; ck.appendChild(d); }
-    for (var k = 0; k < 3; k++) { var e = document.createElement("div"); e.innerHTML = "<dt></dt><dd></dd>"; $("#cmpList").appendChild(e); }
+  }
+
+  /* les trois chiffres : valeur finale écrite telle que la langue la donne ; le décompte ne joue qu'une fois */
+  var DUR = { a: 900, b: 1100, c: 1000 }, curCode = "fr";
+  function statKind(s) { return s.classList.contains("a") ? "a" : s.classList.contains("b") ? "b" : "c"; }
+  function statValue(s) { $(".v", s).textContent = I18N[curCode][s.dataset.p][0]; }
+  function runStat(s) {
+    if (s.classList.contains("counted")) return; s.classList.add("counted");
+    var raw = I18N[curCode][s.dataset.p][0], target = parseInt(raw, 10), v = $(".v", s);
+    if (reduced || !(target > 0)) { statValue(s); return; }
+    var t0 = null, fmt = new Intl.NumberFormat(/^\d+$/.test(raw) ? "en" : numLocale(curCode), { useGrouping: false });
+    requestAnimationFrame(function step(ts) { if (!t0) t0 = ts; var p = Math.min(1, (ts - t0) / DUR[statKind(s)]);
+      if (p < 1) { v.textContent = fmt.format(Math.round((1 - Math.pow(1 - p, 3)) * target)); requestAnimationFrame(step); } else statValue(s); });
   }
 
   function apply(code, keepScroll) {
     var t = I18N[code], L = LANGS.filter(function (l) { return l.code === code; })[0];
+    curCode = code;
     /* ancre de défilement : la section en haut de l'écran doit y rester après le changement de textes */
     var anchor = null, top0 = 0;
-    if (keepScroll) { anchor = $$("main > *, .uni").filter(function (el) { return el.getBoundingClientRect().bottom > 80; })[0]; if (anchor) top0 = anchor.getBoundingClientRect().top; }
+    if (keepScroll) { var best = 1e9; $$("main > :not(#unis), .uni").forEach(function (el) { var r = el.getBoundingClientRect(), d = Math.abs(r.top - 80); if (r.bottom > 80 && r.top < innerHeight && d < best) { best = d; anchor = el; } }); if (anchor) top0 = anchor.getBoundingClientRect().top; }
     loadFont(code);
     var h = document.documentElement; h.lang = code; h.dir = L.rtl ? "rtl" : "ltr";
     document.title = t.title; meta('meta[name="description"]', t.desc);
     meta('meta[property="og:title"]', t.title); meta('meta[property="og:description"]', t.desc); meta('meta[name="twitter:title"]', t.title); meta('meta[name="twitter:description"]', t.desc);
-    $$("[data-i]").forEach(function (el) { var v = t[el.dataset.i]; if (v != null) el.textContent = v; });
+    $$("[data-i]").forEach(function (el) { var v = t[el.dataset.i]; el.textContent = v != null ? v : el.dataset.i === "statsLead" ? "" : el.textContent; });
     $$("[data-cta]").forEach(function (el) { el.textContent = t[device]; });
     $$("[data-app]").forEach(function (el) { el.setAttribute("href", APP_URL); });
     $$("[data-num]").forEach(function (el) { el.textContent = label(code, +el.dataset.num); });
-    $$("[data-p]").forEach(function (el) { var p = t[el.dataset.p]; $("b", el).innerHTML = p[0] + "<small>" + p[1] + "</small>"; $("strong", el).textContent = p[2]; $("span", el).textContent = p[3]; });
+    /* chiffres : valeur, unité, puis la légende. Bureau : intitulé + détail. Mobile, sous 20 et 12 : le détail seul (ou sa version courte). */
+    $$(".stat[data-p]").forEach(function (s) { var k = s.dataset.p, p = t[k];
+      $("small", s).textContent = " " + p[1]; if (s.classList.contains("counted")) statValue(s);
+      var d = $(".cap-d", s); d.textContent = ""; if (t[k + "c"]) d.textContent = t[k + "c"]; else { var b = document.createElement("b"); b.textContent = p[2]; d.appendChild(b); d.appendChild(document.createTextNode(p[3])); }
+      $(".cap-m", s).textContent = t[k + "m"] || p[3]; });
     $$("#unis .uni").forEach(function (a, i) { var u = t.u[i]; $("h3", a).textContent = u[0]; $("p", a).textContent = u[1]; var li = $$("li", a); li[0].textContent = u[2]; li[1].textContent = u[3]; });
-    $$("#cmpList div").forEach(function (d, i) { $("dt", d).textContent = t.cf[i][0]; $("dd", d).textContent = t.cf[i][1]; });
     /* Compagnon : trois écrans dans la langue du site. Index du Mushaf et hadith sont identiques en anglais US et UK (aucune donnée régionale) ; le tasbih affiche la Qibla de la ville, donc une capture par variante. */
-    $$("img[data-cmp]").forEach(function (img, i) { var k = img.dataset.cmp, v = k !== "tasbih" && code === "en-US" ? "en-GB" : code; img.alt = "aljana, " + t.cf[k === "mushaf" ? 0 : k === "hadith" ? 1 : 2][0]; setShot(img, "assets/companion/" + v + "/" + (k === "mushaf" ? "mushaf-index" : k) + ".webp", false); });
+    $$("img[data-cmp]").forEach(function (img) { var k = img.dataset.cmp, v = k !== "tasbih" && code === "en-US" ? "en-GB" : code; img.alt = "aljana, " + t.cf[CMP[k]][0]; setShot(img, "assets/companion/" + v + "/" + (k === "mushaf" ? "mushaf-index" : k) + ".webp", false); });
+    $$(".cmp2-names span").forEach(function (s) { s.textContent = t.cf[CMP[s.dataset.k]][0]; });
     $$("#checks div").forEach(function (d, i) { $("dt", d).textContent = t.pr[i][0]; $("dd", d).textContent = t.pr[i][1]; });
     /* captures dans la langue du site ; la section Langues montre une autre écriture que celle en cours */
     var other = code === "ar" ? "fr" : "ar";
@@ -124,7 +144,9 @@
     $("#langFlag").textContent = L.flag; $("#langName").textContent = L.name; $("#langBtn").setAttribute("aria-label", t.pick + " (" + L.name + ")");
     $$(".lang-opt").forEach(function (b) { b.setAttribute("aria-current", b.dataset.lang === code ? "true" : "false"); });
     var c = $("[data-contact]"); if (c && CONTACT) c.setAttribute("href", "mailto:" + CONTACT);
-    if (anchor) { var d = anchor.getBoundingClientRect().top - top0; if (d) { h.style.scrollBehavior = "auto"; window.scrollBy(0, d); h.style.scrollBehavior = ""; } }
+    /* recalage tout de suite, puis une fois la police de la nouvelle écriture arrivée, tant que le lecteur n'a pas défilé lui-même */
+    if (anchor) { var lastY = null, fix = function () { if (lastY !== null && Math.abs(window.scrollY - lastY) > 2) return; var dy = anchor.getBoundingClientRect().top - top0; if (dy) { h.style.scrollBehavior = "auto"; window.scrollBy(0, dy); h.style.scrollBehavior = ""; } lastY = window.scrollY; };
+      fix(); if (document.fonts && document.fonts.ready) { setTimeout(function () { document.fonts.ready.then(fix); }, 60); setTimeout(fix, 700); } }
     try { localStorage.setItem(KEY, code); } catch (e) { /* stockage indisponible */ }
   }
 
@@ -136,8 +158,33 @@
   $("#langBtn").addEventListener("click", function (e) { e.stopPropagation(); menu(!$("#langMenu").classList.contains("open")); });
   document.addEventListener("click", function (e) { var b = e.target.closest(".lang-opt"); if (b) { apply(b.dataset.lang, true); menu(false); return; } if (!e.target.closest(".lang-menu")) menu(false); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") { menu(false); $("#langBtn").focus(); } });
-  if ("IntersectionObserver" in window) {
+
+  if (hasIO) {
     var io = new IntersectionObserver(function (es) { es.forEach(function (x) { if (x.isIntersecting) { x.target.classList.add("in"); io.unobserve(x.target); } }); }, { rootMargin: "0px 0px -8% 0px" });
     $$(".rv").forEach(function (el) { io.observe(el); });
-  } else $$(".rv").forEach(function (el) { el.classList.add("in"); });
+    /* les orbites ne tournent que lorsque le Ciel est à l'écran */
+    var sky = $(".uni.sky"); if (sky) new IntersectionObserver(function (es) { es.forEach(function (x) { x.target.classList.toggle("run", x.isIntersecting && !reduced); }); }).observe(sky);
+    var sio = new IntersectionObserver(function (es) { es.forEach(function (x) { if (!x.isIntersecting) return; sio.unobserve(x.target);
+      setTimeout(function () { runStat(x.target); }, x.target.classList.contains("c") ? 240 : x.target.classList.contains("b") ? 120 : 0); }); }, { threshold: 0.45 });
+    $$(".stat").forEach(function (s) { sio.observe(s); });
+  } else { $$(".rv").forEach(function (el) { el.classList.add("in"); }); $$(".stat").forEach(runStat); }
+
+  /* Compagnon : Hadith → Mushaf → Tasbih en boucle. L'écran suivant vient devant, celui de devant recule,
+     le troisième s'efface puis reparaît de l'autre côté. Tourne seulement quand la section est visible ; figé si mouvement réduit. */
+  (function () {
+    var stage = $("#cmpStage"); if (!stage) return;
+    var ORDER = ["hadith", "mushaf", "tasbih"], cur = 1, timer = null, seen = false;
+    function el(k) { return $('.phone[data-k="' + k + '"]', stage); }
+    function names() { $$(".cmp2-names span").forEach(function (s) { s.classList.toggle("on", s.dataset.k === ORDER[cur]); }); }
+    function step() {
+      var front = el(ORDER[cur]), next = el(ORDER[(cur + 1) % 3]), prev = el(ORDER[(cur + 2) % 3]);
+      cur = (cur + 1) % 3; names();
+      next.dataset.slot = "front"; front.dataset.slot = "prev";
+      prev.classList.add("behind");
+      setTimeout(function () { prev.classList.add("jump"); prev.dataset.slot = "next"; void prev.offsetWidth; prev.classList.remove("jump"); prev.classList.remove("behind"); }, 320);
+    }
+    function play(on) { if (on && !timer && !reduced && !document.hidden) timer = setInterval(step, 4500); else if (!on && timer) { clearInterval(timer); timer = null; } }
+    if (hasIO) new IntersectionObserver(function (es) { es.forEach(function (x) { seen = x.isIntersecting; play(seen); }); }, { threshold: 0.25 }).observe(stage); else { seen = true; play(true); }
+    document.addEventListener("visibilitychange", function () { play(seen && !document.hidden); });
+  })();
 })();
