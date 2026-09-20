@@ -179,8 +179,8 @@
       /* 1. prochaine prière, sinon date hégirienne */
       var np = pos ? LIVE.nextPrayer(pos.lat, pos.lon, now) : null;
       if (np) { A.l.textContent = t.npL; fill(A.v, t.npT, { p: t.pn[["fajr", "dhuhr", "asr", "maghrib", "isha"].indexOf(np.key)], t: loc(hms(np.at - now), lang2), _flip: false }, "a");
-        A.s.textContent = new Intl.DateTimeFormat(tag, { hour: "2-digit", minute: "2-digit" }).format(np.at); }
-      else { A.l.textContent = t.hjL; var hj = LIVE.hijriToday(now, tz, code); if (lang2 === "ur") hj = hj.replace(/[۰-۹]/g, function (d) { return "۰۱۲۳۴۵۶۷۸۹".indexOf(d); }); /* ourdou : chiffres latins, comme le reste du site */ fill(A.v, "{e}", { e: hj }, "a"); A.s.textContent = ""; }
+        A.s.textContent = new Intl.DateTimeFormat(tag, { hour: "2-digit", minute: "2-digit" }).format(np.at); $("#nowM").textContent = t.mw; }
+      else { A.l.textContent = t.hjL; var hj = LIVE.hijriToday(now, tz, code); if (lang2 === "ur") hj = hj.replace(/[۰-۹]/g, function (d) { return "۰۱۲۳۴۵۶۷۸۹".indexOf(d); }); /* ourdou : chiffres latins, comme le reste du site */ fill(A.v, "{e}", { e: hj }, "a"); A.s.textContent = ""; $("#nowM").textContent = ""; }
       /* 2. astres majeurs levés, sinon l'action « Utiliser ma position » (masquée si le navigateur la refuse) */
       B.l.textContent = t.skL;
       if (pos) { var n = LIVE.skyCount(pos.lat, pos.lon, now).n; B.v.hidden = false; btn.hidden = true; fill(B.v, form(t.sk, lang2, n), { n: loc(n, lang2) }, "b"); B.s.textContent = ""; B.root.hidden = false; }

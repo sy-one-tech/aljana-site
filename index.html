@@ -153,6 +153,7 @@
   @keyframes nowFlip { from { opacity: 0.35; } }
   .now-s { margin: 8px 0 0; font-size: 13.5px; color: var(--faint); }
   .now-s:empty { display: none; }
+  .now-m { margin-top: 3px; font-size: 12.5px; }
   .now-loc { margin-top: 10px; font-family: var(--display); font-weight: var(--hw); font-size: calc(25px * var(--hs)); line-height: 1.3; letter-spacing: var(--hl); color: var(--gold-soft); text-align: start; transition: color 0.2s; }
   .now-loc:hover { color: var(--ink); }
   /* ================= STATS : asymétrie + mesure ================= */
@@ -386,7 +387,7 @@
     <div class="wrap">
       <p class="lbl now-k rv" data-i="nk">Maintenant, chez vous</p>
       <div class="now-grid rv" id="nowGrid">
-        <div class="now-i" id="nowA"><span class="lbl"></span><p class="now-v"></p><p class="now-s"></p></div>
+        <div class="now-i" id="nowA"><span class="lbl"></span><p class="now-v"></p><p class="now-s"></p><p class="now-s now-m" id="nowM"></p></div>
         <div class="now-i" id="nowB"><span class="lbl"></span><p class="now-v"></p><button type="button" class="now-loc" id="nowLoc" hidden></button><p class="now-s"></p></div>
         <div class="now-i" id="nowC"><span class="lbl"></span><p class="now-v"></p><p class="now-s"></p></div>
       </div>
