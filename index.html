@@ -40,6 +40,29 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+/* Garde-fou de rendu. Le contenu n'est masqué (apparition douce) que si ce script a tourné : sans JavaScript, tout est visible.
+   Si un script échoue ou tarde, on révèle tout et on charge les captures françaises, pour ne jamais laisser une page noire.
+   ?diag=1 affiche un relevé technique (appareil, erreurs JS, état du rendu) utile sur un appareil sans console. */
+(function () {
+  var d = document.documentElement, errs = window.__aljErr = [], done = false; d.className += " js";
+  function show(why) { if (done) return; done = true; window.__aljShown = why; d.className = d.className.replace(" js", "") + " rv-all";
+    var im = document.querySelectorAll("img[data-shot],img[data-cmp]"); for (var i = 0; i < im.length; i++) { var g = im[i]; if (g.getAttribute("src") || g.getAttribute("data-pending-src")) continue;
+      var c = g.getAttribute("data-cmp"); g.src = c ? "assets/companion/fr/" + (c === "mushaf" ? "mushaf-index" : c) + ".webp" : "assets/screens/" + (g.hasAttribute("data-other") ? "ar" : "fr") + "/" + g.getAttribute("data-shot") + ".webp"; } }
+  window.__aljShow = show;
+  window.addEventListener("error", function (e) { var t = e.target; if (t && t.tagName === "SCRIPT") errs.push("script non chargé : " + t.src); else if (e.message) errs.push(e.message + " @ " + String(e.filename || "").split("/").pop() + ":" + e.lineno + ":" + e.colno); else return; if (!window.__aljReady) show("erreur"); }, true);
+  window.addEventListener("unhandledrejection", function (e) { errs.push("promesse : " + String(e.reason && e.reason.message || e.reason)); });
+  document.addEventListener("DOMContentLoaded", function () { setTimeout(function () { if (!window.__aljReady) show("délai"); }, 2500); });
+  if (/[?&]diag=1/.test(location.search)) window.addEventListener("load", function () { setTimeout(function () {
+    var rv = document.querySelectorAll(".rv"), inn = document.querySelectorAll(".rv.in"), im = [].slice.call(document.images), b = document.createElement("pre");
+    b.style.cssText = "position:fixed;z-index:99;left:8px;right:8px;bottom:8px;max-height:60vh;overflow:auto;margin:0;padding:12px;border-radius:10px;background:#fff;color:#111;font:12px/1.45 ui-monospace,Menlo,monospace;white-space:pre-wrap;word-break:break-word;direction:ltr;text-align:left";
+    b.textContent = ["aljana diag", navigator.userAgent, "fenêtre " + innerWidth + "x" + innerHeight + " @" + devicePixelRatio + " | tactile " + navigator.maxTouchPoints + " | langue " + navigator.language,
+      "prêt " + !!window.__aljReady + " | secours " + (window.__aljShown || "non") + " | live.js " + !!window.ALJANA_LIVE + " | i18n " + !!window.I18N + " | IO " + ("IntersectionObserver" in window) + " | mouvement réduit " + (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches),
+      "rv " + inn.length + "/" + rv.length + " | images " + im.filter(function (i) { return i.naturalWidth; }).length + "/" + im.length + " | univers " + document.querySelectorAll("#unis .uni").length + " | hauteur " + d.scrollHeight,
+      "clip " + (window.CSS && CSS.supports && CSS.supports("overflow", "clip")) + " | aspect-ratio " + (window.CSS && CSS.supports && CSS.supports("aspect-ratio", "1/1")) + " | inset " + (window.CSS && CSS.supports && CSS.supports("inset", "0")),
+      "erreurs (" + errs.length + ") :"].concat(errs.length ? errs : ["aucune"]).join("\n"); document.body.appendChild(b); }, 3000); });
+})();
+</script>
 <style>
   :root {
     --bg: #060B18; --band: #0A1326; --ink: #EEF1FA; --soft: #C9D1EA; --dim: #93A0C2; --faint: #6F7A9C;
@@ -106,12 +129,13 @@
   .lang-opt:hover { background: rgba(255,255,255,0.06); color: var(--ink); }
   .lang-opt[aria-current="true"] { color: var(--gold-soft); background: rgba(226,182,89,0.08); }
 
-  .rv { opacity: 0; transform: translateY(14px); transition: opacity 0.7s cubic-bezier(.2,.7,.15,1), transform 0.7s cubic-bezier(.2,.7,.15,1); }
-  .rv.in { opacity: 1; transform: none; }
+  /* apparition douce : seulement si le JavaScript tourne (classe js posée en tête de page) ; rv-all = secours, tout visible */
+  .js .rv { opacity: 0; transform: translateY(14px); transition: opacity 0.7s cubic-bezier(.2,.7,.15,1), transform 0.7s cubic-bezier(.2,.7,.15,1); }
+  .js .rv.in, .rv-all .rv { opacity: 1; transform: none; }
   .rv2 { transition-delay: 0.08s; } .rv3 { transition-delay: 0.16s; }
 
   /* ================= HERO ================= */
-  .hero { position: relative; overflow: clip; }
+  .hero { position: relative; overflow: hidden; }
   .hero-sky { position: absolute; inset: 0 0 auto; height: 820px; z-index: -1; pointer-events: none;
     background: radial-gradient(1100px 620px at 78% -12%, rgba(38,60,130,0.42), transparent 70%), radial-gradient(700px 480px at 8% 38%, rgba(226,182,89,0.05), transparent 70%), var(--bg); }
   .hero-arc { position: absolute; left: 0; right: 0; width: 100%; top: 90px; height: 520px; z-index: -1; pointer-events: none; opacity: 0.55; }
@@ -157,7 +181,7 @@
   .now-loc { margin-top: 10px; font-family: var(--display); font-weight: var(--hw); font-size: calc(25px * var(--hs)); line-height: 1.3; letter-spacing: var(--hl); color: var(--gold-soft); text-align: start; transition: color 0.2s; }
   .now-loc:hover { color: var(--ink); }
   /* ================= STATS : asymétrie + mesure ================= */
-  .stats { position: relative; overflow: clip; padding: 84px 0 82px; background: linear-gradient(180deg, transparent, var(--band) 18%, var(--band) 82%, transparent); }
+  .stats { position: relative; overflow: hidden; padding: 84px 0 82px; background: linear-gradient(180deg, transparent, var(--band) 18%, var(--band) 82%, transparent); }
   .stats-lead { max-width: 560px; margin: 0 0 50px; color: var(--soft); font-family: var(--display); font-size: 22px; line-height: 1.45; }
   .stats-lead:empty { display: none; }
   html:not([lang="fr"]) .stats-lead { font-size: 19px; }
@@ -188,7 +212,7 @@
   .uhead h2 { margin-top: 12px; max-width: 720px; font-size: calc(clamp(30px, 3.8vw, 46px) * var(--hs)); line-height: 1.16; }
   .uhead p { margin: 16px 0 0; max-width: 600px; color: var(--soft); }
   .uhead .first { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; margin-top: 26px; color: var(--soft); font-size: 15.5px; }
-  .uni { position: relative; overflow: clip; padding: 74px 0 84px; }
+  .uni { position: relative; overflow: hidden; padding: 74px 0 84px; }
   .uni .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 10px; }
   .uni .txt { max-width: 440px; }
   .uni h3 { margin-top: 12px; font-size: calc(clamp(28px, 3.3vw, 42px) * var(--hs)); line-height: 1.16; }
@@ -205,21 +229,24 @@
   .uni.flip .frame { justify-self: start; margin-inline: 40px 0; }
   /* le Ciel : seul univers à porter son propre ciel, deux orbites centrées sur l'écran, un astre parcourt chacune très lentement */
   .uni.sky { padding: 112px 0 122px; background: radial-gradient(1400px 780px at 50% 18%, #0B1330 0%, #070b16 62%, var(--bg) 100%); }
-  .uni.sky::before { content: ""; position: absolute; inset: 0; opacity: 0.9; pointer-events: none;
-    background-image: radial-gradient(1.3px 1.3px at 8% 22%, #dfe6ff 60%, transparent 61%), radial-gradient(1px 1px at 22% 68%, #cfd8ff 60%, transparent 61%), radial-gradient(1.6px 1.6px at 38% 12%, #fff 60%, transparent 61%), radial-gradient(1px 1px at 55% 44%, #cfd8ff 60%, transparent 61%), radial-gradient(1.2px 1.2px at 68% 78%, #dfe6ff 60%, transparent 61%), radial-gradient(1.5px 1.5px at 83% 30%, #fff 60%, transparent 61%), radial-gradient(1px 1px at 92% 60%, #cfd8ff 60%, transparent 61%), radial-gradient(1.2px 1.2px at 14% 88%, #dfe6ff 60%, transparent 61%); }
+  /* les huit étoiles : une seule image vectorielle étirée sur la section. Huit dégradés radiaux pleine surface coûtaient très cher à peindre dans WebKit sur grand écran (iPad). */
+  .uni.sky::before { content: ""; position: absolute; inset: 0; opacity: 0.9; pointer-events: none; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1000' preserveAspectRatio='none'%3E%3Cg fill='%23dfe6ff'%3E%3Ccircle cx='80' cy='220' r='1.3'/%3E%3Ccircle cx='220' cy='680' r='1' fill='%23cfd8ff'/%3E%3Ccircle cx='380' cy='120' r='1.6' fill='%23fff'/%3E%3Ccircle cx='550' cy='440' r='1' fill='%23cfd8ff'/%3E%3Ccircle cx='680' cy='780' r='1.2'/%3E%3Ccircle cx='830' cy='300' r='1.5' fill='%23fff'/%3E%3Ccircle cx='920' cy='600' r='1' fill='%23cfd8ff'/%3E%3Ccircle cx='140' cy='880' r='1.2'/%3E%3C/g%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat; }
   /* entrée et sortie de la section : le ciel se fond dans le fond nuit, sans arête */
   .uni.sky::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, var(--bg) 0, transparent 190px, transparent calc(100% - 190px), var(--bg) 100%); }
   .uni.sky .frame { margin-inline-end: -74px; }
   .orbits { position: absolute; inset: 0; pointer-events: none; }
-  .orbit { position: absolute; top: 50%; inset-inline-start: 74%; width: var(--D); height: var(--D); margin-top: calc(var(--D) / -2); margin-inline-start: calc(var(--D) / -2); border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(170,185,235,0.13); animation: spin var(--T) linear infinite; animation-play-state: paused; }
-  .orbit.o2 { box-shadow: inset 0 0 0 1px rgba(226,182,89,0.12); animation-direction: reverse; }
-  .uni.sky.run .orbit { animation-play-state: running; }
-  .orbit b { position: absolute; top: -3px; left: 50%; width: 6px; height: 6px; margin-left: -3px; border-radius: 50%; background: #E8EDFF; }
-  .orbit.o2 b { background: var(--gold-soft); width: 5px; height: 5px; top: -2.5px; }
+  .orbit { position: absolute; top: 50%; inset-inline-start: 74%; width: var(--D); height: var(--D); margin-top: calc(var(--D) / -2); margin-inline-start: calc(var(--D) / -2); border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(170,185,235,0.13); }
+  .orbit.o2 { box-shadow: inset 0 0 0 1px rgba(226,182,89,0.12); }
+  /* l'anneau reste fixe ; seul un bras sans dimension tourne autour du centre et porte l'astre : aucun grand calque à recomposer */
+  .orbit i { position: absolute; top: 50%; left: 50%; width: 0; height: 0; animation: spin var(--T) linear infinite; animation-play-state: paused; }
+  .orbit.o2 i { animation-direction: reverse; }
+  .uni.sky.run .orbit i { animation-play-state: running; }
+  .orbit b { position: absolute; top: calc(var(--D) / -2 - 3px); left: -3px; width: 6px; height: 6px; border-radius: 50%; background: #E8EDFF; }
+  .orbit.o2 b { background: var(--gold-soft); width: 5px; height: 5px; top: calc(var(--D) / -2 - 2.5px); left: -2.5px; }
   @keyframes spin { from { transform: rotate(var(--A, 0deg)); } to { transform: rotate(calc(var(--A, 0deg) + 360deg)); } }
 
   /* ================= COMPAGNON ================= */
-  .cmp2 { position: relative; overflow: clip; padding: 122px 0 118px; background: radial-gradient(1200px 640px at 50% 36%, var(--leaf-wash), transparent 66%), var(--bg); }
+  .cmp2 { position: relative; overflow: hidden; padding: 122px 0 118px; background: radial-gradient(1200px 640px at 50% 36%, var(--leaf-wash), transparent 66%), var(--bg); }
   .cmp2-head { max-width: 600px; margin: 0 auto; text-align: center; }
   .cmp2-head .lk { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; color: #8fd96a; }
   .cmp2-head .lk img { width: 17px; height: 16px; }
@@ -273,6 +300,15 @@
   .f-links a:hover { color: var(--ink); }
   .f-base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
 
+  @media (min-width: 901px) and (max-width: 1180px) {
+    .hero-grid { column-gap: 28px; }
+    .h-b p { max-width: 400px; }
+    .hero-stage { height: 560px; }
+    .hero-stage .p-main { width: 264px; margin-inline-start: -132px; }
+    .hero-stage .p-l { width: 200px; margin-inline-start: -276px; top: 70px; }
+    .hero-stage .p-r { width: 200px; margin-inline-start: 76px; top: 70px; }
+    .uni.sky .frame { margin-inline-end: 0; }
+  }
   @media (max-width: 900px) {
     body { font-size: 16.5px; }
     .wrap { width: calc(100% - 32px); }
@@ -327,8 +363,8 @@
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .rv, .rv2, .rv3 { opacity: 1; transform: none; transition: none; }
-    .hero-stage .phone, .orbit { animation: none; }
+    .js .rv, .rv, .rv2, .rv3 { opacity: 1; transform: none; transition: none; }
+    .hero-stage .phone, .orbit i { animation: none; }
     .ticks i, .ticks i::before { transform: none; transition: none; }
     .cmp2-stage .phone, .cmp2-names span, .btn { transition: none; }
     .now-v b.fl { animation: none; }
