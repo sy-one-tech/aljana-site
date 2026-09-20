@@ -3,202 +3,214 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>aljana - étude de direction artistique v2</title>
+<title>aljana, étude de direction artistique</title>
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#060B18">
 <link rel="icon" href="assets/brand/leaf.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link id="font-latin" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #060B18; --band: #0A1326; --ink: #EEF1FA; --soft: #C9D1EA; --dim: #93A0C2; --faint: #6F7A9C;
-    --gold: #E2B659; --gold-soft: #F3DFAE;
-    --leaf: #399f22; --leaf-light: #6fd23e; --leaf-deep: #16811c; --leaf-wash: rgba(57,159,34,0.07);
-    --line: rgba(160,172,205,0.14);
-    --sans: "Nunito", system-ui, sans-serif;
-    --w: 1180px;
+    --gold: #E2B659; --gold-soft: #F3DFAE; --leaf: #399f22; --leaf-wash: rgba(57,159,34,0.07);
+    --line: rgba(160,172,205,0.14); --tick: rgba(160,172,205,0.30);
+    /* piste B (défaut) : titres en serif de lecture, romain ; texte et chiffres en grotesque humaniste */
+    --display: "Newsreader", Georgia, serif; --sans: "Hanken Grotesk", system-ui, sans-serif; --hw: 500; --nw: 700; --hs: 1; --hl: -0.015em;
+    --w: 1180px; --sx: 1;
   }
-  html[lang="ar"] { --sans: "Cairo", system-ui, sans-serif; }
+  /* piste A : une seule grotesque éditoriale */
+  html[data-type="a"] { --display: "Schibsted Grotesk", system-ui, sans-serif; --sans: "Schibsted Grotesk", system-ui, sans-serif; --hw: 700; --nw: 800; --hs: 0.92; --hl: -0.025em; }
+  html[lang="ar"] { --display: "IBM Plex Sans Arabic", system-ui, sans-serif; --sans: "IBM Plex Sans Arabic", system-ui, sans-serif; --hw: 600; --nw: 700; --hs: 0.9; --hl: 0; }
+  html[dir="rtl"] { --sx: -1; }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
   body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 17px; line-height: 1.62; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
-  img { display: block; max-width: 100%; height: auto; }
+  html[lang="ar"] body { line-height: 1.85; }
+  img { display: block; max-width: 100%; }
   a { color: inherit; text-decoration: none; }
   button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
   .wrap { width: min(var(--w), calc(100% - 40px)); margin-inline: auto; }
   ::selection { background: var(--gold); color: #1B1405; }
   :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 6px; }
-  .accent { color: var(--gold-soft); font-weight: 800; }
+  h1, h2, h3 { text-wrap: balance; font-family: var(--display); font-weight: var(--hw); letter-spacing: var(--hl); color: var(--ink); margin: 0; }
+  html[lang="ar"] :is(h1, h2, h3) { line-height: 1.4 !important; }
+  .accent { color: var(--gold-soft); }
 
-  /* ---------- signature : la vraie feuille (asset), jamais recomposee ---------- */
-  .lockup { display: inline-flex; align-items: center; gap: 0.42em; }
-  .lockup img { flex: none; display: block; }
-  .lockup .word { font-family: var(--sans); font-weight: 800; color: var(--ink); white-space: nowrap; letter-spacing: -0.01em; }
+  /* signature : mot-symbole exact de la référence (image), variante claire */
+  .brand { display: inline-flex; flex: none; }
+  .brand img { width: 123px; height: 30px; }
 
-  /* ---------- bandeau ---------- */
-  header { position: sticky; top: 0; z-index: 30; background: rgba(6,11,24,0.92); border-bottom: 1px solid var(--line); }
+  header { position: sticky; top: 0; z-index: 30; background: rgba(6,11,24,0.94); border-bottom: 1px solid var(--line); }
   .bar { display: flex; align-items: center; justify-content: space-between; height: 76px; }
-  .bar .lockup img { width: 44px; height: 30px; } .bar .lockup .word { font-size: 24px; }
-  nav.top { display: flex; align-items: center; gap: 26px; }
-  nav.top a.nl { font-size: 15px; font-weight: 600; color: var(--dim); transition: color 0.2s; }
+  nav.top { display: flex; align-items: center; gap: 24px; }
+  nav.top a.nl { font-size: 15px; font-weight: 500; color: var(--dim); transition: color 0.2s; }
   nav.top a.nl:hover { color: var(--ink); }
-  .btn { display: inline-flex; align-items: center; gap: 9px; min-height: 48px; padding: 0 24px; border-radius: 13px; font-weight: 700; font-size: 15px; transition: transform 0.2s ease, background 0.2s ease; }
-  .btn-gold { background: var(--gold); color: #1B1405; box-shadow: 0 8px 22px rgba(226,182,89,0.14); }
+  .btn { display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; border-radius: 11px; font-weight: 600; font-size: 14.5px; transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease; }
+  .btn-gold { background: var(--gold); color: #1B1405; }
   .btn-gold:hover { transform: translateY(-1px); background: #ECC46E; }
-  nav.top .btn { min-height: 42px; padding: 0 18px; font-size: 14px; }
+  .btn-line { min-height: 40px; padding: 0 16px; box-shadow: inset 0 0 0 1px rgba(226,182,89,0.5); color: var(--gold-soft); font-size: 14px; }
+  .btn-line:hover { background: rgba(226,182,89,0.1); }
 
-  /* ---------- selecteur de langue : menu reel, drapeaux natifs, pas une pilule ---------- */
   .flag { font-family: "Apple Color Emoji", "Segoe UI Emoji", sans-serif; font-size: 1.05em; line-height: 1; }
   .lang { position: relative; }
-  .lang-btn { display: inline-flex; align-items: center; gap: 7px; min-height: 42px; padding: 0 10px; border-radius: 11px; color: var(--soft); font-weight: 700; font-size: 14px; transition: background 0.2s; }
+  .lang-btn { display: inline-flex; align-items: center; gap: 7px; min-height: 42px; padding: 0 10px; border-radius: 11px; color: var(--soft); font-weight: 500; font-size: 14.5px; transition: background 0.2s; }
   .lang-btn:hover, .lang-btn[aria-expanded="true"] { background: rgba(255,255,255,0.06); color: var(--ink); }
   .lang-btn svg { width: 10px; height: 10px; opacity: 0.7; transition: transform 0.2s; }
   .lang-btn[aria-expanded="true"] svg { transform: rotate(180deg); }
   .lang-menu { position: absolute; top: calc(100% + 8px); inset-inline-end: 0; width: 300px; padding: 7px; border-radius: 16px; background: #0E172D; box-shadow: 0 22px 54px rgba(0,0,0,0.5); display: grid; grid-template-columns: 1fr 1fr; gap: 2px; opacity: 0; visibility: hidden; transform: translateY(-6px); transition: opacity 0.16s, transform 0.16s, visibility 0.16s; }
   .lang-menu.open { opacity: 1; visibility: visible; transform: none; }
-  .lang-opt { display: flex; align-items: center; gap: 9px; min-height: 44px; padding: 0 10px; border-radius: 10px; font-size: 14.5px; font-weight: 600; color: var(--soft); text-align: start; width: 100%; }
+  .lang-opt { display: flex; align-items: center; gap: 9px; min-height: 44px; padding: 0 10px; border-radius: 10px; font-size: 14.5px; color: var(--soft); text-align: start; width: 100%; min-width: 0; }
   .lang-opt:hover:not(:disabled) { background: rgba(255,255,255,0.06); color: var(--ink); }
   .lang-opt[aria-current="true"] { color: var(--gold-soft); background: rgba(226,182,89,0.08); }
   .lang-opt:disabled { opacity: 0.32; cursor: default; }
 
-  /* ---------- reveal : transform + opacity uniquement ---------- */
   .rv { opacity: 0; transform: translateY(14px); transition: opacity 0.7s cubic-bezier(.2,.7,.15,1), transform 0.7s cubic-bezier(.2,.7,.15,1); }
   .rv.in { opacity: 1; transform: none; }
   .rv2 { transition-delay: 0.08s; } .rv3 { transition-delay: 0.16s; } .rv4 { transition-delay: 0.24s; }
-  @media (prefers-reduced-motion: reduce) { .rv, .rv2, .rv3, .rv4 { opacity: 1; transform: none; transition: none; } }
 
-  /* ================= HERO - squelette valide (texte / image), approfondi ================= */
-  .hero { position: relative; padding: 30px 0 0; overflow: clip; }
-  .hero-sky { position: absolute; inset: -40px 0 auto; height: 820px; z-index: -1; pointer-events: none;
+  /* ================= HERO ================= */
+  .hero { position: relative; overflow: clip; }
+  .hero-sky { position: absolute; inset: 0 0 auto; height: 820px; z-index: -1; pointer-events: none;
     background: radial-gradient(1100px 620px at 78% -12%, rgba(38,60,130,0.42), transparent 70%), radial-gradient(700px 480px at 8% 38%, rgba(226,182,89,0.05), transparent 70%), var(--bg); }
   .hero-arc { position: absolute; left: 0; right: 0; width: 100%; top: 90px; height: 520px; z-index: -1; pointer-events: none; opacity: 0.55; }
-  .hero-grid { display: grid; grid-template-columns: minmax(0,1.05fr) minmax(0,0.95fr); gap: 44px; align-items: center; padding-block: 56px 40px; }
-  .hero-txt { position: relative; }
-  h1.hero-h { margin: 0; font-family: var(--sans); font-weight: 800; font-size: clamp(34px, 4.7vw, 58px); line-height: 1.08; letter-spacing: -0.02em; color: var(--ink); }
-  .hero-lead { margin: 22px 0 0; max-width: 480px; font-size: 17.5px; color: var(--soft); }
-  .hero-cta { display: flex; align-items: center; gap: 18px; margin-top: 30px; flex-wrap: wrap; }
-  .btn-text { color: var(--dim); font-weight: 700; font-size: 15px; display: inline-flex; align-items: center; gap: 6px; transition: color 0.2s, gap 0.2s; }
-  .btn-text:hover { color: var(--ink); gap: 9px; }
-  .hero-note { margin: 16px 0 0; font-size: 13.5px; color: var(--faint); }
-  .live-chip { display: inline-flex; align-items: center; gap: 8px; margin-top: 26px; padding: 8px 14px 8px 10px; border-radius: 999px; background: rgba(255,255,255,0.04); border: 1px solid var(--line); font-size: 13px; font-weight: 700; color: var(--dim); }
-  .live-chip .dot { width: 7px; height: 7px; border-radius: 999px; background: #34D399; box-shadow: 0 0 8px rgba(52,211,153,0.8); flex: none; }
-  .live-chip b { color: var(--soft); font-weight: 700; }
+  .hero-grid { display: grid; grid-template-columns: minmax(0,1.05fr) minmax(0,0.95fr); grid-template-rows: 1fr auto auto auto auto 1fr; column-gap: 44px; padding-block: 50px 46px;
+    grid-template-areas: ". fig" "a fig" "b fig" "c fig" "d fig" ". fig"; }
+  .h-a { grid-area: a; } .h-b { grid-area: b; } .h-c { grid-area: c; } .h-d { grid-area: d; } .hero-fig { grid-area: fig; margin: 0; min-width: 0; }
+  h1.hero-h { font-size: calc(clamp(36px, 4.9vw, 62px) * var(--hs)); line-height: 1.1; }
+  .h-b p { margin: 22px 0 0; max-width: 480px; font-size: 17.5px; color: var(--soft); }
+  .h-c { display: flex; align-items: center; gap: 20px; margin-top: 28px; flex-wrap: wrap; }
+  .btn-text { color: var(--soft); font-weight: 500; font-size: 15px; display: inline-flex; align-items: center; gap: 6px; border-bottom: 1px solid var(--line); padding-bottom: 2px; transition: color 0.2s, border-color 0.2s; }
+  .btn-text:hover { color: var(--ink); border-color: var(--dim); }
+  html[dir="rtl"] .btn-text .arw { display: inline-block; transform: scaleX(-1); }
+  .h-d p { margin: 16px 0 0; font-size: 13.5px; color: var(--faint); max-width: 420px; }
 
   .hero-stage { position: relative; height: 600px; }
   .hero-stage .glow { position: absolute; inset: -20px -10% auto; height: 480px; z-index: 0; pointer-events: none; background: radial-gradient(closest-side, rgba(226,182,89,0.10), transparent 72%); }
-  .hero-stage .phone { position: absolute; border-radius: 40px; padding: 6px; background: #0D1529; box-shadow: 0 40px 90px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(170,185,225,0.14); }
-  .hero-stage .phone img { width: 100%; border-radius: 34px; background: #050b1a; aspect-ratio: 880/1912; }
-  .hero-stage .p-main { width: 292px; inset-inline-start: 50%; margin-inline-start: -66px; top: 0; z-index: 3; }
-  .hero-stage .p-l { width: 228px; inset-inline-start: 50%; margin-inline-start: -284px; top: 74px; z-index: 1; opacity: 0.62; }
-  .hero-stage .p-r { width: 228px; inset-inline-start: 50%; margin-inline-start: 68px; top: 74px; z-index: 1; opacity: 0.62; }
+  .phone { border-radius: 40px; padding: 6px; background: #0D1529; box-shadow: 0 40px 90px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(170,185,225,0.14); }
+  .phone img { width: 100%; height: auto; border-radius: 34px; background: #050b1a; aspect-ratio: 880/1912; }
+  .hero-stage .phone { position: absolute; inset-inline-start: 50%; animation: riseIn 0.9s cubic-bezier(.2,.7,.15,1) both; }
+  .hero-stage .p-main { width: 292px; margin-inline-start: -146px; top: 0; z-index: 3; animation-delay: .06s; }
+  .hero-stage .p-l { width: 228px; margin-inline-start: -348px; top: 74px; z-index: 1; opacity: 0.62; animation-delay: .18s; }
+  .hero-stage .p-r { width: 228px; margin-inline-start: 120px; top: 74px; z-index: 1; opacity: 0.62; animation-delay: .18s; }
   @keyframes riseIn { from { opacity: 0; transform: translateY(20px); } }
-  .hero-stage .phone { animation: riseIn 0.9s cubic-bezier(.2,.7,.15,1) both; }
-  .hero-stage .p-main { animation-delay: .06s; } .hero-stage .p-l, .hero-stage .p-r { animation-delay: .18s; }
-  @media (prefers-reduced-motion: reduce) { .hero-stage .phone { animation: none; } }
+  /* légende de figure : l'information « en direct » dite comme une légende de photo, pas comme un badge */
+  .hero-fig figcaption { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 18px; font-size: 13.5px; color: var(--dim); }
+  .hero-fig figcaption::before { content: ""; width: 28px; height: 1px; background: var(--gold); opacity: 0.7; flex: none; }
 
-  /* ================= STATS - asymetrique, mesure ================= */
+  /* ================= STATS : asymétrie + mesure ================= */
   .stats { position: relative; overflow: clip; padding: 84px 0 82px; background: linear-gradient(180deg, transparent, var(--band) 18%, var(--band) 82%, transparent); }
-  .stats-lead { max-width: 540px; margin: 0 0 50px; color: var(--soft); font-size: 18px; }
-  .stats-arc { position: absolute; left: 0; right: 0; width: 100%; top: 50%; height: 2px; z-index: 0; }
-  .stats-grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 0; align-items: end; position: relative; }
-  .stat { position: relative; padding-inline-end: 28px; }
+  .stats-lead { max-width: 560px; margin: 0 0 50px; color: var(--soft); font-family: var(--display); font-size: 22px; line-height: 1.45; }
+  html[data-type="a"] .stats-lead, html[lang="ar"] .stats-lead { font-size: 19px; }
+  .stats-grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr; align-items: end; }
+  .stat { position: relative; padding-inline-end: 28px; min-width: 0; }
   .stat + .stat { border-inline-start: 1px solid var(--line); padding-inline-start: 28px; }
   .stat.b { padding-bottom: 40px; } .stat.c { padding-bottom: 6px; }
-  .stat .n { display: flex; align-items: baseline; gap: 7px; font-weight: 900; letter-spacing: -0.03em; color: var(--ink); font-variant-numeric: tabular-nums; }
-  .stat.a .n { font-size: 120px; line-height: 0.86; }
-  .stat.b .n, .stat.c .n { font-size: 62px; line-height: 0.9; }
-  .stat .n small { font-size: 0.3em; font-weight: 700; color: var(--gold); }
-  .stat .cap { display: block; margin-top: 14px; max-width: 280px; font-size: 15.5px; line-height: 1.5; color: var(--dim); }
-  .stat .dot { position: absolute; inset-inline-start: 0; width: 6px; height: 6px; border-radius: 999px; background: var(--gold); top: -14px; opacity: 0; transition: opacity .5s ease .5s; }
-  .stat.b .dot, .stat.c .dot { inset-inline-start: 28px; }
-  .stat.in .dot { opacity: 1; }
+  .stat .n { display: flex; align-items: baseline; gap: 7px; font-weight: var(--nw); letter-spacing: -0.03em; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .stat.a .n { font-size: 120px; line-height: 0.86; } .stat.b .n, .stat.c .n { font-size: 62px; line-height: 0.9; }
+  .stat .n small { font-size: 0.3em; font-weight: 600; color: var(--gold); letter-spacing: 0; }
+  html[lang="ar"] .stat .n { letter-spacing: 0; } html[lang="ar"] .stat.a .n { line-height: 1.1; } html[lang="ar"] .stat.b .n, html[lang="ar"] .stat.c .n { line-height: 1.15; }
+  .stat .cap { display: block; margin-top: 14px; max-width: 290px; font-size: 15.5px; line-height: 1.5; color: var(--dim); }
+  /* règle graduée : un trait par unité, les traits dorés se dévoilent pendant le décompte (13 sur 60 secondes ; 20 méthodes ; 12 langues) */
+  .ticks { --s: calc(100% / var(--n)); position: relative; height: 11px; margin-top: 16px; max-width: 100%; overflow: hidden;
+    background: repeating-linear-gradient(to right, transparent 0, transparent calc(var(--s) / 2 - 0.5px), var(--tick) calc(var(--s) / 2 - 0.5px), var(--tick) calc(var(--s) / 2 + 0.5px), transparent calc(var(--s) / 2 + 0.5px), transparent var(--s)); }
+  .stat.a .ticks { width: 360px; } .stat.b .ticks { width: 200px; } .stat.c .ticks { width: 132px; }
+  .ticks i { position: absolute; inset-block: 0; inset-inline-start: 0; width: calc(100% * var(--f)); overflow: hidden; transform: translateX(calc(-101% * var(--sx))); transition: transform var(--d, 0.9s) cubic-bezier(.2,.7,.2,1); }
+  .ticks i::before { content: ""; --s: calc(100% / var(--n)); position: absolute; inset-block: 0; inset-inline-start: 0; width: calc(100% / var(--f)); transform: translateX(calc(101% * var(--f) * var(--sx))); transition: inherit;
+    background: repeating-linear-gradient(to right, transparent 0, transparent calc(var(--s) / 2 - 0.75px), var(--gold) calc(var(--s) / 2 - 0.75px), var(--gold) calc(var(--s) / 2 + 0.75px), transparent calc(var(--s) / 2 + 0.75px), transparent var(--s)); }
+  .stat.counted .ticks i, .stat.counted .ticks i::before { transform: none; }
 
-  /* ================= UN UNIVERS - CIEL ================= */
-  .sky-u { position: relative; overflow: clip; padding: 112px 0 122px;
-    background: radial-gradient(1400px 780px at 50% 18%, #0B1330 0%, #070b16 62%, var(--bg) 100%); }
+  /* ================= UN UNIVERS : CIEL ================= */
+  .sky-u { position: relative; overflow: clip; padding: 112px 0 122px; background: radial-gradient(1400px 780px at 50% 18%, #0B1330 0%, #070b16 62%, var(--bg) 100%); }
   .sky-u::before { content: ""; position: absolute; inset: 0; opacity: 0.9; pointer-events: none;
-    background-image:
-      radial-gradient(1.3px 1.3px at 8% 22%, #dfe6ff 60%, transparent 61%), radial-gradient(1px 1px at 22% 68%, #cfd8ff 60%, transparent 61%),
-      radial-gradient(1.6px 1.6px at 38% 12%, #fff 60%, transparent 61%), radial-gradient(1px 1px at 55% 44%, #cfd8ff 60%, transparent 61%),
-      radial-gradient(1.2px 1.2px at 68% 78%, #dfe6ff 60%, transparent 61%), radial-gradient(1.5px 1.5px at 83% 30%, #fff 60%, transparent 61%),
-      radial-gradient(1px 1px at 92% 60%, #cfd8ff 60%, transparent 61%), radial-gradient(1.2px 1.2px at 14% 88%, #dfe6ff 60%, transparent 61%); }
+    background-image: radial-gradient(1.3px 1.3px at 8% 22%, #dfe6ff 60%, transparent 61%), radial-gradient(1px 1px at 22% 68%, #cfd8ff 60%, transparent 61%), radial-gradient(1.6px 1.6px at 38% 12%, #fff 60%, transparent 61%), radial-gradient(1px 1px at 55% 44%, #cfd8ff 60%, transparent 61%), radial-gradient(1.2px 1.2px at 68% 78%, #dfe6ff 60%, transparent 61%), radial-gradient(1.5px 1.5px at 83% 30%, #fff 60%, transparent 61%), radial-gradient(1px 1px at 92% 60%, #cfd8ff 60%, transparent 61%), radial-gradient(1.2px 1.2px at 14% 88%, #dfe6ff 60%, transparent 61%); }
+  /* deux orbites centrées sur l'écran du ciel : elles traversent le vide côté texte, un astre parcourt chacune très lentement */
+  .orbits { position: absolute; inset: 0; pointer-events: none; }
+  .orbit { position: absolute; top: 50%; inset-inline-start: 74%; width: var(--D); height: var(--D); margin-top: calc(var(--D) / -2); margin-inline-start: calc(var(--D) / -2); border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(170,185,235,0.13); animation: spin var(--T) linear infinite; animation-play-state: paused; }
+  .orbit.o2 { box-shadow: inset 0 0 0 1px rgba(226,182,89,0.12); animation-direction: reverse; }
+  .sky-u.run .orbit { animation-play-state: running; }
+  .orbit b { position: absolute; top: -3px; left: 50%; width: 6px; height: 6px; margin-left: -3px; border-radius: 50%; background: #E8EDFF; }
+  .orbit.o2 b { background: var(--gold-soft); width: 5px; height: 5px; top: -2.5px; }
+  @keyframes spin { from { transform: rotate(var(--A, 0deg)); } to { transform: rotate(calc(var(--A, 0deg) + 360deg)); } }
   .sky-u .wrap { position: relative; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 10px; }
-  .sky-u .txt { max-width: 430px; }
-  .sky-u .num { font-size: 14px; font-weight: 800; color: var(--dim); }
-  .sky-u h3 { margin: 12px 0 0; font-weight: 800; font-size: clamp(27px, 3.2vw, 40px); line-height: 1.18; letter-spacing: -0.015em; color: var(--ink); }
+  .sky-u .txt { max-width: 440px; }
+  .sky-u .num { font-size: 14px; font-weight: 500; color: var(--dim); }
+  .sky-u h3 { margin-top: 12px; font-size: calc(clamp(28px, 3.3vw, 42px) * var(--hs)); line-height: 1.16; }
   .sky-u p { margin: 16px 0 0; color: var(--soft); max-width: 400px; }
-  .sky-u ul { list-style: none; margin: 20px 0 0; padding: 0; }
+  .sky-u ul { list-style: none; margin: 20px 0 0; padding: 0; max-width: 400px; }
   .sky-u li { position: relative; padding-block: 9px; padding-inline-start: 20px; font-size: 15px; color: var(--dim); border-top: 1px solid var(--line); }
   .sky-u li::before { content: ""; position: absolute; inset-inline-start: 2px; top: 1.15em; width: 4px; height: 4px; border-radius: 999px; background: var(--gold); }
   .sky-u .frame { position: relative; justify-self: end; width: 336px; margin-inline-end: -74px; }
   .sky-u .frame::after { content: ""; position: absolute; inset: -46px -46px 30%; z-index: -1; background: radial-gradient(closest-side, rgba(120,150,255,0.16), transparent 70%); }
-  .sky-u .phone { border-radius: 38px; padding: 6px; background: #0D1529; box-shadow: 0 50px 110px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(170,185,225,0.16);
-    -webkit-mask-image: linear-gradient(180deg, #000 82%, transparent 99%); mask-image: linear-gradient(180deg, #000 82%, transparent 99%); }
-  .sky-u .phone img { border-radius: 32px; width: 100%; aspect-ratio: 880/1912; }
+  .sky-u .phone { border-radius: 38px; -webkit-mask-image: linear-gradient(180deg, #000 82%, transparent 99%); mask-image: linear-gradient(180deg, #000 82%, transparent 99%); }
+  .sky-u .phone img { border-radius: 32px; }
 
-  /* ================= COMPAGNON - rupture editoriale, plus intime ================= */
-  .cmp2 { position: relative; overflow: clip; padding: 122px 0 126px; background: radial-gradient(1200px 640px at 50% 0%, var(--leaf-wash), transparent 62%), var(--bg); }
+  /* ================= COMPAGNON ================= */
+  .cmp2 { position: relative; overflow: clip; padding: 122px 0 118px; background: radial-gradient(1200px 640px at 50% 0%, var(--leaf-wash), transparent 62%), var(--bg); }
   .cmp2::before { content: ""; position: absolute; left: 50%; top: 0; width: 1px; height: 70px; background: linear-gradient(180deg, transparent, var(--leaf)); transform: translateX(-50%); opacity: 0.55; }
   .cmp2-head { max-width: 600px; margin: 0 auto; text-align: center; }
-  .cmp2-head .lk { display: inline-flex; align-items: center; gap: 7px; font-size: 13.5px; font-weight: 700; color: var(--leaf-light); }
-  .cmp2-head .lk img { width: 15px; height: 10px; }
-  .cmp2-head h2 { margin: 18px 0 0; font-weight: 800; font-size: clamp(28px, 4vw, 44px); line-height: 1.2; letter-spacing: -0.015em; color: var(--ink); }
+  .cmp2-head .lk { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; color: #8fd96a; }
+  .cmp2-head .lk img { width: 16px; height: 10px; }
+  .cmp2-head h2 { margin-top: 18px; font-size: calc(clamp(30px, 4.2vw, 48px) * var(--hs)); line-height: 1.18; }
   .cmp2-head p { margin: 18px auto 0; max-width: 430px; color: var(--soft); font-size: 16.5px; }
   .cmp2-stage { position: relative; height: 600px; margin-top: 64px; }
-  .cmp2-stage .phone { position: absolute; border-radius: 34px; padding: 6px; background: #14180F; box-shadow: 0 44px 96px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(210,220,200,0.12); }
-  .cmp2-stage .phone img { border-radius: 28px; width: 100%; aspect-ratio: 880/1912; }
-  .cmp2-stage .m-mushaf { width: 266px; inset-inline-start: 50%; margin-inline-start: -133px; z-index: 3; top: 0; }
-  .cmp2-stage .m-hadith { width: 186px; inset-inline-start: 50%; margin-inline-start: -320px; top: 126px; z-index: 2; opacity: 0.85; }
-  .cmp2-stage .m-tasbih { width: 186px; inset-inline-start: 50%; margin-inline-start: 144px; top: 184px; z-index: 2; opacity: 0.85; }
-  .cmp2-list { display: flex; justify-content: center; gap: 44px; margin-top: 44px; flex-wrap: wrap; }
-  .cmp2-list div { max-width: 168px; text-align: center; }
-  .cmp2-list dt { font-weight: 800; font-size: 16px; color: var(--leaf-light); }
-  .cmp2-list dd { margin: 7px 0 0; font-size: 14px; color: var(--dim); line-height: 1.5; }
+  .cmp2-stage .phone { position: absolute; inset-inline-start: 50%; border-radius: 34px; background: #14180F; box-shadow: 0 44px 96px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(210,220,200,0.12); }
+  .cmp2-stage .phone img { border-radius: 28px; }
+  .cmp2-stage .m-mushaf { width: 266px; margin-inline-start: -133px; z-index: 3; top: 0; }
+  .cmp2-stage .m-hadith { width: 186px; margin-inline-start: -320px; top: 126px; z-index: 2; opacity: 0.85; }
+  .cmp2-stage .m-tasbih { width: 186px; margin-inline-start: 144px; top: 184px; z-index: 2; opacity: 0.85; }
+  .cmp2-names { display: flex; justify-content: center; gap: 40px; margin: 36px 0 0; font-size: 15.5px; color: var(--soft); }
 
-  /* ================= fermeture d'etude ================= */
-  .studyend { padding: 84px 0 66px; text-align: center; border-top: 1px solid var(--line); }
-  .studyend .lockup { justify-content: center; }
-  .studyend .lockup img { width: 55px; height: 38px; } .studyend .lockup .word { font-size: 30px; }
+  .studyend { padding: 80px 0 64px; text-align: center; border-top: 1px solid var(--line); }
+  .studyend .brand img { width: 180px; height: 44px; margin-inline: auto; }
   .studyend p { margin: 18px auto 0; max-width: 420px; color: var(--faint); font-size: 13.5px; }
 
   @media (max-width: 900px) {
     body { font-size: 16.5px; }
     .wrap { width: calc(100% - 32px); }
     .bar { height: 64px; }
-    .bar .lockup img { width: 36px; height: 25px; } .bar .lockup .word { font-size: 20px; }
+    .brand img { width: 102px; height: 25px; }
     nav.top { gap: 6px; } nav.top a.nl { display: none; }
-    .lang-btn #langName { display: none; }
-    .lang-btn { padding: 0 8px; }
-    nav.top .btn { padding: 0 14px; font-size: 13.5px; }
-    .lang-menu { position: fixed; top: 68px; inset-inline: 12px; width: calc(100vw - 24px); max-width: calc(100vw - 24px); grid-template-columns: 1fr; max-height: calc(100vh - 84px); overflow-y: auto; }
-    .hero-grid { grid-template-columns: 1fr; gap: 34px; padding-block: 30px 8px; }
-    .hero-lead { font-size: 16.5px; }
-    .hero-cta .btn-gold { flex: 1 1 100%; min-height: 52px; }
-    .hero-stage { height: 480px; }
-    .hero-stage .p-main { width: 232px; margin-inline-start: -50px; }
-    .hero-stage .p-l { width: 178px; margin-inline-start: -196px; top: 58px; }
-    .hero-stage .p-r { width: 178px; margin-inline-start: 54px; top: 58px; }
+    .lang-btn #langName { display: none; } .lang-btn { padding: 0 8px; }
+    .btn-line { min-height: 38px; padding: 0 13px; font-size: 13.5px; }
+    .lang-menu { position: fixed; top: 68px; inset-inline: 12px; width: calc(100vw - 24px); max-height: calc(100vh - 84px); overflow-y: auto; }
+    /* mobile : titre, action, puis le produit tout de suite ; le texte long passe après l'image */
+    .hero-grid { grid-template-columns: minmax(0,1fr); grid-template-rows: none; grid-template-areas: "a" "c" "fig" "b" "d"; padding-block: 26px 8px; }
+    h1.hero-h { font-size: calc(35px * var(--hs)); }
+    .h-c { margin-top: 18px; gap: 18px; }
+    .hero-fig { margin-top: 24px; }
+    .hero-stage { height: 470px; }
+    .hero-stage .p-main { width: 228px; margin-inline-start: -114px; }
+    .hero-stage .p-l { width: 172px; margin-inline-start: -184px; top: 56px; }
+    .hero-stage .p-r { width: 172px; margin-inline-start: 12px; top: 56px; }
+    .hero-fig figcaption { margin-top: 12px; }
+    .h-b p { margin-top: 26px; font-size: 16.5px; }
     .stats { padding: 58px 0 54px; }
-    .stats-lead { margin-bottom: 36px; font-size: 16.5px; }
-    .stats-grid { grid-template-columns: 1fr 1fr; row-gap: 30px; }
-    .stat.a { grid-column: 1 / -1; padding-inline: 0; }
-    .stat.a .n { font-size: 88px; }
-    .stat.b, .stat.c { padding-bottom: 0 !important; }
-    .stat.b { padding-inline-end: 16px; } .stat.c { padding-inline-start: 16px; }
+    .stats-lead { margin-bottom: 36px; font-size: 19px; }
+    html[data-type="a"] .stats-lead, html[lang="ar"] .stats-lead { font-size: 17px; }
+    .stats-grid { grid-template-columns: minmax(0,1fr) minmax(0,1fr); row-gap: 32px; }
+    .stat.a { grid-column: 1 / -1; padding-inline: 0; } .stat.a .n { font-size: 88px; }
+    .stat.a .ticks { width: 100%; }
+    .stat.b, .stat.c { padding-bottom: 0; } .stat.b { padding-inline-end: 16px; } .stat.c { padding-inline-start: 16px; }
     .stat.b .n, .stat.c .n { font-size: 48px; }
+    .stat.b .ticks { width: 100%; max-width: 160px; } .stat.c .ticks { width: 100%; max-width: 110px; }
     .sky-u { padding: 64px 0 70px; }
-    .sky-u .wrap { grid-template-columns: 1fr; gap: 36px; text-align: center; }
+    .orbits { display: none; }
+    .sky-u .wrap { grid-template-columns: minmax(0,1fr); gap: 36px; text-align: center; }
     .sky-u .txt { max-width: 460px; margin-inline: auto; }
     .sky-u ul { text-align: start; max-width: 300px; margin-inline: auto; }
-    .sky-u .frame { justify-self: center !important; width: 76%; max-width: 300px; margin-inline: 0 !important; }
-    .cmp2 { padding: 70px 0 74px; }
+    .sky-u .frame { justify-self: center; width: 76%; max-width: 300px; margin-inline: 0; }
+    .cmp2 { padding: 70px 0 70px; }
     .cmp2-stage { height: 440px; margin-top: 42px; }
     .cmp2-stage .m-mushaf { width: 192px; margin-inline-start: -96px; }
     .cmp2-stage .m-hadith { width: 118px; margin-inline-start: -152px; top: 122px; }
     .cmp2-stage .m-tasbih { width: 118px; margin-inline-start: 38px; top: 168px; }
-    .cmp2-list { flex-direction: column; align-items: center; gap: 22px; margin-top: 32px; }
-    .cmp2-list div { max-width: 260px; }
+    .cmp2-names { gap: 28px; margin-top: 22px; font-size: 15px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .rv, .rv2, .rv3, .rv4 { opacity: 1; transform: none; transition: none; }
+    .hero-stage .phone, .orbit { animation: none; }
+    .ticks i, .ticks i::before { transform: none; transition: none; }
   }
 </style>
 </head>
@@ -206,10 +218,7 @@
 
 <header>
   <div class="wrap bar">
-    <a class="lockup" href="#top" aria-label="aljana">
-      <img src="assets/brand/leaf.png" alt="" width="709" height="486">
-      <span class="word">aljana</span>
-    </a>
+    <a class="brand" href="#top" aria-label="aljana"><img src="assets/brand/aljana-lockup-light.webp" alt="aljana" width="900" height="220"></a>
     <nav class="top">
       <a class="nl" href="#stats" data-i="navStats">précision</a>
       <a class="nl" href="#ciel" data-i="navCiel">le ciel</a>
@@ -221,7 +230,7 @@
         </button>
         <div class="lang-menu" id="langMenu"></div>
       </div>
-      <a class="btn btn-gold" data-i="ctaGold" href="#">Accéder à la bêta</a>
+      <a class="btn btn-line" data-i="ctaGold" href="https://beta.aljana.app">Accéder à la bêta</a>
     </nav>
   </div>
 </header>
@@ -234,40 +243,42 @@
       <path d="M-60 380 C 300 180, 680 90, 1460 340" fill="none" stroke="url(#hg)" stroke-width="1.2" vector-effect="non-scaling-stroke"/>
     </svg>
     <div class="wrap hero-grid">
-      <div class="hero-txt rv">
-        <h1 class="hero-h" data-i="heroH1">Vos prières et votre ciel, <span class="accent" data-i="heroH1b">à l'endroit exact où vous êtes.</span></h1>
-        <p class="hero-lead" data-i="heroLead">aljana réunit les horaires de prière, le ciel en direct, la Lune, le Hilal, la Qibla et les éclipses. Chaque valeur est calculée pour votre position, à la seconde.</p>
-        <div class="hero-cta">
-          <a class="btn btn-gold" data-i="ctaGold" href="#">Accéder à la bêta</a>
-          <a class="btn-text" href="#ciel" data-i="ctaGhost">Voir un univers <span aria-hidden>→</span></a>
+      <div class="h-a rv"><h1 class="hero-h"><span data-i="heroH1">Vos prières et votre ciel, </span><span class="accent" data-i="heroH1b">à l'endroit exact où vous êtes.</span></h1></div>
+      <div class="h-b rv rv2"><p data-i="heroLead">aljana réunit les horaires de prière, le ciel en direct, la Lune, le Hilal, la Qibla et les éclipses. Chaque valeur est calculée pour votre position, à la seconde.</p></div>
+      <div class="h-c rv rv2">
+        <a class="btn btn-gold" data-i="ctaGold" href="https://beta.aljana.app">Accéder à la bêta</a>
+        <a class="btn-text" href="#ciel"><span data-i="ctaGhost">Voir un univers</span> <span class="arw" aria-hidden="true">→</span></a>
+      </div>
+      <div class="h-d rv rv3"><p data-i="heroNote">Application actuellement en bêta privée. Accès réservé aux bêta-testeurs invités.</p></div>
+      <figure class="hero-fig">
+        <div class="hero-stage">
+          <div class="glow" aria-hidden="true"></div>
+          <div class="phone p-l"><img data-shot="prieres" alt="" width="880" height="1912"></div>
+          <div class="phone p-r"><img data-shot="ciel" alt="" width="880" height="1912"></div>
+          <div class="phone p-main"><img data-shot="accueil" alt="" width="880" height="1912"></div>
         </div>
-        <p class="hero-note" data-i="heroNote">Application actuellement en bêta privée. Accès réservé aux bêta-testeurs invités.</p>
-        <div class="live-chip"><span class="dot" aria-hidden></span><b data-i="kick">Calculé en direct pour votre position</b></div>
-      </div>
-      <div class="hero-stage rv rv2" aria-label="trois écrans réels de l'application">
-        <div class="glow" aria-hidden="true"></div>
-        <div class="phone p-l"><img data-shot="prieres" alt="" width="880" height="1912"></div>
-        <div class="phone p-r"><img data-shot="ciel" alt="" width="880" height="1912"></div>
-        <div class="phone p-main"><img data-shot="accueil" alt="" width="880" height="1912"></div>
-      </div>
+        <figcaption data-i="kick">Calculé en direct pour votre position</figcaption>
+      </figure>
     </div>
   </section>
 
   <section class="stats" id="stats">
     <div class="wrap">
       <p class="stats-lead rv" data-i="statsLead">Nous ne comparons pas aljana à d'autres applications. Nous mesurons l'écart face au ciel lui-même.</p>
-      <svg class="stats-arc" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="var(--line)" stroke-width="1"/></svg>
       <div class="stats-grid">
-        <div class="stat a rv" data-count="13"><span class="dot"></span>
+        <div class="stat a rv" data-count="13">
           <span class="n"><span class="v">0</span><small data-i="statAUnit"> s</small></span>
+          <div class="ticks" style="--n:60;--f:0.21667" aria-hidden="true"><i></i></div>
           <span class="cap" data-i="statACap">Écart maximal mesuré, contrôlé face à JPL Horizons sur 120 instants de référence.</span>
         </div>
-        <div class="stat b rv rv2" data-count="20"><span class="dot"></span>
+        <div class="stat b rv rv2" data-count="20">
           <span class="n"><span class="v">0</span><small data-i="statBUnit"> méthodes</small></span>
+          <div class="ticks" style="--n:20;--f:1;--d:1.1s" aria-hidden="true"><i></i></div>
           <span class="cap" data-i="statBCap">Votre pratique, votre réglage : méthodes internationales et choix de l'école pour l'Asr.</span>
         </div>
-        <div class="stat c rv rv3" data-count="12"><span class="dot"></span>
+        <div class="stat c rv rv3" data-count="12">
           <span class="n"><span class="v">0</span><small data-i="statCUnit"> langues</small></span>
+          <div class="ticks" style="--n:12;--f:1;--d:1s" aria-hidden="true"><i></i></div>
           <span class="cap" data-i="statCCap">Interface localisée, lecture de droite à gauche comprise.</span>
         </div>
       </div>
@@ -275,9 +286,13 @@
   </section>
 
   <section class="sky-u" id="ciel">
+    <div class="orbits" aria-hidden="true">
+      <div class="orbit" style="--D:820px;--T:150s;--A:250deg"><b></b></div>
+      <div class="orbit o2" style="--D:1240px;--T:260s;--A:290deg"><b></b></div>
+    </div>
     <div class="wrap">
       <div class="txt rv">
-        <span class="num" data-i="skyNum">03 · Ciel</span>
+        <span class="num" data-i="skyNum">03 Ciel</span>
         <h3 data-i="skyH">Le ciel au-dessus de vous, maintenant.</h3>
         <p data-i="skyP">Une carte orientée sur votre horizon : étoiles, planètes, Lune, Voie lactée. Le mode Œil nu ne garde que ce que vous pouvez vraiment voir.</p>
         <ul>
@@ -285,16 +300,14 @@
           <li data-i="skyL2">Liste « À observer » triée par visibilité réelle</li>
         </ul>
       </div>
-      <div class="frame rv rv2">
-        <div class="phone"><img data-shot="ciel" alt="" loading="lazy" width="880" height="1912"></div>
-      </div>
+      <div class="frame rv rv2"><div class="phone"><img data-shot="ciel" alt="" loading="lazy" width="880" height="1912"></div></div>
     </div>
   </section>
 
   <section class="cmp2" id="compagnon">
     <div class="wrap">
       <div class="cmp2-head rv">
-        <span class="lk"><img src="assets/brand/leaf.png" alt="" width="709" height="486"><span data-i="cmpKick">Compagnon</span></span>
+        <span class="lk"><img src="assets/brand/leaf.png" alt="" width="256" height="163"><span data-i="cmpKick">Compagnon</span></span>
         <h2 data-i="cmpH">Votre Compagnon, au quotidien.</h2>
         <p data-i="cmpP">Le ciel vous donne les repères. Votre Compagnon vous accompagne dans votre pratique : lecture du Mushaf, dhikr et hadith du jour.</p>
       </div>
@@ -303,17 +316,13 @@
         <div class="phone m-hadith rv rv3"><img data-cmp="hadith" alt="" loading="lazy" width="880" height="1912"></div>
         <div class="phone m-tasbih rv rv4"><img data-cmp="tasbih" alt="" loading="lazy" width="880" height="1912"></div>
       </div>
-      <dl class="cmp2-list rv">
-        <div><dt data-i="cmpMushaf">Mushaf</dt><dd data-i="cmpMushafD">Ḥafṣ, page après page.</dd></div>
-        <div><dt data-i="cmpHadith">Hadith</dt><dd data-i="cmpHadithD">Un texte authentifié, chaque jour.</dd></div>
-        <div><dt data-i="cmpTasbih">Tasbih</dt><dd data-i="cmpTasbihD">Vos dhikr, comptés d'un geste.</dd></div>
-      </dl>
+      <p class="cmp2-names rv"><span data-i="cmpHadith">Hadith</span><span data-i="cmpMushaf">Mushaf</span><span data-i="cmpTasbih">Tasbih</span></p>
     </div>
   </section>
 
   <section class="studyend">
     <div class="wrap">
-      <span class="lockup rv"><img src="assets/brand/leaf.png" alt="" width="709" height="486"><span class="word">aljana</span></span>
+      <span class="brand rv"><img src="assets/brand/aljana-lockup-light.webp" alt="aljana" width="900" height="220" loading="lazy"></span>
       <p class="rv" data-i="studyEnd">Étude de direction artistique. Page de travail, non indexée, non liée à la production.</p>
     </div>
   </section>
@@ -323,8 +332,19 @@
 (function () {
   var $ = function (s, r) { return (r || document).querySelector(s); }, $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
   var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var qs = new URLSearchParams(location.search);
 
-  /* les 12 langues du site reel (memes noms/drapeaux) ; seules fr et ar sont cablees a ce stade de l'etude */
+  /* piste typographique : B par défaut, ?type=a pour la grotesque seule. Une seule feuille de polices latines chargée à la fois. */
+  if (qs.get('type') === 'a') {
+    document.documentElement.dataset.type = 'a';
+    $('#font-latin').href = 'https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&display=swap';
+  }
+  function arabicFont() {
+    if ($('#font-ar')) return;
+    var l = document.createElement('link'); l.id = 'font-ar'; l.rel = 'stylesheet';
+    l.href = 'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap'; document.head.appendChild(l);
+  }
+
   var LANGS = [
     ['fr', 'Français', '🇫🇷', false], ['en-US', 'English (US)', '🇺🇸', false], ['en-GB', 'English (UK)', '🇬🇧', false],
     ['ar', 'العربية', '🇸🇦', true], ['es', 'Español', '🇪🇸', false], ['de', 'Deutsch', '🇩🇪', false],
@@ -332,7 +352,6 @@
     ['fa', 'فارسی', '🇮🇷', true], ['ru', 'Русский', '🇷🇺', false], ['zh', '中文', '🇨🇳', false], ['hi', 'हिन्दी', '🇮🇳', false],
   ];
   var WIRED = ['fr', 'ar'];
-
   var T = {
     fr: {
       navStats: "précision", navCiel: "le ciel", navCmp: "compagnon",
@@ -345,97 +364,81 @@
       statAUnit: " s", statACap: "Écart maximal mesuré, contrôlé face à JPL Horizons sur 120 instants de référence.",
       statBUnit: " méthodes", statBCap: "Votre pratique, votre réglage : méthodes internationales et choix de l'école pour l'Asr.",
       statCUnit: " langues", statCCap: "Interface localisée, lecture de droite à gauche comprise.",
-      skyNum: "03 · Ciel", skyH: "Le ciel au-dessus de vous, maintenant.",
+      skyNum: "03 Ciel", skyH: "Le ciel au-dessus de vous, maintenant.",
       skyP: "Une carte orientée sur votre horizon : étoiles, planètes, Lune, Voie lactée. Le mode Œil nu ne garde que ce que vous pouvez vraiment voir.",
       skyL1: "Vue en carte ou face à l'horizon", skyL2: "Liste « À observer » triée par visibilité réelle",
       cmpKick: "Compagnon", cmpH: "Votre Compagnon, au quotidien.",
       cmpP: "Le ciel vous donne les repères. Votre Compagnon vous accompagne dans votre pratique : lecture du Mushaf, dhikr et hadith du jour.",
-      cmpMushaf: "Mushaf", cmpMushafD: "Ḥafṣ, page après page.", cmpHadith: "Hadith", cmpHadithD: "Un texte authentifié, chaque jour.",
-      cmpTasbih: "Tasbih", cmpTasbihD: "Vos dhikr, comptés d'un geste.",
+      cmpMushaf: "Mushaf", cmpHadith: "Hadith", cmpTasbih: "Tasbih",
       studyEnd: "Étude de direction artistique. Page de travail, non indexée, non liée à la production.",
     },
     ar: {
-      navStats: "الدقة", navCiel: "السماء", navCmp: "الصاحب",
+      navStats: "الدقة", navCiel: "السماء", navCmp: "صاحبي",
       ctaGold: "دخول النسخة التجريبية", ctaGhost: "اكتشف عالماً",
       heroH1: "صلاتك وسماؤك، ", heroH1b: "في المكان الذي أنت فيه تماماً.",
-      heroLead: "يجمع aljana مواقيت الصلاة، والسماء المباشرة، والقمر، والهلال، والقبلة، والكسوف. كل قيمة محسوبة لموقعك، بالثانية.",
+      heroLead: "يجمع aljana مواقيت الصلاة والسماء مباشرة والقمر والهلال والقبلة والكسوف. كل قيمة محسوبة لموقعك، بالثانية.",
       heroNote: "التطبيق حالياً في مرحلة تجريبية خاصة. الدخول متاح للمختبرين المدعوين فقط.",
       kick: "محسوب مباشرة لموقعك",
       statsLead: "لا نقارن aljana بتطبيقات أخرى. نقيس الفرق أمام السماء نفسها.",
-      statAUnit: " ث", statACap: "أقصى فرق تم قياسه، مُراجَع أمام JPL Horizons في ١٢٠ لحظة مرجعية.",
-      statBUnit: " طريقة", statBCap: "ممارستك، إعدادك: طرق دولية واختيار المذهب لصلاة العصر.",
+      statAUnit: " ث", statACap: "أقصى فرق تم قياسه، مُراجَع على JPL Horizons في ١٢٠ لحظة مرجعية.",
+      statBUnit: " طريقة", statBCap: "ممارستك، إعدادك: طرق حساب عالمية مع اختيار المذهب لصلاة العصر.",
       statCUnit: " لغة", statCCap: "واجهة مترجمة كاملة، ومنها الكتابة من اليمين إلى اليسار.",
-      skyNum: "٠٣ · السماء", skyH: "السماء فوقك، الآن.",
-      skyP: "خريطة موجهة على أفقك: نجوم، كواكب، القمر، درب التبانة. وضع العين المجردة يُبقي فقط ما يمكنك رؤيته فعلاً.",
+      skyNum: "٠٣ السماء", skyH: "السماء فوقك، الآن.",
+      skyP: "خريطة موجهة على أفقك: نجوم وكواكب والقمر ودرب التبانة. وضع العين المجردة يُبقي فقط ما يمكنك رؤيته فعلاً.",
       skyL1: "عرض الخريطة أو مواجهة الأفق", skyL2: "قائمة «للرصد» مرتبة حسب الرؤية الفعلية",
-      cmpKick: "الصاحب", cmpH: "صاحبك، في كل يوم.",
-      cmpP: "السماء تمنحك المعالم. وصاحبك يرافقك في عبادتك: قراءة المصحف، والذكر، وحديث اليوم.",
-      cmpMushaf: "المصحف", cmpMushafD: "برواية حفص، صفحة بعد صفحة.", cmpHadith: "الحديث", cmpHadithD: "نص موثَّق، كل يوم.",
-      cmpTasbih: "التسبيح", cmpTasbihD: "أذكارك، تُعدّ بلمسة واحدة.",
+      cmpKick: "صاحبي", cmpH: "صاحبك، في كل يوم.",
+      cmpP: "السماء تمنحك المعالم. وصاحبك يرافقك في عبادتك: قراءة المصحف والذكر وحديث اليوم.",
+      cmpMushaf: "المصحف", cmpHadith: "الحديث", cmpTasbih: "التسبيح",
       studyEnd: "دراسة هوية بصرية. صفحة عمل، غير مفهرسة، غير مرتبطة بالإنتاج.",
     }
   };
 
   function shots(lang) {
-    $$('img[data-shot]').forEach(function (img) { img.src = 'assets/screens/' + lang + '/' + img.dataset.shot + '.webp'; img.alt = 'aljana, ' + img.dataset.shot; });
+    $$('img[data-shot]').forEach(function (img) { img.src = 'assets/screens/' + lang + '/' + img.dataset.shot + '.webp'; });
     $$('img[data-cmp]').forEach(function (img) { img.src = 'assets/companion/' + lang + '/' + img.dataset.cmp + '.webp'; });
   }
   function apply(lang) {
-    var t = T[lang], meta = LANGS.filter(function (l) { return l[0] === lang; })[0];
-    var html = document.documentElement;
+    var t = T[lang], meta = LANGS.filter(function (l) { return l[0] === lang; })[0], html = document.documentElement;
+    if (lang === 'ar') arabicFont();
     html.lang = lang; html.dir = meta[3] ? 'rtl' : 'ltr';
     $$('[data-i]').forEach(function (el) { var v = t[el.dataset.i]; if (v != null) el.textContent = v; });
     shots(lang);
     $('#langFlag').textContent = meta[2]; $('#langName').textContent = meta[1];
     $$('.lang-opt').forEach(function (b) { b.setAttribute('aria-current', b.dataset.lang === lang ? 'true' : 'false'); });
-    resetCounts();
   }
-  function buildLangMenu() {
-    var host = $('#langMenu');
-    LANGS.forEach(function (l) {
-      var wired = WIRED.indexOf(l[0]) !== -1;
-      var b = document.createElement('button'); b.type = 'button'; b.className = 'lang-opt'; b.dataset.lang = l[0];
-      if (!wired) b.disabled = true;
-      b.innerHTML = '<span class="flag" aria-hidden="true">' + l[2] + '</span><span>' + l[1] + (wired ? '' : ' ·</span>');
-      host.appendChild(b);
-    });
-  }
+  LANGS.forEach(function (l) {
+    var b = document.createElement('button'); b.type = 'button'; b.className = 'lang-opt'; b.dataset.lang = l[0];
+    if (WIRED.indexOf(l[0]) === -1) b.disabled = true;
+    b.innerHTML = '<span class="flag" aria-hidden="true">' + l[2] + '</span><span>' + l[1] + '</span>'; $('#langMenu').appendChild(b);
+  });
   function menu(open) { $('#langMenu').classList.toggle('open', open); $('#langBtn').setAttribute('aria-expanded', open ? 'true' : 'false'); }
-  buildLangMenu();
   $('#langBtn').addEventListener('click', function (e) { e.stopPropagation(); menu(!$('#langMenu').classList.contains('open')); });
-  document.addEventListener('click', function (e) { var b = e.target.closest('.lang-opt'); if (b && !b.disabled) { apply(b.dataset.lang, true); menu(false); return; } if (!e.target.closest('.lang')) menu(false); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { menu(false); $('#langBtn').focus(); } });
+  document.addEventListener('click', function (e) { var b = e.target.closest('.lang-opt'); if (b && !b.disabled) { apply(b.dataset.lang); menu(false); return; } if (!e.target.closest('.lang')) menu(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') menu(false); });
 
-  /* ---------- reveal au scroll ---------- */
-  if ('IntersectionObserver' in window) {
+  var hasIO = 'IntersectionObserver' in window;
+  if (hasIO) {
     var io = new IntersectionObserver(function (es) { es.forEach(function (x) { if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target); } }); }, { rootMargin: '0px 0px -10% 0px' });
     $$('.rv').forEach(function (el) { io.observe(el); });
+    /* les orbites ne tournent que lorsque la section est à l'écran */
+    new IntersectionObserver(function (es) { es.forEach(function (x) { x.target.classList.toggle('run', x.isIntersecting && !reduced); }); }).observe($('.sky-u'));
   } else $$('.rv').forEach(function (el) { el.classList.add('in'); });
 
-  /* ---------- count-up sobre : rAF, ease-out cubic, ~800ms, une seule fois ---------- */
-  function resetCounts() { $$('.stat').forEach(function (s) { s.classList.remove('counted'); s.querySelector('.v').textContent = reduced ? s.dataset.count : '0'; }); }
-  function countUp(el, target, duration) {
-    if (reduced) { el.querySelector('.v').textContent = target; return; }
-    var start = null, v = el.querySelector('.v');
-    function step(ts) {
-      if (!start) start = ts;
-      var p = Math.min(1, (ts - start) / duration), e = 1 - Math.pow(1 - p, 3);
-      v.textContent = Math.round(e * target);
-      if (p < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
+  /* décompte : rAF, ease-out cubique, durée propre à chaque chiffre ; la règle graduée se dévoile en même temps (CSS) */
+  var DUR = { a: 900, b: 1100, c: 1000 };
+  function run(s) {
+    var v = $('.v', s), target = +s.dataset.count, k = s.classList.contains('a') ? 'a' : s.classList.contains('b') ? 'b' : 'c';
+    s.classList.add('counted');
+    if (reduced) { v.textContent = target; return; }
+    var t0 = null; requestAnimationFrame(function step(ts) { if (!t0) t0 = ts; var p = Math.min(1, (ts - t0) / DUR[k]); v.textContent = Math.round((1 - Math.pow(1 - p, 3)) * target); if (p < 1) requestAnimationFrame(step); });
   }
-  var statIO = new IntersectionObserver(function (es) {
-    es.forEach(function (x) {
-      if (!x.isIntersecting || x.target.classList.contains('counted')) return;
-      x.target.classList.add('counted');
-      var delay = x.target.classList.contains('rv3') ? 240 : x.target.classList.contains('rv2') ? 120 : 0;
-      setTimeout(function () { countUp(x.target, +x.target.dataset.count, 760); }, delay);
-    });
-  }, { threshold: 0.5 });
-  $$('.stat').forEach(function (s) { statIO.observe(s); });
+  if (hasIO) {
+    var sio = new IntersectionObserver(function (es) { es.forEach(function (x) { if (!x.isIntersecting) return; sio.unobserve(x.target);
+      var delay = x.target.classList.contains('c') ? 240 : x.target.classList.contains('b') ? 120 : 0; setTimeout(function () { run(x.target); }, delay); }); }, { threshold: 0.45 });
+    $$('.stat').forEach(function (s) { sio.observe(s); });
+  } else $$('.stat').forEach(run);
 
-  apply('fr');
+  apply(qs.get('lang') === 'ar' ? 'ar' : 'fr');
 })();
 </script>
 </body>
