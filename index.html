@@ -6,6 +6,21 @@
 <title>aljana : vos prières et votre ciel, là où vous êtes</title>
 <meta name="description" content="Horaires de prière, ciel en direct, Lune, Hilal, Qibla et éclipses. Tout est calculé pour votre position et contrôlé face aux éphémérides de la NASA.">
 <meta name="theme-color" content="#060B18">
+<script>
+  /* amorçage : sans JS tout est visible ; html.js n'active que les apparitions au défilement.
+     Langue résolue tout de suite (même règle que site.js) pour charger les captures du héros dans la bonne langue sans attendre i18n.js.
+     Filet : si site.js n'a pas signalé qu'il tourne au bout de 3 s (script lent, bloqué ou en erreur), html.rv-safe montre tout. */
+  (function (h) {
+    h.className += " js";
+    var C = ["fr", "en-US", "en-GB", "ar", "es", "de", "tr", "id", "ur", "fa", "ru", "zh", "hi"], l = null;
+    function r(t) { t = String(t || ""); if (C.indexOf(t) >= 0) return t; if (/^en/i.test(t)) return /^en-(GB|IE|AU|NZ|ZA|IN|SG|MT|HK)$/i.test(t) ? "en-GB" : "en-US"; t = t.slice(0, 2).toLowerCase(); return C.indexOf(t) >= 0 ? t : null; }
+    try { l = r(new URLSearchParams(location.search).get("lang")); } catch (e) { /* ancien navigateur */ }
+    if (!l) try { l = r(localStorage.getItem("aljana.site.lang")); } catch (e) { /* stockage indisponible */ }
+    if (!l) { var n = navigator.languages || [navigator.language || "fr"]; for (var i = 0; i < n.length && !l; i++) l = r(n[i]); }
+    window.__aljLang = l || "en-US";
+    setTimeout(function () { if (!window.__aljReady) h.className += " rv-safe"; }, 3000);
+  })(document.documentElement);
+</script>
 <link rel="canonical" href="https://aljana.app/">
 <link rel="icon" href="assets/icon-192.png">
 <link rel="apple-touch-icon" href="assets/icon-192.png">
@@ -106,9 +121,18 @@
   .lang-opt:hover { background: rgba(255,255,255,0.06); color: var(--ink); }
   .lang-opt[aria-current="true"] { color: var(--gold-soft); background: rgba(226,182,89,0.08); }
 
-  .rv { opacity: 0; transform: translateY(14px); transition: opacity 0.7s cubic-bezier(.2,.7,.15,1), transform 0.7s cubic-bezier(.2,.7,.15,1); }
-  .rv.in { opacity: 1; transform: none; }
+  /* apparition au défilement : visible par défaut ; seul html.js (posé en tête) masque ce qui attend son tour. Filet : html.rv-safe montre tout. */
+  .rv { transition: opacity 0.7s cubic-bezier(.2,.7,.15,1), transform 0.7s cubic-bezier(.2,.7,.15,1); }
+  html.js .rv:not(.in) { opacity: 0; transform: translateY(14px); }
+  html.js.rv-safe .rv { opacity: 1; transform: none; }
+  html:not(.js) #maintenant { display: none; }
+  html:not(.js) .ticks i, html:not(.js) .ticks i::before { transform: none; }
   .rv2 { transition-delay: 0.08s; } .rv3 { transition-delay: 0.16s; }
+  /* héros : jamais masqué en attendant un script ; la même montée douce est jouée en CSS dès le premier affichage */
+  html.js .hero .rv:not(.in) { opacity: 1; transform: none; }
+  .hero .rv { animation: rvIn 0.7s cubic-bezier(.2,.7,.15,1) both; }
+  .hero .rv2 { animation-delay: 0.08s; } .hero .rv3 { animation-delay: 0.16s; }
+  @keyframes rvIn { from { opacity: 0; transform: translateY(14px); } }
 
   /* ================= HERO ================= */
   .hero { position: relative; overflow: clip; }
@@ -327,8 +351,8 @@
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .rv, .rv2, .rv3 { opacity: 1; transform: none; transition: none; }
-    .hero-stage .phone, .orbit { animation: none; }
+    .rv, .rv2, .rv3, html.js .rv:not(.in) { opacity: 1; transform: none; transition: none; }
+    .hero-stage .phone, .orbit, .hero .rv { animation: none; }
     .ticks i, .ticks i::before { transform: none; transition: none; }
     .cmp2-stage .phone, .cmp2-names span, .btn { transition: none; }
     .now-v b.fl { animation: none; }
@@ -374,10 +398,14 @@
       <figure class="hero-fig">
         <div class="hero-stage">
           <div class="glow" aria-hidden="true"></div>
-          <div class="phone p-l"><img data-shot="prieres" data-sn="1" alt="" width="880" height="1912"></div>
-          <div class="phone p-r"><img data-shot="ciel" data-sn="2" alt="" width="880" height="1912"></div>
-          <div class="phone p-main"><img data-shot="accueil" data-sn="0" alt="" width="880" height="1912"></div>
+          <div class="phone p-l"><img data-shot="prieres" data-sn="1" src="assets/screens/fr/prieres.webp" alt="aljana, Prières" loading="lazy" decoding="async" width="880" height="1912"></div>
+          <div class="phone p-r"><img data-shot="ciel" data-sn="2" src="assets/screens/fr/ciel.webp" alt="aljana, Ciel" loading="lazy" decoding="async" width="880" height="1912"></div>
+          <div class="phone p-main"><img data-shot="accueil" data-sn="0" src="assets/screens/fr/accueil.webp" alt="aljana, Accueil" fetchpriority="high" width="880" height="1912"></div>
         </div>
+        <script>
+          /* captures du héros dans la langue du visiteur dès l'analyse du HTML (le français est déjà dans le source) */
+          (function (l) { if (!l || l === "fr") return; var s = document.querySelectorAll(".hero img[data-shot]"); for (var i = 0; i < s.length; i++) s[i].src = "assets/screens/" + l + "/" + s[i].getAttribute("data-shot") + ".webp"; })(window.__aljLang);
+        </script>
         <figcaption data-i="kick">Calculé en direct pour votre position</figcaption>
       </figure>
     </div>
@@ -396,11 +424,11 @@
 
   <section class="stats" id="stats">
     <div class="wrap">
-      <p class="stats-lead rv" data-i="statsLead"></p>
+      <p class="stats-lead rv" data-i="statsLead">Nous ne comparons pas aljana à d'autres applications. Nous mesurons l'écart face au ciel lui-même.</p>
       <div class="stats-grid">
-        <div class="stat a rv" data-p="p1"><span class="n"><span class="v">0</span><small></small></span><div class="ticks" style="--n:60;--f:0.21667" aria-hidden="true"><i></i></div><span class="cap cap-d"></span><span class="cap cap-m"></span></div>
-        <div class="stat b rv rv2" data-p="p2"><span class="n"><span class="v">0</span><small></small></span><div class="ticks" style="--n:20;--f:1;--d:1.1s" aria-hidden="true"><i></i></div><span class="cap cap-d"></span><span class="cap cap-m"></span></div>
-        <div class="stat c rv rv3" data-p="p3"><span class="n"><span class="v">0</span><small></small></span><div class="ticks" style="--n:12;--f:1;--d:1s" aria-hidden="true"><i></i></div><span class="cap cap-d"></span><span class="cap cap-m"></span></div>
+        <div class="stat a rv" data-p="p1"><span class="n"><span class="v">13</span><small> s</small></span><div class="ticks" style="--n:60;--f:0.21667" aria-hidden="true"><i></i></div><span class="cap cap-d">Écart maximal mesuré, contrôlé face à JPL Horizons sur 120 instants de référence.</span><span class="cap cap-m">Contrôlé face à JPL Horizons, sur 120 instants de référence</span></div>
+        <div class="stat b rv rv2" data-p="p2"><span class="n"><span class="v">20</span><small> méthodes</small></span><div class="ticks" style="--n:20;--f:1;--d:1.1s" aria-hidden="true"><i></i></div><span class="cap cap-d">Votre pratique, votre réglage : méthodes internationales et choix de l'école pour l'Asr.</span><span class="cap cap-m">Méthodes internationales et choix de l’école pour l’Asr.</span></div>
+        <div class="stat c rv rv3" data-p="p3"><span class="n"><span class="v">12</span><small> langues</small></span><div class="ticks" style="--n:12;--f:1;--d:1s" aria-hidden="true"><i></i></div><span class="cap cap-d">Interface localisée, lecture de droite à gauche comprise.</span><span class="cap cap-m">Lecture de droite à gauche comprise.</span></div>
       </div>
     </div>
   </section>
@@ -412,7 +440,33 @@
     <p class="first"><span class="lbl" data-num="0">01 Accueil</span><span data-i="u01">Votre journée en un regard</span></p>
   </div>
 
-  <div id="unis"></div>
+  <div id="unis">
+    <section class="uni flip" id="u-prieres">
+      <div class="wrap"><div class="txt rv"><span class="lbl" data-num="1">02 Prières</span><h3>Savoir où en est la prière, pas seulement quand elle commence.</h3><p>La prière en cours, le temps qu'il reste et le ciel de ce moment. Les horaires du jour suivent, sans surcharge.</p><ul><li>Temps recommandé, tardif et limite de chaque prière</li><li>Un début n'est jamais affiché avant son instant exact</li></ul></div>
+      <div class="frame rv rv2"><div class="phone"><img data-shot="prieres" data-sn="1" src="assets/screens/fr/prieres.webp" alt="aljana, Prières" loading="lazy" decoding="async" width="880" height="1912"></div></div></div>
+    </section>
+    <section class="uni sky" id="u-ciel">
+      <div class="orbits" aria-hidden="true"><div class="orbit" style="--D:820px;--T:150s;--A:250deg"><b></b></div><div class="orbit o2" style="--D:1240px;--T:260s;--A:290deg"><b></b></div></div>
+      <div class="wrap"><div class="txt rv"><span class="lbl" data-num="2">03 Ciel</span><h3>Le ciel au-dessus de vous, maintenant.</h3><p>Une carte orientée sur votre horizon : étoiles, planètes, Lune, Voie lactée. Le mode Œil nu ne garde que ce que vous pouvez vraiment voir.</p><ul><li>Vue en carte ou face à l'horizon</li><li>Liste « À observer » triée par visibilité réelle</li></ul></div>
+      <div class="frame rv rv2"><div class="phone"><img data-shot="ciel" data-sn="2" src="assets/screens/fr/ciel.webp" alt="aljana, Ciel" loading="lazy" decoding="async" width="880" height="1912"></div></div></div>
+    </section>
+    <section class="uni flip" id="u-lune">
+      <div class="wrap"><div class="txt rv"><span class="lbl" data-num="3">04 Lune</span><h3>La Lune telle qu'elle est ce soir.</h3><p>Phase, éclairement et orientation réels. La page dit où la regarder, à quelle heure, et ce qui vient ensuite.</p><ul><li>Lever, passage au plus haut et coucher pour votre lieu</li><li>Prochaines phases à la minute près</li></ul></div>
+      <div class="frame rv rv2"><div class="phone"><img data-shot="lune" data-sn="3" src="assets/screens/fr/lune.webp" alt="aljana, Lune" loading="lazy" decoding="async" width="880" height="1912"></div></div></div>
+    </section>
+    <section class="uni" id="u-hilal">
+      <div class="wrap"><div class="txt rv"><span class="lbl" data-num="4">05 Hilal</span><h3>Le croissant sera-t-il visible, et d'où ?</h3><p>Une carte mondiale de visibilité et un avis clair pour votre ville. aljana prévoit, elle n'annonce pas : la décision revient aux autorités.</p><ul><li>Critères de Yallop et d'Odeh côte à côte</li><li>Rappel pour le soir d'observation</li></ul></div>
+      <div class="frame rv rv2"><div class="phone"><img data-shot="hilal" data-sn="4" src="assets/screens/fr/hilal.webp" alt="aljana, Hilal" loading="lazy" decoding="async" width="880" height="1912"></div></div></div>
+    </section>
+    <section class="uni flip" id="u-qibla">
+      <div class="wrap"><div class="txt rv"><span class="lbl" data-num="5">06 Qibla</span><h3>La direction de la Kaaba, et le chemin qui y mène.</h3><p>Le cap exact depuis votre position, tracé sur le globe par la route la plus courte.</p><ul><li>Déclinaison magnétique corrigée avec le modèle WMM2025</li><li>Méthode du Soleil quand la boussole n'est pas fiable</li></ul></div>
+      <div class="frame rv rv2"><div class="phone"><img data-shot="qibla" data-sn="5" src="assets/screens/fr/qibla.webp" alt="aljana, Qibla" loading="lazy" decoding="async" width="880" height="1912"></div></div></div>
+    </section>
+    <section class="uni" id="u-eclipses">
+      <div class="wrap"><div class="txt rv"><span class="lbl" data-num="6">07 Éclipses</span><h3>Les prochaines éclipses, vues depuis chez vous.</h3><p>Pour chaque éclipse de Soleil ou de Lune : ce que vous verrez depuis votre ville, et à quelle heure.</p><ul><li>Calcul local à partir des éléments besséliens de la NASA</li><li>Consignes de sécurité toujours visibles pour le Soleil</li></ul></div>
+      <div class="frame rv rv2"><div class="phone"><img data-shot="eclipses" data-sn="6" src="assets/screens/fr/eclipses.webp" alt="aljana, Éclipses" loading="lazy" decoding="async" width="880" height="1912"></div></div></div>
+    </section>
+  </div>
 
   <section class="cmp2" id="compagnon">
     <div class="wrap">
@@ -422,11 +476,11 @@
         <p data-i="cp">Le ciel vous donne les repères. Votre Compagnon vous accompagne dans votre pratique.</p>
       </div>
       <div class="cmp2-stage rv rv2" id="cmpStage">
-        <div class="phone" data-k="mushaf" data-slot="front"><img data-cmp="mushaf" alt="" loading="lazy" width="880" height="1912"></div>
-        <div class="phone" data-k="hadith" data-slot="prev"><img data-cmp="hadith" alt="" loading="lazy" width="880" height="1912"></div>
-        <div class="phone" data-k="tasbih" data-slot="next"><img data-cmp="tasbih" alt="" loading="lazy" width="880" height="1912"></div>
+        <div class="phone" data-k="mushaf" data-slot="front"><img data-cmp="mushaf" src="assets/companion/fr/mushaf-index.webp" alt="aljana, Mushaf" loading="lazy" decoding="async" width="880" height="1912"></div>
+        <div class="phone" data-k="hadith" data-slot="prev"><img data-cmp="hadith" src="assets/companion/fr/hadith.webp" alt="aljana, Hadith du jour" loading="lazy" decoding="async" width="880" height="1912"></div>
+        <div class="phone" data-k="tasbih" data-slot="next"><img data-cmp="tasbih" src="assets/companion/fr/tasbih.webp" alt="aljana, Tasbih" loading="lazy" decoding="async" width="880" height="1912"></div>
       </div>
-      <p class="cmp2-names rv"><span data-k="hadith"></span><span data-k="mushaf" class="on"></span><span data-k="tasbih"></span></p>
+      <p class="cmp2-names rv"><span data-k="hadith">Hadith du jour</span><span data-k="mushaf" class="on">Mushaf</span><span data-k="tasbih">Tasbih</span></p>
     </div>
   </section>
 
@@ -437,7 +491,12 @@
         <h2 data-i="ph">Exact, parce que vérifié.</h2>
         <p data-i="pp">Nous ne comparons pas aljana à d'autres applications. Nous comparons ses calculs aux références astronomiques, puis nous mesurons l'écart.</p>
       </div>
-      <dl class="checks rv" id="checks"></dl>
+      <dl class="checks rv" id="checks">
+        <div><dt>Lever, coucher, midi solaire</dt><dd>Comparés à JPL Horizons, à la seconde. Écart maximal mesuré : 13 secondes, de La Mecque à Sydney.</dd></div>
+        <div><dt>Fajr, Asr, Isha</dt><dd>Les angles et l'école de la méthode choisie, appliqués tels quels.</dd></div>
+        <div><dt>Qibla</dt><dd>Route la plus courte sur le globe et déclinaison du modèle WMM2025.</dd></div>
+        <div><dt>Lune, Hilal, éclipses</dt><dd>Phases et conjonctions contrôlées sur Horizons, éclipses sur les éléments besséliens de la NASA.</dd></div>
+      </dl>
     </div>
   </section>
 
@@ -449,7 +508,7 @@
       <div class="chips" id="chips"></div>
       <p class="lv" data-i="lv">L'anglais existe en deux variantes régionales : États-Unis et Royaume-Uni.</p>
     </div>
-    <div class="frame rv"><div class="phone"><img data-shot="accueil" data-other data-sn="0" alt="" loading="lazy" width="880" height="1912"></div></div>
+    <div class="frame rv"><div class="phone"><img data-shot="accueil" data-other data-sn="0" src="assets/screens/ar/accueil.webp" alt="aljana, الرئيسية" loading="lazy" decoding="async" width="880" height="1912"></div></div>
   </section>
 
   <section class="end" id="ouvrir">
