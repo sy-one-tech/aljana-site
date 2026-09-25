@@ -7,7 +7,6 @@
 
   var LANGS = window.LANGS, I18N = window.I18N, KEY = "aljana.site.lang";
   var FONTS = { ru: "Manrope:wght@400..700", ar: "IBM+Plex+Sans+Arabic:wght@400;500;600;700", fa: "Vazirmatn:wght@400..700", ur: "Noto+Naskh+Arabic:wght@400..700", hi: "Noto+Sans+Devanagari:wght@400..700", zh: "Noto+Sans+SC:wght@400..700" };
-  var SHOTS = ["prieres", "ciel", "lune", "hilal", "qibla", "eclipses"];
   var CMP = { mushaf: 0, hadith: 1, tasbih: 2 }; /* rang dans I18N[..].cf */
   var $ = function (s, r) { return (r || document).querySelector(s); }, $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
   var ua = navigator.userAgent || "", device = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1) ? "ios" : /Android/.test(ua) ? "and" : "open";
@@ -23,6 +22,8 @@
     var c = tag.slice(0, 2).toLowerCase(); return has(c) ? c : null;
   }
   function firstLang() {
+    /* langue déjà résolue par le script de tête (mêmes règles) : textes et captures du héros restent d'accord */
+    if (window.__aljLang && has(window.__aljLang)) return window.__aljLang;
     var q = resolve(new URLSearchParams(location.search).get("lang")); if (q) return q;
     try { var s = resolve(localStorage.getItem(KEY)); if (s) return s; } catch (e) { /* stockage indisponible */ }
     var nav = navigator.languages || [navigator.language || "fr"];
@@ -68,8 +69,11 @@
     if (eager || nearViewport(img)) {
       if (shotIO) shotIO.unobserve(img);
       loadShot(img);
-    } else if (shotIO) shotIO.observe(img);
-    else loadShot(img);
+    } else if (shotIO) {
+      /* capture d'une autre langue encore loin de l'écran (source HTML en français) : on la retire pour que le chargement différé du navigateur ne la télécharge pas pour rien */
+      img.removeAttribute("src");
+      shotIO.observe(img);
+    } else loadShot(img);
   }
   function initShotObserver() {
     if (!hasIO) return;
@@ -84,21 +88,14 @@
   function meta(sel, v) { var m = $(sel); if (m) m.setAttribute("content", v); }
 
   function build() {
-    var lm = $("#langMenu"), ch = $("#chips"), un = $("#unis"), ck = $("#checks");
+    /* les six univers et les contrôles de précision sont dans le HTML (en français, lisibles sans JS) ; seuls les choix de langue sont construits ici */
+    var lm = $("#langMenu"), ch = $("#chips");
     LANGS.forEach(function (l) {
       [lm, ch].forEach(function (host) {
         var b = document.createElement("button"); b.type = "button"; b.className = "lang-opt"; b.dataset.lang = l.code; b.lang = l.code; b.dir = l.rtl ? "rtl" : "ltr";
         b.innerHTML = '<span class="flag" aria-hidden="true">' + l.flag + "</span><span>" + l.name + "</span>"; host.appendChild(b);
       });
     });
-    SHOTS.forEach(function (name, i) {
-      var s = document.createElement("section"); s.className = "uni" + (name === "ciel" ? " sky" : "") + (i % 2 ? "" : " flip"); s.id = "u-" + name;
-      s.innerHTML = (name === "ciel" ? '<div class="orbits" aria-hidden="true"><div class="orbit" style="--D:820px;--T:150s;--A:250deg"><b></b></div><div class="orbit o2" style="--D:1240px;--T:260s;--A:290deg"><b></b></div></div>' : "") +
-        '<div class="wrap"><div class="txt rv"><span class="lbl" data-num="' + (i + 1) + '"></span><h3></h3><p></p><ul><li></li><li></li></ul></div>' +
-        '<div class="frame rv rv2"><div class="phone"><img data-shot="' + name + '" data-sn="' + (i + 1) + '" alt="" loading="lazy" decoding="async" width="880" height="1912"></div></div></div>';
-      un.appendChild(s);
-    });
-    for (var i = 0; i < 4; i++) { var d = document.createElement("div"); d.innerHTML = "<dt></dt><dd></dd>"; ck.appendChild(d); }
   }
 
   /* les trois chiffres : valeur finale écrite telle que la langue la donne ; le décompte ne joue qu'une fois */
@@ -140,11 +137,11 @@
     $$("#checks div").forEach(function (d, i) { $("dt", d).textContent = t.pr[i][0]; $("dd", d).textContent = t.pr[i][1]; });
     /* captures dans la langue du site ; la section Langues montre une autre écriture que celle en cours */
     var other = code === "ar" ? "fr" : "ar";
-    $$("img[data-shot]").forEach(function (img) { var lc = img.hasAttribute("data-other") ? other : code; img.alt = "aljana, " + I18N[lc].sn[+img.dataset.sn]; setShot(img, "assets/screens/" + lc + "/" + img.dataset.shot + ".webp", !!img.closest(".hero")); });
+    $$("img[data-shot]").forEach(function (img) { var lc = img.hasAttribute("data-other") ? other : code; img.alt = "aljana, " + I18N[lc].sn[+img.dataset.sn]; setShot(img, "assets/screens/" + lc + "/" + img.dataset.shot + ".webp", !!img.closest(".hero") && img.dataset.sn === "0"); });
     $("#langFlag").textContent = L.flag; $("#langName").textContent = L.name; $("#langBtn").setAttribute("aria-label", t.pick + " (" + L.name + ")");
     $$(".lang-opt").forEach(function (b) { b.setAttribute("aria-current", b.dataset.lang === code ? "true" : "false"); });
     var c = $("[data-contact]"); if (c && CONTACT) c.setAttribute("href", "mailto:" + CONTACT);
-    if (NOW) NOW.render();
+    try { NOW.render(); } catch (e) { /* le bloc Maintenant seul est en panne, le reste de la page suit */ }
     /* recalage tout de suite, puis une fois la police de la nouvelle écriture arrivée, tant que le lecteur n'a pas défilé lui-même */
     if (anchor) { var lastY = null, fix = function () { if (lastY !== null && Math.abs(window.scrollY - lastY) > 2) return; var dy = anchor.getBoundingClientRect().top - top0; if (dy) { h.style.scrollBehavior = "auto"; window.scrollBy(0, dy); h.style.scrollBehavior = ""; } lastY = window.scrollY; };
       fix(); if (document.fonts && document.fonts.ready) { setTimeout(function () { document.fonts.ready.then(fix); }, 60); setTimeout(fix, 700); } }
@@ -154,7 +151,8 @@
   /* « Maintenant, chez vous » : trois valeurs calculées par live.js (moteurs de l'app). La position n'est jamais demandée d'office :
      on ne la lit que si le visiteur l'a déjà accordée, ou s'il touche « Utiliser ma position ». Elle reste dans son navigateur,
      arrondie au centième de degré. Sans position : date hégirienne à la place de la prière, et l'action discrète à la place du ciel. */
-  var NOW = (function () {
+  var NOW = { render: function () {} };
+  try { NOW = (function () {
     var LIVE = window.ALJANA_LIVE, grid = $("#nowGrid"); if (!LIVE || !grid) { var sec = $("#maintenant"); if (sec) sec.hidden = true; return { render: function () {} }; }
     var PKEY = "aljana.site.pos", pos = null, geo = "geolocation" in navigator, denied = false, last = {}, tz;
     try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC"; } catch (e) { tz = "UTC"; }
@@ -183,7 +181,7 @@
       else { A.l.textContent = t.hjL; var hj = LIVE.hijriToday(now, tz, code); if (lang2 === "ur") hj = hj.replace(/[۰-۹]/g, function (d) { return "۰۱۲۳۴۵۶۷۸۹".indexOf(d); }); /* ourdou : chiffres latins, comme le reste du site */ fill(A.v, "{e}", { e: hj }, "a"); A.s.textContent = ""; $("#nowM").textContent = ""; }
       /* 2. astres majeurs levés, sinon l'action « Utiliser ma position » (masquée si le navigateur la refuse) */
       B.l.textContent = t.skL;
-      if (pos) { var n = LIVE.skyCount(pos.lat, pos.lon, now).n; B.v.hidden = false; btn.hidden = true; fill(B.v, form(t.sk, lang2, n), { n: loc(n, lang2) }, "b"); B.s.textContent = ""; B.root.hidden = false; }
+      if (pos) { var n = LIVE.skyCount(pos.lat, pos.lon, now).n; B.v.hidden = false; btn.hidden = true; fill(B.v, form(t.skN, lang2, n), { n: loc(n, lang2) }, "b"); B.s.textContent = ""; B.root.hidden = false; }
       else if (geo && !denied) { B.v.hidden = true; btn.hidden = false; btn.textContent = t.loc; B.s.textContent = t.locS; B.root.hidden = false; }
       else B.root.hidden = true;
       /* 3. prochain repère hégirien */
@@ -205,18 +203,26 @@
     if (hasIO) new IntersectionObserver(function (es) { es.forEach(function (x) { seen = x.isIntersecting; play(); }); }, { rootMargin: "200px 0px" }).observe(grid);
     document.addEventListener("visibilitychange", play); play();
     return { render: render };
-  })();
+  })(); } catch (e) { var ns = $("#maintenant"); if (ns) ns.hidden = true; }
   function menu(open) { $("#langMenu").classList.toggle("open", open); $("#langBtn").setAttribute("aria-expanded", open ? "true" : "false"); }
 
   build();
   initShotObserver();
-  apply(firstLang(), false);
+  /* chiffres : le HTML porte les valeurs finales (lecture sans JS) ; on repart de zéro seulement si le décompte va jouer */
+  if (hasIO && !reduced) $$(".stat .v").forEach(function (v) { v.textContent = "0"; });
+  try { apply(firstLang(), false); } catch (e) { /* textes restés en français : la page reste lisible */ }
   $("#langBtn").addEventListener("click", function (e) { e.stopPropagation(); menu(!$("#langMenu").classList.contains("open")); });
   document.addEventListener("click", function (e) { var b = e.target.closest(".lang-opt"); if (b) { apply(b.dataset.lang, true); menu(false); return; } if (!e.target.closest(".lang-menu")) menu(false); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") { menu(false); $("#langBtn").focus(); } });
 
+  /* révèle un bloc. WebKit peut laisser la transition en attente (vu dans le Ciel, pendant la rotation des orbites) :
+     si le bloc n'est toujours pas visible 1,2 s plus tard, la transition est coupée et il s'affiche directement */
+  function show(el) {
+    if (el.classList.contains("in")) return; el.classList.add("in");
+    setTimeout(function () { if (+getComputedStyle(el).opacity < 0.95) el.style.transition = "none"; }, 1200);
+  }
   if (hasIO) {
-    var io = new IntersectionObserver(function (es) { es.forEach(function (x) { if (x.isIntersecting) { x.target.classList.add("in"); io.unobserve(x.target); } }); }, { rootMargin: "0px 0px -8% 0px" });
+    var io = new IntersectionObserver(function (es) { es.forEach(function (x) { if (x.isIntersecting) { show(x.target); io.unobserve(x.target); } }); }, { rootMargin: "0px 0px -8% 0px" });
     $$(".rv").forEach(function (el) { io.observe(el); });
     /* les orbites ne tournent que lorsque le Ciel est à l'écran */
     var sky = $(".uni.sky"); if (sky) new IntersectionObserver(function (es) { es.forEach(function (x) { x.target.classList.toggle("run", x.isIntersecting && !reduced); }); }).observe(sky);
@@ -224,6 +230,26 @@
       setTimeout(function () { runStat(x.target); }, x.target.classList.contains("c") ? 240 : x.target.classList.contains("b") ? 120 : 0); }); }, { threshold: 0.45 });
     $$(".stat").forEach(function (s) { sio.observe(s); });
   } else { $$(".rv").forEach(function (el) { el.classList.add("in"); }); $$(".stat").forEach(runStat); }
+
+  /* filet si un observateur reste muet (WebKit) : ce qui est à l'écran est révélé, décompté et chargé quand même,
+     une fois au départ puis au défilement ; l'écoute s'arrête quand tout est révélé */
+  (function () {
+    var busy = false;
+    function sweep() {
+      busy = false;
+      var h = window.innerHeight || 800, left = $$(".rv:not(.in)");
+      left.forEach(function (el) { var r = el.getBoundingClientRect(); if (r.top < h * 0.92 && r.bottom > 0) show(el); });
+      /* décompte : l'observateur normal passe d'abord (avec son décalage 0/120/240 ms) ; celui-ci ne rattrape qu'un oubli */
+      $$(".stat:not(.counted)").forEach(function (s) { var r = s.getBoundingClientRect(); if (r.top < h * 0.7 && r.bottom > 0 && !s.dataset.sw) { s.dataset.sw = "1"; setTimeout(function () { runStat(s); }, 900); } });
+      $$("img[data-pending-src]").forEach(function (img) { if (img.getAttribute("src") !== img.dataset.pendingSrc && nearViewport(img)) { if (shotIO) shotIO.unobserve(img); loadShot(img); } });
+      if (!$$(".rv:not(.in)").length && !$$(".stat:not(.counted)").length) window.removeEventListener("scroll", onScroll);
+    }
+    function onScroll() { if (!busy) { busy = true; requestAnimationFrame(sweep); } }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    setTimeout(sweep, 1200);
+  })();
+  /* signal pour le script de tête : site.js tourne, le filet html.rv-safe n'est pas nécessaire */
+  window.__aljReady = true;
 
   /* Compagnon : Hadith → Mushaf → Tasbih en boucle. L'écran suivant vient devant, celui de devant recule,
      le troisième s'efface puis reparaît de l'autre côté. Tourne seulement quand la section est visible ; figé si mouvement réduit. */
