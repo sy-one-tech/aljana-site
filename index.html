@@ -128,6 +128,11 @@
   html:not(.js) #maintenant { display: none; }
   html:not(.js) .ticks i, html:not(.js) .ticks i::before { transform: none; }
   .rv2 { transition-delay: 0.08s; } .rv3 { transition-delay: 0.16s; }
+  /* héros : jamais masqué en attendant un script ; la même montée douce est jouée en CSS dès le premier affichage */
+  html.js .hero .rv:not(.in) { opacity: 1; transform: none; }
+  .hero .rv { animation: rvIn 0.7s cubic-bezier(.2,.7,.15,1) both; }
+  .hero .rv2 { animation-delay: 0.08s; } .hero .rv3 { animation-delay: 0.16s; }
+  @keyframes rvIn { from { opacity: 0; transform: translateY(14px); } }
 
   /* ================= HERO ================= */
   .hero { position: relative; overflow: clip; }
@@ -347,7 +352,7 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .rv, .rv2, .rv3, html.js .rv:not(.in) { opacity: 1; transform: none; transition: none; }
-    .hero-stage .phone, .orbit { animation: none; }
+    .hero-stage .phone, .orbit, .hero .rv { animation: none; }
     .ticks i, .ticks i::before { transform: none; transition: none; }
     .cmp2-stage .phone, .cmp2-names span, .btn { transition: none; }
     .now-v b.fl { animation: none; }
