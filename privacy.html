@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Politique de confidentialité | aljana</title>
+  <meta name="description" content="Découvrez comment aljana collecte, utilise et protège vos données personnelles." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://aljana.app/privacy" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="aljana" />
+  <meta property="og:url" content="https://aljana.app/privacy" />
+  <meta property="og:title" content="Politique de confidentialité | aljana" />
+  <meta property="og:description" content="Découvrez comment aljana collecte, utilise et protège vos données personnelles." />
+  <meta name="theme-color" content="#050A18" />
+  <script>
+    /* langue affichée dès le premier rendu (évite d'apercevoir l'autre version) :
+       ancre #en / #fr, sinon langue déjà choisie sur le site (fr ou en), sinon français */
+    (function () {
+      var h = location.hash, l = h === '#en' ? 'en' : h === '#fr' ? 'fr' : null
+      if (!l) { try { var s = localStorage.getItem('aljana.site.lang'); if (s === 'fr') l = 'fr'; else if (/^en/.test(s || '')) l = 'en' } catch (e) { /* stockage indisponible */ } }
+      l = l || 'fr'
+      document.documentElement.lang = l
+      document.documentElement.setAttribute('data-pp-lang', l)
+      if (l === 'en') document.title = 'Privacy Policy | aljana'
+    })()
+  </script>
+  <link rel="icon" href="/assets/icon-192.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* Jetons et bases du site (repris de src/style.css : page autonome, sans lien avec le bundle des autres pages) */
+    :root{
+      --night-deep:#050A18; --night-ink:#0B1230;
+      --ink-light:#F2F5FC; --ink-body:#C9D3E8;
+      --gold-1:#F5B04C; --gold-2:#E8833A;
+      --font-display:'Space Grotesk', system-ui, sans-serif;
+      --font-body:'Inter', system-ui, sans-serif;
+      --header-h:68px;
+    }
+    *{ box-sizing:border-box; }
+    html,body{ margin:0; min-height:100%; }
+    html{ scroll-padding-top:var(--header-h); }
+    body{ font-family:var(--font-body); color:var(--ink-body); overflow-x:hidden; }
+    h1,h2,h3{ font-family:var(--font-display); color:var(--ink-light); margin:0; }
+    p{ margin:0; }
+    .skip-link{ position:absolute; left:-999px; top:0; }
+    .skip-link:focus{ left:8px; top:8px; background:var(--night-ink); color:var(--ink-light); padding:8px 12px; border-radius:6px; z-index:200; }
+    .visually-hidden{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+    .brand{ display:flex; align-items:center; text-decoration:none; }
+    .brand__logo{ height:30px; width:auto; display:block; flex:none; }
+    @media (min-width:900px){ .brand__logo{ height:34px; } }
+
+    /* ---------- Politique de confidentialité (/privacy) ----------
+       Page autonome, centrée sur la lecture : fond nuit du site, titres Space Grotesk,
+       filets et accents dorés, aucune animation. Colonne de lecture ~ 880 px. */
+
+    /* seule la langue active est affichée (sans JavaScript : les deux, l'une sous l'autre) */
+    html[data-pp-lang="fr"] .pp-doc[data-lang="en"],
+    html[data-pp-lang="en"] .pp-doc[data-lang="fr"],
+    .pp-doc[hidden]{ display:none; }
+
+    body[data-page="privacy"]{ background:var(--night-deep); }
+
+    /* ---------- En-tête : logo + sélecteur FR / EN ---------- */
+    .pp-header{
+      position:sticky; top:0; z-index:40;
+      background:rgba(5,10,24,.94);
+      border-bottom:1px solid rgba(245,176,76,.22);
+    }
+    .pp-header__inner{
+      max-width:960px; margin:0 auto; min-height:var(--header-h);
+      display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px 16px;
+      padding:10px clamp(16px,4vw,32px);
+    }
+    .pp-header .brand{ border-radius:6px; }
+
+    .pp-lang{
+      display:flex; gap:4px; padding:4px;
+      border:1px solid rgba(245,176,76,.45); border-radius:999px;
+      background:rgba(242,245,252,.04);
+    }
+    .pp-lang a{
+      position:relative; display:inline-flex; align-items:center; justify-content:center;
+      min-width:52px; min-height:40px; padding:0 14px; border-radius:999px;
+      font-family:var(--font-display); font-weight:600; font-size:15px; letter-spacing:.06em;
+      color:var(--ink-light); text-decoration:none;
+    }
+    .pp-lang a:hover{ background:rgba(245,176,76,.14); }
+    .pp-lang a[aria-current="true"]{
+      background:linear-gradient(135deg, var(--gold-1), var(--gold-2)); color:#1B1204;
+    }
+
+    /* ---------- Contenu ---------- */
+    .pp{ outline:none; }
+    .pp-doc{
+      scroll-margin-top:var(--header-h);
+      max-width:880px; margin:0 auto;
+      padding:clamp(48px,8vw,104px) clamp(20px,5vw,40px) clamp(56px,8vw,96px);
+      color:var(--ink-body);
+      font-size:clamp(16.5px, 1.1vw + 12px, 18px); line-height:1.75;
+      overflow-wrap:break-word;
+    }
+    .pp-doc + .pp-doc{ border-top:1px solid rgba(245,176,76,.22); }
+
+    .pp-doc__head{ margin-bottom:clamp(40px,6vw,64px); padding-bottom:clamp(28px,4vw,40px); border-bottom:1px solid rgba(245,176,76,.35); }
+    .pp-doc h1{ font-size:clamp(32px, 5vw, 50px); line-height:1.12; letter-spacing:-.01em; margin-bottom:16px; }
+    .pp-updated{ color:var(--gold-1); font-size:.9em; font-weight:500; letter-spacing:.02em; margin-bottom:24px; }
+    .pp-intro{ font-size:1.08em; color:var(--ink-light); }
+
+    .pp-doc section{ margin-bottom:clamp(40px,5vw,56px); scroll-margin-top:calc(var(--header-h) + 24px); }
+    .pp-doc h2{ font-size:clamp(22px, 2.6vw, 28px); line-height:1.3; margin-bottom:18px; }
+    .pp-doc h3{ font-size:clamp(18px, 1.8vw, 20px); line-height:1.4; margin:28px 0 8px; color:var(--gold-1); }
+    .pp-doc p{ margin-bottom:16px; }
+    .pp-doc ul{ margin:0 0 18px; padding-left:1.4em; }
+    .pp-doc li{ margin-bottom:8px; }
+    .pp-doc li::marker{ color:var(--gold-1); }
+
+    .pp-doc a{ color:var(--ink-light); text-decoration:underline; text-decoration-color:var(--gold-1); text-underline-offset:3px; }
+    .pp-doc a:hover{ color:var(--gold-1); }
+
+    .pp-contact{
+      font-style:normal; line-height:1.9; margin-top:8px;
+      padding:20px 24px; border-left:3px solid var(--gold-1);
+      background:rgba(242,245,252,.04); border-radius:0 10px 10px 0;
+    }
+    .pp-contact strong{ color:var(--ink-light); font-family:var(--font-display); }
+    .pp-placeholder{ color:var(--ink-light); font-weight:600; }
+
+    /* ---------- Pied : simple retour ---------- */
+    .pp-footer{
+      text-align:center; padding:36px 20px 56px;
+      border-top:1px solid rgba(245,176,76,.22);
+    }
+    .pp-footer a{
+      display:inline-flex; align-items:center; min-height:44px; padding:0 8px;
+      color:var(--ink-light); font-family:var(--font-display); font-size:16px;
+      text-decoration:underline; text-decoration-color:var(--gold-1); text-underline-offset:4px;
+    }
+    .pp-footer a:hover{ color:var(--gold-1); }
+
+    /* ---------- Focus clavier visible ---------- */
+    .pp-header a:focus-visible, .pp-doc a:focus-visible, .pp-footer a:focus-visible, .skip-link:focus-visible{
+      outline:3px solid var(--gold-1); outline-offset:3px;
+    }
+
+    @media (max-width:420px){
+      .pp-header .brand__logo{ height:26px; }
+      .pp-lang a{ min-width:48px; padding:0 12px; }
+      .pp-contact{ padding:16px 16px; }
+    }
+
+    @media print{
+      .pp-header, .pp-footer, .skip-link{ display:none; }
+      body[data-page="privacy"]{ background:#fff; }
+      .pp-doc, .pp-doc h1, .pp-doc h2, .pp-doc h3, .pp-intro, .pp-updated, .pp-doc a{ color:#000; }
+    }
+  </style>
+</head>
+<body data-page="privacy">
+
+  <a class="skip-link" href="#main" data-l10n="skip">Aller au contenu</a>
+
+  <header class="pp-header">
+    <div class="pp-header__inner">
+      <a href="/" class="brand" data-l10n-label="home" aria-label="aljana — accueil">
+        <img class="brand__logo" src="/assets/brand/aljana-logo-v4.webp" alt="aljana" width="102" height="34" />
+      </a>
+      <nav class="pp-lang" aria-label="Langue / Language">
+        <a href="#fr" hreflang="fr" lang="fr" data-lang-switch="fr" aria-current="true">FR<span class="visually-hidden"> — Français</span></a>
+        <a href="#en" hreflang="en" lang="en" data-lang-switch="en">EN<span class="visually-hidden"> — English</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="pp" tabindex="-1">
+
+    <!-- ===================== VERSION FRANÇAISE ===================== -->
+    <article class="pp-doc" id="fr" lang="fr" data-lang="fr" aria-labelledby="pp-title-fr">
+      <header class="pp-doc__head">
+        <h1 id="pp-title-fr">Politique de confidentialité</h1>
+        <p class="pp-updated">Dernière mise à jour : <time datetime="2026-09-29">29 septembre 2026</time></p>
+        <p class="pp-intro">La présente politique de confidentialité explique comment aljana collecte, utilise et protège certaines informations lorsque vous utilisez l’application et les services associés.</p>
+      </header>
+
+      <section aria-labelledby="fr-1">
+        <h2 id="fr-1">1. Données collectées</h2>
+        <p>aljana peut collecter les catégories de données suivantes :</p>
+        <h3>Adresse e-mail</h3>
+        <p>L’adresse e-mail peut être utilisée pour créer et gérer votre compte, permettre votre authentification, communiquer avec vous au sujet de votre compte et assurer le bon fonctionnement des services.</p>
+        <h3>Identifiant utilisateur</h3>
+        <p>Un identifiant utilisateur peut être attribué à votre compte afin de permettre son fonctionnement, son authentification et l’association de vos droits d’accès et préférences à votre profil.</p>
+        <h3>Historique des achats</h3>
+        <p>Certaines informations relatives à vos achats ou abonnements peuvent être utilisées afin de vérifier votre statut d’abonnement, activer les fonctionnalités correspondantes et restaurer vos achats.</p>
+        <p>aljana ne collecte pas vos informations bancaires ou numéros de carte de paiement lorsque les achats sont effectués via l’App Store. Les paiements sont traités par Apple conformément à ses propres conditions et politiques.</p>
+      </section>
+
+      <section aria-labelledby="fr-2">
+        <h2 id="fr-2">2. Finalités d’utilisation</h2>
+        <p>Les données collectées sont utilisées uniquement pour les besoins liés au fonctionnement de aljana, notamment :</p>
+        <ul>
+          <li>création et gestion du compte</li>
+          <li>authentification</li>
+          <li>accès aux fonctionnalités</li>
+          <li>gestion des abonnements</li>
+          <li>restauration des achats</li>
+          <li>sécurité du compte</li>
+          <li>support utilisateur</li>
+          <li>maintien et amélioration du fonctionnement technique du service</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="fr-3">
+        <h2 id="fr-3">3. Données liées à l’utilisateur</h2>
+        <p>L’adresse e-mail, l’identifiant utilisateur et certaines informations relatives aux achats peuvent être associés au compte de l’utilisateur.</p>
+      </section>
+
+      <section aria-labelledby="fr-4">
+        <h2 id="fr-4">4. Publicité et suivi</h2>
+        <p>aljana n’utilise pas ces données à des fins de suivi publicitaire.</p>
+        <p>aljana ne vend pas vos données personnelles.</p>
+        <p>aljana n’utilise pas votre adresse e-mail, votre identifiant utilisateur ou votre historique d’achats afin de vous suivre à travers les applications ou sites web appartenant à d’autres sociétés.</p>
+      </section>
+
+      <section aria-labelledby="fr-5">
+        <h2 id="fr-5">5. Achats et abonnements</h2>
+        <p>Les achats intégrés et abonnements effectués sur iOS peuvent être traités par Apple via l’App Store.</p>
+        <p>Apple peut traiter certaines informations liées aux transactions conformément à sa propre politique de confidentialité.</p>
+        <p>aljana peut recevoir les informations techniques nécessaires pour déterminer le statut d’un achat ou d’un abonnement et accorder les droits correspondants dans l’application.</p>
+      </section>
+
+      <section aria-labelledby="fr-6">
+        <h2 id="fr-6">6. Conservation des données</h2>
+        <p>Les données sont conservées uniquement pendant la durée nécessaire à la fourniture du service, au respect des obligations légales, à la sécurité et à la gestion du compte.</p>
+        <p>Lorsque vous demandez la suppression de votre compte, les données associées peuvent être supprimées ou anonymisées, sous réserve des obligations légales ou réglementaires applicables.</p>
+      </section>
+
+      <section aria-labelledby="fr-7">
+        <h2 id="fr-7">7. Sécurité</h2>
+        <p>aljana met en œuvre des mesures techniques et organisationnelles raisonnables afin de protéger les données contre l’accès non autorisé, la perte, l’altération ou la divulgation.</p>
+        <p>Aucune méthode de transmission ou de stockage électronique ne pouvant garantir une sécurité absolue, aljana ne peut toutefois garantir une protection totale contre tout incident de sécurité.</p>
+      </section>
+
+      <section aria-labelledby="fr-8">
+        <h2 id="fr-8">8. Vos droits</h2>
+        <p>Selon votre lieu de résidence et la réglementation applicable, vous pouvez disposer de droits concernant vos données personnelles, notamment :</p>
+        <ul>
+          <li>droit d’accès</li>
+          <li>droit de rectification</li>
+          <li>droit d’effacement</li>
+          <li>droit à la limitation du traitement</li>
+          <li>droit d’opposition dans certains cas</li>
+          <li>droit à la portabilité lorsque celui-ci est applicable</li>
+        </ul>
+        <p>Vous pouvez également demander la suppression de votre compte et des données associées.</p>
+      </section>
+
+      <section aria-labelledby="fr-9">
+        <h2 id="fr-9">9. Suppression du compte</h2>
+        <p>Lorsqu’une fonctionnalité de suppression de compte est disponible dans l’application, vous pouvez l’utiliser directement.</p>
+        <p>À défaut, vous pouvez contacter aljana afin de demander la suppression de votre compte et des données personnelles qui lui sont associées.</p>
+      </section>
+
+      <section aria-labelledby="fr-10">
+        <h2 id="fr-10">10. Enfants</h2>
+        <p>aljana n’a pas vocation à collecter sciemment des données personnelles d’enfants en violation des règles applicables.</p>
+        <p>Si un parent ou représentant légal estime que des données ont été fournies de manière inappropriée par un mineur, il peut contacter aljana afin de demander leur suppression.</p>
+      </section>
+
+      <section aria-labelledby="fr-11">
+        <h2 id="fr-11">11. Modifications de cette politique</h2>
+        <p>La présente politique peut être mise à jour afin de refléter une évolution des fonctionnalités de aljana, de la réglementation ou des pratiques de traitement des données.</p>
+        <p>La date de dernière mise à jour affichée en haut de cette page sera modifiée en conséquence.</p>
+      </section>
+
+      <section aria-labelledby="fr-12">
+        <h2 id="fr-12">12. Contact</h2>
+        <p>Pour toute question relative à la confidentialité, à vos données personnelles ou à l’exercice de vos droits, contactez :</p>
+        <address class="pp-contact">
+          <strong>aljana</strong><br />
+          Éditeur : SY-ONE<br />
+          E-mail : <span class="pp-placeholder">[À REMPLACER PAR L’ADRESSE OFFICIELLE PRIVACY OU SUPPORT]</span><br />
+          Site : <a href="https://aljana.app">https://aljana.app</a>
+        </address>
+      </section>
+    </article>
+
+    <!-- ===================== ENGLISH VERSION ===================== -->
+    <article class="pp-doc" id="en" lang="en" data-lang="en" aria-labelledby="pp-title-en">
+      <header class="pp-doc__head">
+        <h1 id="pp-title-en">Privacy Policy</h1>
+        <p class="pp-updated">Last updated: <time datetime="2026-09-29">September 29, 2026</time></p>
+        <p class="pp-intro">This Privacy Policy explains how aljana collects, uses, and protects certain information when you use the application and related services.</p>
+      </header>
+
+      <section aria-labelledby="en-1">
+        <h2 id="en-1">1. Data We Collect</h2>
+        <p>aljana may collect the following categories of data:</p>
+        <h3>Email Address</h3>
+        <p>Your email address may be used to create and manage your account, authenticate you, communicate with you regarding your account, and provide the service.</p>
+        <h3>User ID</h3>
+        <p>A user identifier may be assigned to your account in order to enable account functionality, authentication, and the association of access rights and preferences with your profile.</p>
+        <h3>Purchase History</h3>
+        <p>Certain information relating to purchases or subscriptions may be used to verify your subscription status, enable the corresponding features, and restore purchases.</p>
+        <p>aljana does not collect your bank card details or payment card numbers when purchases are made through the App Store. Payments are processed by Apple in accordance with Apple’s own terms and privacy policies.</p>
+      </section>
+
+      <section aria-labelledby="en-2">
+        <h2 id="en-2">2. How We Use Data</h2>
+        <p>The data collected is used only for purposes related to the operation of aljana, including:</p>
+        <ul>
+          <li>account creation and management</li>
+          <li>authentication</li>
+          <li>access to features</li>
+          <li>subscription management</li>
+          <li>purchase restoration</li>
+          <li>account security</li>
+          <li>user support</li>
+          <li>maintaining and improving the technical operation of the service</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="en-3">
+        <h2 id="en-3">3. Data Linked to You</h2>
+        <p>Your email address, user identifier, and certain purchase-related information may be linked to your user account.</p>
+      </section>
+
+      <section aria-labelledby="en-4">
+        <h2 id="en-4">4. Advertising and Tracking</h2>
+        <p>aljana does not use these data for advertising tracking purposes.</p>
+        <p>aljana does not sell your personal data.</p>
+        <p>aljana does not use your email address, user identifier, or purchase history to track you across apps or websites owned by other companies.</p>
+      </section>
+
+      <section aria-labelledby="en-5">
+        <h2 id="en-5">5. Purchases and Subscriptions</h2>
+        <p>In-app purchases and subscriptions on iOS may be processed by Apple through the App Store.</p>
+        <p>Apple may process transaction-related information in accordance with its own privacy policy.</p>
+        <p>aljana may receive the technical information necessary to determine the status of a purchase or subscription and grant the corresponding access rights within the application.</p>
+      </section>
+
+      <section aria-labelledby="en-6">
+        <h2 id="en-6">6. Data Retention</h2>
+        <p>Data is retained only for as long as necessary to provide the service, comply with legal obligations, maintain security, and manage user accounts.</p>
+        <p>If you request deletion of your account, related data may be deleted or anonymized, subject to applicable legal or regulatory obligations.</p>
+      </section>
+
+      <section aria-labelledby="en-7">
+        <h2 id="en-7">7. Security</h2>
+        <p>aljana implements reasonable technical and organizational measures designed to protect data against unauthorized access, loss, alteration, or disclosure.</p>
+        <p>However, no method of electronic transmission or storage can guarantee absolute security.</p>
+      </section>
+
+      <section aria-labelledby="en-8">
+        <h2 id="en-8">8. Your Rights</h2>
+        <p>Depending on your place of residence and applicable law, you may have rights regarding your personal data, including:</p>
+        <ul>
+          <li>right of access</li>
+          <li>right to rectification</li>
+          <li>right to erasure</li>
+          <li>right to restriction of processing</li>
+          <li>right to object in certain circumstances</li>
+          <li>right to data portability where applicable</li>
+        </ul>
+        <p>You may also request deletion of your account and related data.</p>
+      </section>
+
+      <section aria-labelledby="en-9">
+        <h2 id="en-9">9. Account Deletion</h2>
+        <p>Where an account deletion feature is available in the application, you may use it directly.</p>
+        <p>Otherwise, you may contact aljana to request deletion of your account and the personal data associated with it.</p>
+      </section>
+
+      <section aria-labelledby="en-10">
+        <h2 id="en-10">10. Children</h2>
+        <p>aljana is not intended to knowingly collect personal data from children in violation of applicable laws.</p>
+        <p>If a parent or legal guardian believes that a minor has provided personal data inappropriately, they may contact aljana to request deletion.</p>
+      </section>
+
+      <section aria-labelledby="en-11">
+        <h2 id="en-11">11. Changes to This Policy</h2>
+        <p>This Privacy Policy may be updated to reflect changes to aljana features, applicable laws, or data processing practices.</p>
+        <p>The “Last updated” date at the top of this page will be revised accordingly.</p>
+      </section>
+
+      <section aria-labelledby="en-12">
+        <h2 id="en-12">12. Contact</h2>
+        <p>For questions regarding privacy, personal data, or the exercise of your rights, please contact:</p>
+        <address class="pp-contact">
+          <strong>aljana</strong><br />
+          Publisher: SY-ONE<br />
+          Email: <span class="pp-placeholder">[REPLACE WITH THE OFFICIAL PRIVACY OR SUPPORT EMAIL]</span><br />
+          Website: <a href="https://aljana.app">https://aljana.app</a>
+        </address>
+      </section>
+    </article>
+
+  </main>
+
+  <footer class="pp-footer">
+    <a href="/" data-l10n="back">Retour à aljana</a>
+  </footer>
+
+  <script>
+    (function () {
+    /* Politique de confidentialité — bascule FR / EN sans rechargement.
+       Les deux versions sont dans le HTML (lisibles sans JavaScript, ancres #fr / #en) ;
+       le script n'affiche que la langue active et met à jour lang, title et descriptions.
+       Rien n'est enregistré : la langue vient de l'ancre (#en), sinon de la préférence
+       déjà choisie sur le site (lue seulement), sinon le français. */
+
+    const L10N = {
+      fr: {
+        title: 'Politique de confidentialité | aljana',
+        description: 'Découvrez comment aljana collecte, utilise et protège vos données personnelles.',
+        skip: 'Aller au contenu',
+        home: 'aljana — accueil',
+        back: 'Retour à aljana',
+      },
+      en: {
+        title: 'Privacy Policy | aljana',
+        description: 'Learn how aljana collects, uses and protects your personal data.',
+        skip: 'Skip to content',
+        home: 'aljana — home',
+        back: 'Back to aljana',
+      },
+    }
+
+    const root = document.documentElement
+    const setMeta = (sel, value) => document.querySelector(sel)?.setAttribute('content', value)
+
+    function apply(lang) {
+      const t = L10N[lang]
+      root.lang = lang
+      root.dataset.ppLang = lang
+      document.title = t.title
+      setMeta('meta[name="description"]', t.description)
+      setMeta('meta[property="og:title"]', t.title)
+      setMeta('meta[property="og:description"]', t.description)
+      document.querySelectorAll('[data-lang]').forEach((el) => { el.hidden = el.dataset.lang !== lang })
+      document.querySelectorAll('[data-lang-switch]').forEach((a) => {
+        if (a.dataset.langSwitch === lang) a.setAttribute('aria-current', 'true')
+        else a.removeAttribute('aria-current')
+      })
+      document.querySelectorAll('[data-l10n]').forEach((el) => { el.textContent = t[el.dataset.l10n] })
+      document.querySelectorAll('[data-l10n-label]').forEach((el) => el.setAttribute('aria-label', t[el.dataset.l10nLabel]))
+    }
+
+    const fromHash = () => (location.hash === '#en' ? 'en' : location.hash === '#fr' ? 'fr' : null)
+
+    apply(L10N[root.dataset.ppLang] ? root.dataset.ppLang : 'fr')
+
+    document.querySelectorAll('[data-lang-switch]').forEach((a) => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault()
+        const lang = a.dataset.langSwitch
+        apply(lang)
+        /* URL partageable : /privacy (français) ou /privacy#en, sans saut de page */
+        history.replaceState(null, '', lang === 'en' ? '#en' : location.pathname + location.search)
+      })
+    })
+
+    window.addEventListener('hashchange', () => { const lang = fromHash(); if (lang) apply(lang) })
+    })()
+  </script>
+</body>
+</html>
