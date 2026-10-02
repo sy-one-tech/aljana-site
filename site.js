@@ -1,8 +1,6 @@
 /* Site aljana : langue (détection, mémoire, bascule sans perdre la position), captures synchronisées et chargées à l'approche,
    boutons selon l'appareil, décompte des trois chiffres, orbites du Ciel, ronde des trois écrans du Compagnon. */
 (function () {
-  /* APP_URL pointe sur la bêta pour le moment ; à basculer vers https://aljana.app ou le lien de store définitif à la publication. */
-  const APP_URL = "https://beta.aljana.app";
   const CONTACT = "contact@aljana.app";
 
   var LANGS = window.LANGS, I18N = window.I18N, KEY = "aljana.site.lang";
@@ -123,7 +121,6 @@
     meta('meta[property="og:title"]', t.title); meta('meta[property="og:description"]', t.desc); meta('meta[name="twitter:title"]', t.title); meta('meta[name="twitter:description"]', t.desc);
     $$("[data-i]").forEach(function (el) { var v = t[el.dataset.i]; el.textContent = v != null ? v : el.dataset.i === "statsLead" ? "" : el.textContent; });
     $$("[data-cta]").forEach(function (el) { el.textContent = t[device]; });
-    $$("[data-app]").forEach(function (el) { el.setAttribute("href", APP_URL); });
     $$("[data-num]").forEach(function (el) { el.textContent = label(code, +el.dataset.num); });
     /* chiffres : valeur, unité, puis la légende. Bureau : intitulé + détail. Mobile, sous 20 et 12 : le détail seul (ou sa version courte). */
     $$(".stat[data-p]").forEach(function (s) { var k = s.dataset.p, p = t[k];

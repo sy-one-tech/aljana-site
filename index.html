@@ -108,6 +108,8 @@
   .btn-gold:hover { transform: translateY(-1px); background: #ECC46E; }
   .btn-line { min-height: 40px; padding: 0 16px; box-shadow: inset 0 0 0 1px rgba(226,182,89,0.5); color: var(--gold-soft); font-size: 14px; }
   .btn-line:hover { background: rgba(226,182,89,0.1); }
+  /* statut, pas une action : aucun lien tant que l'application n'est pas publiée */
+  .btn-soon, .btn-soon:hover { box-shadow: inset 0 0 0 1px rgba(226,182,89,0.5); color: var(--gold-soft); background: none; transform: none; cursor: default; }
 
   .flag { font-family: "Apple Color Emoji", "Segoe UI Emoji", sans-serif; font-size: 1.05em; line-height: 1; }
   .lang { position: relative; }
@@ -375,7 +377,7 @@
         </button>
         <div class="lang-menu" id="langMenu"></div>
       </div>
-      <a class="btn btn-line" data-app data-i="open" href="https://beta.aljana.app">Accéder à la bêta</a>
+      <span class="btn btn-line btn-soon" data-i="open">Bientôt disponible</span>
     </nav>
   </div>
 </header>
@@ -391,10 +393,9 @@
       <div class="h-a rv"><h1 class="hero-h"><span data-i="h1a">Vos prières et votre ciel,</span> <span class="accent" data-i="h1b">à l'endroit exact où vous êtes.</span></h1></div>
       <div class="h-b rv rv2"><p data-i="lead">aljana réunit les horaires de prière, le ciel en direct, la Lune, le Hilal, la Qibla et les éclipses. Chaque valeur est calculée pour votre position, à la seconde.</p></div>
       <div class="h-c rv rv2">
-        <a class="btn btn-gold" data-app data-cta href="https://beta.aljana.app">Accéder à la bêta</a>
+        <span class="btn btn-soon" data-cta>Bientôt disponible</span>
         <a class="btn-text" href="#univers"><span data-i="cta2">Explorer les sept univers</span> <span class="arw" aria-hidden="true">→</span></a>
       </div>
-      <div class="h-d rv rv3"><p data-i="note">Application actuellement en bêta privée. Accès réservé aux bêta-testeurs invités.</p></div>
       <figure class="hero-fig">
         <div class="hero-stage">
           <div class="glow" aria-hidden="true"></div>
@@ -514,10 +515,8 @@
   <section class="end" id="ouvrir">
     <div class="wrap rv">
       <span class="brand"><img src="assets/brand/aljana-logo-v4.webp" alt="aljana" width="1086" height="362" loading="lazy"></span>
-      <h2 data-i="eh">Ouvrez aljana ce soir.</h2>
+      <h2 data-i="eh">aljana arrive bientôt.</h2>
       <p data-i="ep">Regardez l'heure de la prochaine prière, puis levez les yeux : la Lune sera là où l'application vous l'indique.</p>
-      <a class="btn btn-gold" data-app data-cta href="https://beta.aljana.app">Accéder à la bêta</a>
-      <p class="note" data-i="note">Application actuellement en bêta privée. Accès réservé aux bêta-testeurs invités.</p>
     </div>
   </section>
 </main>
@@ -525,8 +524,8 @@
 <footer>
   <div class="wrap">
     <div class="f-links">
+      <a href="/privacy" data-i="f2">Confidentialité</a>
       <a href="mailto:contact@aljana.app" data-contact data-i="f3">Contact</a>
-      <a href="#ouvrir" data-i="f4">Accéder à la bêta</a>
     </div>
     <div class="f-base"><span class="ltr">© 2026 aljana</span><span data-i="fd">Prévisions astronomiques. Les annonces religieuses relèvent des autorités compétentes.</span></div>
   </div>

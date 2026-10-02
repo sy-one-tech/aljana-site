@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Page introuvable | aljana</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#060B18">
+<script>
+  /* langue déjà choisie sur le site, sinon celle du navigateur : français ou anglais */
+  (function (h) {
+    var l = null;
+    try { l = localStorage.getItem("aljana.site.lang"); } catch (e) { /* stockage indisponible */ }
+    l = l || navigator.language || "en";
+    if (!/^fr/i.test(l)) { h.lang = "en"; document.title = "Page not found | aljana"; }
+  })(document.documentElement);
+</script>
+<link rel="icon" href="/assets/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #060B18; --ink: #EEF1FA; --soft: #C9D1EA; --faint: #6F7A9C; --gold: #E2B659; --gold-soft: #F3DFAE; }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--soft); font-family: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 17px; line-height: 1.62; -webkit-font-smoothing: antialiased; }
+  main { min-height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px 20px; }
+  img { display: block; width: 150px; height: 50px; }
+  .code { margin: 44px 0 0; font-size: 13.5px; font-weight: 600; letter-spacing: 0.14em; color: var(--faint); }
+  h1 { margin: 10px 0 0; font-family: "Newsreader", Georgia, serif; font-weight: 500; font-size: clamp(30px, 5vw, 44px); line-height: 1.12; letter-spacing: -0.015em; color: var(--ink); text-wrap: balance; }
+  p { margin: 14px 0 0; max-width: 440px; }
+  a.btn { display: inline-flex; align-items: center; min-height: 46px; margin-top: 30px; padding: 0 24px; border-radius: 11px; background: var(--gold); color: #1B1405; font-weight: 600; font-size: 15px; text-decoration: none; }
+  a.btn:hover { background: #ECC46E; }
+  a.btn:focus-visible { outline: 2px solid var(--gold-soft); outline-offset: 3px; }
+  html[lang="fr"] [lang="en"], html[lang="en"] [lang="fr"] { display: none; }
+</style>
+</head>
+<body>
+<main>
+  <a href="/" aria-label="aljana"><img src="/assets/brand/aljana-logo-v4.webp" alt="aljana" width="1086" height="362"></a>
+  <p class="code">404</p>
+  <h1 lang="fr">Cette page n'existe pas.</h1>
+  <h1 lang="en">This page does not exist.</h1>
+  <p lang="fr">L'adresse a peut-être changé, ou elle contient une erreur.</p>
+  <p lang="en">The address may have changed, or it may contain a typo.</p>
+  <a class="btn" href="/" lang="fr">Retour à l'accueil</a>
+  <a class="btn" href="/" lang="en">Back to home</a>
+</main>
+</body>
+</html>
