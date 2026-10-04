@@ -36,7 +36,7 @@
     /* Voie lactée : densité en coordonnées galactiques (bande, bulbe vers le centre, poussières) */
     'float milky(float az, float alt){',
     '  float la = uLat*D2R, A = az*D2R, h = alt*D2R;',
-    '  float dec = asin(sin(la)*sin(h) + cos(la)*cos(h)*cos(A));',
+    '  float dec = asin(clamp(sin(la)*sin(h) + cos(la)*cos(h)*cos(A), -1.0, 1.0)); /* borné : au pôle céleste, l arrondi dépassait 1 (point noir) */',
     '  float H = atan(-sin(A)*cos(h), cos(la)*sin(h) - sin(la)*cos(h)*cos(A));',
     '  float ra = uLST*D2R - H;',
     '  vec3 e = vec3(cos(dec)*cos(ra), cos(dec)*sin(ra), sin(dec));',
@@ -144,7 +144,7 @@
     '  float far = ridge(az, uSeed, 0.5, 1.5); float m = smoothstep(far - 0.05, far + 0.35, alt);',
     '  if (m <= 0.0) { gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0); return; }',
     '  float la = uLat*D2R, A = az*D2R, h = max(alt, 0.0)*D2R;',
-    '  float dec = asin(sin(la)*sin(h) + cos(la)*cos(h)*cos(A));',
+    '  float dec = asin(clamp(sin(la)*sin(h) + cos(la)*cos(h)*cos(A), -1.0, 1.0)); /* borné : au pôle céleste, l arrondi dépassait 1 (point noir) */',
     '  float H = atan(-sin(A)*cos(h), cos(la)*sin(h) - sin(la)*cos(h)*cos(A));',
     '  float ra = uLST*D2R - H;',
     '  vec2 tc = vec2(fract(0.5 - ra / (2.0*PI)), 0.5 - dec / PI);',
