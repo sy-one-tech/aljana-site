@@ -54,23 +54,23 @@
 <link rel="alternate" hreflang="hi" href="https://aljana.app/?lang=hi">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #060B18; --band: #0A1326; --ink: #EEF1FA; --soft: #C9D1EA; --dim: #93A0C2; --faint: #6F7A9C;
     --gold: #E2B659; --gold-soft: #F3DFAE; --leaf: #399f22; --leaf-wash: rgba(57,159,34,0.07);
     --line: rgba(160,172,205,0.14); --tick: rgba(160,172,205,0.30);
-    /* titres en serif de lecture, romain ; texte et chiffres en grotesque humaniste */
-    --display: "Newsreader", Georgia, serif; --sans: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif; --hw: 500; --nw: 700; --hs: 1; --hl: -0.015em;
+    /* Commissioner : titres en SemiBold, texte courant ; couvre le latin étendu (translittérations) et le cyrillique */
+    --display: "Commissioner", system-ui, sans-serif; --sans: "Commissioner", system-ui, -apple-system, "Segoe UI", sans-serif; --hw: 600; --nw: 700; --hs: 1; --hl: -0.022em;
     --w: 1180px; --sx: 1;
   }
   /* une pile de polices par écriture ; hors alphabet latin, titres et texte partagent la même famille, sans interlettrage */
   html[lang="ar"] { --display: "IBM Plex Sans Arabic", system-ui, sans-serif; --sans: "IBM Plex Sans Arabic", system-ui, sans-serif; --hw: 600; --hs: 0.9; --hl: 0; }
   html[lang="fa"] { --display: "Vazirmatn", "Noto Sans Arabic", Tahoma, sans-serif; --sans: "Vazirmatn", "Noto Sans Arabic", Tahoma, sans-serif; --hw: 600; --hs: 0.9; --hl: 0; }
-  html[lang="ur"] { --display: "Noto Naskh Arabic", "Noto Sans Arabic", Tahoma, sans-serif; --sans: "Hanken Grotesk", "Noto Naskh Arabic", "Noto Sans Arabic", Tahoma, sans-serif; --hw: 600; --hs: 0.9; --hl: 0; } /* naskh simple : plus lisible que le nastaliq à 390 px, comparaison faite */
+  html[lang="ur"] { --display: "Noto Naskh Arabic", "Noto Sans Arabic", Tahoma, sans-serif; --sans: "Commissioner", "Noto Naskh Arabic", "Noto Sans Arabic", Tahoma, sans-serif; --hw: 600; --hs: 0.9; --hl: 0; } /* naskh simple : plus lisible que le nastaliq à 390 px, comparaison faite */
   html[lang="hi"] { --display: "Noto Sans Devanagari", "Nirmala UI", sans-serif; --sans: "Noto Sans Devanagari", "Nirmala UI", sans-serif; --hw: 600; --hs: 0.86; --hl: 0; }
   html[lang="zh"] { --display: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif; --sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif; --hw: 600; --hs: 0.9; --hl: 0; }
-  html[lang="ru"] { --display: "Manrope", "Hanken Grotesk", system-ui, sans-serif; --sans: "Manrope", "Hanken Grotesk", system-ui, sans-serif; --hw: 600; --hs: 0.86; --hl: -0.02em; }
+  html[lang="ru"] { --hs: 0.9; }
   html[dir="rtl"] { --sx: -1; }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: 84px; }
@@ -359,6 +359,250 @@
     .cmp2-stage .phone, .cmp2-names span, .btn { transition: none; }
     .now-v b.fl { animation: none; }
   }
+
+  /* ================= scènes du ciel (V4.2) ================= */
+  canvas, svg { display: block; } .tab { font-variant-numeric: tabular-nums; }
+
+  /* écritures de droite à gauche : pas d'approche serrée, interligne plus haut ; nastaliq encore plus haut (ses lettres descendent en diagonale) */
+  html[dir="rtl"] :is(h1, h2) { letter-spacing: 0; } html[dir="rtl"] .v1-text h1 { line-height: 1.38; } html[dir="rtl"] .lead { line-height: 1.85; }
+  html[data-afont="gulzar"] h1 { font-synthesis: none; }
+  html[dir="rtl"] .lens-cap.side { transform: none; text-align: left; } html[dir="rtl"] .lens-cap.side.look { text-align: right; }
+  html[dir="rtl"] #v2 .ph { transform: perspective(2200px) rotateY(-7deg); transform-origin: 100% 50%; } /* le téléphone se tourne vers le croissant, à gauche */
+  html[dir="rtl"] .v1-text { max-width: 600px; }
+  html[data-afont="nastaliq"] .v1-text h1, html[data-afont="gulzar"] .v1-text h1 { font-size: clamp(34px, 3.9vw, 54px); line-height: 1.8; } /* le nastaliq occupe plus de hauteur à corps égal */
+  .soon { display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px; border-radius: 11px; box-shadow: inset 0 0 0 1px rgba(226,182,89,0.5); color: var(--gold-soft); font-weight: 600; font-size: 14px; white-space: nowrap; background: rgba(6,11,24,0.3); }
+
+  /* scènes de ciel : WebGL (atmosphère) + calque des astres + Lune */
+  .scene { position: relative; overflow: hidden; isolation: isolate; }
+  .scene > canvas.sky, .scene > canvas.ov { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2; }
+  .scene > canvas.ov { z-index: -1; }
+  .scene > canvas.stars { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2; mix-blend-mode: screen; } /* étoiles NASA ajoutées au ciel */
+  .moon { position: absolute; z-index: -1; transform: translate(-50%, -50%); filter: drop-shadow(0 0 18px rgba(220,228,255,0.18)); }
+  .vignette { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+
+  /* ---------- Vue 1 : héros ---------- */
+  #v1 { height: 100svh; min-height: 760px; max-height: 1000px; }
+  #v1 .vignette { background: linear-gradient(90deg, rgba(4,8,20,0.55), rgba(4,8,20,0.05) 48%, rgba(4,8,20,0) 70%); }
+  .v1-text { position: absolute; inset-inline-start: max(20px, calc((100% - var(--w)) / 2)); top: 28%; max-width: 560px; }
+  .kick { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; color: var(--soft); margin-bottom: 20px; }
+  .kick i { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px rgba(63,199,122,0.8); }
+  .v1-text h1 { font-size: clamp(40px, 4.8vw, 66px); line-height: 1.06; text-shadow: 0 2px 34px rgba(2,5,16,0.55); }
+  .v1-text h1 .acc { display: block; color: var(--gold-soft); }
+  .lead { margin: 22px 0 0; font-size: 18px; color: var(--soft); max-width: 470px; text-shadow: 0 1px 18px rgba(2,5,16,0.7); }
+  .acts { display: flex; align-items: center; gap: 22px; margin-top: 30px; }
+  .acts .soon { min-height: 46px; padding: 0 22px; font-size: 15px; }
+  .more { color: var(--soft); font-weight: 500; font-size: 15px; border-bottom: 1px solid rgba(201,209,234,0.3); padding-bottom: 2px; }
+  #v1 .phone-at { position: absolute; inset-inline-end: max(20px, calc((100% - var(--w)) / 2 + 10px)); top: 128px; }
+  .proof { position: absolute; inset-inline-start: max(20px, calc((100% - var(--w)) / 2)); bottom: 24px; font-size: 13px; color: var(--soft); opacity: 0.85; text-shadow: 0 1px 10px rgba(2,5,16,0.9); }
+
+  /* ---------- Vue 2 : Maghrib, le premier croissant ---------- */
+  #v2 { height: 100svh; min-height: 760px; max-height: 1000px; }
+  #v2 .vignette { background: radial-gradient(120% 90% at 70% 78%, rgba(0,0,0,0) 40%, rgba(3,6,16,0.35)); }
+  #v2 .phone-at { position: absolute; inset-inline-start: calc((100% - var(--w)) / 2 - 64px); top: 336px; padding: 80px 120px 0; margin-inline-start: -120px; --vis: calc(clamp(760px, 100svh, 1000px) - 336px); }
+  #v2 .ph { transform: perspective(2200px) rotateY(7deg); transform-origin: 0 50%; } /* marge intérieure : l'ombre du téléphone n'est pas rognée par le masque */
+  /* le téléphone se lève du sol : il s'efface dans la nuit du paysage au lieu d'être coupé net */
+  #v2 .phone-at { -webkit-mask-image: linear-gradient(to bottom, #000 calc(var(--vis) - 160px), transparent calc(var(--vis) - 4px)); mask-image: linear-gradient(to bottom, #000 calc(var(--vis) - 160px), transparent calc(var(--vis) - 4px)); }
+  #v2 .ph { --pw: 470px; }
+  .v2-text { position: absolute; inset-inline-start: max(20px, calc((100% - var(--w)) / 2)); top: 104px; max-width: 610px; }
+  .v2-text .k { font-size: 15px; font-weight: 600; color: var(--gold-soft); letter-spacing: 0.02em; text-shadow: 0 1px 12px rgba(2,5,16,0.6); }
+  .v2-text h2 { font-size: clamp(36px, 4vw, 56px); line-height: 1.06; margin-top: 0; text-shadow: 0 2px 30px rgba(2,5,16,0.5); }
+  .v2-text p { margin: 16px 0 0; font-size: 17.5px; color: var(--soft); max-width: 470px; text-shadow: 0 1px 16px rgba(2,5,16,0.7); }
+  .v2-text .ans { margin-top: 18px; font-size: 21px; font-weight: 500; color: var(--gold-soft); max-width: none; }
+  .v2-text .v2p { margin-top: 10px; font-size: 16px; color: var(--soft); max-width: 440px; }
+  .lens-cap.look { text-align: right; }
+  .lens-cap .look-l { display: block; margin: 0 0 6px; font-size: 18px; font-weight: 500; line-height: 1.4; color: var(--ink); white-space: normal; }
+  .lens-cap .look-d { display: block; font-size: 14px; line-height: 1.5; color: var(--soft); white-space: normal; }
+  .tag { position: absolute; z-index: 2; transform: translateX(-50%); text-align: center; font-size: 13.5px; color: var(--soft); line-height: 1.45; text-shadow: 0 1px 10px rgba(2,5,16,0.9); white-space: nowrap; }
+  .tag b { display: block; color: var(--ink); font-weight: 600; font-size: 14.5px; }
+  .tag .adv { display: inline-block; margin-top: 6px; color: var(--gold-soft); }
+  .tag-line { position: absolute; z-index: 2; height: 1px; background: linear-gradient(90deg, rgba(238,241,250,0.65), rgba(238,241,250,0.15)); transform-origin: 0 0; }
+
+  /* ---------- Vue 3 : Maintenant, chez vous ---------- */
+  #v3 { padding: 96px 0 110px; background: radial-gradient(80% 60% at 70% 20%, #0B1636 0%, var(--bg) 70%); }
+  #v3 > canvas.ov { opacity: 0.55; }
+  .v3-head .k { font-size: 15px; font-weight: 600; color: var(--gold-soft); }
+  .v3-head h2 { font-size: clamp(32px, 3.6vw, 48px); line-height: 1.1; margin-top: 10px; max-width: 720px; }
+  .v3-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; margin-top: 40px; align-items: center; }
+  .day { grid-column: 1 / 8; grid-row: 1; }
+  .day .lbl, .mo .lbl, .qb .lbl { font-size: 14px; font-weight: 500; color: var(--dim); }
+  .day .np { display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; margin-top: 6px; }
+  .day .np .name { font-family: var(--display); font-size: 44px; line-height: 1; }
+  .day .np .cd { font-size: 46px; font-weight: 600; letter-spacing: -0.02em; color: var(--green); line-height: 1; }
+  .day .np .at { font-size: 16px; color: var(--soft); }
+  .day svg { width: 100%; height: auto; margin-top: 18px; overflow: visible; }
+  .day .prec { margin-top: 10px; font-size: 14.5px; color: var(--soft); } .day .prec b { color: var(--ink); font-weight: 600; }
+  .day .prec small { display: block; margin-top: 4px; font-size: 13px; color: var(--faint); }
+  .mo { grid-column: 8 / 13; grid-row: 1 / 3; display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .mo .big { font-family: var(--display); font-size: 34px; line-height: 1.1; margin-top: 14px; }
+  .mo p { margin: 6px 0 0; font-size: 15px; color: var(--soft); } .mo small { display: block; margin-top: 6px; font-size: 13px; color: var(--faint); }
+  .qb { grid-column: 1 / 8; grid-row: 2; display: flex; align-items: center; gap: 28px; margin-top: 34px; }
+  .qb .globe { width: 360px; height: 360px; flex: none; position: relative; }
+  .qb .globe canvas { width: 100% !important; height: 100% !important; }
+  .qb .big { font-family: var(--display); font-size: 40px; line-height: 1.05; margin-top: 6px; }
+  .qb p { margin: 8px 0 0; font-size: 15px; color: var(--soft); max-width: 320px; }
+  .credit { margin-top: 18px; font-size: 12px; color: var(--dim); }
+  .event { margin-top: 46px; padding-top: 22px; border-top: 1px solid rgba(160,172,205,0.14); font-size: 16.5px; color: var(--soft); } .event b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- vue agrandie : V4, plus de cercle ni de pointillés — la Lune agrandie flotte dans son halo optique ---------- */
+  .lens { position: absolute; z-index: 1; border-radius: 50%; transform: translate(-50%, -50%); display: grid; place-items: center; pointer-events: none;
+    background: radial-gradient(circle, rgba(214,224,255,var(--halo, 0.09)) 0%, rgba(214,224,255,calc(var(--halo, 0.09) * 0.4)) 36%, rgba(214,224,255,0) 70%); }
+  .lens canvas { mix-blend-mode: screen; filter: drop-shadow(0 0 24px rgba(225,233,255,0.20)); }
+  .lens-cap { position: absolute; z-index: 1; transform: translateX(-50%); margin: 0; font-size: 13px; line-height: 1.5; color: var(--soft); text-align: center; white-space: nowrap; text-shadow: 0 1px 12px rgba(2,5,16,0.9); letter-spacing: 0.01em; }
+  .lens-cap.side { transform: translateX(-100%); text-align: right; }
+  .lens-cap b { color: var(--soft); font-weight: 500; }
+  /* un fil de lumière presque invisible, de la vraie Lune vers sa vue agrandie */
+  .lens-line { position: absolute; z-index: 1; height: 1px; transform-origin: 0 50%; background: linear-gradient(90deg, rgba(225,233,255,0.17), rgba(225,233,255,0.05) 60%, rgba(225,233,255,0)); }
+  .scene > canvas.moon { filter: drop-shadow(0 0 7px rgba(225,232,255,0.55)) drop-shadow(0 0 24px rgba(225,232,255,0.16)); mix-blend-mode: screen; } /* la lumière de la Lune s'ajoute au ciel */
+
+  /* ---------- vue 3 : séquence — un élément au centre de la scène à la fois ---------- */
+  .seq { position: relative; height: 360vh; }
+  .stage3 { position: sticky; top: 0; height: 100vh; overflow: hidden; background: radial-gradient(120% 70% at 50% 108%, var(--glow, #13224A) 0%, rgba(6,11,24,0) 62%), linear-gradient(var(--top, #04081F), var(--bg) 70%); }
+  /* passage d'un temps à l'autre : la lumière de la scène change d'abord, le sujet apparaît dans cette lumière (ni glissement, ni zoom, ni flou) */
+  @property --top { syntax: "<color>"; inherits: true; initial-value: #04081F; } @property --glow { syntax: "<color>"; inherits: true; initial-value: #13224A; }
+  .stage3 { transition: --top 2.2s ease, --glow 2.2s ease; }
+  .stage3::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(130% 100% at 50% 50%, rgba(0,0,0,0) 55%, rgba(1,3,10,0.45) 100%); }
+  .act { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 1.6s ease 0.25s; pointer-events: none; }
+  .act.on { opacity: 1; pointer-events: auto; }
+  /* temps 1 : le ciel raconte la journée */
+  .a1-in { position: absolute; inset: 0; }
+  .a1-head { position: absolute; left: 0; right: 0; top: 16%; text-align: center; }
+  .a1-head h2 { font-size: clamp(32px, 3.2vw, 46px); line-height: 1.1; }
+  .a1-head .np { display: flex; justify-content: center; align-items: baseline; gap: 16px; margin-top: 26px; }
+  .a1-head .np .name { font-family: var(--display); font-size: 30px; font-weight: 600; color: var(--soft); }
+  .a1-head .np .cd { font-size: 76px; font-weight: 600; letter-spacing: -0.03em; color: var(--green); line-height: 1; }
+  .a1-head .np .at { font-size: 16px; color: var(--dim); }
+  /* frise de l'app (DayArc), à l'identique, agrandie */
+  #dayarc { position: absolute; left: 50%; bottom: 74px; transform: translateX(-50%); width: min(1200px, calc(100% - 80px)); height: auto; overflow: visible; }
+  .arc-pulse { transform-box: fill-box; transform-origin: center; animation: arcPulse 2.2s ease-out infinite; }
+  @keyframes arcPulse { 0% { opacity: 0.7; transform: scale(1); } 100% { opacity: 0; transform: scale(1.9); } }
+  .a1-prec { position: absolute; left: 0; right: 0; bottom: 30px; text-align: center; font-size: 14px; color: var(--soft); margin: 0; }
+  .a1-prec b { color: var(--ink); font-weight: 600; }
+  /* temps 2 : la Lune, en silence */
+  .a2-in { display: flex; align-items: center; justify-content: center; gap: 64px; width: min(1240px, calc(100% - 80px)); }
+  .a2-in canvas { filter: drop-shadow(0 0 70px rgba(214,224,255,0.07)); will-change: transform; }
+  .a2-in .txt { max-width: 380px; } .a2-in h2, .a3-in h2 { font-size: 40px; line-height: 1.1; } .a2-in .ph1 { margin-top: 18px; font-size: 19px; font-weight: 500; color: var(--ink); }
+  .a2-in p { margin: 8px 0 0; font-size: 17px; color: var(--soft); line-height: 1.55; }
+  /* temps 3 : la Qibla, une lumière qui relie */
+  .a3-in { display: flex; align-items: center; justify-content: flex-end; gap: 40px; width: min(1240px, calc(100% - 80px)); }
+  .a3-in .txt { max-width: 400px; margin-inline-end: auto; }
+  .a3-in .big { font-family: var(--display); font-size: 72px; line-height: 1; margin-top: 26px; font-weight: 600; letter-spacing: -0.02em; }
+  .a3-in p { margin: 12px 0 0; font-size: 17px; color: var(--soft); }
+  .a3-in .globe { width: 660px; height: 660px; flex: none; position: relative; background: radial-gradient(closest-side, rgba(52,86,170,0.10), rgba(52,86,170,0.03) 70%, rgba(52,86,170,0)); }
+  .a3-in .globe canvas { width: 100% !important; height: 100% !important; }
+  #v3 { padding: 0 0 90px; overflow: visible; } #v3 .event { margin-top: 0; }  /* sticky : pas de overflow:hidden sur l'ancêtre */
+  @keyframes breathe { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+  .breathe { animation: breathe 6s ease-in-out infinite; }
+
+  /* ---------- téléphone : l'Accueil de l'app ---------- */
+  /* V4 : présence physique — cadre en titane qui prend la lumière de la scène (--rim), reflet du ciel sur le verre (--refl),
+     ombre naturelle en couches. Ni verre dépoli, ni néon. */
+  .ph { --pw: 430px; --rim: rgba(205,218,255,0.55); --rim-a: 135deg; --refl: 190,205,245; --refl-a: 118deg;
+    width: var(--pw); aspect-ratio: 9 / 19.5; border-radius: calc(var(--pw) * 0.155); padding: calc(var(--pw) * 0.03); position: relative;
+    background: linear-gradient(145deg, #3B4254 0%, #1A1F2B 14%, #0B0F18 46%, #121723 78%, #2B3242 100%);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08), inset 0 1px 0 rgba(255,255,255,0.16), 0 0 0 1.5px #03050A,
+      0 2px 4px rgba(0,0,0,0.45), 0 26px 50px -12px rgba(1,3,10,0.72), 0 70px 130px -24px rgba(1,3,10,0.62); }
+  .ph::before { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.6px; pointer-events: none; z-index: 4;
+    background: linear-gradient(var(--rim-a), var(--rim) 0%, rgba(255,255,255,0) 30%, rgba(255,255,255,0) 72%, rgba(255,255,255,0.10) 100%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
+  .ph::after { content: ""; position: absolute; inset: calc(var(--pw) * 0.03); border-radius: calc(var(--pw) * 0.128); pointer-events: none; z-index: 3; mix-blend-mode: screen;
+    background: linear-gradient(var(--refl-a), rgba(var(--refl),0.13) 0%, rgba(var(--refl),0.05) 20%, rgba(var(--refl),0) 34%, rgba(var(--refl),0) 80%, rgba(var(--refl),0.035) 100%); }
+  .ph-btn { position: absolute; width: 3px; border-radius: 2px; background: linear-gradient(90deg, #2A303E, #12161F); box-shadow: inset 0 1px 0 rgba(255,255,255,0.12); }
+  .ph-btn.a { left: -2.5px; top: 16%; height: 4.2%; } .ph-btn.b { left: -2.5px; top: 23%; height: 7.5%; } .ph-btn.c { left: -2.5px; top: 32%; height: 7.5%; } .ph-btn.d { right: -2.5px; top: 25%; height: 11%; }
+  .ph { opacity: 0; filter: brightness(0.2); transition: opacity 1.6s ease, filter 2.8s ease; } .ph.lit { opacity: 1; filter: none; }
+  body::after { content: ""; position: fixed; inset: 0; z-index: 60; pointer-events: none; opacity: 0.055; mix-blend-mode: overlay; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1.4 -0.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  #v1 .ph { --rim: rgba(205,218,255,0.62); --rim-a: 140deg; --refl: 175,195,245; }
+  #v2 .ph { --rim: rgba(255,196,160,0.60); --rim-a: 235deg; --refl: 250,200,175; --refl-a: 245deg; }
+  .ph-s { position: relative; height: 100%; border-radius: calc(var(--pw) * 0.128); overflow: hidden; background: radial-gradient(130% 70% at 50% 42%, #0A1530 0%, #050A1A 62%); color: #EEF1FA; font-family: "Hanken Grotesk", system-ui, sans-serif; font-size: calc(var(--pw) * 0.034); line-height: 1.32; display: flex; flex-direction: column; }
+  html[lang="ar"] .ph-s { font-family: "Hanken Grotesk", "IBM Plex Sans Arabic", system-ui, sans-serif; } html[lang="ur"] .ph-s { font-family: "Hanken Grotesk", "Noto Naskh Arabic", system-ui, sans-serif; }
+  .ph-island { position: absolute; top: 1.6%; left: 50%; width: 30%; height: 3.3%; transform: translateX(-50%); background: #000; border-radius: 99px; z-index: 3; }
+  .ph-st { position: absolute; z-index: 2; inset: 0 0 auto; height: 6.2%; display: flex; justify-content: space-between; align-items: center; padding: 0 9% 0 10%; font-size: 1.05em; font-weight: 600; }
+  .ph-in { padding: 13.5% 5.8% 0; display: flex; flex-direction: column; }
+  .ph-top { display: flex; align-items: center; justify-content: space-between; }
+  .ph-ic { width: 2.6em; height: 2.6em; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12); display: grid; place-items: center; position: relative; color: #C9D1EA; }
+  .ph-ic.h { box-shadow: inset 0 0 0 1px rgba(63,199,122,0.55); background: rgba(63,199,122,0.12); color: #6EE7A8; }
+  .ph-ic svg { width: 1.15em; height: 1.15em; } .ph-ic .dot { position: absolute; top: 0.25em; right: 0.25em; width: 0.5em; height: 0.5em; border-radius: 50%; background: #3FC77A; }
+  .ph-logo { height: 2.2em; width: auto; }
+  .ph-title { margin-top: 0.75em; font-size: 1.62em; font-weight: 700; letter-spacing: -0.01em; line-height: 1.12; }
+  .ph-ctx { margin-top: 0.45em; display: flex; align-items: center; gap: 0.55em; font-weight: 600; font-size: 0.98em; }
+  .ph-ctx .city { border-bottom: 1px dotted rgba(255,255,255,0.45); } .ph-live { color: #3FC77A; } .ph-live::before { content: "● "; font-size: 0.8em; }
+  .ph-date { color: #93A0C2; font-size: 0.86em; margin-top: 0.2em; }
+  .ph-next { margin-top: 0.75em; padding-top: 0.2em; }
+  .ph-next .k { display: flex; justify-content: space-between; gap: 0.5em; font-size: 0.7em; letter-spacing: 0.12em; text-transform: uppercase; color: #93A0C2; } .ph-next .k b { color: #3FC77A; font-weight: 600; } .ph-next .k span b { color: #EEF1FA; letter-spacing: 0; text-transform: none; font-size: 1.25em; }
+  html[lang="ar"] .ph-next .k { letter-spacing: 0; }
+  .ph-next .v { display: flex; align-items: baseline; gap: 0.45em; margin-top: 0.2em; } .ph-next .v .n { font-size: 1.75em; font-weight: 700; } .ph-next .v .c { font-size: 1.75em; font-weight: 700; color: #3FC77A; } .ph-next .v .a { color: #C9D1EA; font-size: 1.02em; }
+  .ph-bar { height: 0.26em; border-radius: 1em; background: rgba(255,255,255,0.08); margin-top: 0.5em; overflow: hidden; } .ph-bar i { display: block; height: 100%; background: #3FC77A; border-radius: 1em; }
+  .ph-hero { position: relative; margin-top: 0.4em; height: 18.6em; }
+  .ph-globe { position: absolute; left: 50%; top: 47%; width: 16.2em; height: 16.2em; transform: translate(-50%, -50%); }
+  .ph-globe canvas { width: 100% !important; height: 100% !important; }
+  .ph-sun { position: absolute; width: 5.6em; height: 5.6em; left: 2%; top: -2%; pointer-events: none; }
+  .ph-moonthumb { position: absolute; right: 6%; top: 2%; }
+  .ph-corner { position: absolute; bottom: 0.3em; font-size: 0.9em; } .ph-corner.l { left: 0; } .ph-corner.r { right: 0; text-align: end; }
+  .ph-corner small { display: block; font-size: 0.72em; letter-spacing: 0.13em; font-weight: 700; } .ph-corner.l small { color: #E2B659; } .ph-corner.r small { color: #6FA2FF; }
+  html[lang="ar"] .ph-corner small { letter-spacing: 0; }
+  .ph-corner b { display: block; font-size: 1.5em; line-height: 1.1; } .ph-corner span { color: #C9D1EA; font-size: 0.92em; }
+  .ph-arc { margin-top: 0.4em; width: 100%; height: auto; overflow: visible; }
+  .ph-today { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 0.7em; padding-top: 0.75em; border-top: 1px solid rgba(255,255,255,0.07); text-align: center; }
+  .ph-today div + div { border-inline-start: 1px solid rgba(255,255,255,0.08); }
+  .ph-today svg { width: 1.2em; height: 1.2em; margin: 0 auto 0.3em; }
+  .ph-today small { display: block; font-size: 0.66em; letter-spacing: 0.12em; text-transform: uppercase; color: #93A0C2; } html[lang="ar"] .ph-today small { letter-spacing: 0; }
+  .ph-today b { display: block; font-size: 1.12em; margin-top: 0.2em; } .ph-today span { font-size: 0.82em; color: #C9D1EA; }
+  .ph-nav { margin-top: auto; display: grid; grid-template-columns: repeat(7, 1fr); padding: 0.7em 0.3em 1.5em; border-top: 1px solid rgba(255,255,255,0.07); background: rgba(5,10,26,0.85); font-size: 0.62em; color: #93A0C2; text-align: center; }
+  .ph-nav span { display: flex; flex-direction: column; align-items: center; gap: 0.35em; } .ph-nav svg { width: 1.9em; height: 1.9em; } .ph-nav span:first-child { color: #4E9BFF; font-weight: 600; }
+
+  .m-only { display: none; }
+  /* ---------- mobile : composition propre, verticale, une idée par écran ---------- */
+  @media (max-width: 900px) {
+    .d-only { display: none; } .m-only { display: inline; }
+    #v1 { height: auto; min-height: 0; max-height: none; padding-bottom: 0; }
+    #v1 .vignette { background: linear-gradient(rgba(4,8,20,0.2), rgba(4,8,20,0) 30%); }
+    .v1-text { position: relative; inset: auto; top: auto; padding: 352px 16px 0; max-width: none; }
+    .v1-text h1 { font-size: 36px; }
+    .lead { font-size: 16.5px; margin-top: 16px; }
+    .acts { margin-top: 24px; }
+    #v1 .phone-at { position: relative; inset: auto; top: auto; margin: 40px auto 0; height: 640px; display: flex; justify-content: center;
+      -webkit-mask-image: linear-gradient(#000 62%, transparent 98%); mask-image: linear-gradient(#000 62%, transparent 98%); }
+    #v1 .ph { --pw: 344px; }
+    .proof { position: relative; inset: auto; bottom: auto; padding: 0 16px 30px; margin-top: 0; font-size: 12px; }
+    .ph { --pw: 330px; }
+    #v2 { height: 1340px; min-height: 0; max-height: none; }
+    .v2-text { inset-inline-start: 16px; inset-inline-end: 16px; top: 88px; }
+    .v2-text h2 { font-size: 34px; } .v2-text .ans { font-size: 18px; margin-top: 12px; } .v2-text .v2p { display: none; }
+    #v2 .phone-at { inset-inline-start: 50%; inset-inline-end: auto; top: 900px; margin-inline-start: 0; padding: 80px 60px 0; transform: translateX(-50%);
+      -webkit-mask-image: linear-gradient(to bottom, #000 300px, transparent 432px); mask-image: linear-gradient(to bottom, #000 300px, transparent 432px); }
+    #v2 .ph { --pw: 320px; }
+    html[dir="rtl"] #v2 .phone-at { transform: translateX(50%); }
+    .lens-cap.look { width: calc(100% - 32px) !important; white-space: normal; text-align: center; }
+    /* vue 3 : trois écrans qui se suivent, chacun plein cadre */
+    #v3 { padding: 0 0 60px; }
+    .seq { height: auto; } .stage3 { position: static; height: auto; overflow: visible; background: linear-gradient(var(--top, #04081F), var(--bg) 40%); }
+    .v3k { position: static; padding: 40px 16px 0; } .rail3 { display: none; }
+    .act { position: relative; inset: auto; opacity: 1; transform: none; filter: none; display: flex; flex-direction: column; justify-content: center; min-height: 92svh; pointer-events: auto; }
+    .a1-in { position: relative; inset: auto; padding-top: 20px; }
+    .a1-head { position: static; padding: 0 16px; text-align: left; }
+    .a1-head h2 { font-size: 30px; } .a1-head .np { justify-content: flex-start; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+    .a1-head .np .name { font-size: 24px; } .a1-head .np .cd { font-size: 54px; flex-basis: 100%; order: 2; } .a1-head .np .at { order: 3; }
+    #dayarc { position: relative; left: auto; bottom: auto; transform: none; width: 100%; height: auto; margin-top: 24px; }
+    .a1-prec { position: static; padding: 10px 16px 0; text-align: left; }
+    .a2-in { width: 100%; flex-direction: column; gap: 22px; text-align: center; }
+    .a2-in .txt { max-width: none; padding: 0 16px; } .a2-in h2, .a3-in h2 { font-size: 30px; }
+    .a3-in { width: 100%; flex-direction: column-reverse; gap: 8px; text-align: center; }
+    .a3-in .txt { margin: 0; padding: 0 16px; max-width: none; } .a3-in .big { font-size: 56px; margin-top: 18px; }
+    .a3-in .globe { width: 370px; height: 370px; }
+    #v3 .event { margin-top: 30px; }
+  }
+
+  /* en-tête transparent sur le ciel, plein dès qu'on défile */
+  header { position: fixed; left: 0; right: 0; top: 0; background: rgba(6,11,24,0); transition: background 0.35s ease, box-shadow 0.35s ease; }
+  header.solid { background: rgba(6,11,24,0.94); box-shadow: 0 1px 0 rgba(160,172,205,0.10); }
+  @media (max-width: 900px) { #v1 .acts .soon { min-height: 40px; padding: 0 16px; font-size: 14px; } }
+  /* écritures sans approche serrée */
+  html:is([lang="zh"], [lang="hi"], [lang="fa"]) :is(h1, h2) { letter-spacing: 0; }
+  /* téléphone en arabe, ourdou et persan : mis en page de droite à gauche, comme l'app ; chiffres isolés pour garder leur ordre */
+  html[dir="rtl"] .ph { direction: rtl; }
+  html[dir="rtl"] .ph-corner.l { left: auto; right: 0; text-align: right; } html[dir="rtl"] .ph-corner.r { right: auto; left: 0; text-align: left; }
+  html[dir="rtl"] .ph-sun { left: auto; right: 2%; } html[dir="rtl"] .ph-moonthumb { right: auto; left: 6%; }
+  html[dir="rtl"] .ph :is(.sv, .mv, .t2, .t3, .st-t, .ph-live, .v .c, .v .a) { direction: ltr; unicode-bidi: isolate; }
+  html[dir="rtl"] .ph-ic .dot { right: auto; left: 0.25em; }
 </style>
 </head>
 <body>
@@ -383,44 +627,33 @@
 </header>
 
 <main id="top">
-  <section class="hero">
-    <div class="hero-sky" aria-hidden="true"></div>
-    <svg class="hero-arc" viewBox="0 0 1400 520" preserveAspectRatio="none" aria-hidden="true">
-      <defs><linearGradient id="hg" x1="0" x2="1"><stop offset="0" stop-color="#E2B659" stop-opacity="0"/><stop offset=".5" stop-color="#F3DFAE" stop-opacity=".5"/><stop offset="1" stop-color="#E2B659" stop-opacity="0"/></linearGradient></defs>
-      <path d="M-60 380 C 300 180, 680 90, 1460 340" fill="none" stroke="url(#hg)" stroke-width="1.2" vector-effect="non-scaling-stroke"/>
-    </svg>
-    <div class="wrap hero-grid">
-      <div class="h-a rv"><h1 class="hero-h"><span data-i="h1a">Vos prières et votre ciel,</span> <span class="accent" data-i="h1b">à l'endroit exact où vous êtes.</span></h1></div>
-      <div class="h-b rv rv2"><p data-i="lead">aljana réunit les horaires de prière, le ciel en direct, la Lune, le Hilal, la Qibla et les éclipses. Chaque valeur est calculée pour votre position, à la seconde.</p></div>
-      <div class="h-c rv rv2">
-        <span class="btn btn-soon" data-cta>Bientôt disponible</span>
-        <a class="btn-text" href="#univers"><span data-i="cta2">Explorer les sept univers</span> <span class="arw" aria-hidden="true">→</span></a>
-      </div>
-      <figure class="hero-fig">
-        <div class="hero-stage">
-          <div class="glow" aria-hidden="true"></div>
-          <div class="phone p-l"><img data-shot="prieres" data-sn="1" src="assets/screens/fr/prieres.webp" alt="aljana, Prières" loading="lazy" decoding="async" width="880" height="1912"></div>
-          <div class="phone p-r"><img data-shot="ciel" data-sn="2" src="assets/screens/fr/ciel.webp" alt="aljana, Ciel" loading="lazy" decoding="async" width="880" height="1912"></div>
-          <div class="phone p-main"><img data-shot="accueil" data-sn="0" src="assets/screens/fr/accueil.webp" alt="aljana, Accueil" fetchpriority="high" width="880" height="1912"></div>
-        </div>
-        <script>
-          /* captures du héros dans la langue du visiteur dès l'analyse du HTML (le français est déjà dans le source) */
-          (function (l) { if (!l || l === "fr") return; var s = document.querySelectorAll(".hero img[data-shot]"); for (var i = 0; i < s.length; i++) s[i].src = "assets/screens/" + l + "/" + s[i].getAttribute("data-shot") + ".webp"; })(window.__aljLang);
-        </script>
-        <figcaption data-i="kick">Calculé en direct pour votre position</figcaption>
-      </figure>
+  <section class="scene" id="v1" aria-labelledby="h1">
+    <canvas class="sky" aria-hidden="true"></canvas><canvas class="stars" aria-hidden="true"></canvas><canvas class="ov" aria-hidden="true"></canvas><canvas class="moon" aria-hidden="true"></canvas><div class="vignette"></div><div class="lens" aria-hidden="true"><canvas></canvas></div><p class="lens-cap" aria-hidden="true"></p><div class="lens-line" aria-hidden="true"></div>
+    <div class="v1-text">
+      <h1 id="h1"><span data-t="h1a">Le ciel, le temps et vos prières.</span> <span class="acc" data-t="h1b">À l’endroit exact où vous êtes.</span></h1>
+      <p class="lead"><span class="d-only">aljana calcule pour votre position la prière en cours, le Soleil, la Lune, la Qibla et le croissant. Ce ciel est celui <span class="here"></span>, maintenant.</span><span class="m-only">Prières, Soleil, Lune, Qibla et croissant, calculés pour l’endroit exact où vous êtes.</span></p>
+      <div class="acts"><span class="soon" data-cta>Bientôt disponible</span><a class="more" href="#v3" data-t="more">Voir votre ciel</a></div>
     </div>
+    <div class="phone-at" aria-hidden="true"><div class="ph" id="ph1"></div></div>
+    <p class="proof" id="proof1"></p>
   </section>
 
-  <section class="now" id="maintenant" aria-live="off">
-    <div class="wrap">
-      <p class="lbl now-k rv" data-i="nk">Maintenant, chez vous</p>
-      <div class="now-grid rv" id="nowGrid">
-        <div class="now-i" id="nowA"><span class="lbl"></span><p class="now-v"></p><p class="now-s"></p><p class="now-s now-m" id="nowM"></p></div>
-        <div class="now-i" id="nowB"><span class="lbl"></span><p class="now-v"></p><button type="button" class="now-loc" id="nowLoc" hidden></button><p class="now-s"></p></div>
-        <div class="now-i" id="nowC"><span class="lbl"></span><p class="now-v"></p><p class="now-s"></p></div>
-      </div>
-    </div>
+  <section class="scene" id="v2" aria-labelledby="h2b">
+    <canvas class="sky" aria-hidden="true"></canvas><canvas class="ov" aria-hidden="true"></canvas><canvas class="moon" aria-hidden="true"></canvas><div class="vignette"></div><div class="lens" aria-hidden="true"><canvas></canvas></div><p class="lens-cap" aria-hidden="true"></p><div class="lens-line" aria-hidden="true"></div>
+    <div class="phone-at" aria-hidden="true"><div class="ph" id="ph2"></div></div>
+    <div class="v2-text"><h2 id="h2b" data-t="v2h">Le croissant sera-t-il visible ce soir ?</h2><p class="ans" id="v2ans"></p><p class="v2p" data-t="v2p">Et quand le croissant revient, aljana vous dit où et quand le chercher, selon les critères de Yallop et d’Odeh. L’annonce revient aux autorités.</p></div>
+    <div class="tag-line" id="tagline"></div><div class="tag" id="tag2"></div>
+  </section>
+
+  <section class="scene" id="v3" aria-labelledby="h3">
+    <canvas class="ov" aria-hidden="true"></canvas>
+    <div class="seq" id="seq"><div class="stage3">
+      <div class="act a1"><div class="a1-in"><div class="a1-head"><h2 id="h3" data-t="v3h">Le Soleil avance, et chaque prière arrive à son heure.</h2><div class="np"><span class="name" id="np-n"></span><span class="cd tab" id="np-c"></span><span class="at" id="np-a"></span></div></div><svg id="dayarc" aria-hidden="true"></svg><p class="a1-prec" id="prec"></p></div></div>
+      <div class="act a2"><div class="a2-in"><canvas id="bigmoon" aria-hidden="true"></canvas><div class="txt"><h2 data-t="v3m">La Lune, elle, compte les mois.</h2><p class="ph1" id="mo-n"></p><p id="mo-w"></p></div></div></div>
+      <div class="act a3"><div class="a3-in"><div class="txt"><h2 data-t="v3q">La direction de la Kaaba, calculée depuis chez vous.</h2><div class="big tab" id="qb-b"></div><p id="qb-p"></p></div><div class="globe" id="qglobe"><canvas aria-hidden="true"></canvas></div></div></div>
+    </div></div>
+    <p class="event wrap" id="event"></p>
+    <p class="credit wrap">Ciel : NASA/Goddard SVS, Deep Star Maps 2020 ; Gaia DR2 : ESA/Gaia/DPAC. Lune : NASA SVS, LRO/LROC/LOLA.</p>
   </section>
 
   <section class="stats" id="stats">
@@ -531,8 +764,13 @@
   </div>
 </footer>
 
-<script src="i18n.js?v=20261002-1"></script>
-<script src="live.js?v=20261002-1"></script>
-<script src="site.js?v=20261002-1"></script>
+<script src="i18n.js?v=20261004-1"></script>
+<script src="site.js?v=20261004-1"></script>
+<script src="ciel/engine.js?v=1"></script>
+<script src="ciel/moon.js?v=1"></script>
+<script src="ciel/sky.js?v=1"></script>
+<script src="ciel/scenes-i18n.js?v=1"></script>
+<script src="ciel/earth.js?v=1" defer></script>
+<script src="ciel/scenes.js?v=1" defer></script>
 </body>
 </html>

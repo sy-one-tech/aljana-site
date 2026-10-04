@@ -4,7 +4,7 @@
   const CONTACT = "contact@aljana.app";
 
   var LANGS = window.LANGS, I18N = window.I18N, KEY = "aljana.site.lang";
-  var FONTS = { ru: "Manrope:wght@400..700", ar: "IBM+Plex+Sans+Arabic:wght@400;500;600;700", fa: "Vazirmatn:wght@400..700", ur: "Noto+Naskh+Arabic:wght@400..700", hi: "Noto+Sans+Devanagari:wght@400..700", zh: "Noto+Sans+SC:wght@400..700" };
+  var FONTS = { ar: "IBM+Plex+Sans+Arabic:wght@400;500;600;700", fa: "Vazirmatn:wght@400..700", ur: "Noto+Naskh+Arabic:wght@400..700", hi: "Noto+Sans+Devanagari:wght@400..700", zh: "Noto+Sans+SC:wght@400..700" };
   var CMP = { mushaf: 0, hadith: 1, tasbih: 2 }; /* rang dans I18N[..].cf */
   var $ = function (s, r) { return (r || document).querySelector(s); }, $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
   var ua = navigator.userAgent || "", device = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1) ? "ios" : /Android/.test(ua) ? "and" : "open";
