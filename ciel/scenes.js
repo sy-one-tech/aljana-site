@@ -127,7 +127,7 @@
     var L = sec.querySelector('.lens'), cv = L.querySelector('canvas'), cp = sec.querySelector('.lens-cap'), ln = sec.querySelector('.lens-line')
     L.style.width = L.style.height = c.size + 'px'; L.style.left = c.cx + 'px'; L.style.top = c.cy + 'px'; if (c.halo != null) L.style.setProperty('--halo', c.halo)
     var mp = Math.round(c.size * 0.74)
-    if (c.drawMoon !== false) window.ALJ_MOON.render(cv, mp, A.moonOrientation(at, place.lat, place.lon), { ash: c.ash, gain: 1.15, bump: 2.0 })
+    if (c.drawMoon !== false) window.ALJ_MOON.render(cv, mp, A.moonOrientation(at, place.lat, place.lon), { ash: c.ash, gain: 1.15, bump: 1.4 })
     cp.innerHTML = fill(c.cap, Object.assign({ n: num(Math.round(mp / c.realPx)) }, c.vals || {}))
     cp.style.left = (c.capX != null ? c.capX : c.cx) + 'px'; cp.style.top = (c.capY != null ? c.capY : c.cy + mp / 2 + 18) + 'px'; cp.style.width = c.capW ? c.capW + 'px' : ''; cp.style.whiteSpace = c.capW ? 'normal' : ''
     cp.classList.toggle('side', !!c.side); cp.classList.toggle('look', !!c.look)

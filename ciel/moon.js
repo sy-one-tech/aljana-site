@@ -56,8 +56,10 @@
       var hl = M[k2 - 1] ? H[k2 - 1] : H[k2], hr = M[k2 + 1] ? H[k2 + 1] : H[k2], hu = j2 > 0 && M[k2 - N] ? H[k2 - N] : H[k2], hd = j2 < N - 1 && M[k2 + N] ? H[k2 + N] : H[k2]
       var nx = x2 - (hr - hl) * bump, ny = y2 + (hd - hu) * bump, nz = z2, nl = Math.hypot(nx, ny, nz); nx /= nl; ny /= nl; nz /= nl
       var mu0 = nx * Sx + ny * Sy + nz * Sz, mu0g = x2 * Sx + y2 * Sy + z2 * Sz, mu = Math.max(0.02, z2)
+      /* près du terminateur, le relief n'agit qu'à moitié : la ligne reste irrégulière (cratères) sans dents de scie */
+      var tb = Math.min(1, Math.max(0, mu0g / 0.3)); mu0 = mu0g + (mu0 - mu0g) * (0.4 + 0.6 * tb)
       var lit = mu0 > 0 ? (0.62 * 2 * mu0 / (mu0 + mu) + 0.38 * mu0) : 0  /* Lommel-Seeliger + Lambert : pleine lune peu assombrie au bord */
-      lit *= Math.min(1, Math.max(0, (mu0g + 0.02) / 0.06))                /* le relief ne déborde pas dans la nuit lunaire */
+      lit *= Math.min(1, Math.max(0, (mu0g + 0.025) / 0.09))               /* passage jour-nuit progressif ; le relief ne déborde pas dans la nuit lunaire */
       var e = mu0g < 0.08 ? es * (0.55 + 0.45 * mu) : 0
       var o = k2 * 4
       for (var ch = 0; ch < 3; ch++) {
@@ -66,7 +68,9 @@
         out[o + ch] = Math.min(255, Math.round(255 * Math.pow(lin, 1 / 2.2)))
       }
       var edge = Math.min(1, (1 - Math.sqrt(rr2)) * R * 1.4), lum = Math.max(out[o], out[o + 1], out[o + 2]) / 255
-      var op = opts.opaque ? 1 : lit > 0.002 ? 1 : Math.min(1, lum * 3.2) * (opts.ash == null ? 1 : opts.ash)
+      var dayK = Math.min(1, Math.max(0, (mu0g + 0.025) / 0.09)) /* opacité selon la géométrie : les ombres des cratères restent sombres, sans trous de ciel */
+      var deep = Math.min(1, Math.max(0, (mu0g - 0.04) / 0.14)) /* loin du terminateur : opaque (ombres de cratères sombres) ; près : fondu selon la lumière, sans liseré noir */
+      var op = opts.opaque ? 1 : Math.max(dayK * Math.max(deep, Math.min(1, lum * 4)), Math.min(1, lum * 3.2) * (opts.ash == null ? 1 : opts.ash))
       out[o + 3] = Math.round(255 * Math.max(0, edge) * op)
     }
     ctx.putImageData(img, 0, 0)
