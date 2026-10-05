@@ -40,8 +40,14 @@
     phases: ['Nouvelle lune', 'Premier croissant', 'Premier quartier', 'Gibbeuse croissante', 'Pleine lune', 'Gibbeuse décroissante', 'Dernier quartier', 'Dernier croissant'],
     ev: { ramadan: 'Ramadan', fitr: 'L’Aïd al-Fitr', adha: 'L’Aïd al-Adha', muharram: 'Le nouvel an hégirien' },
     planets: { venus: 'Vénus', jupiter: 'Jupiter', mars: 'Mars', saturn: 'Saturne', mercury: 'Mercure' }, today: 'aujourd’hui', tomorrowL: 'demain',
+    cielNow: 'Ciel calculé pour {c} · {d}', cielTonight: 'Le ciel de cette nuit à {t}, calculé pour {c}',
+    eSolarP: '{p} % du Soleil caché depuis {c}, au maximum à {t}.', eSolarT: 'Éclipse totale depuis {c} : {dur} de totalité, au maximum à {t}.', eSolarA: 'Éclipse annulaire depuis {c}, au maximum à {t}.',
+    eBand: 'Totale seulement dans une étroite bande : {r}.', eBandA: 'Annulaire seulement dans une étroite bande : {r}.', eLunarP: 'Éclipse partielle de Lune visible depuis {c}, au maximum à {t}.', eLunarT: 'Éclipse totale de Lune visible depuis {c}, au maximum à {t}.',
+    eFilter: 'Vue à travers un filtre solaire, au maximum', eLunarCap: 'La Lune au maximum de l’éclipse', eSafe: 'Ne regardez jamais le Soleil sans filtre adapté.',
   }
+  var BASE_T = JSON.parse(JSON.stringify(T))
   if (TL) { Object.keys(TL.T).forEach(function (k) { T[k] = TL.T[k] }); LOC = TL.loc }
+  var HJ = TL ? TL.hijri : 'fr', PRTL = RTL
   var fill = function (s, o) { return s.replace(/\{(\w+)\}/g, function (_, k) { return o[k] != null ? o[k] : '' }) }
 
   /* ---------- lieu et instants ---------- */
@@ -197,7 +203,7 @@
   function updatePhone(ph, at) {
     ph.at = at; var q = ph.q, st = prayerState(at), sun = A.sunAltAz(at, place.lat, place.lon), mo = A.moonAltAz(at, place.lat, place.lon), qb = qibla()
     q('.st-t').textContent = fmtT(at); q('.city').textContent = place.city; q('.ph-live').textContent = (T.live || 'LIVE') + ' ' + fmtT(at, true)
-    q('.ph-date').textContent = cap(fmtD(at, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })) + ' · ' + A.fmtHijri(A.hijriCivil({ y: st.c.y, m: st.c.m, d: st.c.d }, place.tz), TL ? TL.hijri : 'fr')
+    q('.ph-date').textContent = cap(fmtD(at, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })) + ' · ' + A.fmtHijri(A.hijriCivil({ y: st.c.y, m: st.c.m, d: st.c.d }, place.tz), HJ)
     q('.cur').innerHTML = T.cur + ' : <b>' + T.P[st.cur.key] + '</b>'
     q('.v .n').textContent = T.P[st.next.key]; q('.v .c').textContent = fmtCd(st.next.at - at); q('.v .a').textContent = T.atT ? fill(T.atT, { t: fmtT(st.next.at) }) : T.at + ' ' + fmtT(st.next.at)
     q('.ph-bar i').style.width = (100 * clamp((at - st.cur.at) / (st.next.at - st.cur.at), 0, 1)).toFixed(1) + '%'
@@ -213,7 +219,16 @@
     phoneArc(ph, st, at)
   }
   /* frise de l'app (DayArc compacte), sans le Zénith */
-  function phoneArc(ph, st, at) { appDayArc(ph.q('.ph-arc'), at, { W: 320, compact: true, rtl: RTL, font: 'inherit' }) }
+  function phoneArc(ph, st, at) { appDayArc(ph.q('.ph-arc'), at, { W: 320, compact: true, rtl: PRTL, font: 'inherit' }) }
+  /* le même téléphone dans une autre langue (bloc Langues) : textes, chiffres, calendrier et sens de lecture de cette langue */
+  var AR_DG = '٠١٢٣٤٥٦٧٨٩', FA_DG = '۰۱۲۳۴۵۶۷۸۹'
+  function withLang(code, fn) {
+    var sv = { T: JSON.parse(JSON.stringify(T)), LOC: LOC, HJ: HJ, DG: DG, PRTL: PRTL }, L = code === 'fr' ? null : LX[code]
+    var setT = function (o) { Object.keys(T).forEach(function (k) { delete T[k] }); Object.assign(T, o) }
+    setT(Object.assign(JSON.parse(JSON.stringify(BASE_T)), L ? JSON.parse(JSON.stringify(L.T)) : {}))
+    LOC = L ? L.loc : 'fr-FR'; HJ = L ? L.hijri : 'fr'; DG = code === 'ar' ? AR_DG : code === 'fa' ? FA_DG : null; PRTL = code === 'ar' || code === 'ur' || code === 'fa'
+    try { return fn() } finally { setT(sv.T); LOC = sv.LOC; HJ = sv.HJ; DG = sv.DG; PRTL = sv.PRTL }
+  }
 
   /* ---------- frise de la journée : portage fidèle de DayArc (App.jsx), sans le Zénith ----------
      Même géométrie (hauteurs, amplitudes, marges), même dégradé selon l'altitude du Soleil, mêmes lueurs aux passages
@@ -336,6 +351,8 @@
     if (RT[LANG]) document.getElementById('proof1').textContent = fill(RT[LANG].proof, { c: place.city, d: new Intl.DateTimeFormat(LOC, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZone: place.tz }).format(at), n: new Intl.NumberFormat(LOC, { maximumFractionDigits: 1, minimumFractionDigits: 1 }).format(Math.abs(sun.alt)) })
     else document.getElementById('proof1').textContent = fill(T.proof, { c: place.city, d: fmtD(at, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) + ', ' + fmtT(at, true), dir: T.dirL[Math.round((((v1.azC % 360) + 360) % 360) / 45) % 8], s: fill(sun.alt >= 0 ? T.above : T.below, { n: num(Math.abs(sun.alt), 1) }) })
     renderV3(at)
+    if (ph3) withLang(OL, function () { updatePhone(ph3, at) })
+    if (s4 && reduced) drawCiel()
   }
   function drawMaghrib(full) {
     if (!cres) return
@@ -394,8 +411,93 @@
     if (qt.k < 1 && qt.t0) { qt.k = Math.min(1, (performance.now() - qt.t0) / 4200); qApply() }
     if (ts - lastT > 120) { lastT = ts
       if (s1.sec.getBoundingClientRect().bottom > 0) drawHero(now(), false)
-      var r2 = s2.sec.getBoundingClientRect(); if (r2.bottom > 0 && r2.top < window.innerHeight) drawMaghrib(false) }
+      var r2 = s2.sec.getBoundingClientRect(); if (r2.bottom > 0 && r2.top < window.innerHeight) drawMaghrib(false)
+      if (s4) { var r4 = s4.sec.getBoundingClientRect(); if (r4.bottom > 0 && r4.top < window.innerHeight) drawCiel() } }
     requestAnimationFrame(loop)
+  }
+  /* ---------- bas de page : le ciel de cette nuit ---------- */
+  var s4 = null, ph3 = null, OL = RTL ? 'fr' : 'ar'
+  function cielTime(at) {
+    if (A.sunAltAz(at, place.lat, place.lon).alt < -15) return { at: at, now: true }
+    for (var m = 10; m <= 1440; m += 10) { var t = new Date(at.getTime() + m * 60000); if (A.sunAltAz(t, place.lat, place.lon).alt < -18) return { at: new Date(t.getTime() + 45 * 60000), now: false } }
+    return { at: at, now: true }
+  }
+  function cielFrame(at) {
+    var jd = A.jdFromDate(at), aim = place.lat >= 0 ? 180 : 0, best = 9
+    ;['venus', 'jupiter', 'mars', 'saturn'].forEach(function (k) { var p = A.planetPos(k, jd); if (p.mag > 1.2 || p.mag >= best) return; var q = A.altAzFromRaDec(jd, p.ra, p.dec, place.lat, place.lon); if (q.alt > 12) { best = p.mag; aim = q.az } })
+    return mobile() ? { fov: 74, hz: 0.47, H: 760, aim: aim, ax: 0.5 } : { fov: 118, hz: 0.88, aim: aim, ax: RTL ? 0.47 : 0.53 }
+  }
+  function drawCiel() {
+    if (!s4) return
+    var c = cielTime(now()); s4.draw(c.at, cielFrame(c.at), { labels: true, minPx: 7, seed: 2.6, drift: drift })
+    document.getElementById('proof4').textContent = c.now ? fill(T.cielNow, { c: place.city, d: fmtD(c.at, { weekday: 'long', day: 'numeric', month: 'long' }) + ', ' + fmtT(c.at) }) : fill(T.cielTonight, { c: place.city, t: fmtT(c.at) })
+  }
+  /* ---------- bas de page : la prochaine éclipse visible d'ici (moteur d'éclipses de l'app) ---------- */
+  var ECL = null
+  function nextEclipse(at) {
+    var E = window.ALJ_ECL; if (!E) return null
+    for (var i = 0; i < E.ECLIPSES.length; i++) { var ev = E.ECLIPSES[i]; if (ev.max < at.getTime()) continue
+      if (ev.kind === 'solar') { var r = E.localSolarCirc(ev, place.lat, place.lon); if (r.visible && r.obscMax >= 0.02) return { ev: ev, solar: r } }
+      else if (ev.type !== 'penumbral') { var lc = E.lunarCirc(ev), l = E.localLunarCirc(lc, place.lat, place.lon); if (l.visible) return { ev: ev, lunar: lc } } }
+    return null
+  }
+  function drawSolar(cv, S, info, total) {
+    var dpr = Math.min(2, window.devicePixelRatio || 1), N = Math.round(S * dpr); cv.width = N; cv.height = N; cv.style.width = S + 'px'; cv.style.height = S + 'px'
+    var x = cv.getContext('2d'), c = N / 2, R = N * 0.34, k = R / 0.267
+    var g = x.createRadialGradient(c, c, R * 0.95, c, c, N * 0.49); g.addColorStop(0, 'rgba(255,220,170,0.16)'); g.addColorStop(1, 'rgba(255,220,170,0)'); x.fillStyle = g; x.fillRect(0, 0, N, N)
+    /* disque : assombrissement centre-bord I(μ) = 0,4 + 0,6 μ, teinte d'un filtre solaire photographique */
+    var d = x.createRadialGradient(c, c, 0, c, c, R)
+    ;[0, 0.3, 0.5, 0.7, 0.82, 0.9, 0.96, 1].forEach(function (f) { var mu = Math.sqrt(Math.max(0, 1 - f * f)), b = 0.4 + 0.6 * mu; d.addColorStop(f, 'rgb(' + Math.round(255 * Math.min(1, b + 0.16)) + ',' + Math.round(244 * Math.min(1, b + 0.04)) + ',' + Math.round(222 * Math.pow(b, 1.4)) + ')') })
+    x.save(); x.beginPath(); x.arc(c, c, R, 0, 2 * Math.PI); x.clip(); x.fillStyle = d; x.fillRect(0, 0, N, N)
+    var rnd = function (i) { var t = Math.sin(i * 127.1) * 43758.5453; return t - Math.floor(t) }
+    for (var i = 0; i < 2600; i++) { var a = rnd(i) * 2 * Math.PI, rr = Math.sqrt(rnd(i + 7)) * R; x.fillStyle = rnd(i + 3) > 0.5 ? 'rgba(255,255,255,0.022)' : 'rgba(140,80,20,0.022)'; x.beginPath(); x.arc(c + Math.cos(a) * rr, c + Math.sin(a) * rr, N * 0.0028, 0, 2 * Math.PI); x.fill() }
+    x.restore()
+    if (total) { var co = x.createRadialGradient(c, c, R, c, c, R * 2.4); co.addColorStop(0, 'rgba(235,240,255,0.85)'); co.addColorStop(0.25, 'rgba(220,228,255,0.25)'); co.addColorStop(1, 'rgba(220,228,255,0)'); x.globalCompositeOperation = 'destination-over'; x.fillStyle = co; x.fillRect(0, 0, N, N); x.globalCompositeOperation = 'source-over' }
+    /* la Lune, à sa vraie place devant le Soleil (haut = zénith, droite = ouest/est du ciel local) */
+    x.save(); if (!total) { x.beginPath(); x.arc(c, c, R + 1, 0, 2 * Math.PI); x.clip() } /* à travers le filtre, la Lune n'est visible que devant le Soleil */
+    x.fillStyle = '#060B18'; x.beginPath(); x.arc(c + info.mx * k, c - info.my * k, info.rmDeg * k, 0, 2 * Math.PI); x.fill(); x.restore()
+  }
+  function drawLunar(cv, S, lc, at) {
+    var dpr = Math.min(2, window.devicePixelRatio || 1), N = Math.round(S * dpr); cv.width = N; cv.height = N; cv.style.width = S + 'px'; cv.style.height = S + 'px'
+    var mc = document.createElement('canvas'), D = Math.round(S * 0.72)
+    window.ALJ_MOON.render(mc, D, A.moonOrientation(at, place.lat, place.lon), { gain: 1.1, opaque: true })
+    var x = cv.getContext('2d'), c = N / 2, R = mc.width / 2, g = lc.geo
+    var sc = document.createElement('canvas'); sc.width = mc.width; sc.height = mc.height; var y = sc.getContext('2d'); y.drawImage(mc, 0, 0)
+    var k = R / g.rm, sx = R - g.x * k, sy = R + g.y * k
+    y.globalCompositeOperation = 'source-atop'
+    var pg = y.createRadialGradient(sx, sy, g.rU * k, sx, sy, g.rP * k); pg.addColorStop(0, 'rgba(0,0,0,0.35)'); pg.addColorStop(1, 'rgba(0,0,0,0)'); y.fillStyle = pg; y.fillRect(0, 0, sc.width, sc.height)
+    var ug = y.createRadialGradient(sx, sy, 0, sx, sy, g.rU * k * 1.02); ug.addColorStop(0, 'rgba(70,18,6,0.9)'); ug.addColorStop(0.94, 'rgba(110,32,12,0.82)'); ug.addColorStop(1, 'rgba(110,32,12,0)'); y.fillStyle = ug; y.fillRect(0, 0, sc.width, sc.height)
+    x.drawImage(sc, c - sc.width / 2, c - sc.height / 2)
+  }
+  function renderEclipse() {
+    var sec = document.getElementById('v5'); if (!sec) return
+    if (!ECL) { sec.hidden = true; return }
+    var ev = ECL.ev, M = mobile(), S = M ? 320 : 520, cv = document.getElementById('eclCv'), base = LANG === 'fr' || LANG === 'en' || LANG === 'ar' ? LANG : null
+    var dset = function (id, v) { document.getElementById(id).textContent = v || '' }
+    if (ECL.solar) { var r = ECL.solar, p = r.peakInfo, tot = r.central && p.total
+      drawSolar(cv, S, p, tot)
+      dset('eclDate', cap(fmtD(r.peak, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })))
+      var dur = r.c2 && r.c3 ? Math.round((r.c3 - r.c2) / 1000) + 30 : 0, durTxt = Math.floor(dur / 60) + ' min ' + pad(dur % 60) + ' s'
+      dset('eclWhat', r.central ? fill(tot ? T.eSolarT : T.eSolarA, { c: place.city, t: fmtT(r.peak), dur: dg(durTxt) }) : fill(T.eSolarP, { p: num(Math.round(r.obscMax * 100)), c: place.city, t: fmtT(r.peak) }))
+      dset('eclBand', !r.central && ev.type !== 'partial' && base && ev.regions && ev.regions[base] ? fill(ev.type === 'total' ? T.eBand : T.eBandA, { r: ev.regions[base] }) : '')
+      dset('eclSafe', T.eSafe); dset('eclCap', T.eFilter + ' · ' + fmtT(r.peak))
+    } else { var lc = ECL.lunar
+      drawLunar(cv, S, lc, lc.max)
+      dset('eclDate', cap(fmtD(lc.max, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })))
+      dset('eclWhat', fill(ev.type === 'total' ? T.eLunarT : T.eLunarP, { c: place.city, t: fmtT(lc.max) })); dset('eclBand', ''); dset('eclSafe', ''); dset('eclCap', T.eLunarCap + ' · ' + fmtT(lc.max)) }
+  }
+  /* ---------- textes du bas tirés des traductions du site (i18n.js) ---------- */
+  function basTexts() {
+    var t = window.I18N && (window.I18N[CODE] || window.I18N.fr); if (!t) return
+    document.querySelectorAll('[data-u]').forEach(function (e) { var u = t.u[+e.dataset.u]; if (u) e.textContent = e.tagName === 'H2' ? u[0] : u[1] })
+    var n = document.getElementById('u7names'); if (n && t.sn) n.textContent = t.sn.join(' · ')
+  }
+  function lazyBas() {
+    var on = function (el, fn) { if (!el) return; if (!window.IntersectionObserver) return fn(); var io = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { io.disconnect(); fn() } }, { rootMargin: '900px 0px' }); io.observe(el) }
+    on(document.getElementById('v4'), function () { s4 = new Scene(document.getElementById('v4')); (s4.stars ? s4.stars.loaded : Promise.resolve()).then(drawCiel) })
+    on(document.getElementById('ph3'), function () { var el = document.getElementById('ph3'); el.dir = OL === 'fr' ? 'ltr' : 'rtl'; el.lang = OL
+      var go = function () { withLang(OL, function () { ph3 = buildPhone(el, {}); updatePhone(ph3, now()) }) }
+      if (OL === 'ar' && LANG !== 'ar') { var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap'; document.head.appendChild(l); l.onload = go; l.onerror = go } else go() })
   }
   var hd = document.querySelector('header'), hdS = function () { if (hd) hd.classList.toggle('solid', window.scrollY > 40) }
   window.addEventListener('scroll', hdS, { passive: true }); hdS()
@@ -409,13 +511,14 @@
     ph1 = buildPhone(document.getElementById('ph1'), {}); ph2 = buildPhone(document.getElementById('ph2'), {})
     try { var qc = document.getElementById('qglobe'); qGlobe = new window.ALJ_EARTH.EarthScene({ canvas: qc.querySelector('canvas'), container: qc, reducedMotion: reduced, qibla: true, getNow: now }); qGlobe.setObserver(place.lat, place.lon) } catch (e) { console.warn('qibla', e) }
     cres = A.nextCrescentDay(now(), place, place.tz)
-    Promise.all([starsP, window.ALJ_MOON.ready(), fontP, s1.stars ? s1.stars.loaded : 0]).then(function () { render(); renderMaghrib(); renderBigMoon(now()); seqScroll(); document.documentElement.dataset.ready = '1'
+    basTexts(); try { ECL = nextEclipse(now()) } catch (e) { console.warn('éclipses', e) }
+    Promise.all([starsP, window.ALJ_MOON.ready(), fontP, s1.stars ? s1.stars.loaded : 0]).then(function () { render(); renderMaghrib(); renderBigMoon(now()); renderEclipse(); lazyBas(); seqScroll(); document.documentElement.dataset.ready = '1'
       try { var y = sessionStorage.getItem('aljana.scroll'); if (y) { sessionStorage.removeItem('aljana.scroll'); window.scrollTo(0, +y) } } catch (e) { /* stockage indisponible */ } })
     window.addEventListener('scroll', seqScroll, { passive: true })
     var phs = document.querySelectorAll('.ph'); if (reduced || !window.IntersectionObserver) phs.forEach(function (e) { e.classList.add('lit') })
     else { var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('lit'); io.unobserve(e.target) } }) }, { threshold: 0.2 }); phs.forEach(function (e) { io.observe(e) }) }
     if (!qs.get('still')) { setInterval(render, 1000); requestAnimationFrame(loop) }
-    window.addEventListener('resize', function () { actIdx = -1; render(); renderMaghrib(); renderBigMoon(now()); seqScroll() })
+    window.addEventListener('resize', function () { actIdx = -1; render(); renderMaghrib(); renderBigMoon(now()); renderEclipse(); drawCiel(); seqScroll() })
   }
   /* lieu par Cloudflare (ville, sans permission) puis démarrage */
   if (qs.get('lat') || qs.get('cap')) start()

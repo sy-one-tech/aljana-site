@@ -32,7 +32,7 @@ window.I18N = {
     ],
     pk: "Précision", ph: "Exact, parce que vérifié.", pp: "Nous ne comparons pas aljana à d'autres applications. Nous comparons ses calculs aux références astronomiques, puis nous mesurons l'écart.",
     pr: [
-      ["Lever, coucher, midi solaire", "Comparés à JPL Horizons, à la seconde. Écart maximal mesuré : 13 secondes, de La Mecque à Sydney."],
+      ["Lever, coucher, midi solaire", "Comparés à JPL Horizons. Écart maximal mesuré : 13 secondes, de La Mecque à Sydney."],
       ["Fajr, Asr, Isha", "Les angles et l'école de la méthode choisie, appliqués tels quels."],
       ["Qibla", "Route la plus courte sur le globe et déclinaison du modèle WMM2025."],
       ["Lune, Hilal, éclipses", "Phases et conjonctions contrôlées sur Horizons, éclipses sur les éléments besséliens de la NASA."],
@@ -63,7 +63,7 @@ window.I18N = {
     ],
     pk: "Accuracy", ph: "Exact, because verified.", pp: "We do not compare aljana with other apps. We compare its calculations with astronomical references, then we measure the gap.",
     pr: [
-      ["Sunrise, sunset, solar noon", "Compared with JPL Horizons, to the second. Largest measured gap: 13 seconds, from Makkah to Sydney."],
+      ["Sunrise, sunset, solar noon", "Compared with JPL Horizons. Largest measured gap: 13 seconds, from Makkah to Sydney."],
       ["Fajr, Asr, Isha", "The angles and school of the chosen method, applied as they are."],
       ["Qibla", "Shortest route on the globe and declination from the WMM2025 model."],
       ["Moon, Hilal, eclipses", "Phases and conjunctions checked on Horizons, eclipses on NASA Besselian elements."],
@@ -94,7 +94,7 @@ window.I18N = {
     ],
     pk: "الدقة", ph: "دقيق، لأنه مُتحقَّق منه.", pp: "لا نقارن aljana بتطبيقات أخرى. نقارن حساباته بالمراجع الفلكية، ثم نقيس الفرق.",
     pr: [
-      ["الشروق والغروب والزوال", "مقارنة مع JPL Horizons بالثانية. أقصى فرق تم قياسه: ١٣ ثانية، من مكة المكرمة إلى سيدني."],
+      ["الشروق والغروب والزوال", "مقارنة مع JPL Horizons. أقصى فرق تم قياسه: ١٣ ثانية، من مكة المكرمة إلى سيدني."],
       ["الفجر والعصر والعشاء", "زوايا الطريقة المختارة ومذهبها، مطبقة كما هي."],
       ["القبلة", "أقصر طريق على الكرة الأرضية والانحراف من نموذج WMM2025."],
       ["القمر والهلال والكسوف", "الأطوار والاقترانات مُراجَعة على Horizons، والكسوفات على عناصر بيسل من ناسا."],
@@ -125,7 +125,7 @@ window.I18N = {
     ],
     pk: "Precisión", ph: "Exacto, porque está verificado.", pp: "No comparamos aljana con otras aplicaciones. Comparamos sus cálculos con las referencias astronómicas y medimos la diferencia.",
     pr: [
-      ["Salida, puesta y mediodía solar", "Comparados con JPL Horizons, al segundo. Diferencia máxima medida: 13 segundos, de La Meca a Sídney."],
+      ["Salida, puesta y mediodía solar", "Comparados con JPL Horizons. Diferencia máxima medida: 13 segundos, de La Meca a Sídney."],
       ["Fajr, Asr, Isha", "Los ángulos y la escuela del método elegido, aplicados tal cual."],
       ["Qibla", "Ruta más corta sobre el globo y declinación del modelo WMM2025."],
       ["Luna, Hilal, eclipses", "Fases y conjunciones contrastadas con Horizons, eclipses con los elementos besselianos de la NASA."],
@@ -156,7 +156,7 @@ window.I18N = {
     ],
     pk: "Genauigkeit", ph: "Exakt, weil überprüft.", pp: "Wir vergleichen aljana nicht mit anderen Apps. Wir vergleichen seine Berechnungen mit astronomischen Referenzen und messen die Abweichung.",
     pr: [
-      ["Sonnenaufgang, Sonnenuntergang, Sonnenmittag", "Verglichen mit JPL Horizons, auf die Sekunde. Größte gemessene Abweichung: 13 Sekunden, von Mekka bis Sydney."],
+      ["Sonnenaufgang, Sonnenuntergang, Sonnenmittag", "Verglichen mit JPL Horizons. Größte gemessene Abweichung: 13 Sekunden, von Mekka bis Sydney."],
       ["Fajr, Asr, Isha", "Winkel und Rechtsschule der gewählten Methode, unverändert angewendet."],
       ["Qibla", "Kürzeste Route auf dem Globus und Deklination aus dem Modell WMM2025."],
       ["Mond, Hilal, Finsternisse", "Phasen und Konjunktionen mit Horizons abgeglichen, Finsternisse mit den Bessel-Elementen der NASA."],
@@ -187,7 +187,7 @@ window.I18N = {
     ],
     pk: "Hassasiyet", ph: "Kesin, çünkü doğrulanmış.", pp: "aljana'yı başka uygulamalarla karşılaştırmıyoruz. Hesaplarını astronomik referanslarla karşılaştırıyor, sonra farkı ölçüyoruz.",
     pr: [
-      ["Gün doğumu, gün batımı, güneş öğlesi", "JPL Horizons ile saniyesine kadar karşılaştırıldı. Ölçülen en büyük fark: 13 saniye, Mekke'den Sidney'e."],
+      ["Gün doğumu, gün batımı, güneş öğlesi", "JPL Horizons ile karşılaştırıldı. Ölçülen en büyük fark: 13 saniye, Mekke'den Sidney'e."],
       ["İmsak, ikindi, yatsı", "Seçilen yöntemin açıları ve mezhebi, olduğu gibi uygulanır."],
       ["Kıble", "Küre üzerinde en kısa rota ve WMM2025 modelinden sapma."],
       ["Ay, Hilal, tutulmalar", "Evreler ve kavuşumlar Horizons ile, tutulmalar NASA'nın Bessel elemanlarıyla denetlenir."],
@@ -218,7 +218,7 @@ window.I18N = {
     ],
     pk: "Ketepatan", ph: "Tepat, karena diverifikasi.", pp: "Kami tidak membandingkan aljana dengan aplikasi lain. Kami membandingkan perhitungannya dengan acuan astronomi, lalu mengukur selisihnya.",
     pr: [
-      ["Terbit, terbenam, tengah hari Matahari", "Dibandingkan dengan JPL Horizons hingga hitungan detik. Selisih terbesar yang terukur: 13 detik, dari Makkah hingga Sydney."],
+      ["Terbit, terbenam, tengah hari Matahari", "Dibandingkan dengan JPL Horizons. Selisih terbesar yang terukur: 13 detik, dari Makkah hingga Sydney."],
       ["Subuh, Asar, Isya", "Sudut dan mazhab dari metode yang dipilih, diterapkan apa adanya."],
       ["Kiblat", "Rute terpendek di bola dunia dan deklinasi dari model WMM2025."],
       ["Bulan, Hilal, gerhana", "Fase dan konjungsi diperiksa dengan Horizons, gerhana dengan elemen Bessel NASA."],
@@ -249,7 +249,7 @@ window.I18N = {
     ],
     pk: "درستگی", ph: "درست، کیونکہ تصدیق شدہ۔", pp: "ہم aljana کا موازنہ دوسری ایپس سے نہیں کرتے۔ ہم اس کے حسابات کا موازنہ فلکیاتی حوالوں سے کرتے ہیں، پھر فرق ناپتے ہیں۔",
     pr: [
-      ["طلوع، غروب، زوال", "JPL Horizons سے سیکنڈ تک موازنہ۔ زیادہ سے زیادہ ناپا گیا فرق: 13 سیکنڈ، مکہ مکرمہ سے سڈنی تک۔"],
+      ["طلوع، غروب، زوال", "JPL Horizons سے موازنہ۔ زیادہ سے زیادہ ناپا گیا فرق: 13 سیکنڈ، مکہ مکرمہ سے سڈنی تک۔"],
       ["فجر، عصر، عشاء", "منتخب طریقے کے زاویے اور مسلک، جوں کے توں لاگو۔"],
       ["قبلہ", "کرۂ ارض پر مختصر ترین راستہ اور WMM2025 ماڈل کا انحراف۔"],
       ["چاند، ہلال، گرہن", "مراحل اور اقتران Horizons پر جانچے گئے، گرہن ناسا کے بیسل عناصر پر۔"],
@@ -280,7 +280,7 @@ window.I18N = {
     ],
     pk: "دقت", ph: "دقیق، چون راستی‌آزمایی شده.", pp: "ما aljana را با برنامه‌های دیگر مقایسه نمی‌کنیم. محاسباتش را با مراجع نجومی مقایسه می‌کنیم و سپس اختلاف را می‌سنجیم.",
     pr: [
-      ["طلوع، غروب، ظهر خورشیدی", "مقایسه با JPL Horizons تا ثانیه. بیشترین اختلاف سنجیده‌شده: ۱۳ ثانیه، از مکه تا سیدنی."],
+      ["طلوع، غروب، ظهر خورشیدی", "مقایسه با JPL Horizons. بیشترین اختلاف سنجیده‌شده: ۱۳ ثانیه، از مکه تا سیدنی."],
       ["صبح، عصر، عشا", "زاویه‌ها و مذهب روش انتخاب‌شده، بی‌هیچ تغییر اعمال می‌شود."],
       ["قبله", "کوتاه‌ترین مسیر روی کره و میل مغناطیسی از مدل WMM2025."],
       ["ماه، هلال، گرفت‌ها", "فازها و مقارنه‌ها با Horizons سنجیده می‌شوند، گرفت‌ها با عناصر بسلی ناسا."],
@@ -311,7 +311,7 @@ window.I18N = {
     ],
     pk: "Точность", ph: "Точно, потому что проверено.", pp: "Мы не сравниваем aljana с другими приложениями. Мы сравниваем его расчёты с астрономическими эталонами и измеряем отклонение.",
     pr: [
-      ["Восход, заход, солнечный полдень", "Сравнение с JPL Horizons до секунды. Наибольшее измеренное отклонение: 13 секунд, от Мекки до Сиднея."],
+      ["Восход, заход, солнечный полдень", "Сравнение с JPL Horizons. Наибольшее измеренное отклонение: 13 секунд, от Мекки до Сиднея."],
       ["Фаджр, аср, иша", "Углы и мазхаб выбранного метода, применённые без изменений."],
       ["Кибла", "Кратчайший путь по глобусу и склонение по модели WMM2025."],
       ["Луна, хиляль, затмения", "Фазы и соединения сверены с Horizons, затмения с бесселевыми элементами NASA."],
@@ -342,7 +342,7 @@ window.I18N = {
     ],
     pk: "精确", ph: "精确，因为经过验证。", pp: "我们不把 aljana 与其他应用作比较。我们把它的计算结果与天文参考数据比较，然后测量误差。",
     pr: [
-      ["日出、日落、太阳正午", "与 JPL Horizons 逐秒比较。实测最大误差：13 秒，从麦加到悉尼。"],
+      ["日出、日落、太阳正午", "与 JPL Horizons 比较。实测最大误差：13 秒，从麦加到悉尼。"],
       ["晨礼、晡礼、宵礼", "所选方法的角度与学派，原样应用。"],
       ["朝向", "地球上的最短路线，以及 WMM2025 模型给出的磁偏角。"],
       ["月亮、新月、日月食", "月相与合朔以 Horizons 核对，日月食以 NASA 贝塞尔根数核对。"],
@@ -373,7 +373,7 @@ window.I18N = {
     ],
     pk: "सटीकता", ph: "सटीक, क्योंकि जाँचा हुआ।", pp: "हम aljana की तुलना दूसरे ऐप से नहीं करते। हम इसकी गणनाओं की तुलना खगोलीय संदर्भों से करते हैं, फिर अंतर नापते हैं।",
     pr: [
-      ["सूर्योदय, सूर्यास्त, सौर दोपहर", "JPL Horizons से सेकंड तक तुलना। नापा गया सबसे बड़ा अंतर: 13 सेकंड, मक्का से सिडनी तक।"],
+      ["सूर्योदय, सूर्यास्त, सौर दोपहर", "JPL Horizons से तुलना। नापा गया सबसे बड़ा अंतर: 13 सेकंड, मक्का से सिडनी तक।"],
       ["फ़ज्र, अस्र, इशा", "चुने हुए तरीक़े के कोण और मसलक, जैसे हैं वैसे लागू।"],
       ["क़िबला", "ग्लोब पर सबसे छोटा रास्ता और WMM2025 मॉडल का चुंबकीय झुकाव।"],
       ["चाँद, हिलाल, ग्रहण", "कलाएँ और युति Horizons पर जाँची गईं, ग्रहण NASA के बेसेल तत्वों पर।"],
