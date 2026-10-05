@@ -13,6 +13,7 @@ window.ALJ_L10N = {
       v3h: 'The Sun moves on, and each prayer comes in its time.', v3m: 'The Moon, for its part, counts the months.', v3q: 'The direction of the Kaaba, calculated from where you are.',
       credit: 'Sky: NASA/Goddard SVS, Deep Star Maps 2020; Gaia DR2: ESA/Gaia/DPAC. Moon: NASA SVS, LRO/LROC/LOLA.' },
     T: {
+      cmp: ["Every day, a verse, a hadith and a duʿāʾ.","The Muṣḥaf, page after page.","Al-Kahf, in one gesture."],
       cielNow: "Sky calculated for {c} · {d}", cielTonight: "Tonight’s sky at {t}, calculated for {c}", eSolarP: "{p}% of the Sun hidden from {c}, at maximum at {t}.", eSolarT: "Total eclipse from {c}: {dur} of totality, at maximum at {t}.", eSolarA: "Annular eclipse from {c}, at maximum at {t}.", eBand: "Total only within a narrow band: {r}.", eBandA: "Annular only within a narrow band: {r}.", eLunarP: "Partial lunar eclipse visible from {c}, at maximum at {t}.", eLunarT: "Total lunar eclipse visible from {c}, at maximum at {t}.", eFilter: "Seen through a solar filter, at maximum", eLunarCap: "The Moon at maximum eclipse", eSafe: "Never look at the Sun without a proper filter.",
       lensM: '<span class="look-l">{look}</span><span class="look-d">Around {t}, {a}° above the horizon and {z}° to the {side} of the setting Sun. Age {h} h, {p}% lit. Magnified view ×{n}.</span>',
       ans: '{d}, aljana’s assessment: {v}.', left: 'left', right: 'right',
@@ -40,6 +41,7 @@ window.ALJ_L10N = {
       v3h: 'تمضي الشمس، وتأتي كل صلاة في وقتها.', v3m: 'أما القمر، فيعدّ الشهور.', v3q: 'اتجاه الكعبة، محسوباً من مكانك.',
       credit: 'السماء: NASA/Goddard SVS، Deep Star Maps 2020؛ Gaia DR2: ESA/Gaia/DPAC. القمر: NASA SVS، LRO/LROC/LOLA.' },
     T: {
+      cmp: ["كل يوم آية وحديث ودعاء.","المصحف، صفحة بعد صفحة.","سورة الكهف، بلمسة واحدة."],
       cielNow: "سماء {c} المحسوبة · {d}", cielTonight: "سماء هذه الليلة في {t}، محسوبة لـ{c}", eSolarP: "يُحجب {p}٪ من الشمس في {c}، والذروة في {t}.", eSolarT: "كسوف كلي في {c}: {dur} من الكلية، والذروة في {t}.", eSolarA: "كسوف حلقي في {c}، والذروة في {t}.", eBand: "لا يكون كلياً إلا في شريط ضيق: {r}.", eBandA: "لا يكون حلقياً إلا في شريط ضيق: {r}.", eLunarP: "خسوف جزئي للقمر يُرى من {c}، والذروة في {t}.", eLunarT: "خسوف كلي للقمر يُرى من {c}، والذروة في {t}.", eFilter: "منظر عبر مرشح شمسي، عند الذروة", eLunarCap: "القمر عند ذروة الخسوف", eSafe: "لا تنظر إلى الشمس أبداً دون مرشح مناسب.",
       lensM: '<span class="look-l">{look}</span><span class="look-d">قرابة {t}، على ارتفاع {a}° فوق الأفق و{z}° إلى {side} الشمس الغاربة. العمر {h} ساعة، والإضاءة {p}٪. منظر مكبَّر ×{n}.</span>',
       ans: '{d}، تقدير aljana: {v}.', left: 'اليسار', right: 'اليمين',
@@ -67,6 +69,7 @@ window.ALJ_L10N = {
       v3h: 'سورج آگے بڑھتا ہے، اور ہر نماز اپنے وقت پر آتی ہے۔', v3m: 'اور چاند، مہینے گنتا ہے۔', v3q: 'کعبہ کی سمت، آپ کے مقام سے حساب شدہ۔',
       credit: 'آسمان: NASA/Goddard SVS، Deep Star Maps 2020؛ Gaia DR2: ESA/Gaia/DPAC۔ چاند: NASA SVS، LRO/LROC/LOLA۔' },
     T: {
+      cmp: ["ہر روز ایک آیت، ایک حدیث اور ایک دعا۔","مصحف، صفحہ بہ صفحہ۔","سورۂ کہف، ایک لمس میں۔"],
       cielNow: "{c} کے لیے حساب شدہ آسمان · {d}", cielTonight: "آج رات {t} بجے کا آسمان، {c} کے لیے حساب شدہ", eSolarP: "{c} سے سورج کا {p}٪ حصہ چھپ جائے گا، عروج {t} بجے۔", eSolarT: "{c} سے مکمل سورج گرہن: {dur} مکمل، عروج {t} بجے۔", eSolarA: "{c} سے حلقی سورج گرہن، عروج {t} بجے۔", eBand: "مکمل صرف ایک تنگ پٹی میں: {r}۔", eBandA: "حلقی صرف ایک تنگ پٹی میں: {r}۔", eLunarP: "{c} سے جزوی چاند گرہن نظر آئے گا، عروج {t} بجے۔", eLunarT: "{c} سے مکمل چاند گرہن نظر آئے گا، عروج {t} بجے۔", eFilter: "سورج کے فلٹر سے منظر، عروج پر", eLunarCap: "گرہن کے عروج پر چاند", eSafe: "مناسب فلٹر کے بغیر کبھی سورج کو نہ دیکھیں۔",
       lensM: '<span class="look-l">{look}</span><span class="look-d">تقریباً {t} بجے، افق سے {a}° بلند اور غروب ہوتے سورج سے {z}° {side}۔ عمر {h} گھنٹے، {p}٪ روشن۔ بڑا کر کے دکھایا گیا ×{n}۔</span>',
       ans: '{d}، aljana کا اندازہ: {v}۔', left: 'بائیں جانب', right: 'دائیں جانب',
@@ -94,6 +97,7 @@ window.ALJ_L10N = {
       v3h: 'El Sol avanza, y cada oración llega a su hora.', v3m: 'La Luna, por su parte, cuenta los meses.', v3q: 'La dirección de la Kaaba, calculada desde donde estás.',
       credit: 'Cielo: NASA/Goddard SVS, Deep Star Maps 2020; Gaia DR2: ESA/Gaia/DPAC. Luna: NASA SVS, LRO/LROC/LOLA.' },
     T: {
+      cmp: ["Cada día, un versículo, un hadiz y una duʿāʾ.","El Muṣḥaf, página a página.","Al-Kahf, en un gesto."],
       cielNow: "Cielo calculado para {c} · {d}", cielTonight: "El cielo de esta noche a las {t}, calculado para {c}", eSolarP: "{p} % del Sol oculto desde {c}, máximo a las {t}.", eSolarT: "Eclipse total desde {c}: {dur} de totalidad, máximo a las {t}.", eSolarA: "Eclipse anular desde {c}, máximo a las {t}.", eBand: "Total solo en una franja estrecha: {r}.", eBandA: "Anular solo en una franja estrecha: {r}.", eLunarP: "Eclipse parcial de Luna visible desde {c}, máximo a las {t}.", eLunarT: "Eclipse total de Luna visible desde {c}, máximo a las {t}.", eFilter: "Vista a través de un filtro solar, en el máximo", eLunarCap: "La Luna en el máximo del eclipse", eSafe: "Nunca mires el Sol sin un filtro adecuado.",
       lensM: '<span class="look-l">{look}</span><span class="look-d">Hacia las {t}, a {a}° sobre el horizonte y {z}° a la {side} del Sol poniente. Edad {h} h, {p} % iluminado. Vista ampliada ×{n}.</span>',
       ans: '{d}, valoración de aljana: {v}.', left: 'izquierda', right: 'derecha',
@@ -121,6 +125,7 @@ window.ALJ_L10N = {
       v3h: 'Die Sonne zieht weiter, und jedes Gebet kommt zu seiner Zeit.', v3m: 'Der Mond wiederum zählt die Monate.', v3q: 'Die Richtung der Kaaba, berechnet von Ihrem Standort aus.',
       credit: 'Himmel: NASA/Goddard SVS, Deep Star Maps 2020; Gaia DR2: ESA/Gaia/DPAC. Mond: NASA SVS, LRO/LROC/LOLA.' },
     T: {
+      cmp: ["Jeden Tag ein Vers, ein Hadith und ein Duʿāʾ.","Der Muṣḥaf, Seite für Seite.","Al-Kahf, mit einer Geste."],
       cielNow: "Himmel berechnet für {c} · {d}", cielTonight: "Der Himmel heute Nacht um {t}, berechnet für {c}", eSolarP: "{p} % der Sonne von {c} aus verdeckt, Maximum um {t}.", eSolarT: "Totale Finsternis von {c} aus: {dur} Totalität, Maximum um {t}.", eSolarA: "Ringförmige Finsternis von {c} aus, Maximum um {t}.", eBand: "Total nur in einem schmalen Streifen: {r}.", eBandA: "Ringförmig nur in einem schmalen Streifen: {r}.", eLunarP: "Partielle Mondfinsternis von {c} aus sichtbar, Maximum um {t}.", eLunarT: "Totale Mondfinsternis von {c} aus sichtbar, Maximum um {t}.", eFilter: "Durch einen Sonnenfilter gesehen, im Maximum", eLunarCap: "Der Mond im Maximum der Finsternis", eSafe: "Schauen Sie nie ohne geeigneten Filter in die Sonne.",
       lensM: '<span class="look-l">{look}</span><span class="look-d">Gegen {t}, {a}° über dem Horizont und {z}° {side} der untergegangenen Sonne. Alter {h} h, {p} % beleuchtet. Vergrößerte Ansicht ×{n}.</span>',
       ans: '{d}, Einschätzung von aljana: {v}.', left: 'links', right: 'rechts',
@@ -148,6 +153,7 @@ window.ALJ_L10N = {
       v3h: 'Güneş ilerler ve her namaz vaktinde gelir.', v3m: 'Ay ise ayları sayar.', v3q: 'Kâbe’nin yönü, bulunduğunuz yerden hesaplanır.',
       credit: 'Gökyüzü: NASA/Goddard SVS, Deep Star Maps 2020; Gaia DR2: ESA/Gaia/DPAC. Ay: NASA SVS, LRO/LROC/LOLA.' },
     T: {
+      cmp: ["Her gün bir ayet, bir hadis ve bir dua.","Mushaf, sayfa sayfa.","Kehf Suresi, tek dokunuşla."],
       cielNow: "{c} için hesaplanan gökyüzü · {d}", cielTonight: "Bu gecenin saat {t} gökyüzü, {c} için hesaplandı", eSolarP: "{c} konumundan Güneş’in %{p}’i örtülür, en büyük an {t}.", eSolarT: "{c} konumundan tam tutulma: {dur} tamlık, en büyük an {t}.", eSolarA: "{c} konumundan halkalı tutulma, en büyük an {t}.", eBand: "Yalnızca dar bir şeritte tam: {r}.", eBandA: "Yalnızca dar bir şeritte halkalı: {r}.", eLunarP: "{c} konumundan parçalı Ay tutulması görülür, en büyük an {t}.", eLunarT: "{c} konumundan tam Ay tutulması görülür, en büyük an {t}.", eFilter: "Güneş filtresinden görünüm, en büyük anda", eLunarCap: "Tutulmanın en büyük anında Ay", eSafe: "Uygun bir filtre olmadan asla Güneş’e bakmayın.",
       lensM: '<span class="look-l">{look}</span><span class="look-d">Saat {t} civarında, ufkun {a}° üzerinde ve batan Güneş’in {z}° {side}. Yaş {h} sa, %{p} aydınlık. Büyütülmüş görünüm ×{n}.</span>',
       ans: '{d}, aljana değerlendirmesi: {v}.', left: 'solunda', right: 'sağında',
@@ -175,6 +181,7 @@ window.ALJ_L10N = {
       v3h: 'Matahari bergerak, dan setiap salat datang pada waktunya.', v3m: 'Sementara Bulan menghitung bulan-bulan.', v3q: 'Arah Kakbah, dihitung dari tempat Anda.',
       credit: 'Langit: NASA/Goddard SVS, Deep Star Maps 2020; Gaia DR2: ESA/Gaia/DPAC. Bulan: NASA SVS, LRO/LROC/LOLA.' },
     T: {
+      cmp: ["Setiap hari, satu ayat, satu hadis, dan satu doa.","Mushaf, halaman demi halaman.","Al-Kahfi, dalam satu sentuhan."],
       cielNow: "Langit dihitung untuk {c} · {d}", cielTonight: "Langit malam ini pukul {t}, dihitung untuk {c}", eSolarP: "{p}% Matahari tertutup dari {c}, puncak pukul {t}.", eSolarT: "Gerhana total dari {c}: {dur} totalitas, puncak pukul {t}.", eSolarA: "Gerhana cincin dari {c}, puncak pukul {t}.", eBand: "Total hanya di jalur sempit: {r}.", eBandA: "Cincin hanya di jalur sempit: {r}.", eLunarP: "Gerhana bulan sebagian terlihat dari {c}, puncak pukul {t}.", eLunarT: "Gerhana bulan total terlihat dari {c}, puncak pukul {t}.", eFilter: "Dilihat melalui filter matahari, saat puncak", eLunarCap: "Bulan saat puncak gerhana", eSafe: "Jangan pernah melihat Matahari tanpa filter yang sesuai.",
       lensM: '<span class="look-l">{look}</span><span class="look-d">Sekitar pukul {t}, {a}° di atas ufuk dan {z}° di {side} Matahari terbenam. Umur {h} jam, {p}% bercahaya. Tampilan diperbesar ×{n}.</span>',
       ans: '{d}, penilaian aljana: {v}.', left: 'kiri', right: 'kanan',
@@ -202,6 +209,7 @@ window.ALJ_L10N = {
       v3h: 'خورشید پیش می‌رود و هر نماز در وقت خود فرا می‌رسد.', v3m: 'و ماه، ماه‌ها را می‌شمارد.', v3q: 'جهت کعبه، محاسبه‌شده از جایی که هستید.',
       credit: 'آسمان: NASA/Goddard SVS، Deep Star Maps 2020؛ Gaia DR2: ESA/Gaia/DPAC. ماه: NASA SVS، LRO/LROC/LOLA.' },
     T: {
+      cmp: ["هر روز یک آیه، یک حدیث و یک دعا.","مصحف، صفحه به صفحه.","سورهٔ کهف، با یک لمس."],
       cielNow: "آسمان محاسبه‌شده برای {c} · {d}", cielTonight: "آسمان امشب ساعت {t}، محاسبه‌شده برای {c}", eSolarP: "{p}٪ از خورشید از {c} پوشیده می‌شود، اوج ساعت {t}.", eSolarT: "گرفت کامل از {c}: {dur} کامل، اوج ساعت {t}.", eSolarA: "گرفت حلقوی از {c}، اوج ساعت {t}.", eBand: "فقط در نواری باریک کامل است: {r}.", eBandA: "فقط در نواری باریک حلقوی است: {r}.", eLunarP: "ماه‌گرفتگی جزئی از {c} دیده می‌شود، اوج ساعت {t}.", eLunarT: "ماه‌گرفتگی کامل از {c} دیده می‌شود، اوج ساعت {t}.", eFilter: "نما از پشت فیلتر خورشیدی، در اوج", eLunarCap: "ماه در اوج گرفتگی", eSafe: "هرگز بدون فیلتر مناسب به خورشید نگاه نکنید.",
       lensM: '<span class="look-l">{look}</span><span class="look-d">حدود ساعت {t}، {a}° بالای افق و {z}° {side} خورشیدِ غروب‌کرده. سن {h} ساعت، {p}٪ روشن. نمای بزرگ‌شده ×{n}.</span>',
       ans: '{d}، ارزیابی aljana: {v}.', left: 'سمت چپِ', right: 'سمت راستِ',
@@ -229,6 +237,7 @@ window.ALJ_L10N = {
       v3h: 'Солнце движется, и каждая молитва приходит в своё время.', v3m: 'А Луна считает месяцы.', v3q: 'Направление на Каабу, рассчитанное от вашего места.',
       credit: 'Небо: NASA/Goddard SVS, Deep Star Maps 2020; Gaia DR2: ESA/Gaia/DPAC. Луна: NASA SVS, LRO/LROC/LOLA.' },
     T: {
+      cmp: ["Каждый день — аят, хадис и дуа.","Мусхаф, страница за страницей.","Аль-Кахф — одним касанием."],
       cielNow: "Небо рассчитано для {c} · {d}", cielTonight: "Небо этой ночью в {t}, рассчитано для {c}", eSolarP: "Из {c} будет закрыто {p} % Солнца, максимум в {t}.", eSolarT: "Полное затмение из {c}: {dur} полной фазы, максимум в {t}.", eSolarA: "Кольцеобразное затмение из {c}, максимум в {t}.", eBand: "Полное только в узкой полосе: {r}.", eBandA: "Кольцеобразное только в узкой полосе: {r}.", eLunarP: "Частное лунное затмение видно из {c}, максимум в {t}.", eLunarT: "Полное лунное затмение видно из {c}, максимум в {t}.", eFilter: "Вид через солнечный фильтр, в максимуме", eLunarCap: "Луна в максимуме затмения", eSafe: "Никогда не смотрите на Солнце без подходящего фильтра.",
       lensM: '<span class="look-l">{look}</span><span class="look-d">Около {t}, на {a}° над горизонтом и на {z}° {side} зашедшего Солнца. Возраст {h} ч, освещено {p} %. Увеличенный вид ×{n}.</span>',
       ans: '{d}, оценка aljana: {v}.', left: 'левее', right: 'правее',
@@ -256,6 +265,7 @@ window.ALJ_L10N = {
       v3h: '太阳运行，每一次礼拜都按时到来。', v3m: '而月亮，计数着月份。', v3q: '克尔白的方向，从您所在之处计算。',
       credit: '天空：NASA/Goddard SVS，Deep Star Maps 2020；Gaia DR2：ESA/Gaia/DPAC。月亮：NASA SVS，LRO/LROC/LOLA。' },
     T: {
+      cmp: ["每天一节经文、一段圣训、一句祈祷。","穆斯哈夫，一页接一页。","山洞章，一触即达。"],
       cielNow: "为 {c} 计算的天空 · {d}", cielTonight: "今晚 {t} 的天空，为 {c} 计算", eSolarP: "从 {c} 看，太阳将被遮住 {p}%，食甚 {t}。", eSolarT: "从 {c} 看为日全食：全食 {dur}，食甚 {t}。", eSolarA: "从 {c} 看为日环食，食甚 {t}。", eBand: "只有在一条狭窄带内才是全食：{r}。", eBandA: "只有在一条狭窄带内才是环食：{r}。", eLunarP: "从 {c} 可见月偏食，食甚 {t}。", eLunarT: "从 {c} 可见月全食，食甚 {t}。", eFilter: "透过太阳滤镜所见，食甚时刻", eLunarCap: "食甚时的月亮", eSafe: "切勿在没有合适滤镜的情况下直视太阳。",
       lensM: '<span class="look-l">{look}</span><span class="look-d">约 {t}，地平线上方 {a}°，位于落日{side} {z}°。月龄 {h} 小时，照亮 {p}%。放大视图 ×{n}。</span>',
       ans: '{d}，aljana 评估：{v}。', left: '左侧', right: '右侧',
@@ -283,6 +293,7 @@ window.ALJ_L10N = {
       v3h: 'सूर्य आगे बढ़ता है, और हर नमाज़ अपने समय पर आती है।', v3m: 'और चंद्रमा, महीनों को गिनता है।', v3q: 'काबा की दिशा, आपकी जगह से गणना की गई।',
       credit: 'आकाश: NASA/Goddard SVS, Deep Star Maps 2020; Gaia DR2: ESA/Gaia/DPAC. चंद्रमा: NASA SVS, LRO/LROC/LOLA.' },
     T: {
+      cmp: ["हर दिन एक आयत, एक हदीस और एक दुआ।","मुसहफ़, पन्ना दर पन्ना।","सूरह कहफ़, एक स्पर्श में।"],
       cielNow: "{c} के लिए गणना किया गया आकाश · {d}", cielTonight: "आज रात {t} बजे का आकाश, {c} के लिए गणना किया गया", eSolarP: "{c} से सूर्य का {p}% भाग ढका रहेगा, अधिकतम {t} बजे।", eSolarT: "{c} से पूर्ण सूर्य ग्रहण: {dur} पूर्णता, अधिकतम {t} बजे।", eSolarA: "{c} से वलयाकार सूर्य ग्रहण, अधिकतम {t} बजे।", eBand: "केवल एक संकरी पट्टी में पूर्ण: {r}।", eBandA: "केवल एक संकरी पट्टी में वलयाकार: {r}।", eLunarP: "{c} से आंशिक चंद्र ग्रहण दिखेगा, अधिकतम {t} बजे।", eLunarT: "{c} से पूर्ण चंद्र ग्रहण दिखेगा, अधिकतम {t} बजे।", eFilter: "सौर फ़िल्टर से दृश्य, अधिकतम पर", eLunarCap: "ग्रहण के अधिकतम पर चंद्रमा", eSafe: "उचित फ़िल्टर के बिना कभी सूर्य को न देखें।",
       lensM: '<span class="look-l">{look}</span><span class="look-d">लगभग {t} बजे, क्षितिज से {a}° ऊपर और डूबते सूर्य के {z}° {side}। आयु {h} घंटे, {p}% प्रकाशित। बड़ा किया गया दृश्य ×{n}।</span>',
       ans: '{d}, aljana का आकलन: {v}।', left: 'बाईं ओर', right: 'दाईं ओर',

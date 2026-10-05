@@ -43,6 +43,7 @@
     cielNow: 'Ciel calculé pour {c} · {d}', cielTonight: 'Le ciel de cette nuit à {t}, calculé pour {c}',
     eSolarP: '{p} % du Soleil caché depuis {c}, au maximum à {t}.', eSolarT: 'Éclipse totale depuis {c} : {dur} de totalité, au maximum à {t}.', eSolarA: 'Éclipse annulaire depuis {c}, au maximum à {t}.',
     eBand: 'Totale seulement dans une étroite bande : {r}.', eBandA: 'Annulaire seulement dans une étroite bande : {r}.', eLunarP: 'Éclipse partielle de Lune visible depuis {c}, au maximum à {t}.', eLunarT: 'Éclipse totale de Lune visible depuis {c}, au maximum à {t}.',
+    cmp: ['Chaque jour, un verset, un hadith et une duʿāʾ.', 'Le Muṣḥaf, page après page.', 'Al-Kahf, en un geste.'],
     eFilter: 'Vue à travers un filtre solaire, au maximum', eLunarCap: 'La Lune au maximum de l’éclipse', eSafe: 'Ne regardez jamais le Soleil sans filtre adapté.',
   }
   var BASE_T = JSON.parse(JSON.stringify(T))
@@ -499,6 +500,33 @@
       var go = function () { withLang(OL, function () { ph3 = buildPhone(el, {}); updatePhone(ph3, now()) }) }
       if (OL === 'ar' && LANG !== 'ar') { var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap'; document.head.appendChild(l); l.onload = go; l.onerror = go } else go() })
   }
+  /* ---------- Compagnon : le jour, le livre, le geste (vraies captures de l'app) ---------- */
+  var cmpIdx = -1, CMPL = { fr: 'fr' }
+  function cmpSet(i) {
+    var st = document.querySelector('.cmpx-stage'); if (!st || i === cmpIdx) return
+    cmpIdx = i; st.dataset.k = i
+    document.querySelectorAll('.cmpx-l').forEach(function (e) { e.classList.toggle('on', +e.dataset.c === i) })
+    document.querySelectorAll('.cmpx-step').forEach(function (e) { e.classList.toggle('on', +e.dataset.c === i) })
+    var v = document.getElementById('cmpVid'); if (!v) return
+    if (i === 2 && !reduced) { try { v.currentTime = 0; var pr = v.play(); if (pr && pr.catch) pr.catch(function () { }) } catch (e) { } }
+  }
+  function cmpScroll() {
+    var seq = document.getElementById('cmpSeq'); if (!seq) return
+    if (mobile()) { document.querySelectorAll('.cmpx-step').forEach(function (e) { e.classList.add('on') }); return }
+    var r = seq.getBoundingClientRect(), span = seq.offsetHeight - window.innerHeight, p = clamp(-r.top / span, 0, 1)
+    cmpSet(p < 0.34 ? 0 : p < 0.67 ? 1 : 2)
+  }
+  function cmpInit() {
+    var t = T.cmp; if (t) for (var i = 0; i < 3; i++) { var e = document.getElementById('cmpS' + i); if (e) e.textContent = t[i] }
+    var v = document.getElementById('cmpVid'), ph = document.getElementById('cmpPh'); if (!v) return
+    if (window.IntersectionObserver) new IntersectionObserver(function (es, o) { if (es[0].isIntersecting) { o.disconnect(); v.preload = 'auto'; try { v.load() } catch (e) { } } }, { rootMargin: '1200px 0px' }).observe(v)
+    /* mobile : les trois écrans se suivent dans le même téléphone, au fil du défilement de la scène */
+    if (mobile() && window.IntersectionObserver && ph) {
+      var k = 0, tm = null, go = function () { cmpSet(k); if (k < 2) tm = setTimeout(function () { k++; go() }, 3400) }
+      new IntersectionObserver(function (es, o) { if (es[0].isIntersecting) { o.disconnect(); if (reduced) cmpSet(2); else go() } }, { threshold: 0.6 }).observe(ph)
+    } else if (mobile()) cmpSet(2)
+    window.addEventListener('scroll', cmpScroll, { passive: true }); cmpScroll()
+  }
   var hd = document.querySelector('header'), hdS = function () { if (hd) hd.classList.toggle('solid', window.scrollY > 40) }
   window.addEventListener('scroll', hdS, { passive: true }); hdS()
   new MutationObserver(function () { var c = document.documentElement.lang; if (!c || c === CODE) return
@@ -512,7 +540,7 @@
     try { var qc = document.getElementById('qglobe'); qGlobe = new window.ALJ_EARTH.EarthScene({ canvas: qc.querySelector('canvas'), container: qc, reducedMotion: reduced, qibla: true, getNow: now }); qGlobe.setObserver(place.lat, place.lon) } catch (e) { console.warn('qibla', e) }
     cres = A.nextCrescentDay(now(), place, place.tz)
     basTexts(); try { ECL = nextEclipse(now()) } catch (e) { console.warn('éclipses', e) }
-    Promise.all([starsP, window.ALJ_MOON.ready(), fontP, s1.stars ? s1.stars.loaded : 0]).then(function () { render(); renderMaghrib(); renderBigMoon(now()); renderEclipse(); lazyBas(); seqScroll(); document.documentElement.dataset.ready = '1'
+    Promise.all([starsP, window.ALJ_MOON.ready(), fontP, s1.stars ? s1.stars.loaded : 0]).then(function () { render(); renderMaghrib(); renderBigMoon(now()); renderEclipse(); lazyBas(); cmpInit(); seqScroll(); document.documentElement.dataset.ready = '1'
       try { var y = sessionStorage.getItem('aljana.scroll'); if (y) { sessionStorage.removeItem('aljana.scroll'); window.scrollTo(0, +y) } } catch (e) { /* stockage indisponible */ } })
     window.addEventListener('scroll', seqScroll, { passive: true })
     var phs = document.querySelectorAll('.ph'); if (reduced || !window.IntersectionObserver) phs.forEach(function (e) { e.classList.add('lit') })
