@@ -124,6 +124,7 @@
   .lang-menu { position: absolute; top: calc(100% + 8px); inset-inline-end: 0; width: 320px; padding: 7px; border-radius: 16px; background: #0E172D; box-shadow: 0 22px 54px rgba(0,0,0,0.5); display: grid; grid-template-columns: 1fr 1fr; gap: 2px; opacity: 0; visibility: hidden; transform: translateY(-6px); transition: opacity 0.16s, transform 0.16s, visibility 0.16s; }
   .lang-menu.open { opacity: 1; visibility: visible; transform: none; }
   .lang-opt { display: flex; align-items: center; gap: 9px; min-height: 44px; padding: 0 10px; border-radius: 10px; font-size: 14.5px; color: var(--soft); text-align: start; width: 100%; min-width: 0; }
+  .lang-opt[dir] { direction: inherit; } /* chaque langue s'aligne comme les autres ; le nom reste écrit dans son sens */
   .lang-opt:hover { background: rgba(255,255,255,0.06); color: var(--ink); }
   .lang-opt[aria-current="true"] { color: var(--gold-soft); background: rgba(226,182,89,0.08); }
 
@@ -867,6 +868,6 @@
 <script src="ciel/sky.js?v=5"></script>
 <script src="ciel/scenes-i18n.js?v=3"></script>
 <script src="ciel/eclipses.js?v=1" defer></script>
-<script src="ciel/scenes.js?v=12" defer></script>
+<script src="ciel/scenes.js?v=13" defer></script>
 </body>
 </html>

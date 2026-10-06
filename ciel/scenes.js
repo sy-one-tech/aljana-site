@@ -421,7 +421,7 @@
     requestAnimationFrame(loop)
   }
   /* ---------- bas de page : le ciel de cette nuit ---------- */
-  var s4 = null, ph3 = null, OL = RTL ? 'fr' : 'ar'
+  var s4 = null, ph3 = null, OL = LANG /* le téléphone du bloc Langues parle la langue de la page ; choisir une langue recharge la page dans cette langue */
   function cielTime(at) {
     if (A.sunAltAz(at, place.lat, place.lon).alt < -15) return { at: at, now: true }
     for (var m = 10; m <= 1440; m += 10) { var t = new Date(at.getTime() + m * 60000); if (A.sunAltAz(t, place.lat, place.lon).alt < -18) return { at: new Date(t.getTime() + 45 * 60000), now: false } }
@@ -500,7 +500,7 @@
   function lazyBas() {
     var on = function (el, fn) { if (!el) return; if (!window.IntersectionObserver) return fn(); var io = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { io.disconnect(); fn() } }, { rootMargin: '900px 0px' }); io.observe(el) }
     on(document.getElementById('v4'), function () { s4 = new Scene(document.getElementById('v4')); (s4.stars ? s4.stars.loaded : Promise.resolve()).then(drawCiel) })
-    on(document.getElementById('ph3'), function () { var el = document.getElementById('ph3'); el.dir = OL === 'fr' ? 'ltr' : 'rtl'; el.lang = OL
+    on(document.getElementById('ph3'), function () { var el = document.getElementById('ph3'); el.dir = RTL ? 'rtl' : 'ltr'; el.lang = OL
       var go = function () { withLang(OL, function () { ph3 = buildPhone(el, {}); updatePhone(ph3, now()) }) }
       if (OL === 'ar' && LANG !== 'ar') { var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap'; document.head.appendChild(l); l.onload = go; l.onerror = go } else go() })
   }
