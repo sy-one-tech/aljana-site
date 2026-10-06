@@ -357,6 +357,7 @@
   }
   function drawMaghrib(full) {
     if (!cres) return
+    if (!s2) return
     var at = cres.ev.best, M = mobile(), v = s2.draw(at, maghribFrame(), { labels: false, minPx: 9, seed: 4.2, milky: 0, drift: drift, drawMoon: full })
     if (!v.moon) return
     var W = v.W, H = v.H, side = cres.ev.az < cres.ev.sunAz ? T.left : T.right
@@ -368,6 +369,7 @@
   function renderMaghrib() {
     if (!cres) return
     drawMaghrib(true)
+    if (!s2 || !ph2) return
     var at = cres.ev.best; ph2.crescAt = new Date(cres.ev.sunset.getTime() - 60000); updatePhone(ph2, at)
     document.getElementById('v2ans').textContent = fill(T.ans, { d: cap(fmtD(at, { weekday: 'long', day: 'numeric', month: 'long' })), v: T.advTxt[cres.ev.aljanaAdvisory] })
     document.getElementById('tag2').style.display = 'none'; document.getElementById('tagline').style.display = 'none'
@@ -412,7 +414,7 @@
     if (qt.k < 1 && qt.t0) { qt.k = Math.min(1, (performance.now() - qt.t0) / 4200); qApply() }
     if (ts - lastT > 120) { lastT = ts
       if (s1.sec.getBoundingClientRect().bottom > 0) drawHero(now(), false)
-      var r2 = s2.sec.getBoundingClientRect(); if (r2.bottom > 0 && r2.top < window.innerHeight) drawMaghrib(false)
+      var r2 = s2 ? s2.sec.getBoundingClientRect() : { bottom: -1 }; if (r2.bottom > 0 && r2.top < window.innerHeight) drawMaghrib(false)
       if (s4) { var r4 = s4.sec.getBoundingClientRect(); if (r4.bottom > 0 && r4.top < window.innerHeight) drawCiel() } }
     requestAnimationFrame(loop)
   }
@@ -538,14 +540,13 @@
   function start() {
     applySim()
     if (TL) { Object.keys(TL.html).forEach(function (k) { var e = k === 'credit' ? document.querySelector('.credit') : document.querySelector('[data-t="' + k + '"]'); if (e) e.textContent = TL.html[k] }) }
-    s1 = new Scene(document.getElementById('v1')); s2 = new Scene(document.getElementById('v2'))
-    ph1 = buildPhone(document.getElementById('ph1'), {}); ph2 = buildPhone(document.getElementById('ph2'), {})
-    try { var qc = document.getElementById('qglobe'); qGlobe = new window.ALJ_EARTH.EarthScene({ canvas: qc.querySelector('canvas'), container: qc, reducedMotion: reduced, qibla: true, getNow: now }); qGlobe.setObserver(place.lat, place.lon) } catch (e) { console.warn('qibla', e) }
+    /* seul le héros est construit tout de suite ; les autres scènes 3D le sont après, une à une (compilation des shaders, textures) */
+    s1 = new Scene(document.getElementById('v1')); ph1 = buildPhone(document.getElementById('ph1'), {})
     cres = A.nextCrescentDay(now(), place, place.tz)
     basTexts(); try { ECL = nextEclipse(now()) } catch (e) { console.warn('éclipses', e) }
     Promise.all([starsP, window.ALJ_MOON.ready(), fontP, s1.stars ? s1.stars.loaded : 0]).then(function () { s1.redraw = function () { drawHero(now(), true) }; render(); document.documentElement.dataset.hero = '1' /* le héros est prêt : l'écran de lancement peut s'effacer */
       /* le reste se calcule ensuite, une scène à la fois, pour laisser respirer la page */
-      var steps = [renderMaghrib, function () { renderBigMoon(now()) }, renderEclipse, lazyBas, cmpInit, seqScroll], k = 0
+      var steps = [function () { s2 = new Scene(document.getElementById('v2')) }, function () { ph2 = buildPhone(document.getElementById('ph2'), {}) }, renderMaghrib, function () { renderBigMoon(now()) }, renderEclipse, function () { try { var qc = document.getElementById('qglobe'); qGlobe = new window.ALJ_EARTH.EarthScene({ canvas: qc.querySelector('canvas'), container: qc, reducedMotion: reduced, qibla: true, getNow: now }); qGlobe.setObserver(place.lat, place.lon) } catch (e) { console.warn('qibla', e) } }, lazyBas, cmpInit, seqScroll], k = 0
       ;(function next() { if (k < steps.length) { try { steps[k++]() } catch (e) { console.warn(e) } setTimeout(next, 30); return } document.documentElement.dataset.ready = '1'
       try { var y = sessionStorage.getItem('aljana.scroll'); if (y) { sessionStorage.removeItem('aljana.scroll'); window.scrollTo(0, +y) } } catch (e) { /* stockage indisponible */ } })() })
     window.addEventListener('scroll', seqScroll, { passive: true })
