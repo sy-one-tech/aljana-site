@@ -163,18 +163,18 @@
     this.u = {}; var self = this
     ;['uRes', 'uAzC', 'uPpd', 'uHzY', 'uLat', 'uLST', 'uGain', 'uThr', 'uSeed', 'uTex'].forEach(function (n) { self.u[n] = gl.getUniformLocation(pr, n) })
     var big = gl.getParameter(gl.MAX_TEXTURE_SIZE) >= 4096 && window.innerWidth >= 900
-    this.loaded = new Promise(function (ok) {
-      var img = new Image(); img.decoding = 'async'
-      img.onload = function () {
-        var t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t); gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false)
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, img) /* sans mipmaps : près du pôle céleste et sur la couture de la carte, le choix de niveau donnait des traînées et un point noir ; la carte est déjà à la résolution de l'écran */
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
-        gl.uniform1i(self.u.uTex, 0); self.ready = true; ok(true)
-      }
-      img.onerror = function () { ok(false) }
-      img.src = src + (big ? 'starmap-4096.jpg' : 'starmap-2048.jpg') + '?v=1'
-    })
+    /* carte 2048 d'abord (légère, prête avant la fin de l'écran de lancement), puis 4096 en arrière-plan sur grand écran */
+    var load = function (name) { return new Promise(function (ok) { var img = new Image(); img.decoding = 'async'; img.onload = function () { ok(img) }; img.onerror = function () { ok(null) }; img.src = src + name + '?v=1' }) }
+    var upload = function (img) {
+      var t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t); gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false)
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, img) /* sans mipmaps : près du pôle céleste et sur la couture de la carte, le choix de niveau donnait des traînées et un point noir */
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+      if (self.tex) gl.deleteTexture(self.tex); self.tex = t; gl.uniform1i(self.u.uTex, 0); self.ready = true
+    }
+    this.loaded = load('starmap-2048.jpg').then(function (img) { if (!img) return false; upload(img)
+      if (big) setTimeout(function () { load('starmap-4096.jpg').then(function (im) { if (im) { upload(im); if (self.onupgrade) self.onupgrade() } }) }, 2500)
+      return true })
   }
   /* v : { W, H, azC, ppd, hzY, lat, lst, sunAlt, moonLit, seed } */
   Stars.prototype.render = function (v) {

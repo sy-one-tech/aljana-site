@@ -139,7 +139,7 @@
 
   /* ---------- scène ---------- */
   function Scene(sec) { this.sec = sec; this.sky = new window.ALJ_SKY(sec.querySelector('canvas.sky'), 0.5); this.ov = sec.querySelector('canvas.ov'); this.moon = sec.querySelector('canvas.moon')
-    var sc = sec.querySelector('canvas.stars'); if (sc && window.ALJ_STARS) try { this.stars = new window.ALJ_STARS(sc, '/textures/nasa/') } catch (e) { console.warn('étoiles', e) } }
+    var sc = sec.querySelector('canvas.stars'); if (sc && window.ALJ_STARS) try { this.stars = new window.ALJ_STARS(sc, '/textures/nasa/'); var me = this; this.stars.onupgrade = function () { if (me.redraw) me.redraw() } } catch (e) { console.warn('étoiles', e) } }
   Scene.prototype.draw = function (at, frame, o) {
     var W = this.sec.clientWidth, H = frame.H || this.sec.clientHeight, sun = A.sunAltAz(at, place.lat, place.lon), mo = A.moonAltAz(at, place.lat, place.lon)
     var v = { W: W, H: this.sec.clientHeight, ppd: W / frame.fov, hzY: frame.hz * H, azC: 0 }
@@ -543,7 +543,7 @@
     try { var qc = document.getElementById('qglobe'); qGlobe = new window.ALJ_EARTH.EarthScene({ canvas: qc.querySelector('canvas'), container: qc, reducedMotion: reduced, qibla: true, getNow: now }); qGlobe.setObserver(place.lat, place.lon) } catch (e) { console.warn('qibla', e) }
     cres = A.nextCrescentDay(now(), place, place.tz)
     basTexts(); try { ECL = nextEclipse(now()) } catch (e) { console.warn('éclipses', e) }
-    Promise.all([starsP, window.ALJ_MOON.ready(), fontP, s1.stars ? s1.stars.loaded : 0]).then(function () { render(); document.documentElement.dataset.hero = '1' /* le héros est prêt : l'écran de lancement peut s'effacer */
+    Promise.all([starsP, window.ALJ_MOON.ready(), fontP, s1.stars ? s1.stars.loaded : 0]).then(function () { s1.redraw = function () { drawHero(now(), true) }; render(); document.documentElement.dataset.hero = '1' /* le héros est prêt : l'écran de lancement peut s'effacer */
       /* le reste se calcule ensuite, une scène à la fois, pour laisser respirer la page */
       var steps = [renderMaghrib, function () { renderBigMoon(now()) }, renderEclipse, lazyBas, cmpInit, seqScroll], k = 0
       ;(function next() { if (k < steps.length) { try { steps[k++]() } catch (e) { console.warn(e) } setTimeout(next, 30); return } document.documentElement.dataset.ready = '1'
