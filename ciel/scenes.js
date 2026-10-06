@@ -501,7 +501,7 @@
       if (OL === 'ar' && LANG !== 'ar') { var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap'; document.head.appendChild(l); l.onload = go; l.onerror = go } else go() })
   }
   /* ---------- Compagnon : le jour, le livre, le geste (vraies captures de l'app) ---------- */
-  var cmpIdx = -1, CMPL = { fr: 'fr' }
+  var cmpIdx = -1
   function cmpSet(i) {
     var st = document.querySelector('.cmpx-stage'); if (!st || i === cmpIdx) return
     cmpIdx = i; st.dataset.k = i
@@ -517,6 +517,9 @@
     cmpSet(p < 0.34 ? 0 : p < 0.67 ? 1 : 2)
   }
   function cmpInit() {
+    /* captures de l'app dans la langue de la page (assets/compagnon/<langue>/) */
+    var CL = ['fr', 'en-US', 'en-GB', 'ar', 'es', 'de', 'tr', 'id', 'ur', 'fa', 'ru', 'zh', 'hi'].indexOf(CODE) >= 0 ? CODE : 'fr'
+    document.querySelectorAll('#compagnon img.cmpx-l, #cmpVid, #cmpVid source').forEach(function (e) { ['src', 'poster'].forEach(function (k) { var v = e.getAttribute('data-' + k); if (v) e.setAttribute(k, v.replace('/compagnon/fr/', '/compagnon/' + CL + '/')) }) })
     var t = T.cmp; if (t) for (var i = 0; i < 3; i++) { var e = document.getElementById('cmpS' + i); if (e) e.textContent = t[i] }
     var v = document.getElementById('cmpVid'), ph = document.getElementById('cmpPh'); if (!v) return
     if (window.IntersectionObserver) new IntersectionObserver(function (es, o) { if (es[0].isIntersecting) { o.disconnect(); v.preload = 'auto'; try { v.load() } catch (e) { } } }, { rootMargin: '1200px 0px' }).observe(v)
