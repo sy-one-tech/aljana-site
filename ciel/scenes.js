@@ -547,8 +547,10 @@
     Promise.all([starsP, window.ALJ_MOON.ready(), fontP, s1.stars ? s1.stars.loaded : 0]).then(function () { s1.redraw = function () { drawHero(now(), true) }; render(); document.documentElement.dataset.hero = '1' /* le héros est prêt : l'écran de lancement peut s'effacer */
       /* le reste se calcule ensuite, une scène à la fois, pour laisser respirer la page */
       var steps = [function () { s2 = new Scene(document.getElementById('v2')) }, function () { ph2 = buildPhone(document.getElementById('ph2'), {}) }, renderMaghrib, function () { renderBigMoon(now()) }, renderEclipse, function () { try { var qc = document.getElementById('qglobe'); qGlobe = new window.ALJ_EARTH.EarthScene({ canvas: qc.querySelector('canvas'), container: qc, reducedMotion: reduced, qibla: true, getNow: now }); qGlobe.setObserver(place.lat, place.lon) } catch (e) { console.warn('qibla', e) } }, lazyBas, cmpInit, seqScroll], k = 0
-      ;(function next() { if (k < steps.length) { try { steps[k++]() } catch (e) { console.warn(e) } setTimeout(next, 30); return } document.documentElement.dataset.ready = '1'
-      try { var y = sessionStorage.getItem('aljana.scroll'); if (y) { sessionStorage.removeItem('aljana.scroll'); window.scrollTo(0, +y) } } catch (e) { /* stockage indisponible */ } })() })
+      var next = function next() { if (k < steps.length) { try { steps[k++]() } catch (e) { console.warn(e) } setTimeout(next, 30); return } document.documentElement.dataset.ready = '1'
+      try { var y = sessionStorage.getItem('aljana.scroll'); if (y) { sessionStorage.removeItem('aljana.scroll'); window.scrollTo(0, +y) } } catch (e) { /* stockage indisponible */ } }
+      /* pendant l'écran de lancement, rien de lourd : le fondu reste fluide ; la suite démarre quand il a disparu */
+      var sp = document.getElementById('splash'); if (sp && !document.documentElement.classList.contains('nosplash')) { var go = function () { if (go.done) return; go.done = true; next() }; window.addEventListener('aljana:splashgone', go); setTimeout(go, 9500) } else next() })
     window.addEventListener('scroll', seqScroll, { passive: true })
     var phs = document.querySelectorAll('.ph'); if (reduced || !window.IntersectionObserver) phs.forEach(function (e) { e.classList.add('lit') })
     else { var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('lit'); io.unobserve(e.target) } }) }, { threshold: 0.2 }); phs.forEach(function (e) { io.observe(e) }) }
