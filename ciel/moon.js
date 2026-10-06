@@ -10,7 +10,7 @@
   function loadImg(src) { return new Promise(function (ok, ko) { var i = new Image(); i.decoding = 'async'; i.onload = function () { ok(i) }; i.onerror = ko; i.src = src }) }
   function pixels(img, w, h) { var c = document.createElement('canvas'); c.width = w; c.height = h; var x = c.getContext('2d', { willReadFrequently: true }); x.drawImage(img, 0, 0, w, h); return { w: w, h: h, d: x.getImageData(0, 0, w, h).data } }
   /* V4.2 : CGI Moon Kit de la NASA en définition supérieure (LRO 8k réduit à 4096, relief LOLA 16 px/° réduit à 2048), comme la maquette du film */
-  var big = window.innerWidth >= 900, CW = big ? 4096 : 2048, HW = big ? 2048 : 1024
+  var CW = 2048, HW = 1024 /* 2048 texels de large : plus d'un texel par pixel même pour la grande Lune de 700 px, et quatre fois moins de calcul au démarrage */
   var loading = Promise.all([loadImg('/textures/nasa/moon-color-' + CW + '.jpg?v=1'), loadImg('/textures/nasa/moon-height-' + HW + '.png?v=1')]).then(function (r) {
     tex.color = pixels(r[0], CW, CW / 2); tex.height = pixels(r[1], HW, HW / 2); tex.ready = true
   })

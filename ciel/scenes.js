@@ -543,8 +543,11 @@
     try { var qc = document.getElementById('qglobe'); qGlobe = new window.ALJ_EARTH.EarthScene({ canvas: qc.querySelector('canvas'), container: qc, reducedMotion: reduced, qibla: true, getNow: now }); qGlobe.setObserver(place.lat, place.lon) } catch (e) { console.warn('qibla', e) }
     cres = A.nextCrescentDay(now(), place, place.tz)
     basTexts(); try { ECL = nextEclipse(now()) } catch (e) { console.warn('éclipses', e) }
-    Promise.all([starsP, window.ALJ_MOON.ready(), fontP, s1.stars ? s1.stars.loaded : 0]).then(function () { render(); renderMaghrib(); renderBigMoon(now()); renderEclipse(); lazyBas(); cmpInit(); seqScroll(); document.documentElement.dataset.ready = '1'
-      try { var y = sessionStorage.getItem('aljana.scroll'); if (y) { sessionStorage.removeItem('aljana.scroll'); window.scrollTo(0, +y) } } catch (e) { /* stockage indisponible */ } })
+    Promise.all([starsP, window.ALJ_MOON.ready(), fontP, s1.stars ? s1.stars.loaded : 0]).then(function () { render(); document.documentElement.dataset.hero = '1' /* le héros est prêt : l'écran de lancement peut s'effacer */
+      /* le reste se calcule ensuite, une scène à la fois, pour laisser respirer la page */
+      var steps = [renderMaghrib, function () { renderBigMoon(now()) }, renderEclipse, lazyBas, cmpInit, seqScroll], k = 0
+      ;(function next() { if (k < steps.length) { try { steps[k++]() } catch (e) { console.warn(e) } setTimeout(next, 30); return } document.documentElement.dataset.ready = '1'
+      try { var y = sessionStorage.getItem('aljana.scroll'); if (y) { sessionStorage.removeItem('aljana.scroll'); window.scrollTo(0, +y) } } catch (e) { /* stockage indisponible */ } })() })
     window.addEventListener('scroll', seqScroll, { passive: true })
     var phs = document.querySelectorAll('.ph'); if (reduced || !window.IntersectionObserver) phs.forEach(function (e) { e.classList.add('lit') })
     else { var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('lit'); io.unobserve(e.target) } }) }, { threshold: 0.2 }); phs.forEach(function (e) { io.observe(e) }) }

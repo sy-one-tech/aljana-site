@@ -721,7 +721,7 @@
     function set(v) { p = Math.max(p, Math.min(1, v)); bar.style.transform = "scaleX(" + p.toFixed(3) + ")"; }
     function end() { if (gone) return; gone = true; set(1); setTimeout(function () { sp.classList.add("done"); h.classList.add("splash-off"); setTimeout(function () { sp.remove(); }, 1100); }, 380); }
     set(0.06);
-    var tick = setInterval(function () { var k = (Date.now() - t0) / MAX; set(p + (0.86 - p) * 0.06); if (h.dataset.ready === "1" && Date.now() - t0 >= MIN) { clearInterval(tick); end(); } else if (k >= 1) { clearInterval(tick); end(); } }, 120);
+    var tick = setInterval(function () { var k = (Date.now() - t0) / MAX; set(p + (0.86 - p) * 0.06); if ((h.dataset.hero === "1" || h.dataset.ready === "1") && Date.now() - t0 >= MIN) { clearInterval(tick); end(); } else if (k >= 1) { clearInterval(tick); end(); } }, 120);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { set(0.35); });
     window.addEventListener("load", function () { set(0.7); });
   })();
@@ -865,11 +865,11 @@
 <script src="i18n.js?v=20261004-1"></script>
 <script src="site.js?v=20261004-1"></script>
 <script src="ciel/engine.js?v=1"></script>
-<script src="ciel/moon.js?v=2"></script>
+<script src="ciel/moon.js?v=3"></script>
 <script src="ciel/sky.js?v=3"></script>
 <script src="ciel/scenes-i18n.js?v=3"></script>
 <script src="ciel/earth.js?v=1" defer></script>
 <script src="ciel/eclipses.js?v=1" defer></script>
-<script src="ciel/scenes.js?v=5" defer></script>
+<script src="ciel/scenes.js?v=6" defer></script>
 </body>
 </html>
