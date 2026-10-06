@@ -18,9 +18,13 @@
     if (!l) try { l = r(localStorage.getItem("aljana.site.lang")); } catch (e) { /* stockage indisponible */ }
     if (!l) { var n = navigator.languages || [navigator.language || "fr"]; for (var i = 0; i < n.length && !l; i++) l = r(n[i]); }
     window.__aljLang = l || "en-US";
+    /* écran de lancement : une fois par visite ; jamais pour un rechargement de langue, ni pour les captures (?still=1) ; ?splash=1 le force */
+    try { var q = new URLSearchParams(location.search), seen = sessionStorage.getItem("aljana.splash") || sessionStorage.getItem("aljana.scroll");
+      if ((seen || q.get("still")) && !q.get("splash")) h.className += " nosplash"; else sessionStorage.setItem("aljana.splash", "1"); } catch (e) { h.className += " nosplash"; }
     setTimeout(function () { if (!window.__aljReady) h.className += " rv-safe"; }, 3000);
   })(document.documentElement);
 </script>
+<style>html:not(.nosplash){background:#000}html:not(.nosplash) body{background:#000}</style> <!-- premier affichage noir, avant les polices -->
 <link rel="canonical" href="https://aljana.app/">
 <link rel="icon" href="assets/icon-192.png">
 <link rel="apple-touch-icon" href="assets/icon-192.png">
@@ -687,9 +691,41 @@
     .cmpx-phone { justify-self: center; } .cmpx-phone .ph { --pw: 300px; }
   }
   @media (prefers-reduced-motion: reduce) { .cmpx-step, .cmpx-l { transition: none; } }
+
+  /* ================= écran de lancement ================= */
+  #splash { position: fixed; inset: 0; z-index: 200; background: #000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 46px; transition: opacity 1s ease, visibility 0s linear 1s; }
+  html.nosplash #splash, #splash.done { opacity: 0; visibility: hidden; }
+  html.nosplash #splash { display: none; }
+  html:not(.nosplash) body { overflow: hidden; }
+  html.splash-off body { overflow: auto; }
+  #splash .sp-leaf { position: relative; width: min(42vw, 188px); aspect-ratio: 1; }
+  #splash .sp-leaf::before { content: ""; position: absolute; inset: -38%; border-radius: 50%; background: radial-gradient(closest-side, rgba(84,170,52,0.20), rgba(84,170,52,0.06) 55%, rgba(84,170,52,0) 100%); opacity: 0; animation: spGlow 2.6s ease 0.5s forwards; }
+  #splash img { position: relative; width: 100%; height: 100%; object-fit: contain; opacity: 0; transform: translateY(10px) rotate(-4deg) scale(0.94); animation: spIn 1.6s cubic-bezier(.2,.7,.2,1) 0.15s forwards; filter: drop-shadow(0 18px 40px rgba(60,150,40,0.18)); }
+  #splash .sp-bar { width: min(46vw, 200px); height: 2px; border-radius: 2px; background: rgba(255,255,255,0.10); overflow: hidden; opacity: 0; animation: spFade 0.8s ease 0.6s forwards; }
+  #splash .sp-bar i { display: block; width: 100%; height: 100%; background: linear-gradient(90deg, #3d9a26, #7fd35a); transform-origin: 0 50%; transform: scaleX(0); transition: transform 0.45s ease-out; }
+  html[dir="rtl"] #splash .sp-bar i { transform-origin: 100% 50%; }
+  @keyframes spIn { to { opacity: 1; transform: none; } }
+  @keyframes spGlow { to { opacity: 1; } }
+  @keyframes spFade { to { opacity: 1; } }
+  #splash.done img { transform: scale(1.04); transition: transform 1s ease; }
+  @media (prefers-reduced-motion: reduce) { #splash img, #splash .sp-leaf::before, #splash .sp-bar { animation: none; opacity: 1; transform: none; } #splash { transition: opacity 0.4s ease, visibility 0s linear 0.4s; } }
 </style>
 </head>
 <body>
+<div id="splash" aria-hidden="true"><div class="sp-leaf"><img src="assets/brand/leaf-512.png" alt="" width="512" height="512" fetchpriority="high" decoding="async"></div><div class="sp-bar"><i></i></div></div>
+<script>
+  /* barre : elle avance avec le vrai chargement (polices, page, ciel prêt) ; l'écran s'efface dès que le ciel est prêt, au plus tard à 8 s */
+  (function () {
+    var h = document.documentElement, sp = document.getElementById("splash"); if (!sp || h.classList.contains("nosplash")) return;
+    var bar = sp.querySelector("i"), t0 = Date.now(), MIN = 1600, MAX = 8000, p = 0.06, gone = false;
+    function set(v) { p = Math.max(p, Math.min(1, v)); bar.style.transform = "scaleX(" + p.toFixed(3) + ")"; }
+    function end() { if (gone) return; gone = true; set(1); setTimeout(function () { sp.classList.add("done"); h.classList.add("splash-off"); setTimeout(function () { sp.remove(); }, 1100); }, 380); }
+    set(0.06);
+    var tick = setInterval(function () { var k = (Date.now() - t0) / MAX; set(p + (0.86 - p) * 0.06); if (h.dataset.ready === "1" && Date.now() - t0 >= MIN) { clearInterval(tick); end(); } else if (k >= 1) { clearInterval(tick); end(); } }, 120);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { set(0.35); });
+    window.addEventListener("load", function () { set(0.7); });
+  })();
+</script>
 
 <header>
   <div class="wrap bar">
