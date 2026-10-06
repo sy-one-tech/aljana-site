@@ -89,23 +89,31 @@
     [-0.8, ['#0B1740', '#284076', '#5B6488']], [4, ['#0B1E4C', '#2A4E8E', '#8E9CBA']], [15, ['#081D4F', '#1E4A8E', '#7FA6D2']], [40, ['#061A4A', '#184186', '#5A88C2']], [90, ['#051747', '#143B7E', '#4A79B5']]]
   function mixHex(a, b, f) { var p = function (h, i) { return parseInt(h.slice(i, i + 2), 16) }, c = function (i) { return ('0' + Math.round(p(a, i) + (p(b, i) - p(a, i)) * f).toString(16)).slice(-2) }; return '#' + c(1) + c(3) + c(5) }
   function palette(alt) { var i = 0; while (i < PAL.length - 2 && alt > PAL[i + 1][0]) i++; var f = Math.min(1, Math.max(0, (alt - PAL[i][0]) / (PAL[i + 1][0] - PAL[i][0]))); return PAL[i][1].map(function (c, j) { return mixHex(c, PAL[i + 1][1][j], f) }) }
+  /* les pilotes compilent les shaders en tâche de fond si l'extension existe : on attend sans bloquer la page */
+  function whenLinked(gl, pr, done) {
+    var ext = gl.getExtension('KHR_parallel_shader_compile')
+    if (!ext) { done(); return }
+    ;(function poll() { if (gl.getProgramParameter(pr, ext.COMPLETION_STATUS_KHR)) done(); else setTimeout(poll, 40) })()
+  }
   function Sky(canvas, scale) {
     this.cv = canvas; this.scale = scale || 0.5
     var gl = canvas.getContext('webgl', { antialias: false, alpha: false, preserveDrawingBuffer: true }) || canvas.getContext('experimental-webgl')
     if (!gl) { this.gl = null; return }
     this.gl = gl
-    var sh = function (t, s) { var o = gl.createShader(t); gl.shaderSource(o, s); gl.compileShader(o); if (!gl.getShaderParameter(o, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(o)); return o }
-    var pr = gl.createProgram(); gl.attachShader(pr, sh(gl.VERTEX_SHADER, VS)); gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, FS)); gl.linkProgram(pr)
-    if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(pr))
-    gl.useProgram(pr); this.pr = pr
-    var b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW)
-    var loc = gl.getAttribLocation(pr, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0)
-    this.u = {}; var self = this
-    ;['uRes', 'uSun', 'uAzC', 'uPpd', 'uHzY', 'uLat', 'uLST', 'uExp', 'uNight', 'uMilky', 'uSeed', 'uMoonLit', 'uFloorW', 'uTop', 'uMid', 'uHor', 'uTime', 'uSunAz'].forEach(function (n) { self.u[n] = gl.getUniformLocation(pr, n) })
+    var mk = function (t, s) { var o = gl.createShader(t); gl.shaderSource(o, s); gl.compileShader(o); return o }
+    var vs = mk(gl.VERTEX_SHADER, VS), fs = mk(gl.FRAGMENT_SHADER, FS), pr = gl.createProgram(); gl.attachShader(pr, vs); gl.attachShader(pr, fs); gl.linkProgram(pr)
+    this.pr = pr; this.u = null; var self = this
+    this.loaded = new Promise(function (ok) { whenLinked(gl, pr, function () {
+      if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) { console.warn('ciel', gl.getShaderInfoLog(fs) || gl.getProgramInfoLog(pr)); self.gl = null; ok(false); return }
+      gl.useProgram(pr)
+      var b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW)
+      var loc = gl.getAttribLocation(pr, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0)
+      var u = {}; ['uRes', 'uSun', 'uAzC', 'uPpd', 'uHzY', 'uLat', 'uLST', 'uExp', 'uNight', 'uMilky', 'uSeed', 'uMoonLit', 'uFloorW', 'uTop', 'uMid', 'uHor', 'uTime', 'uSunAz'].forEach(function (n) { u[n] = gl.getUniformLocation(pr, n) })
+      self.u = u; ok(true) }) })
   }
   /* v : { W, H (px CSS), azC, ppd (px/°), hzY (px depuis le haut), sunAlt, sunAz, lat, lst (°), moonLit (0..1) } */
   Sky.prototype.render = function (v) {
-    var gl = this.gl; if (!gl) return
+    var gl = this.gl; if (!gl || !this.u) return
     var dpr = Math.min(2, window.devicePixelRatio || 1), k = dpr * this.scale, w = Math.max(2, Math.round(v.W * k)), h = Math.max(2, Math.round(v.H * k))
     if (this.cv.width !== w || this.cv.height !== h) { this.cv.width = w; this.cv.height = h }
     gl.viewport(0, 0, w, h)
@@ -156,12 +164,15 @@
     this.cv = canvas; this.ready = false
     var gl = canvas.getContext('webgl', { antialias: false, alpha: false, preserveDrawingBuffer: true }); if (!gl) return
     this.gl = gl
-    var sh = function (t, s) { var o = gl.createShader(t); gl.shaderSource(o, s); gl.compileShader(o); if (!gl.getShaderParameter(o, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(o)); return o }
-    var pr = gl.createProgram(); gl.attachShader(pr, sh(gl.VERTEX_SHADER, VS)); gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, SFS)); gl.linkProgram(pr); gl.useProgram(pr); this.pr = pr
-    var b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW)
-    var loc = gl.getAttribLocation(pr, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0)
+    var mk = function (t, s) { var o = gl.createShader(t); gl.shaderSource(o, s); gl.compileShader(o); return o }
+    var pr = gl.createProgram(); gl.attachShader(pr, mk(gl.VERTEX_SHADER, VS)); gl.attachShader(pr, mk(gl.FRAGMENT_SHADER, SFS)); gl.linkProgram(pr); this.pr = pr
     this.u = {}; var self = this
-    ;['uRes', 'uAzC', 'uPpd', 'uHzY', 'uLat', 'uLST', 'uGain', 'uThr', 'uSeed', 'uTex'].forEach(function (n) { self.u[n] = gl.getUniformLocation(pr, n) })
+    var linked = new Promise(function (ok) { whenLinked(gl, pr, function () {
+      gl.useProgram(pr)
+      var b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW)
+      var loc = gl.getAttribLocation(pr, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0)
+      ;['uRes', 'uAzC', 'uPpd', 'uHzY', 'uLat', 'uLST', 'uGain', 'uThr', 'uSeed', 'uTex'].forEach(function (n) { self.u[n] = gl.getUniformLocation(pr, n) })
+      ok() }) })
     var big = gl.getParameter(gl.MAX_TEXTURE_SIZE) >= 4096 && window.innerWidth >= 900
     /* carte 2048 d'abord (légère, prête avant la fin de l'écran de lancement), puis 4096 en arrière-plan sur grand écran */
     var load = function (name) { return new Promise(function (ok) { var img = new Image(); img.decoding = 'async'; img.onload = function () { ok(img) }; img.onerror = function () { ok(null) }; img.src = src + name + '?v=1' }) }
@@ -172,7 +183,7 @@
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
       if (self.tex) gl.deleteTexture(self.tex); self.tex = t; gl.uniform1i(self.u.uTex, 0); self.ready = true
     }
-    this.loaded = load('starmap-2048.jpg').then(function (img) { if (!img) return false; upload(img)
+    this.loaded = Promise.all([load('starmap-2048.jpg'), linked]).then(function (r) { var img = r[0]; if (!img) return false; upload(img)
       if (big) setTimeout(function () { load('starmap-4096.jpg').then(function (im) { if (im) { upload(im); if (self.onupgrade) self.onupgrade() } }) }, 2500)
       return true })
   }

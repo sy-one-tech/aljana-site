@@ -324,11 +324,13 @@
     prev = up; for (var k = 5; k <= 36 * 60; k += 5) { var b = A.moonAltAz(new Date(t0 + k * 60000), place.lat, place.lon).alt + 0.125 > 0; if (!up && !rise && !prev && b) rise = { time: new Date(t0 + (k - 2.5) * 60000) }; if (prev && !b && (up || rise)) { set = { time: new Date(t0 + (k - 2.5) * 60000) }; break } prev = b }
     return { rise: rise, set: set } }
   var EVENTS = [{ key: 'ramadan', m: 9, d: 1, f: true }, { key: 'fitr', m: 10, d: 1, f: true }, { key: 'adha', m: 12, d: 10, f: true }, { key: 'muharram', m: 1, d: 1, f: false }]
-  function nextEvent(at) { var c0 = parts(at); for (var i = 0; i <= 400; i++) { var c = A.civilAdd({ y: c0.y, m: c0.m, d: c0.d }, i), h = A.hijriCivil(c, place.tz); for (var j = 0; j < EVENTS.length; j++) if (EVENTS[j].m === h.m && EVENTS[j].d === h.d) return { key: EVENTS[j].key, f: EVENTS[j].f, days: i, c: c } } return null }
+  var evCache = {}
+  function nextEvent(at) { var c0 = parts(at), ck = c0.y + '-' + c0.m + '-' + c0.d; if (ck in evCache) return evCache[ck]; return (evCache[ck] = nextEventRaw(at)) }
+  function nextEventRaw(at) { var c0 = parts(at); for (var i = 0; i <= 400; i++) { var c = A.civilAdd({ y: c0.y, m: c0.m, d: c0.d }, i), h = A.hijriCivil(c, place.tz); for (var j = 0; j < EVENTS.length; j++) if (EVENTS[j].m === h.m && EVENTS[j].d === h.d) return { key: EVENTS[j].key, f: EVENTS[j].f, days: i, c: c } } return null }
 
   /* ---------- orchestration ---------- */
   var mobile = function () { return window.innerWidth < 900 }
-  var s1, s2, ph1, ph2, qGlobe, cres = null, drift = 0
+  var s1, s2, ph1, ph2, qGlobe, cres = null, drift = 0, heroDone = false
   function heroFrame(at) {
     var mo = A.moonAltAz(at, place.lat, place.lon), M = mobile(), aim = mo.alt > 0 ? mo.az : null
     if (M) { var fov = 62, ppd = window.innerWidth / fov, H = 860, hz = aim != null ? clamp((150 + mo.alt * ppd) / H, 0.26, 0.6) : 0.47; return { fov: fov, hz: hz, H: H, aim: aim, ax: 0.2 } }
@@ -344,14 +346,14 @@
   }
   function render() {
     var at = now(), M = mobile(), v1 = drawHero(at, true)
-    updatePhone(ph1, at)
+    if (ph1) updatePhone(ph1, at)
     if (RT[LANG]) { var R = RT[LANG]; document.querySelector('[data-t="h1a"]').textContent = R.h1a; document.querySelector('[data-t="h1b"]').textContent = R.h1b; document.querySelector('.lead .d-only').textContent = fill(R.lead, { c: place.city }); document.querySelector('.lead .m-only').textContent = R.leadM
       document.querySelector('.more').textContent = R.more }
     else document.querySelector('.here').textContent = (/^[aeiouyhàâéèêîôûAEIOUYHÉÈÎ]/.test(place.city) ? 'd’' : 'de ') + place.city
     var sun = A.sunAltAz(at, place.lat, place.lon)
     if (RT[LANG]) document.getElementById('proof1').textContent = fill(RT[LANG].proof, { c: place.city, d: new Intl.DateTimeFormat(LOC, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZone: place.tz }).format(at), n: new Intl.NumberFormat(LOC, { maximumFractionDigits: 1, minimumFractionDigits: 1 }).format(Math.abs(sun.alt)) })
     else document.getElementById('proof1').textContent = fill(T.proof, { c: place.city, d: fmtD(at, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) + ', ' + fmtT(at, true), dir: T.dirL[Math.round((((v1.azC % 360) + 360) % 360) / 45) % 8], s: fill(sun.alt >= 0 ? T.above : T.below, { n: num(Math.abs(sun.alt), 1) }) })
-    renderV3(at)
+    if (heroDone) renderV3(at)
     if (ph3) withLang(OL, function () { updatePhone(ph3, at) })
     if (s4 && reduced) drawCiel()
   }
@@ -541,16 +543,19 @@
     applySim()
     if (TL) { Object.keys(TL.html).forEach(function (k) { var e = k === 'credit' ? document.querySelector('.credit') : document.querySelector('[data-t="' + k + '"]'); if (e) e.textContent = TL.html[k] }) }
     /* seul le héros est construit tout de suite ; les autres scènes 3D le sont après, une à une (compilation des shaders, textures) */
-    s1 = new Scene(document.getElementById('v1')); ph1 = buildPhone(document.getElementById('ph1'), {})
-    cres = A.nextCrescentDay(now(), place, place.tz)
-    basTexts(); try { ECL = nextEclipse(now()) } catch (e) { console.warn('éclipses', e) }
-    Promise.all([starsP, window.ALJ_MOON.ready(), fontP, s1.stars ? s1.stars.loaded : 0]).then(function () { s1.redraw = function () { drawHero(now(), true) }; render(); document.documentElement.dataset.hero = '1' /* le héros est prêt : l'écran de lancement peut s'effacer */
+    s1 = new Scene(document.getElementById('v1'))
+    /* le globe de l'app (earth.js) et ses textures se chargent après le héros */
+    var earthP = null, loadEarth = function () { if (!earthP) earthP = window.ALJ_EARTH ? Promise.resolve() : new Promise(function (ok) { var e = document.createElement('script'); e.src = 'ciel/earth.js?v=1'; e.onload = ok; e.onerror = ok; document.head.appendChild(e) }); return earthP }
+    basTexts()
+    Promise.all([starsP, fontP, s1.sky.loaded]).then(function () { s1.redraw = function () { drawHero(now(), true) }; render(); document.getElementById('v1').classList.add('sky-on'); document.documentElement.dataset.hero = '1'
+      if (s1.stars) s1.stars.loaded.then(function () { s1.redraw() }); window.ALJ_MOON.ready().then(function () { s1.redraw() })
+      loadEarth().then(function () { ph1 = buildPhone(document.getElementById('ph1'), {}); updatePhone(ph1, now()) }) /* le héros est prêt : l'écran de lancement peut s'effacer */
       /* le reste se calcule ensuite, une scène à la fois, pour laisser respirer la page */
-      var steps = [function () { s2 = new Scene(document.getElementById('v2')) }, function () { ph2 = buildPhone(document.getElementById('ph2'), {}) }, renderMaghrib, function () { renderBigMoon(now()) }, renderEclipse, function () { try { var qc = document.getElementById('qglobe'); qGlobe = new window.ALJ_EARTH.EarthScene({ canvas: qc.querySelector('canvas'), container: qc, reducedMotion: reduced, qibla: true, getNow: now }); qGlobe.setObserver(place.lat, place.lon) } catch (e) { console.warn('qibla', e) } }, lazyBas, cmpInit, seqScroll], k = 0
+      var steps = [function () { heroDone = true; renderV3(now()) }, function () { cres = A.nextCrescentDay(now(), place, place.tz) }, function () { try { ECL = nextEclipse(now()) } catch (e) { console.warn('éclipses', e) } }, function () { s2 = new Scene(document.getElementById('v2')) }, function () { ph2 = buildPhone(document.getElementById('ph2'), {}) }, renderMaghrib, function () { renderBigMoon(now()) }, renderEclipse, function () { try { var qc = document.getElementById('qglobe'); qGlobe = new window.ALJ_EARTH.EarthScene({ canvas: qc.querySelector('canvas'), container: qc, reducedMotion: reduced, qibla: true, getNow: now }); qGlobe.setObserver(place.lat, place.lon) } catch (e) { console.warn('qibla', e) } }, lazyBas, cmpInit, seqScroll], k = 0
       var next = function next() { if (k < steps.length) { try { steps[k++]() } catch (e) { console.warn(e) } setTimeout(next, 30); return } document.documentElement.dataset.ready = '1'
       try { var y = sessionStorage.getItem('aljana.scroll'); if (y) { sessionStorage.removeItem('aljana.scroll'); window.scrollTo(0, +y) } } catch (e) { /* stockage indisponible */ } }
       /* pendant l'écran de lancement, rien de lourd : le fondu reste fluide ; la suite démarre quand il a disparu */
-      var sp = document.getElementById('splash'); if (sp && !document.documentElement.classList.contains('nosplash')) { var go = function () { if (go.done) return; go.done = true; next() }; window.addEventListener('aljana:splashgone', go); setTimeout(go, 9500) } else next() })
+      var sp = document.getElementById('splash'); if (sp && !document.documentElement.classList.contains('nosplash')) { var go = function () { if (go.done) return; go.done = true; loadEarth().then(next) }; window.addEventListener('aljana:splashgone', go); setTimeout(go, 4500) } else loadEarth().then(next) })
     window.addEventListener('scroll', seqScroll, { passive: true })
     var phs = document.querySelectorAll('.ph'); if (reduced || !window.IntersectionObserver) phs.forEach(function (e) { e.classList.add('lit') })
     else { var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('lit'); io.unobserve(e.target) } }) }, { threshold: 0.2 }); phs.forEach(function (e) { io.observe(e) }) }
