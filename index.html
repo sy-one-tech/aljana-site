@@ -396,6 +396,8 @@
   .lead { margin: 22px 0 0; font-size: 18px; color: var(--soft); max-width: 470px; text-shadow: 0 1px 18px rgba(2,5,16,0.7); }
   .acts { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: 30px; }
   .acts .more { white-space: nowrap; }
+  /* lien du film : petit triangle de lecture (non inversé en RTL, comme les commandes média) */
+  #filmLink::before { content: ""; display: inline-block; width: 0; height: 0; border-style: solid; border-width: 5px 0 5px 8px; border-color: transparent transparent transparent currentColor; margin-inline-end: 9px; vertical-align: 1px; }
   .acts .soon { min-height: 46px; padding: 0 22px; font-size: 15px; }
   .more { color: var(--soft); font-weight: 500; font-size: 15px; border-bottom: 1px solid rgba(201,209,234,0.3); padding-bottom: 2px; }
   #v1 .phone-at { position: absolute; inset-inline-end: max(20px, calc((100% - var(--w)) / 2 + 10px)); top: 128px; }
@@ -895,6 +897,6 @@
 <script src="ciel/scenes-i18n.js?v=3"></script>
 <script src="ciel/eclipses.js?v=1" defer></script>
 <script src="ciel/scenes.js?v=13" defer></script>
-<script src="ciel/film.js?v=1" defer></script>
+<script src="ciel/film.js?v=2" defer></script>
 </body>
 </html>
