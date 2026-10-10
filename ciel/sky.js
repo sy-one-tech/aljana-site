@@ -141,6 +141,7 @@
   var SFS = [
     'precision highp float;',
     'uniform vec2 uRes; uniform float uAzC, uPpd, uHzY, uLat, uLST, uGain, uThr, uSeed; uniform sampler2D uTex;',
+    'uniform vec4 uBright[24]; /* étoiles brillantes : direction équatoriale (xyz), rayon effacé en radians (w) */',
     'const float D2R = 0.01745329; const float PI = 3.14159265;',
     'float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }',
     'float noise(vec2 p){ vec2 i = floor(p), f = fract(p); f = f*f*(3.0-2.0*f); return mix(mix(hash(i), hash(i+vec2(1,0)), f.x), mix(hash(i+vec2(0,1)), hash(i+vec2(1,1)), f.x), f.y); }',
@@ -157,6 +158,11 @@
     '  float ra = uLST*D2R - H;',
     '  vec2 tc = vec2(fract(0.5 - ra / (2.0*PI)), 0.5 - dec / PI);',
     '  vec3 s = texture2D(uTex, tc).rgb; s = max(s - uThr, 0.0) / (1.0 - uThr);',
+    '  /* les étoiles les plus brillantes sont de gros disques dans la carte : la projection du ciel (x selon l azimut, y selon',
+    '     la hauteur) les étire en largeur dès qu elles montent. On les efface ici ; le calque 2D les redessine rondes, à leur place. */',
+    '  vec3 q = vec3(cos(dec)*cos(ra), cos(dec)*sin(ra), sin(dec)); float k = 1.0;',
+    '  for (int i = 0; i < 24; i++) { vec4 b = uBright[i]; if (b.w <= 0.0) continue; float t2 = 2.0*(1.0 - dot(q, b.xyz)); k = min(k, smoothstep(0.36*b.w*b.w, b.w*b.w, t2)); }',
+    '  s *= k;',
     '  float am = 1.0 / max(sin(h) + 0.025, 0.035); s *= exp(-0.16*(am - 1.0));',
     '  gl_FragColor = vec4(s * uGain * m, 1.0);',
     '}'].join('\n')
@@ -171,7 +177,7 @@
       gl.useProgram(pr)
       var b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW)
       var loc = gl.getAttribLocation(pr, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0)
-      ;['uRes', 'uAzC', 'uPpd', 'uHzY', 'uLat', 'uLST', 'uGain', 'uThr', 'uSeed', 'uTex'].forEach(function (n) { self.u[n] = gl.getUniformLocation(pr, n) })
+      ;['uRes', 'uAzC', 'uPpd', 'uHzY', 'uLat', 'uLST', 'uGain', 'uThr', 'uSeed', 'uTex', 'uBright'].forEach(function (n) { self.u[n] = gl.getUniformLocation(pr, n) })
       ok() }) })
     var big = gl.getParameter(gl.MAX_TEXTURE_SIZE) >= 4096 && window.innerWidth >= 900
     /* carte 2048 d'abord (légère, prête avant la fin de l'écran de lancement), puis 4096 en arrière-plan sur grand écran */
@@ -187,6 +193,12 @@
       if (big) setTimeout(function () { load('starmap-4096.jpg').then(function (im) { if (im) { upload(im); if (self.onupgrade) self.onupgrade() } }) }, 2500)
       return true })
   }
+  /* étoiles à effacer de la carte : [[ascension droite °, déclinaison °, magnitude], …] (24 au plus) */
+  Stars.prototype.setBright = function (list) {
+    var a = new Float32Array(96), r = Math.PI / 180
+    list.slice(0, 24).forEach(function (s, i) { var ra = s[0] * r, de = s[1] * r; a[i * 4] = Math.cos(de) * Math.cos(ra); a[i * 4 + 1] = Math.cos(de) * Math.sin(ra); a[i * 4 + 2] = Math.sin(de); a[i * 4 + 3] = (0.45 + 0.16 * Math.max(0, 1.6 - s[2])) * r })
+    this.bright = a
+  }
   /* v : { W, H, azC, ppd, hzY, lat, lst, sunAlt, moonLit, seed } */
   Stars.prototype.render = function (v) {
     var gl = this.gl; if (!gl || !this.ready) return
@@ -196,6 +208,7 @@
     var night = Math.min(1, Math.max(0, (-v.sunAlt - 6) / 10)), ml = v.moonLit || 0
     gl.uniform2f(this.u.uRes, w, h); gl.uniform1f(this.u.uAzC, v.azC); gl.uniform1f(this.u.uPpd, v.ppd * dpr); gl.uniform1f(this.u.uHzY, v.hzY * dpr)
     gl.uniform1f(this.u.uLat, v.lat); gl.uniform1f(this.u.uLST, v.lst); gl.uniform1f(this.u.uSeed, v.seed || 1.7)
+    gl.uniform4fv(this.u.uBright, this.bright || new Float32Array(96))
     gl.uniform1f(this.u.uGain, 0.95 * night * (1 - 0.7 * ml)); gl.uniform1f(this.u.uThr, 0.05 + 0.25 * (1 - night) + 0.12 * ml)
     gl.drawArrays(gl.TRIANGLES, 0, 3)
   }

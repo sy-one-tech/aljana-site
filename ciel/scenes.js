@@ -86,6 +86,8 @@
   /* ---------- astres : calque 2D (étoiles réelles, planètes) et Lune texturée ---------- */
   var STARS = []
   var starsP = fetch('ciel/stars.json?v=1').then(function (r) { return r.json() }).then(function (s) { STARS = s }).catch(function () { })
+  /* les 24 étoiles les plus brillantes : effacées de la carte NASA (où elles s'étirent en montant), dessinées rondes par drawAstres */
+  var BRIGHT = function () { return STARS.filter(function (s) { return s[2] < 1.6 }).sort(function (a, b) { return a[2] - b[2] }).slice(0, 24) }
   var sprite = (function () { var c = document.createElement('canvas'); c.width = c.height = 64; var x = c.getContext('2d'), g = x.createRadialGradient(32, 32, 0, 32, 32, 32); g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(0.12, 'rgba(255,255,255,0.85)'); g.addColorStop(0.3, 'rgba(255,255,255,0.22)'); g.addColorStop(1, 'rgba(255,255,255,0)'); x.fillStyle = g; x.fillRect(0, 0, 64, 64); return c })()
   var tints = {}
   function tinted(bv) { var k = bv < 0.1 ? 'b' : bv < 0.6 ? 'w' : bv < 1.1 ? 'y' : 'o'; if (tints[k]) return tints[k]; var col = { b: '200,218,255', w: '246,248,255', y: '255,236,204', o: '255,206,158' }[k]
@@ -104,8 +106,9 @@
       var airm = 1 / Math.max(0.08, Math.sin((aa.alt + 2) * RAD)), m = s[2] + 0.25 * (airm - 1), vis = smooth((lim + 0.35 - m) / 1.1); if (vis <= 0.01) continue
       var L = Math.pow(10, -0.4 * (m - 1.2)), a = vis * (0.3 + 0.7 * Math.min(1, L * 1.4)) * (o.dim || 1)
       if (tw) a *= 1 + 0.22 * Math.min(1, 0.25 + (airm - 1) * 0.5) * Math.sin(tw * (2.1 + (i % 7) * 0.37) + i) /* scintillation, plus forte près de l'horizon */
-      a = clamp(a, 0, 1); var r = (0.75 + 3.4 * Math.sqrt(Math.min(1.6, L))) * (o.scale || 1)
+      a = clamp(a, 0, 1); var r = (0.75 + 3.4 * Math.sqrt(Math.min(4, L))) * (o.scale || 1) /* plafond 4 : Véga, Arcturus, Sirius… restent les plus éclatantes (elles ne sont plus dans la carte NASA) */
       x.globalAlpha = a; x.drawImage(tinted(s[3]), X - r * 2.2, Y - r * 2.2, r * 4.4, r * 4.4)
+      if (s[2] < 1.6) x.drawImage(tinted(s[3]), X - r * 1.1, Y - r * 1.1, r * 2.2, r * 2.2) /* cœur plus net pour les plus brillantes */
     }
     var pl = ['venus', 'jupiter', 'mars', 'saturn', 'mercury']
     for (var j = 0; j < pl.length; j++) { var p = A.planetPos(pl[j], jd); if (p.mag > 1.6) continue; var q = A.altAzFromRaDec(jd, p.ra, p.dec, place.lat, place.lon); if (q.alt < 2) continue
@@ -139,7 +142,7 @@
 
   /* ---------- scène ---------- */
   function Scene(sec) { this.sec = sec; this.sky = new window.ALJ_SKY(sec.querySelector('canvas.sky'), 0.5); this.ov = sec.querySelector('canvas.ov'); this.moon = sec.querySelector('canvas.moon')
-    var sc = sec.querySelector('canvas.stars'); if (sc && window.ALJ_STARS) try { this.stars = new window.ALJ_STARS(sc, '/textures/nasa/'); var me = this; this.stars.onupgrade = function () { if (me.redraw) me.redraw() } } catch (e) { console.warn('étoiles', e) } }
+    var sc = sec.querySelector('canvas.stars'); if (sc && window.ALJ_STARS) try { this.stars = new window.ALJ_STARS(sc, '/textures/nasa/'); var st = this.stars; starsP.then(function () { st.setBright(BRIGHT()) }); var me = this; this.stars.onupgrade = function () { if (me.redraw) me.redraw() } } catch (e) { console.warn('étoiles', e) } }
   Scene.prototype.draw = function (at, frame, o) {
     var W = this.sec.clientWidth, H = frame.H || this.sec.clientHeight, sun = A.sunAltAz(at, place.lat, place.lon), mo = A.moonAltAz(at, place.lat, place.lon)
     var v = { W: W, H: this.sec.clientHeight, ppd: W / frame.fov, hzY: frame.hz * H, azC: 0 }
