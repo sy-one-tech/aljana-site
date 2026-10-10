@@ -110,11 +110,22 @@
       x.globalAlpha = a; x.drawImage(tinted(s[3]), X - r * 2.2, Y - r * 2.2, r * 4.4, r * 4.4)
       if (s[2] < 1.6) x.drawImage(tinted(s[3]), X - r * 1.1, Y - r * 1.1, r * 2.2, r * 2.2) /* cœur plus net pour les plus brillantes */
     }
+    /* zones à laisser libres pour les noms des planètes : textes, boutons, téléphone, loupe, en-tête (repère : le calque) */
+    var busy = []
+    if (o.labels) { var cr = cv.getBoundingClientRect(), sc = cv.parentNode
+      var add = function (r) { if (r.width && r.height) busy.push([r.left - cr.left - 8, r.top - cr.top - 6, r.right - cr.left + 8, r.bottom - cr.top + 6]) }, rg = document.createRange()
+      sc.querySelectorAll('.acts > *, .phone-at, .lens').forEach(function (e) { add(e.getBoundingClientRect()) })
+      sc.querySelectorAll('h1, h2, .lead, .proof, .lens-cap, .v2-text > *').forEach(function (e) { var tw = document.createTreeWalker(e, NodeFilter.SHOW_TEXT), n; while ((n = tw.nextNode())) { rg.selectNodeContents(n); Array.prototype.forEach.call(rg.getClientRects(), add) } }) /* le contour des mots (nœuds texte), pas le bloc entier */
+      var hd = document.querySelector('header'); if (hd) { var hr = hd.getBoundingClientRect(); busy.push([hr.left - cr.left, hr.top - cr.top, hr.right - cr.left, hr.bottom - cr.top + 6]) } }
+    var free = function (a) { for (var i = 0; i < busy.length; i++) { var b = busy[i]; if (a[0] < b[2] && a[2] > b[0] && a[1] < b[3] && a[3] > b[1]) return false } return a[0] >= 0 && a[2] <= W && a[1] >= 0 && a[3] <= H }
     var pl = ['venus', 'jupiter', 'mars', 'saturn', 'mercury']
     for (var j = 0; j < pl.length; j++) { var p = A.planetPos(pl[j], jd); if (p.mag > 1.6) continue; var q = A.altAzFromRaDec(jd, p.ra, p.dec, place.lat, place.lon); if (q.alt < 2) continue
       var X2 = px(q.az), Y2 = v.hzY - q.alt * v.ppd; if (X2 < 0 || X2 > W) continue
       var r2 = 4.2 + 2.2 * Math.max(0, 1 - p.mag); x.globalAlpha = nk; x.drawImage(tinted(0.9), X2 - r2 * 2.6, Y2 - r2 * 2.6, r2 * 5.2, r2 * 5.2)
-      if (o.labels) { x.globalCompositeOperation = 'source-over'; x.globalAlpha = 0.78 * nk; x.font = RTL ? '500 13px ' + getComputedStyle(document.documentElement).getPropertyValue('--sans') : '500 12.5px "Commissioner", sans-serif'; x.fillStyle = '#C9D1EA'; x.textAlign = 'center'; x.fillText((RT[LANG] ? RT[LANG].planets : T.planets)[pl[j]], X2, Y2 + 22); x.globalCompositeOperation = 'lighter' } }
+      if (o.labels) { x.globalCompositeOperation = 'source-over'; x.globalAlpha = 0.78 * nk; x.font = RTL ? '500 13px ' + getComputedStyle(document.documentElement).getPropertyValue('--sans') : '500 12.5px "Commissioner", sans-serif'; x.fillStyle = '#C9D1EA'; x.textAlign = 'center'
+        var nm = (RT[LANG] ? RT[LANG].planets : T.planets)[pl[j]], hw = x.measureText(nm).width / 2 + 3, ty = null
+        if (free([X2 - hw, Y2 + 10, X2 + hw, Y2 + 27])) ty = Y2 + 22; else if (free([X2 - hw, Y2 - 27, X2 + hw, Y2 - 10])) ty = Y2 - 14 /* dessous, sinon dessus, sinon pas de nom */
+        if (ty != null) x.fillText(nm, X2, ty); x.globalCompositeOperation = 'lighter' } }
     x.globalAlpha = 1; x.globalCompositeOperation = 'source-over'
   }
   function placeMoon(el, at, v, o) {
