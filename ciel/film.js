@@ -10,18 +10,18 @@
   var code = (document.documentElement.lang || 'fr').toLowerCase(), two = code.slice(0, 2)
   var FL = two === 'fr' ? 'fr' : two === 'ar' ? 'ar' : 'en', VER = '1'
   var S = {
-    fr: ['Voir le film · 42 s', 'Film · 42 s · sans son', 'Lire le film', 'Mettre en pause', 'Revoir le film', 'Film de présentation d’aljana, 42 secondes, sans son'],
-    en: ['Watch the film · 42 s', 'Film · 42 s · no sound', 'Play the film', 'Pause', 'Watch again', 'aljana introduction film, 42 seconds, no sound'],
-    ar: ['شاهد الفيلم (٤٢ ثانية)', 'فيلم، ٤٢ ثانية، بلا صوت', 'تشغيل الفيلم', 'إيقاف مؤقت', 'إعادة المشاهدة', 'فيلم تعريفي بـ aljana، ٤٢ ثانية، بلا صوت'],
-    es: ['Ver el vídeo · 42 s', 'Vídeo · 42 s · sin sonido · en inglés', 'Reproducir el vídeo', 'Pausa', 'Volver a verlo', 'Vídeo de presentación de aljana, 42 segundos, sin sonido, en inglés'],
-    de: ['Film ansehen · 42 s', 'Film · 42 s · ohne Ton · auf Englisch', 'Film abspielen', 'Pause', 'Noch einmal ansehen', 'Vorstellungsfilm von aljana, 42 Sekunden, ohne Ton, auf Englisch'],
-    tr: ['Filmi izleyin · 42 sn', 'Film · 42 sn · sessiz · İngilizce', 'Filmi oynat', 'Duraklat', 'Yeniden izle', 'aljana tanıtım filmi, 42 saniye, sessiz, İngilizce'],
-    id: ['Tonton filmnya · 42 dtk', 'Film · 42 dtk · tanpa suara · bahasa Inggris', 'Putar film', 'Jeda', 'Tonton lagi', 'Film perkenalan aljana, 42 detik, tanpa suara, dalam bahasa Inggris'],
-    ur: ['فلم دیکھیں · 42 سیکنڈ', 'فلم · 42 سیکنڈ · بغیر آواز · انگریزی میں', 'فلم چلائیں', 'روکیں', 'دوبارہ دیکھیں', 'aljana کی تعارفی فلم، 42 سیکنڈ، بغیر آواز، انگریزی میں'],
-    fa: ['تماشای فیلم (۴۲ ثانیه)', 'فیلم، ۴۲ ثانیه، بی‌صدا، به انگلیسی', 'پخش فیلم', 'توقف', 'تماشای دوباره', 'فیلم معرفی aljana، ۴۲ ثانیه، بی‌صدا، به انگلیسی'],
-    ru: ['Смотреть фильм · 42 с', 'Фильм · 42 с · без звука · на английском', 'Воспроизвести фильм', 'Пауза', 'Посмотреть снова', 'Фильм о приложении aljana, 42 секунды, без звука, на английском'],
-    zh: ['观看短片 · 42 秒', '短片 · 42 秒 · 无声 · 英文', '播放短片', '暂停', '重新观看', 'aljana 介绍短片，42 秒，无声，英文'],
-    hi: ['फ़िल्म देखें · 42 सेकंड', 'फ़िल्म · 42 सेकंड · बिना आवाज़ · अंग्रेज़ी में', 'फ़िल्म चलाएँ', 'रोकें', 'फिर से देखें', 'aljana की परिचय फ़िल्म, 42 सेकंड, बिना आवाज़, अंग्रेज़ी में']
+    fr: ['Voir le film (42 s)', 'Film de 42 secondes, sans son', 'Lire le film', 'Mettre en pause', 'Revoir le film', 'Film de présentation d’aljana, 42 secondes, sans son'],
+    en: ['Watch the film (42 s)', '42-second film, no sound', 'Play the film', 'Pause', 'Watch again', 'aljana introduction film, 42 seconds, no sound'],
+    ar: ['شاهد الفيلم (٤٢ ثانية)', 'فيلم مدته ٤٢ ثانية، بلا صوت', 'تشغيل الفيلم', 'إيقاف مؤقت', 'إعادة المشاهدة', 'فيلم تعريفي بـ aljana، ٤٢ ثانية، بلا صوت'],
+    es: ['Ver el vídeo (42 s)', 'Vídeo de 42 segundos sin sonido, en inglés', 'Reproducir el vídeo', 'Pausa', 'Volver a verlo', 'Vídeo de presentación de aljana, 42 segundos, sin sonido, en inglés'],
+    de: ['Film ansehen (42 s)', 'Film von 42 Sekunden ohne Ton, auf Englisch', 'Film abspielen', 'Pause', 'Noch einmal ansehen', 'Vorstellungsfilm von aljana, 42 Sekunden, ohne Ton, auf Englisch'],
+    tr: ['Filmi izleyin (42 sn)', '42 saniyelik sessiz film, İngilizce', 'Filmi oynat', 'Duraklat', 'Yeniden izle', 'aljana tanıtım filmi, 42 saniye, sessiz, İngilizce'],
+    id: ['Tonton filmnya (42 dtk)', 'Film 42 detik tanpa suara, dalam bahasa Inggris', 'Putar film', 'Jeda', 'Tonton lagi', 'Film perkenalan aljana, 42 detik, tanpa suara, dalam bahasa Inggris'],
+    ur: ['فلم دیکھیں (42 سیکنڈ)', '42 سیکنڈ کی فلم، بغیر آواز، انگریزی میں', 'فلم چلائیں', 'روکیں', 'دوبارہ دیکھیں', 'aljana کی تعارفی فلم، 42 سیکنڈ، بغیر آواز، انگریزی میں'],
+    fa: ['تماشای فیلم (۴۲ ثانیه)', 'فیلم ۴۲ ثانیه‌ای بی‌صدا، به انگلیسی', 'پخش فیلم', 'توقف', 'تماشای دوباره', 'فیلم معرفی aljana، ۴۲ ثانیه، بی‌صدا، به انگلیسی'],
+    ru: ['Смотреть фильм (42 с)', 'Фильм на 42 секунды без звука, на английском', 'Воспроизвести фильм', 'Пауза', 'Посмотреть снова', 'Фильм о приложении aljana, 42 секунды, без звука, на английском'],
+    zh: ['观看短片（42 秒）', '42 秒无声短片，英文', '播放短片', '暂停', '重新观看', 'aljana 介绍短片，42 秒，无声，英文'],
+    hi: ['फ़िल्म देखें (42 सेकंड)', '42 सेकंड की फ़िल्म, बिना आवाज़, अंग्रेज़ी में', 'फ़िल्म चलाएँ', 'रोकें', 'फिर से देखें', 'aljana की परिचय फ़िल्म, 42 सेकंड, बिना आवाज़, अंग्रेज़ी में']
   }
   var T = S[two] || S.en
   var btn = document.getElementById('filmBtn'), bar = sec.querySelector('.film-bar i'), meta = document.getElementById('filmMeta'), link = document.getElementById('filmLink')

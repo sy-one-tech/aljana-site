@@ -25,13 +25,13 @@
   var smooth = function (k) { k = clamp(k, 0, 1); return k * k * (3 - 2 * k) }
   var LOC = 'fr-FR', pad = function (n) { return String(n).padStart(2, '0') }
   var T = {
-    kick: 'Votre ciel, maintenant · {c}', proof: 'Ciel calculé pour {c} · {d} · vue vers le {dir} · Soleil {s}', above: 'à {n}° au-dessus de l’horizon', below: 'à {n}° sous l’horizon',
-    v2k: 'Maghrib {t} · {d}', lensH: 'Vue agrandie ×{n} · phase et orientation réelles', lensM: '<span class="look-l">{look}</span><span class="look-d">Vers {t}, à {a}° au-dessus de l’horizon et {z}° {side} du Soleil couché. Âge {h} h, {p} % éclairé. Vue agrandie ×{n}.</span>', ans: '{d}, avis aljana : {v}.', left: 'à gauche', right: 'à droite', moL: 'La Lune, ce soir', moW: '{t} · à {a}° au-dessus de l’horizon, vers le {d}.', moDown: 'Sous l’horizon à {t} · lever à {r}.', tagH: 'Premier croissant · {t}', tagL: '{a}° au-dessus de l’horizon · âge {h} h · {p} % éclairé', adv: 'Avis aljana : {v}',
+    kick: 'Votre ciel, maintenant, {c}', proof: 'Ciel calculé pour {c}, le {d}, vue vers le {dir}. Soleil {s}', above: 'à {n}° au-dessus de l’horizon', below: 'à {n}° sous l’horizon',
+    v2k: 'Maghrib {t}, {d}', lensH: 'Vue agrandie ×{n}, phase et orientation réelles', lensM: '<span class="look-l">{look}</span><span class="look-d">Vers {t}, à {a}° au-dessus de l’horizon et {z}° {side} du Soleil couché. Âge {h} h, {p} % éclairé. Vue agrandie ×{n}.</span>', ans: '{d}, avis aljana : {v}.', left: 'à gauche', right: 'à droite', moL: 'La Lune, ce soir', moW: '{t}, à {a}° au-dessus de l’horizon, vers le {d}.', moDown: 'Sous l’horizon à {t}, lever à {r}.', tagH: 'Premier croissant, {t}', tagL: '{a}° au-dessus de l’horizon, âge {h} h, {p} % éclairé', adv: 'Avis aljana : {v}',
     look: { low0: 'Un fin croissant, très bas sur l’horizon, ', low1: 'Un fin croissant, bas sur l’horizon, ', low2: 'Un fin croissant, ', near: 'juste au-dessus du Soleil couché.', bit: 'un peu {s} du Soleil couché.', far: '{s} du Soleil couché.' },
     advTxt: { A: 'visible à l’œil nu', B: 'visible à l’œil nu sous bonnes conditions', C: 'aide optique utile', D: 'visible seulement avec aide optique', E: 'non visible', F: 'non visible' },
-    v3k: 'Maintenant, chez vous · {c}', npAt: 'à {t}', moP: 'lever {r} · coucher {s}', qbP: '{dir} · {km} km jusqu’à la Kaaba',
-    prec: '<b>{c}</b> · lever du Soleil {when} à {r} · coucher {sw} à {s} · contrôlé face aux éphémérides JPL Horizons de la NASA',
-    event: '<b>{e}</b> dans {n} jours · {d}{f}', forecast: ' (date prévisionnelle)',
+    v3k: 'Maintenant, chez vous, {c}', npAt: 'à {t}', moP: 'lever {r}, coucher {s}', qbP: '{dir}, {km} km jusqu’à la Kaaba',
+    prec: '<b>{c}</b>, lever du Soleil {when} à {r}, coucher {sw} à {s}, contrôlé face aux éphémérides JPL Horizons de la NASA',
+    event: '<b>{e}</b> dans {n} jours, {d}{f}', forecast: ' (date prévisionnelle)',
     salam: 'Assalamou Aleykoum', nextP: 'Prochaine prière', cur: 'Actuelle', last: 'Dernière', at: 'à', sun: 'SOLEIL', moon: 'LUNE', altitude: 'Altitude',
     cresc: 'Prochain croissant', qibla: 'Qibla', sunset: 'Coucher du soleil', sunrise: 'Lever du soleil', tonight: 'Ce soir', inDays: 'Dans {n} jours', tomorrow: 'Demain', observable: 'Observable',
     nav: ['Accueil', 'Prières', 'Ciel', 'Lune', 'Hilal', 'Qibla', 'Éclipses'],
@@ -40,7 +40,7 @@
     phases: ['Nouvelle lune', 'Premier croissant', 'Premier quartier', 'Gibbeuse croissante', 'Pleine lune', 'Gibbeuse décroissante', 'Dernier quartier', 'Dernier croissant'],
     ev: { ramadan: 'Ramadan', fitr: 'L’Aïd al-Fitr', adha: 'L’Aïd al-Adha', muharram: 'Le nouvel an hégirien' },
     planets: { venus: 'Vénus', jupiter: 'Jupiter', mars: 'Mars', saturn: 'Saturne', mercury: 'Mercure' }, today: 'aujourd’hui', tomorrowL: 'demain',
-    cielNow: 'Ciel calculé pour {c} · {d}', cielTonight: 'Le ciel de cette nuit à {t}, calculé pour {c}',
+    cielNow: 'Ciel calculé pour {c}, {d}', cielTonight: 'Le ciel de cette nuit à {t}, calculé pour {c}',
     eSolarP: '{p} % du Soleil caché depuis {c}, au maximum à {t}.', eSolarT: 'Éclipse totale depuis {c} : {dur} de totalité, au maximum à {t}.', eSolarA: 'Éclipse annulaire depuis {c}, au maximum à {t}.',
     eBand: 'Totale seulement dans une étroite bande : {r}.', eBandA: 'Annulaire seulement dans une étroite bande : {r}.', eLunarP: 'Éclipse partielle de Lune visible depuis {c}, au maximum à {t}.', eLunarT: 'Éclipse totale de Lune visible depuis {c}, au maximum à {t}.',
     cmp: ['Chaque jour, un verset, un hadith et une duʿāʾ.', 'Le Muṣḥaf, page après page.', 'Al-Kahf, en un geste.'],
@@ -84,6 +84,7 @@
   var lstDeg = function (at) { return ((280.16 + 360.9856235 * (A.jdFromDate(at) - 2451545.0) + place.lon) % 360 + 360) % 360 }
 
   /* ---------- astres : calque 2D (étoiles réelles, planètes) et Lune texturée ---------- */
+  var SEP = /^(ar|ur|fa)$/.test(LANG) ? '، ' : LANG === 'zh' ? '，' : ', ' /* virgule de la langue, à la place des points médians */
   var STARS = []
   var starsP = fetch('ciel/stars.json?v=1').then(function (r) { return r.json() }).then(function (s) { STARS = s }).catch(function () { })
   /* les 24 étoiles les plus brillantes : effacées de la carte NASA (où elles s'étirent en montant), dessinées rondes par drawAstres */
@@ -326,7 +327,7 @@
     var sunUp = A.sunAltAz(at, place.lat, place.lon).alt >= -0.833, srToday = st.tt.sunrise > at, sr = srToday ? st.tt.sunrise : times(addDays(st.c, 1)).sunrise, ssToday = st.tt.sunset > at, ss = ssToday ? st.tt.sunset : st.tt.sunset
     document.getElementById('prec').innerHTML = fill(T.prec, { c: place.city, when: srToday ? T.today : T.tomorrowL, r: fmtT(preciseCross(sr, -0.833)), sw: T.today, s: fmtT(preciseCross(ss, -0.833)) })
     var mo = A.moonAltAz(at, place.lat, place.lon), rs = moonEvents(at)
-    document.getElementById('mo-n').textContent = T.moN ? fill(T.moN, { ph: phaseName(mo), p: num(Math.round(mo.illum * 100)) }) : phaseName(mo) + ' · ' + num(Math.round(mo.illum * 100)) + ' % éclairée'
+    document.getElementById('mo-n').textContent = T.moN ? fill(T.moN, { ph: phaseName(mo), p: num(Math.round(mo.illum * 100)) }) : phaseName(mo) + SEP + num(Math.round(mo.illum * 100)) + ' % éclairée'
     var dirM = T.dirL[Math.round(mo.az / 45) % 8]
     document.getElementById('mo-w').textContent = mo.alt > 0 ? fill(T.moW, { t: fmtT(at), a: num(Math.round(mo.alt)), d: dirM }) : fill(T.moDown, { t: fmtT(at), r: rs.rise ? fmtT(rs.rise.time) : '—' })
     var qb = qibla(); document.getElementById('qb-b').textContent = num(qb.b, 1) + '°'; document.getElementById('qb-p').textContent = fill(T.qbP, { dir: qb.dir, km: num(Math.round(qb.km)) })
@@ -365,8 +366,8 @@
       document.querySelector('.more').textContent = R.more }
     else document.querySelector('.here').textContent = (/^[aeiouyhàâéèêîôûAEIOUYHÉÈÎ]/.test(place.city) ? 'd’' : 'de ') + place.city
     var sun = A.sunAltAz(at, place.lat, place.lon)
-    if (RT[LANG]) document.getElementById('proof1').textContent = fill(RT[LANG].proof, { c: place.city, d: new Intl.DateTimeFormat(LOC, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZone: place.tz }).format(at), n: new Intl.NumberFormat(LOC, { maximumFractionDigits: 1, minimumFractionDigits: 1 }).format(Math.abs(sun.alt)) })
-    else document.getElementById('proof1').textContent = fill(T.proof, { c: place.city, d: fmtD(at, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) + ', ' + fmtT(at, true), dir: T.dirL[Math.round((((v1.azC % 360) + 360) % 360) / 45) % 8], s: fill(sun.alt >= 0 ? T.above : T.below, { n: num(Math.abs(sun.alt), 1) }) })
+    if (RT[LANG]) document.getElementById('proof1').textContent = fill(sun.alt >= 0 && RT[LANG].proofUp ? RT[LANG].proofUp : RT[LANG].proof, { c: place.city, d: new Intl.DateTimeFormat(LOC, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZone: place.tz }).format(at), n: new Intl.NumberFormat(LOC, { maximumFractionDigits: 1, minimumFractionDigits: 1 }).format(Math.abs(sun.alt)) })
+    else document.getElementById('proof1').textContent = fill(T.proof, { c: place.city, d: fmtD(at, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) + ' à ' + fmtT(at, true), dir: T.dirL[Math.round((((v1.azC % 360) + 360) % 360) / 45) % 8], s: fill(sun.alt >= 0 ? T.above : T.below, { n: num(Math.abs(sun.alt), 1) }) })
     if (heroDone) renderV3(at)
     if (ph3) withLang(OL, function () { updatePhone(ph3, at) })
     if (s4 && reduced) drawCiel()
@@ -499,17 +500,17 @@
       var dur = r.c2 && r.c3 ? Math.round((r.c3 - r.c2) / 1000) + 30 : 0, durTxt = Math.floor(dur / 60) + ' min ' + pad(dur % 60) + ' s'
       dset('eclWhat', r.central ? fill(tot ? T.eSolarT : T.eSolarA, { c: place.city, t: fmtT(r.peak), dur: dg(durTxt) }) : fill(T.eSolarP, { p: num(Math.round(r.obscMax * 100)), c: place.city, t: fmtT(r.peak) }))
       dset('eclBand', !r.central && ev.type !== 'partial' && base && ev.regions && ev.regions[base] ? fill(ev.type === 'total' ? T.eBand : T.eBandA, { r: ev.regions[base] }) : '')
-      dset('eclSafe', T.eSafe); dset('eclCap', T.eFilter + ' · ' + fmtT(r.peak))
+      dset('eclSafe', T.eSafe); dset('eclCap', T.eFilter + SEP + fmtT(r.peak))
     } else { var lc = ECL.lunar
       drawLunar(cv, S, lc, lc.max)
       dset('eclDate', cap(fmtD(lc.max, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })))
-      dset('eclWhat', fill(ev.type === 'total' ? T.eLunarT : T.eLunarP, { c: place.city, t: fmtT(lc.max) })); dset('eclBand', ''); dset('eclSafe', ''); dset('eclCap', T.eLunarCap + ' · ' + fmtT(lc.max)) }
+      dset('eclWhat', fill(ev.type === 'total' ? T.eLunarT : T.eLunarP, { c: place.city, t: fmtT(lc.max) })); dset('eclBand', ''); dset('eclSafe', ''); dset('eclCap', T.eLunarCap + SEP + fmtT(lc.max)) }
   }
   /* ---------- textes du bas tirés des traductions du site (i18n.js) ---------- */
   function basTexts() {
     var t = window.I18N && (window.I18N[CODE] || window.I18N.fr); if (!t) return
     document.querySelectorAll('[data-u]').forEach(function (e) { var u = t.u[+e.dataset.u]; if (u) e.textContent = e.tagName === 'H2' ? u[0] : u[1] })
-    var n = document.getElementById('u7names'); if (n && t.sn) n.textContent = t.sn.join(' · ')
+    var n = document.getElementById('u7names'); if (n && t.sn) n.textContent = t.sn.join(/^(ar|ur|fa)$/.test(LANG) ? '، ' : LANG === 'zh' ? '、' : ', ')
   }
   function lazyBas() {
     var on = function (el, fn) { if (!el) return; if (!window.IntersectionObserver) return fn(); var io = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { io.disconnect(); fn() } }, { rootMargin: '900px 0px' }); io.observe(el) }

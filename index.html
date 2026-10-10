@@ -33,14 +33,14 @@
 <meta property="og:url" content="https://aljana.app/">
 <meta property="og:title" content="aljana : vos prières et votre ciel, là où vous êtes">
 <meta property="og:description" content="Horaires de prière, ciel en direct, Lune, Hilal, Qibla et éclipses. Tout est calculé pour votre position et contrôlé face aux éphémérides de la NASA.">
-<meta property="og:image" content="https://aljana.app/assets/og/fr.jpg?v=1">
+<meta property="og:image" content="https://aljana.app/assets/og/fr.jpg?v=2">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="fr_FR">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="aljana : vos prières et votre ciel, là où vous êtes">
 <meta name="twitter:description" content="Horaires de prière, ciel en direct, Lune, Hilal, Qibla et éclipses, calculés pour votre position.">
-<meta name="twitter:image" content="https://aljana.app/assets/og/fr.jpg?v=1">
+<meta name="twitter:image" content="https://aljana.app/assets/og/fr.jpg?v=2">
 <link rel="alternate" hreflang="x-default" href="https://aljana.app/">
 <link rel="alternate" hreflang="fr" href="https://aljana.app/?lang=fr">
 <link rel="alternate" hreflang="en" href="https://aljana.app/?lang=en-US">
@@ -448,7 +448,7 @@
   .qb .globe canvas { width: 100% !important; height: 100% !important; }
   .qb .big { font-family: var(--display); font-size: 40px; line-height: 1.05; margin-top: 6px; }
   .qb p { margin: 8px 0 0; font-size: 15px; color: var(--soft); max-width: 320px; }
-  .credit { margin-top: 18px; font-size: 12px; color: var(--dim); }
+  .credit { margin-top: 18px; font-size: 12px; color: var(--dim); white-space: pre-line; line-height: 1.6; }
   .event { margin-top: 46px; padding-top: 22px; border-top: 1px solid rgba(160,172,205,0.14); font-size: 16.5px; color: var(--soft); } .event b { color: var(--ink); font-weight: 600; }
 
   /* ---------- vue agrandie : V4, plus de cercle ni de pointillés — la Lune agrandie flotte dans son halo optique ---------- */
@@ -771,7 +771,7 @@
     <div class="v1-text">
       <h1 id="h1"><span data-t="h1a">Le ciel, le temps et vos prières.</span> <span class="acc" data-t="h1b">À l’endroit exact où vous êtes.</span></h1>
       <p class="lead"><span class="d-only">aljana calcule pour votre position la prière en cours, le Soleil, la Lune, la Qibla et le croissant. Ce ciel est celui <span class="here"></span>, maintenant.</span><span class="m-only">Prières, Soleil, Lune, Qibla et croissant, calculés pour l’endroit exact où vous êtes.</span></p>
-      <div class="acts"><span class="soon" data-cta>Bientôt disponible</span><a class="more" href="#v3" data-t="more">Voir votre ciel</a><a class="more" id="filmLink" href="#univers">Voir le film · 42 s</a></div>
+      <div class="acts"><span class="soon" data-cta>Bientôt disponible</span><a class="more" href="#v3" data-t="more">Voir votre ciel</a><a class="more" id="filmLink" href="#univers">Voir le film (42 s)</a></div>
     </div>
     <div class="phone-at" aria-hidden="true"><div class="ph" id="ph1"></div></div>
     <p class="proof" id="proof1"></p>
@@ -792,14 +792,15 @@
       <div class="act a3"><div class="a3-in"><div class="txt"><h2 data-t="v3q">La direction de la Kaaba, calculée depuis chez vous.</h2><div class="big tab" id="qb-b"></div><p id="qb-p"></p></div><div class="globe" id="qglobe"><canvas aria-hidden="true"></canvas></div></div></div>
     </div></div>
     <p class="event wrap" id="event"></p>
-    <p class="credit wrap">Ciel : NASA/Goddard SVS, Deep Star Maps 2020 ; Gaia DR2 : ESA/Gaia/DPAC. Lune : NASA SVS, LRO/LROC/LOLA.</p>
+    <p class="credit wrap">Ciel : NASA/Goddard SVS (Deep Star Maps 2020) et ESA/Gaia/DPAC (Gaia DR2)
+Lune : NASA SVS (LRO/LROC/LOLA)</p>
   </section>
 
   <section class="u7 film wrap" id="univers" aria-labelledby="fh">
     <div class="film-txt rv">
       <h2 id="fh" data-i="sh">Sept univers. Chacun répond à une question simple.</h2>
-      <p class="u7-names" id="u7names">Accueil · Prières · Ciel · Lune · Hilal · Qibla · Éclipses</p>
-      <p class="film-meta" id="filmMeta">Film · 42 s · sans son</p>
+      <p class="u7-names" id="u7names">Accueil, Prières, Ciel, Lune, Hilal, Qibla, Éclipses</p>
+      <p class="film-meta" id="filmMeta">Film de 42 secondes, sans son</p>
     </div>
     <figure class="film-fr">
       <video id="filmV" muted playsinline preload="none" disablepictureinpicture aria-label="Film de présentation d’aljana, 42 secondes, sans son"></video>
@@ -889,14 +890,14 @@
   </div>
 </footer>
 
-<script src="i18n.js?v=20261004-1"></script>
+<script src="i18n.js?v=20261010-1"></script>
 <script src="site.js?v=20261004-1"></script>
 <script src="ciel/engine.js?v=1"></script>
 <script src="ciel/moon.js?v=3"></script>
 <script src="ciel/sky.js?v=6"></script>
-<script src="ciel/scenes-i18n.js?v=3"></script>
+<script src="ciel/scenes-i18n.js?v=4"></script>
 <script src="ciel/eclipses.js?v=1" defer></script>
-<script src="ciel/scenes.js?v=15" defer></script>
-<script src="ciel/film.js?v=2" defer></script>
+<script src="ciel/scenes.js?v=16" defer></script>
+<script src="ciel/film.js?v=3" defer></script>
 </body>
 </html>
