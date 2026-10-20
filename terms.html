@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>aljana : conditions d’utilisation</title>
+  <meta name="description" content="Les conditions d’utilisation d’aljana et de son offre Premium : abonnements, Pass, renouvellement, résiliation et remboursement." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://aljana.app/terms" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="aljana" />
+  <meta property="og:url" content="https://aljana.app/terms" />
+  <meta property="og:title" content="aljana : conditions d’utilisation" />
+  <meta property="og:description" content="Les conditions d’utilisation d’aljana et de son offre Premium : abonnements, Pass, renouvellement, résiliation et remboursement." />
+  <meta property="og:image" content="https://aljana.app/assets/og/fr.jpg?v=2" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://aljana.app/assets/og/fr.jpg?v=2" />
+  <meta name="theme-color" content="#050A18" />
+  <script>
+    /* langue affichée dès le premier rendu : ancre #en / #fr, sinon langue déjà choisie sur le site, sinon français */
+    (function () {
+      var h = location.hash, l = h === '#en' ? 'en' : h === '#fr' ? 'fr' : null
+      if (!l) { try { var s = localStorage.getItem('aljana.site.lang'); if (s === 'fr') l = 'fr'; else if (/^en/.test(s || '')) l = 'en' } catch (e) { /* stockage indisponible */ } }
+      l = l || 'fr'
+      document.documentElement.lang = l
+      document.documentElement.setAttribute('data-pp-lang', l)
+      if (l === 'en') document.title = 'aljana: Terms of Use'
+    })()
+  </script>
+  <link rel="icon" href="/assets/icon-192.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+  <style>
+    /* Jetons et bases du site (repris de src/style.css : page autonome, sans lien avec le bundle des autres pages) */
+    :root{
+      --night-deep:#050A18; --night-ink:#0B1230;
+      --ink-light:#F2F5FC; --ink-body:#C9D3E8;
+      --gold-1:#F5B04C; --gold-2:#E8833A;
+      --font-display:'Space Grotesk', system-ui, sans-serif;
+      --font-body:'Inter', system-ui, sans-serif;
+      --header-h:68px;
+    }
+    *{ box-sizing:border-box; }
+    html,body{ margin:0; min-height:100%; }
+    html{ scroll-padding-top:var(--header-h); }
+    body{ font-family:var(--font-body); color:var(--ink-body); overflow-x:hidden; }
+    h1,h2,h3{ font-family:var(--font-display); color:var(--ink-light); margin:0; }
+    p{ margin:0; }
+    .skip-link{ position:absolute; left:-999px; top:0; }
+    .skip-link:focus{ left:8px; top:8px; background:var(--night-ink); color:var(--ink-light); padding:8px 12px; border-radius:6px; z-index:200; }
+    .visually-hidden{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+    .brand{ display:flex; align-items:center; text-decoration:none; }
+    .brand__logo{ height:30px; width:auto; display:block; flex:none; }
+    @media (min-width:900px){ .brand__logo{ height:34px; } }
+
+    /* ---------- Conditions d’utilisation (/terms), même mise en page que /privacy ----------
+       Page autonome, centrée sur la lecture : fond nuit du site, titres Space Grotesk,
+       filets et accents dorés, aucune animation. Colonne de lecture ~ 880 px. */
+
+    /* seule la langue active est affichée (sans JavaScript : les deux, l'une sous l'autre) */
+    html[data-pp-lang="fr"] .pp-doc[data-lang="en"],
+    html[data-pp-lang="en"] .pp-doc[data-lang="fr"],
+    .pp-doc[hidden]{ display:none; }
+
+    body[data-page="legal"]{ background:var(--night-deep); }
+
+    /* ---------- En-tête : logo + sélecteur FR / EN ---------- */
+    .pp-header{
+      position:sticky; top:0; z-index:40;
+      background:rgba(5,10,24,.94);
+      border-bottom:1px solid rgba(245,176,76,.22);
+    }
+    .pp-header__inner{
+      max-width:960px; margin:0 auto; min-height:var(--header-h);
+      display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px 16px;
+      padding:10px clamp(16px,4vw,32px);
+    }
+    .pp-header .brand{ border-radius:6px; }
+
+    .pp-lang{
+      display:flex; gap:4px; padding:4px;
+      border:1px solid rgba(245,176,76,.45); border-radius:999px;
+      background:rgba(242,245,252,.04);
+    }
+    .pp-lang a{
+      position:relative; display:inline-flex; align-items:center; justify-content:center;
+      min-width:52px; min-height:40px; padding:0 14px; border-radius:999px;
+      font-family:var(--font-display); font-weight:600; font-size:15px; letter-spacing:.06em;
+      color:var(--ink-light); text-decoration:none;
+    }
+    .pp-lang a:hover{ background:rgba(245,176,76,.14); }
+    .pp-lang a[aria-current="true"]{
+      background:linear-gradient(135deg, var(--gold-1), var(--gold-2)); color:#1B1204;
+    }
+
+    /* ---------- Contenu ---------- */
+    .pp{ outline:none; }
+    .pp-doc{
+      scroll-margin-top:var(--header-h);
+      max-width:880px; margin:0 auto;
+      padding:clamp(48px,8vw,104px) clamp(20px,5vw,40px) clamp(56px,8vw,96px);
+      color:var(--ink-body);
+      font-size:clamp(16.5px, 1.1vw + 12px, 18px); line-height:1.75;
+      overflow-wrap:break-word;
+    }
+    .pp-doc + .pp-doc{ border-top:1px solid rgba(245,176,76,.22); }
+
+    .pp-doc__head{ margin-bottom:clamp(40px,6vw,64px); padding-bottom:clamp(28px,4vw,40px); border-bottom:1px solid rgba(245,176,76,.35); }
+    .pp-doc h1{ font-size:clamp(32px, 5vw, 50px); line-height:1.12; letter-spacing:-.01em; margin-bottom:16px; }
+    .pp-updated{ color:var(--gold-1); font-size:.9em; font-weight:500; letter-spacing:.02em; margin-bottom:24px; }
+    .pp-intro{ font-size:1.08em; color:var(--ink-light); }
+
+    .pp-doc section{ margin-bottom:clamp(40px,5vw,56px); scroll-margin-top:calc(var(--header-h) + 24px); }
+    .pp-doc h2{ font-size:clamp(22px, 2.6vw, 28px); line-height:1.3; margin-bottom:18px; }
+    .pp-doc h3{ font-size:clamp(18px, 1.8vw, 20px); line-height:1.4; margin:28px 0 8px; color:var(--gold-1); }
+    .pp-doc p{ margin-bottom:16px; }
+    .pp-doc ul{ margin:0 0 18px; padding-left:1.4em; }
+    .pp-doc li{ margin-bottom:8px; }
+    .pp-doc li::marker{ color:var(--gold-1); }
+
+    .pp-doc a{ color:var(--ink-light); text-decoration:underline; text-decoration-color:var(--gold-1); text-underline-offset:3px; }
+    .pp-doc a:hover{ color:var(--gold-1); }
+
+    .pp-contact{
+      font-style:normal; line-height:1.9; margin-top:8px;
+      padding:20px 24px; border:1px solid rgba(245,176,76,.35);
+      background:rgba(242,245,252,.04); border-radius:10px;
+    }
+    .pp-contact strong{ color:var(--ink-light); font-family:var(--font-display); }
+    .pp-placeholder{ color:var(--ink-light); font-weight:600; }
+
+    /* ---------- Pied : simple retour ---------- */
+    .pp-footer{
+      text-align:center; padding:36px 20px 56px;
+      border-top:1px solid rgba(245,176,76,.22);
+    }
+    .pp-footer a{
+      display:inline-flex; align-items:center; min-height:44px; padding:0 8px;
+      color:var(--ink-light); font-family:var(--font-display); font-size:16px;
+      text-decoration:underline; text-decoration-color:var(--gold-1); text-underline-offset:4px;
+    }
+    .pp-footer a:hover{ color:var(--gold-1); }
+
+    /* ---------- Focus clavier visible ---------- */
+    .pp-header a:focus-visible, .pp-doc a:focus-visible, .pp-footer a:focus-visible, .skip-link:focus-visible{
+      outline:3px solid var(--gold-1); outline-offset:3px;
+    }
+
+    @media (max-width:420px){
+      .pp-header .brand__logo{ height:26px; }
+      .pp-lang a{ min-width:48px; padding:0 12px; }
+      .pp-contact{ padding:16px 16px; }
+    }
+
+    @media print{
+      .pp-header, .pp-footer, .skip-link{ display:none; }
+      body[data-page="legal"]{ background:#fff; }
+      .pp-doc, .pp-doc h1, .pp-doc h2, .pp-doc h3, .pp-intro, .pp-updated, .pp-doc a{ color:#000; }
+    }
+  </style>
+  </style>
+</head>
+<body data-page="legal">
+
+  <a class="skip-link" href="#main" data-l10n="skip">Aller au contenu</a>
+
+  <header class="pp-header">
+    <div class="pp-header__inner">
+      <a href="/" class="brand" data-l10n-label="home" aria-label="Accueil d’aljana">
+        <img class="brand__logo" src="/assets/brand/aljana-logo-v4.webp" alt="aljana" width="102" height="34" />
+      </a>
+      <nav class="pp-lang" aria-label="Langue / Language">
+        <a href="#fr" hreflang="fr" lang="fr" data-lang-switch="fr" aria-current="true">FR<span class="visually-hidden"> (Français)</span></a>
+        <a href="#en" hreflang="en" lang="en" data-lang-switch="en">EN<span class="visually-hidden"> (English)</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="pp" tabindex="-1">
+
+    <!-- ===================== VERSION FRANÇAISE ===================== -->
+    <article class="pp-doc" id="fr" lang="fr" data-lang="fr" aria-labelledby="tos-title-fr">
+      <header class="pp-doc__head">
+        <h1 id="tos-title-fr">Conditions d’utilisation</h1>
+        <p class="pp-updated">Dernière mise à jour : <time datetime="2026-10-20">20 octobre 2026</time></p>
+        <p class="pp-intro">Ces conditions s’appliquent à l’application aljana et à son offre Premium. En utilisant aljana, vous les acceptez. Elles sont écrites pour être lues : si un point n’est pas clair, écrivez-nous.</p>
+      </header>
+
+      <section aria-labelledby="tos-fr-1">
+        <h2 id="tos-fr-1">1. L’éditeur</h2>
+        <p>aljana est éditée par SY-ONE, société par actions simplifiée de droit français. Pour nous joindre : <a href="mailto:contact@aljana.app">contact@aljana.app</a>.</p>
+      </section>
+
+      <section aria-labelledby="tos-fr-2">
+        <h2 id="tos-fr-2">2. Le service</h2>
+        <p>aljana calcule les horaires de prière, la Qibla, le ciel, la Lune, le Hilal et les éclipses, et donne accès au Muṣḥaf et à des textes de rappel. Une partie de l’application est gratuite, sans limite de durée, notamment le Coran complet et les horaires de prière du jour. Les autres fonctions sont réservées à aljana Premium ; elles sont signalées dans l’application.</p>
+        <p>aljana est un outil de calcul et de lecture. Les horaires, les prévisions du croissant et les éclipses sont des calculs astronomiques ; aljana n’émet aucun avis religieux et n’annonce pas le début des mois. Les avis cités viennent de sources identifiées dans l’application. Pour toute décision religieuse, référez-vous aux savants et aux instances de votre communauté.</p>
+      </section>
+
+      <section aria-labelledby="tos-fr-3">
+        <h2 id="tos-fr-3">3. Les offres Premium</h2>
+        <ul>
+          <li><strong>Abonnement mensuel</strong> : un mois d’accès, renouvelé automatiquement chaque mois.</li>
+          <li><strong>Abonnement annuel</strong> : un an d’accès, renouvelé automatiquement chaque année.</li>
+          <li><strong>Pass 1 mois</strong> : un mois d’accès, sans renouvellement automatique. Vous pouvez en acheter un nouveau quand vous le souhaitez.</li>
+        </ul>
+        <p>Le prix de chaque offre est affiché dans l’application, dans la devise de votre pays, avant tout achat. Il peut varier d’un pays à l’autre. Si une offre d’essai ou de lancement est proposée, ses conditions sont affichées avant l’achat.</p>
+      </section>
+
+      <section aria-labelledby="tos-fr-4">
+        <h2 id="tos-fr-4">4. Paiement et renouvellement</h2>
+        <p>Les achats se font uniquement par l’App Store d’Apple ou par Google Play, avec le compte de votre store. Le paiement est débité sur ce compte à la confirmation de l’achat.</p>
+        <p>Un abonnement se renouvelle automatiquement pour la même durée, au prix en vigueur, sauf si vous le résiliez au moins 24 heures avant la fin de la période en cours. Le renouvellement est débité dans les 24 heures qui précèdent la fin de la période. Si le prix change, votre store vous prévient selon ses propres règles.</p>
+      </section>
+
+      <section aria-labelledby="tos-fr-5">
+        <h2 id="tos-fr-5">5. Résiliation</h2>
+        <p>Vous pouvez résilier à tout moment, dans les réglages de votre store :</p>
+        <ul>
+          <li>sur iPhone et iPad : Réglages, votre nom, puis Abonnements, ou <a href="https://apps.apple.com/account/subscriptions">apps.apple.com/account/subscriptions</a> ;</li>
+          <li>sur Android : Google Play, votre profil, Paiements et abonnements, puis Abonnements, ou <a href="https://play.google.com/store/account/subscriptions">play.google.com/store/account/subscriptions</a>.</li>
+        </ul>
+        <p>La résiliation arrête le renouvellement. Vous gardez l’accès à Premium jusqu’à la fin de la période déjà payée. Supprimer l’application ne résilie pas l’abonnement.</p>
+      </section>
+
+      <section aria-labelledby="tos-fr-6">
+        <h2 id="tos-fr-6">6. Remboursement</h2>
+        <p>Les paiements sont encaissés par Apple ou par Google, qui traitent les demandes de remboursement selon leurs propres conditions :</p>
+        <ul>
+          <li>App Store : <a href="https://reportaproblem.apple.com">reportaproblem.apple.com</a> ;</li>
+          <li>Google Play : <a href="https://support.google.com/googleplay/answer/2479637">support.google.com/googleplay/answer/2479637</a>.</li>
+        </ul>
+        <p>Premium donne accès à un contenu numérique dès l’achat. Lorsque la loi de votre pays prévoit un droit de rétractation, son exercice suit les règles de votre store. Rien dans ces conditions ne réduit les droits que la loi vous accorde en tant que consommateur.</p>
+      </section>
+
+      <section aria-labelledby="tos-fr-7">
+        <h2 id="tos-fr-7">7. Retrouver vos achats</h2>
+        <p>aljana ne vous demande pas de compte. Votre achat est lié au compte de votre store. Sur un nouvel appareil, ou après une réinstallation, connectez-vous avec le même compte et touchez « Restaurer les achats » dans l’écran Premium. Un achat fait sur l’App Store n’est pas transférable vers Google Play, et inversement.</p>
+      </section>
+
+      <section aria-labelledby="tos-fr-8">
+        <h2 id="tos-fr-8">8. Évolution du service</h2>
+        <p>aljana évolue : des fonctions peuvent être ajoutées, améliorées ou remplacées. Si une fonction Premium importante devait être retirée pendant une période déjà payée, nous vous en informerions dans l’application. Le service peut être interrompu un moment pour maintenance ou à cause d’un service tiers (météo, téléchargement des pages du Muṣḥaf) ; les calculs principaux restent disponibles hors ligne.</p>
+      </section>
+
+      <section aria-labelledby="tos-fr-9">
+        <h2 id="tos-fr-9">9. Responsabilité</h2>
+        <p>Nous apportons le plus grand soin à l’exactitude des calculs, vérifiés avec des références astronomiques publiques. Les résultats dépendent toutefois du lieu, de l’heure et des réglages de votre appareil, ainsi que de la méthode de calcul choisie. Dans la limite permise par la loi, SY-ONE n’est pas responsable des conséquences d’un réglage inadapté, d’un appareil mal réglé ou d’une interruption due à un service tiers.</p>
+      </section>
+
+      <section aria-labelledby="tos-fr-10">
+        <h2 id="tos-fr-10">10. Contenus et propriété</h2>
+        <p>L’application, son interface, ses textes et ses illustrations appartiennent à SY-ONE. Le texte du Coran, les traductions de ses sens et les autres textes cités viennent de sources identifiées dans l’application, sous leurs propres licences. Vous pouvez partager les contenus prévus pour l’être avec le bouton « Partager ». Toute autre reproduction ou extraction de l’application demande notre accord écrit.</p>
+      </section>
+
+      <section aria-labelledby="tos-fr-11">
+        <h2 id="tos-fr-11">11. Vos données</h2>
+        <p>La façon dont aljana traite vos données est décrite dans la <a href="/privacy">politique de confidentialité</a>.</p>
+      </section>
+
+      <section aria-labelledby="tos-fr-12">
+        <h2 id="tos-fr-12">12. Conditions des stores</h2>
+        <p>Si vous avez téléchargé aljana sur l’App Store, le <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">contrat de licence standard d’Apple</a> s’applique aussi. Si vous l’avez téléchargée sur Google Play, les conditions d’utilisation de Google Play s’appliquent aussi. En cas de contradiction sur un achat, les conditions de votre store l’emportent.</p>
+      </section>
+
+      <section aria-labelledby="tos-fr-13">
+        <h2 id="tos-fr-13">13. Modifications et droit applicable</h2>
+        <p>Nous pouvons modifier ces conditions ; la date en haut de la page est alors mise à jour, et un changement important vous est signalé dans l’application. Ces conditions sont soumises au droit français, sans vous priver de la protection que vous accordent les règles impératives du pays où vous résidez. En cas de difficulté, écrivez-nous d’abord : nous cherchons toujours une solution amiable.</p>
+      </section>
+
+      <section aria-labelledby="tos-fr-14">
+        <h2 id="tos-fr-14">14. Contact</h2>
+        <address class="pp-contact">
+          <strong>aljana</strong><br>
+          Éditeur : SY-ONE<br>
+          E-mail : <a href="mailto:contact@aljana.app">contact@aljana.app</a><br>
+          Site : <a href="https://aljana.app">https://aljana.app</a>
+        </address>
+      </section>
+    </article>
+
+    <!-- ===================== ENGLISH VERSION ===================== -->
+    <article class="pp-doc" id="en" lang="en" data-lang="en" aria-labelledby="tos-title-en">
+      <header class="pp-doc__head">
+        <h1 id="tos-title-en">Terms of Use</h1>
+        <p class="pp-updated">Last updated: <time datetime="2026-10-20">October 20, 2026</time></p>
+        <p class="pp-intro">These terms apply to the aljana app and its Premium offer. By using aljana, you accept them. They are written to be read: if anything is unclear, write to us.</p>
+      </header>
+
+      <section aria-labelledby="tos-en-1">
+        <h2 id="tos-en-1">1. Publisher</h2>
+        <p>aljana is published by SY-ONE, a French simplified joint-stock company (SAS). To reach us: <a href="mailto:contact@aljana.app">contact@aljana.app</a>.</p>
+      </section>
+
+      <section aria-labelledby="tos-en-2">
+        <h2 id="tos-en-2">2. The service</h2>
+        <p>aljana calculates prayer times, the Qibla, the sky, the Moon, the Hilal and eclipses, and gives access to the Muṣḥaf and to texts of remembrance. Part of the app is free, with no time limit, including the complete Qur’an and today’s prayer times. The other features are reserved for aljana Premium; they are marked in the app.</p>
+        <p>aljana is a calculation and reading tool. Prayer times, crescent forecasts and eclipses are astronomical calculations; aljana issues no religious rulings and does not announce the start of months. The opinions quoted come from sources identified in the app. For any religious decision, refer to the scholars and bodies of your community.</p>
+      </section>
+
+      <section aria-labelledby="tos-en-3">
+        <h2 id="tos-en-3">3. Premium offers</h2>
+        <ul>
+          <li><strong>Monthly subscription</strong>: one month of access, renewed automatically every month.</li>
+          <li><strong>Yearly subscription</strong>: one year of access, renewed automatically every year.</li>
+          <li><strong>1-month pass</strong>: one month of access, with no automatic renewal. You can buy a new one whenever you wish.</li>
+        </ul>
+        <p>The price of each offer is shown in the app, in your country’s currency, before any purchase. It may vary from one country to another. If a trial or launch offer is available, its terms are shown before purchase.</p>
+      </section>
+
+      <section aria-labelledby="tos-en-4">
+        <h2 id="tos-en-4">4. Payment and renewal</h2>
+        <p>Purchases are made only through Apple’s App Store or Google Play, with your store account. Payment is charged to that account when you confirm the purchase.</p>
+        <p>A subscription renews automatically for the same duration, at the current price, unless you cancel it at least 24 hours before the end of the current period. The renewal is charged within the 24 hours before the end of the period. If the price changes, your store notifies you under its own rules.</p>
+      </section>
+
+      <section aria-labelledby="tos-en-5">
+        <h2 id="tos-en-5">5. Cancellation</h2>
+        <p>You can cancel at any time in your store settings:</p>
+        <ul>
+          <li>on iPhone and iPad: Settings, your name, then Subscriptions, or <a href="https://apps.apple.com/account/subscriptions">apps.apple.com/account/subscriptions</a>;</li>
+          <li>on Android: Google Play, your profile, Payments and subscriptions, then Subscriptions, or <a href="https://play.google.com/store/account/subscriptions">play.google.com/store/account/subscriptions</a>.</li>
+        </ul>
+        <p>Cancelling stops the renewal. You keep access to Premium until the end of the period already paid for. Deleting the app does not cancel the subscription.</p>
+      </section>
+
+      <section aria-labelledby="tos-en-6">
+        <h2 id="tos-en-6">6. Refunds</h2>
+        <p>Payments are collected by Apple or Google, which handle refund requests under their own terms:</p>
+        <ul>
+          <li>App Store: <a href="https://reportaproblem.apple.com">reportaproblem.apple.com</a>;</li>
+          <li>Google Play: <a href="https://support.google.com/googleplay/answer/2479637">support.google.com/googleplay/answer/2479637</a>.</li>
+        </ul>
+        <p>Premium gives access to digital content as soon as you buy it. Where the law of your country provides a right of withdrawal, it is exercised under your store’s rules. Nothing in these terms limits the rights the law gives you as a consumer.</p>
+      </section>
+
+      <section aria-labelledby="tos-en-7">
+        <h2 id="tos-en-7">7. Getting your purchases back</h2>
+        <p>aljana does not ask you to create an account. Your purchase is linked to your store account. On a new device, or after reinstalling, sign in with the same account and tap “Restore purchases” in the Premium screen. A purchase made on the App Store cannot be transferred to Google Play, and vice versa.</p>
+      </section>
+
+      <section aria-labelledby="tos-en-8">
+        <h2 id="tos-en-8">8. Changes to the service</h2>
+        <p>aljana evolves: features may be added, improved or replaced. If an important Premium feature had to be removed during a period already paid for, we would tell you in the app. The service may be briefly interrupted for maintenance or because of a third-party service (weather, downloading Muṣḥaf pages); the main calculations remain available offline.</p>
+      </section>
+
+      <section aria-labelledby="tos-en-9">
+        <h2 id="tos-en-9">9. Liability</h2>
+        <p>We take great care over the accuracy of the calculations, which are checked against public astronomical references. Results nevertheless depend on the place, the time and the settings of your device, and on the calculation method chosen. To the extent permitted by law, SY-ONE is not liable for the consequences of an unsuitable setting, a wrongly set device or an interruption caused by a third-party service.</p>
+      </section>
+
+      <section aria-labelledby="tos-en-10">
+        <h2 id="tos-en-10">10. Content and ownership</h2>
+        <p>The app, its interface, texts and illustrations belong to SY-ONE. The text of the Qur’an, the translations of its meanings and the other texts quoted come from sources identified in the app, under their own licences. You may share the content designed for it with the “Share” button. Any other reproduction or extraction from the app requires our written consent.</p>
+      </section>
+
+      <section aria-labelledby="tos-en-11">
+        <h2 id="tos-en-11">11. Your data</h2>
+        <p>How aljana handles your data is described in the <a href="/privacy#en">privacy policy</a>.</p>
+      </section>
+
+      <section aria-labelledby="tos-en-12">
+        <h2 id="tos-en-12">12. Store terms</h2>
+        <p>If you downloaded aljana from the App Store, <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Apple’s standard licence agreement</a> also applies. If you downloaded it from Google Play, the Google Play terms of service also apply. If they conflict on a purchase, your store’s terms prevail.</p>
+      </section>
+
+      <section aria-labelledby="tos-en-13">
+        <h2 id="tos-en-13">13. Changes and governing law</h2>
+        <p>We may change these terms; the date at the top of the page is then updated, and an important change is pointed out in the app. These terms are governed by French law, without depriving you of the protection given by the mandatory rules of the country where you live. If a problem arises, write to us first: we always look for an amicable solution.</p>
+      </section>
+
+      <section aria-labelledby="tos-en-14">
+        <h2 id="tos-en-14">14. Contact</h2>
+        <address class="pp-contact">
+          <strong>aljana</strong><br>
+          Publisher: SY-ONE<br>
+          Email: <a href="mailto:contact@aljana.app">contact@aljana.app</a><br>
+          Website: <a href="https://aljana.app">https://aljana.app</a>
+        </address>
+      </section>
+    </article>
+
+  </main>
+
+  <footer class="pp-footer">
+    <a href="/" data-l10n="back">Retour à aljana</a>
+  </footer>
+
+  <script>
+    (function () {
+    /* Conditions d’utilisation : bascule FR / EN sans rechargement (même fonctionnement que /privacy). */
+    const L10N = {
+      fr: {
+        title: 'aljana : conditions d’utilisation',
+        description: 'Les conditions d’utilisation d’aljana et de son offre Premium : abonnements, Pass, renouvellement, résiliation et remboursement.',
+        skip: 'Aller au contenu',
+        home: 'Accueil d’aljana',
+        back: 'Retour à aljana',
+      },
+      en: {
+        title: 'aljana: Terms of Use',
+        description: 'The terms of use of aljana and its Premium offer: subscriptions, pass, renewal, cancellation and refunds.',
+        skip: 'Skip to content',
+        home: 'aljana home page',
+        back: 'Back to aljana',
+      },
+    }
+
+    const root = document.documentElement
+    const setMeta = (sel, value) => document.querySelector(sel)?.setAttribute('content', value)
+
+    function apply(lang) {
+      const t = L10N[lang]
+      root.lang = lang
+      root.dataset.ppLang = lang
+      document.title = t.title
+      setMeta('meta[name="description"]', t.description)
+      setMeta('meta[property="og:title"]', t.title)
+      setMeta('meta[property="og:description"]', t.description)
+      document.querySelectorAll('[data-lang]').forEach((el) => { el.hidden = el.dataset.lang !== lang })
+      document.querySelectorAll('[data-lang-switch]').forEach((a) => {
+        if (a.dataset.langSwitch === lang) a.setAttribute('aria-current', 'true')
+        else a.removeAttribute('aria-current')
+      })
+      document.querySelectorAll('[data-l10n]').forEach((el) => { el.textContent = t[el.dataset.l10n] })
+      document.querySelectorAll('[data-l10n-label]').forEach((el) => el.setAttribute('aria-label', t[el.dataset.l10nLabel]))
+    }
+
+    const fromHash = () => (location.hash === '#en' ? 'en' : location.hash === '#fr' ? 'fr' : null)
+
+    apply(L10N[root.dataset.ppLang] ? root.dataset.ppLang : 'fr')
+
+    document.querySelectorAll('[data-lang-switch]').forEach((a) => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault()
+        const lang = a.dataset.langSwitch
+        apply(lang)
+        history.replaceState(null, '', lang === 'en' ? '#en' : location.pathname + location.search)
+      })
+    })
+
+    window.addEventListener('hashchange', () => { const lang = fromHash(); if (lang) apply(lang) })
+    })()
+  </script>
+</body>
+</html>
