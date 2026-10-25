@@ -134,7 +134,7 @@
     $$("#checks div").forEach(function (d, i) { $("dt", d).textContent = t.pr[i][0]; $("dd", d).textContent = t.pr[i][1]; });
     /* captures dans la langue du site ; la section Langues montre une autre écriture que celle en cours */
     var other = code === "ar" ? "fr" : "ar";
-    $$("img[data-shot]").forEach(function (img) { var lc = img.hasAttribute("data-other") ? other : code; img.alt = "aljana, " + I18N[lc].sn[+img.dataset.sn]; setShot(img, "assets/screens/" + lc + "/" + img.dataset.shot + ".webp", !!img.closest(".hero") && img.dataset.sn === "0"); });
+    $$("img[data-shot]").forEach(function (img) { var lc = img.hasAttribute("data-other") ? other : code; img.alt = "aljana, " + I18N[lc].sn[+img.dataset.sn]; setShot(img, "assets/screens/" + lc + "/" + img.dataset.shot + ".webp?v=2028", !!img.closest(".hero") && img.dataset.sn === "0"); });
     $("#langFlag").textContent = L.flag; $("#langName").textContent = L.name; $("#langBtn").setAttribute("aria-label", t.pick + " (" + L.name + ")");
     $$(".lang-opt").forEach(function (b) { b.setAttribute("aria-current", b.dataset.lang === code ? "true" : "false"); });
     var c = $("[data-contact]"); if (c && CONTACT) c.setAttribute("href", "mailto:" + CONTACT);
