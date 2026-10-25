@@ -39,7 +39,7 @@ window.I18N = {
     ],
     lk: "Langues", lh: "Pensée pour être lue dans votre langue.", lp: "Douze langues complètes. En arabe, en ourdou et en persan, toute l'interface s'inverse de droite à gauche. Choisissez la vôtre :",
     eh: "aljana arrive bientôt.", ep: "Regardez l'heure de la prochaine prière, puis levez les yeux : la Lune sera là où l'application vous l'indique.",
-    f1: "Mentions légales", f2: "Confidentialité", f3: "Contact", f4: "Bientôt disponible", fd: "Prévisions astronomiques. Les annonces religieuses relèvent des autorités compétentes.",
+    f1: "Mentions légales", f2: "Confidentialité", f3: "Contact", f5: "Conditions d’utilisation", f4: "Bientôt disponible", fd: "Prévisions astronomiques. Les annonces religieuses relèvent des autorités compétentes.",
   },
   en: {
     title: "aljana: your prayers and your sky, right where you are",
@@ -70,7 +70,7 @@ window.I18N = {
     ],
     lk: "Languages", lh: "Made to be read in your language.", lp: "Twelve complete languages. In Arabic, Urdu and Persian the whole interface flips right to left. Choose yours:",
     eh: "aljana is coming soon.", ep: "Check the time of the next prayer, then look up: the Moon will be where the app tells you.",
-    f1: "Legal notice", f2: "Privacy", f3: "Contact", f4: "Coming soon", fd: "Astronomical forecasts. Religious announcements belong to the competent authorities.",
+    f1: "Legal notice", f2: "Privacy", f3: "Contact", f5: "Terms of use", f4: "Coming soon", fd: "Astronomical forecasts. Religious announcements belong to the competent authorities.",
   },
   ar: {
     title: "aljana: صلاتك وسماؤك حيث أنت",
@@ -101,7 +101,7 @@ window.I18N = {
     ],
     lk: "اللغات", lh: "صُمّم ليُقرأ بلغتك.", lp: "اثنتا عشرة لغة كاملة. في العربية والأردية والفارسية تنعكس الواجهة كلها من اليمين إلى اليسار. اختر لغتك:",
     eh: "aljana قريباً.", ep: "انظر إلى وقت الصلاة القادمة، ثم ارفع بصرك: ستجد القمر حيث يدلك التطبيق.",
-    f1: "إشعارات قانونية", f2: "الخصوصية", f3: "اتصل بنا", f4: "قريباً", fd: "توقعات فلكية. الإعلانات الدينية من اختصاص الجهات المختصة.",
+    f1: "إشعارات قانونية", f2: "الخصوصية", f3: "اتصل بنا", f5: "شروط الاستخدام", f4: "قريباً", fd: "توقعات فلكية. الإعلانات الدينية من اختصاص الجهات المختصة.",
   },
   es: {
     title: "aljana: tus oraciones y tu cielo, allí donde estás",
@@ -132,7 +132,7 @@ window.I18N = {
     ],
     lk: "Idiomas", lh: "Pensada para leerse en tu idioma.", lp: "Doce idiomas completos. En árabe, urdu y persa toda la interfaz se invierte de derecha a izquierda. Elige el tuyo:",
     eh: "aljana llega pronto.", ep: "Mira la hora de la próxima oración y luego levanta la vista: la Luna estará donde la aplicación te indica.",
-    f1: "Aviso legal", f2: "Privacidad", f3: "Contacto", f4: "Próximamente", fd: "Previsiones astronómicas. Los anuncios religiosos corresponden a las autoridades competentes.",
+    f1: "Aviso legal", f2: "Privacidad", f3: "Contacto", f5: "Condiciones de uso", f4: "Próximamente", fd: "Previsiones astronómicas. Los anuncios religiosos corresponden a las autoridades competentes.",
   },
   de: {
     title: "aljana: deine Gebete und dein Himmel, genau dort, wo du bist",
@@ -163,7 +163,7 @@ window.I18N = {
     ],
     lk: "Sprachen", lh: "Gemacht, um in deiner Sprache gelesen zu werden.", lp: "Zwölf vollständige Sprachen. Auf Arabisch, Urdu und Persisch kehrt sich die gesamte Oberfläche von rechts nach links um. Wähle deine:",
     eh: "aljana kommt bald.", ep: "Sieh nach, wann das nächste Gebet ist, und schau dann nach oben: Der Mond steht dort, wo die App es dir zeigt.",
-    f1: "Impressum", f2: "Datenschutz", f3: "Kontakt", f4: "Demnächst verfügbar", fd: "Astronomische Vorhersagen. Religiöse Bekanntgaben obliegen den zuständigen Autoritäten.",
+    f1: "Impressum", f2: "Datenschutz", f3: "Kontakt", f5: "Nutzungsbedingungen", f4: "Demnächst verfügbar", fd: "Astronomische Vorhersagen. Religiöse Bekanntgaben obliegen den zuständigen Autoritäten.",
   },
   tr: {
     title: "aljana: namazların ve gökyüzün, tam bulunduğun yerde",
@@ -194,7 +194,7 @@ window.I18N = {
     ],
     lk: "Diller", lh: "Kendi dilinde okunsun diye tasarlandı.", lp: "On iki eksiksiz dil. Arapça, Urduca ve Farsçada tüm arayüz sağdan sola döner. Kendi dilini seç:",
     eh: "aljana çok yakında.", ep: "Sıradaki namazın vaktine bak, sonra başını kaldır: Ay, uygulamanın gösterdiği yerde olacak.",
-    f1: "Yasal bilgiler", f2: "Gizlilik", f3: "İletişim", f4: "Çok yakında", fd: "Astronomik öngörüler. Dinî duyurular yetkili makamlara aittir.",
+    f1: "Yasal bilgiler", f2: "Gizlilik", f3: "İletişim", f5: "Kullanım koşulları", f4: "Çok yakında", fd: "Astronomik öngörüler. Dinî duyurular yetkili makamlara aittir.",
   },
   id: {
     title: "aljana: salat dan langit Anda, tepat di tempat Anda berada",
@@ -225,7 +225,7 @@ window.I18N = {
     ],
     lk: "Bahasa", lh: "Dirancang untuk dibaca dalam bahasa Anda.", lp: "Dua belas bahasa lengkap. Dalam bahasa Arab, Urdu, dan Persia seluruh antarmuka berbalik dari kanan ke kiri. Pilih bahasa Anda:",
     eh: "aljana segera hadir.", ep: "Lihat waktu salat berikutnya, lalu tengadahkan pandangan: Bulan akan berada di tempat yang ditunjukkan aplikasi.",
-    f1: "Informasi hukum", f2: "Privasi", f3: "Kontak", f4: "Segera hadir", fd: "Prakiraan astronomi. Pengumuman keagamaan merupakan wewenang otoritas yang berwenang.",
+    f1: "Informasi hukum", f2: "Privasi", f3: "Kontak", f5: "Ketentuan penggunaan", f4: "Segera hadir", fd: "Prakiraan astronomi. Pengumuman keagamaan merupakan wewenang otoritas yang berwenang.",
   },
   ur: {
     title: "aljana: آپ کی نمازیں اور آپ کا آسمان، جہاں آپ ہیں",
@@ -256,7 +256,7 @@ window.I18N = {
     ],
     lk: "زبانیں", lh: "آپ کی زبان میں پڑھے جانے کے لیے بنایا گیا۔", lp: "بارہ مکمل زبانیں۔ عربی، اردو اور فارسی میں پورا انٹرفیس دائیں سے بائیں پلٹ جاتا ہے۔ اپنی زبان منتخب کریں:",
     eh: "aljana جلد آ رہا ہے۔", ep: "اگلی نماز کا وقت دیکھیں، پھر نظر اٹھائیں: چاند وہیں ہوگا جہاں ایپ بتاتی ہے۔",
-    f1: "قانونی معلومات", f2: "رازداری", f3: "رابطہ", f4: "جلد آ رہا ہے", fd: "فلکیاتی پیش گوئیاں۔ مذہبی اعلانات مجاز اداروں کا اختیار ہیں۔",
+    f1: "قانونی معلومات", f2: "رازداری", f3: "رابطہ", f5: "شرائطِ استعمال", f4: "جلد آ رہا ہے", fd: "فلکیاتی پیش گوئیاں۔ مذہبی اعلانات مجاز اداروں کا اختیار ہیں۔",
   },
   fa: {
     title: "aljana: نمازها و آسمان شما، همان‌جا که هستید",
@@ -287,7 +287,7 @@ window.I18N = {
     ],
     lk: "زبان‌ها", lh: "ساخته شده تا به زبان شما خوانده شود.", lp: "دوازده زبان کامل. در عربی، اردو و فارسی کل رابط از راست به چپ برمی‌گردد. زبان خود را انتخاب کنید:",
     eh: "aljana به‌زودی می‌آید.", ep: "زمان نماز بعدی را ببینید، سپس به بالا نگاه کنید: ماه همان‌جاست که برنامه نشان می‌دهد.",
-    f1: "اطلاعات حقوقی", f2: "حریم خصوصی", f3: "تماس", f4: "به‌زودی", fd: "پیش‌بینی‌های نجومی. اعلام‌های دینی در صلاحیت مراجع ذی‌صلاح است.",
+    f1: "اطلاعات حقوقی", f2: "حریم خصوصی", f3: "تماس", f5: "شرایط استفاده", f4: "به‌زودی", fd: "پیش‌بینی‌های نجومی. اعلام‌های دینی در صلاحیت مراجع ذی‌صلاح است.",
   },
   ru: {
     title: "aljana: ваши молитвы и ваше небо там, где вы находитесь",
@@ -318,7 +318,7 @@ window.I18N = {
     ],
     lk: "Языки", lh: "Создано, чтобы читать на вашем языке.", lp: "Двенадцать полных языков. На арабском, урду и персидском весь интерфейс разворачивается справа налево. Выберите свой:",
     eh: "aljana скоро выйдет.", ep: "Посмотрите время следующего намаза, затем поднимите глаза: Луна будет там, где показывает приложение.",
-    f1: "Правовая информация", f2: "Конфиденциальность", f3: "Контакты", f4: "Скоро", fd: "Астрономические прогнозы. Религиозные объявления остаются за уполномоченными органами.",
+    f1: "Правовая информация", f2: "Конфиденциальность", f3: "Контакты", f5: "Условия использования", f4: "Скоро", fd: "Астрономические прогнозы. Религиозные объявления остаются за уполномоченными органами.",
   },
   zh: {
     title: "aljana：您的礼拜与星空，就在您所在之处",
@@ -349,7 +349,7 @@ window.I18N = {
     ],
     lk: "语言", lh: "为用您的语言阅读而设计。", lp: "十二种完整语言。在阿拉伯语、乌尔都语和波斯语中，整个界面从右到左翻转。请选择您的语言：",
     eh: "aljana 即将推出。", ep: "看一眼下一次礼拜的时间，然后抬头：月亮就在应用告诉您的位置。",
-    f1: "法律声明", f2: "隐私", f3: "联系", f4: "即将推出", fd: "天文预测。宗教事务的宣布属于有关主管机构。",
+    f1: "法律声明", f2: "隐私", f3: "联系", f5: "使用条款", f4: "即将推出", fd: "天文预测。宗教事务的宣布属于有关主管机构。",
   },
   hi: {
     title: "aljana: आपकी नमाज़ें और आपका आसमान, ठीक वहीं जहाँ आप हैं",
@@ -380,7 +380,7 @@ window.I18N = {
     ],
     lk: "भाषाएँ", lh: "आपकी भाषा में पढ़े जाने के लिए बनाया गया।", lp: "बारह पूरी भाषाएँ। अरबी, उर्दू और फ़ारसी में पूरा इंटरफ़ेस दाएँ से बाएँ पलट जाता है। अपनी भाषा चुनें:",
     eh: "aljana जल्द आ रहा है।", ep: "अगली नमाज़ का समय देखें, फिर नज़र उठाएँ: चाँद वहीं होगा जहाँ ऐप बताता है।",
-    f1: "क़ानूनी जानकारी", f2: "गोपनीयता", f3: "संपर्क", f4: "जल्द आ रहा है", fd: "खगोलीय पूर्वानुमान। धार्मिक घोषणाएँ अधिकृत संस्थाओं का अधिकार हैं।",
+    f1: "क़ानूनी जानकारी", f2: "गोपनीयता", f3: "संपर्क", f5: "उपयोग की शर्तें", f4: "जल्द आ रहा है", fd: "खगोलीय पूर्वानुमान। धार्मिक घोषणाएँ अधिकृत संस्थाओं का अधिकार हैं।",
   },
 };
 

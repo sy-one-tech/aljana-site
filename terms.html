@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -17,148 +17,118 @@
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://aljana.app/assets/og/fr.jpg?v=2" />
-  <meta name="theme-color" content="#050A18" />
+  <meta name="theme-color" content="#060B18" />
+  <!-- Page générée par legal/build.mjs à partir de legal/src : modifier les sources, puis régénérer. -->
   <script>
-    /* langue affichée dès le premier rendu : ancre #en / #fr, sinon langue déjà choisie sur le site, sinon français */
+    /* langue dès le premier rendu, mêmes règles que le site : ?lang=, sinon langue déjà choisie sur le site,
+       sinon langue du navigateur, sinon anglais. Une ancienne ancre (#en, #fr…) est encore comprise. */
     (function () {
-      var h = location.hash, l = h === '#en' ? 'en' : h === '#fr' ? 'fr' : null
-      if (!l) { try { var s = localStorage.getItem('aljana.site.lang'); if (s === 'fr') l = 'fr'; else if (/^en/.test(s || '')) l = 'en' } catch (e) { /* stockage indisponible */ } }
-      l = l || 'fr'
-      document.documentElement.lang = l
-      document.documentElement.setAttribute('data-pp-lang', l)
-      if (l === 'en') document.title = 'aljana: Terms of Use'
+      var C = ["fr","en","ar","es","de","tr","id","ur","fa","ru","zh","hi"], T = {"fr":"aljana : conditions d’utilisation","en":"aljana: Terms of Use","ar":"aljana: شروط الاستخدام","es":"aljana: condiciones de uso","de":"aljana: Nutzungsbedingungen","tr":"aljana: kullanım koşulları","id":"aljana: ketentuan penggunaan","ur":"aljana: شرائطِ استعمال","fa":"aljana: شرایط استفاده","ru":"aljana: условия использования","zh":"aljana：使用条款","hi":"aljana: उपयोग की शर्तें"}
+      var norm = function (t) { t = String(t || '').toLowerCase(); if (/^en/.test(t)) return 'en'; t = t.slice(0, 2); return C.indexOf(t) >= 0 ? t : null }
+      var l = norm(new URLSearchParams(location.search).get('lang')) || (C.indexOf(location.hash.slice(1)) >= 0 ? location.hash.slice(1) : null)
+      if (!l) { try { l = norm(localStorage.getItem('aljana.site.lang')) } catch (e) { /* stockage indisponible */ } }
+      if (!l) { var n = navigator.languages || [navigator.language]; for (var i = 0; i < n.length && !l; i++) l = norm(n[i]) }
+      l = l || 'en'
+      var h = document.documentElement
+      h.lang = l; h.dir = /^(ar|ur|fa)$/.test(l) ? 'rtl' : 'ltr'; h.setAttribute('data-pp-lang', l); document.title = T[l]
     })()
   </script>
   <link rel="icon" href="/assets/icon-192.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@400..700&display=swap" rel="stylesheet">
   <style>
-    /* Jetons et bases du site (repris de src/style.css : page autonome, sans lien avec le bundle des autres pages) */
-    :root{
-      --night-deep:#050A18; --night-ink:#0B1230;
-      --ink-light:#F2F5FC; --ink-body:#C9D3E8;
-      --gold-1:#F5B04C; --gold-2:#E8833A;
-      --font-display:'Space Grotesk', system-ui, sans-serif;
-      --font-body:'Inter', system-ui, sans-serif;
-      --header-h:68px;
+    /* mêmes jetons et mêmes polices que la page d'accueil du site (index.html) */
+    :root {
+      --bg: #060B18; --band: #0A1326; --ink: #EEF1FA; --soft: #C9D1EA; --dim: #93A0C2;
+      --gold: #E2B659; --gold-soft: #F3DFAE; --line: rgba(160,172,205,0.14);
+      --sans: "Commissioner", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --header-h: 68px;
     }
-    *{ box-sizing:border-box; }
-    html,body{ margin:0; min-height:100%; }
-    html{ scroll-padding-top:var(--header-h); }
-    body{ font-family:var(--font-body); color:var(--ink-body); overflow-x:hidden; }
-    h1,h2,h3{ font-family:var(--font-display); color:var(--ink-light); margin:0; }
-    p{ margin:0; }
-    .skip-link{ position:absolute; left:-999px; top:0; }
-    .skip-link:focus{ left:8px; top:8px; background:var(--night-ink); color:var(--ink-light); padding:8px 12px; border-radius:6px; z-index:200; }
-    .visually-hidden{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
-    .brand{ display:flex; align-items:center; text-decoration:none; }
-    .brand__logo{ height:30px; width:auto; display:block; flex:none; }
-    @media (min-width:900px){ .brand__logo{ height:34px; } }
+    html[lang="ar"] { --sans: "IBM Plex Sans Arabic", system-ui, sans-serif; }
+    html[lang="fa"] { --sans: "Vazirmatn", "Noto Sans Arabic", Tahoma, sans-serif; }
+    html[lang="ur"] { --sans: "Noto Naskh Arabic", "Noto Sans Arabic", Tahoma, sans-serif; }
+    html[lang="hi"] { --sans: "Noto Sans Devanagari", "Nirmala UI", sans-serif; }
+    html[lang="zh"] { --sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    html { scroll-padding-top: var(--header-h); -webkit-text-size-adjust: 100%; }
+    body { background: var(--bg); color: var(--soft); font-family: var(--sans); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    h1, h2, h3 { color: var(--ink); margin: 0; font-weight: 600; }
+    p { margin: 0; }
+    .skip-link { position: absolute; inset-inline-start: -999px; top: 0; }
+    .skip-link:focus { inset-inline-start: 8px; top: 8px; background: var(--band); color: var(--ink); padding: 8px 12px; border-radius: 6px; z-index: 200; }
+    .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-    /* ---------- Conditions d’utilisation (/terms), même mise en page que /privacy ----------
-       Page autonome, centrée sur la lecture : fond nuit du site, titres Space Grotesk,
-       filets et accents dorés, aucune animation. Colonne de lecture ~ 880 px. */
+    /* une seule langue affichée (sans JavaScript : toutes, l'une sous l'autre) */
+    html[data-pp-lang="fr"] .pp-doc:not([data-lang="fr"]),
+    html[data-pp-lang="en"] .pp-doc:not([data-lang="en"]),
+    html[data-pp-lang="ar"] .pp-doc:not([data-lang="ar"]),
+    html[data-pp-lang="es"] .pp-doc:not([data-lang="es"]),
+    html[data-pp-lang="de"] .pp-doc:not([data-lang="de"]),
+    html[data-pp-lang="tr"] .pp-doc:not([data-lang="tr"]),
+    html[data-pp-lang="id"] .pp-doc:not([data-lang="id"]),
+    html[data-pp-lang="ur"] .pp-doc:not([data-lang="ur"]),
+    html[data-pp-lang="fa"] .pp-doc:not([data-lang="fa"]),
+    html[data-pp-lang="ru"] .pp-doc:not([data-lang="ru"]),
+    html[data-pp-lang="zh"] .pp-doc:not([data-lang="zh"]),
+    html[data-pp-lang="hi"] .pp-doc:not([data-lang="hi"]) { display: none; }
 
-    /* seule la langue active est affichée (sans JavaScript : les deux, l'une sous l'autre) */
-    html[data-pp-lang="fr"] .pp-doc[data-lang="en"],
-    html[data-pp-lang="en"] .pp-doc[data-lang="fr"],
-    .pp-doc[hidden]{ display:none; }
-
-    body[data-page="legal"]{ background:var(--night-deep); }
-
-    /* ---------- En-tête : logo + sélecteur FR / EN ---------- */
-    .pp-header{
-      position:sticky; top:0; z-index:40;
-      background:rgba(5,10,24,.94);
-      border-bottom:1px solid rgba(245,176,76,.22);
+    /* en-tête : logo et choix de la langue */
+    .pp-header { position: sticky; top: 0; z-index: 40; background: rgba(6,11,24,0.94); border-bottom: 1px solid var(--line); }
+    .pp-header__inner { max-width: 960px; margin: 0 auto; min-height: var(--header-h); display: flex; align-items: center; justify-content: space-between; gap: 12px 16px; padding: 10px clamp(16px, 4vw, 32px); }
+    .brand { display: flex; align-items: center; border-radius: 6px; }
+    .brand img { height: 32px; width: auto; display: block; }
+    .pp-lang select {
+      appearance: none; -webkit-appearance: none; min-height: 42px; padding: 0 40px 0 16px; border-radius: 999px;
+      border: 1px solid rgba(226,182,89,0.45); background-color: rgba(238,241,250,0.04); color: var(--ink);
+      font: 600 15px/1 "Commissioner", system-ui, sans-serif; cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23F3DFAE' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 16px center;
     }
-    .pp-header__inner{
-      max-width:960px; margin:0 auto; min-height:var(--header-h);
-      display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px 16px;
-      padding:10px clamp(16px,4vw,32px);
-    }
-    .pp-header .brand{ border-radius:6px; }
+    html[dir="rtl"] .pp-lang select { padding: 0 16px 0 40px; background-position: left 16px center; }
+    .pp-lang select option { background: var(--band); color: var(--ink); }
 
-    .pp-lang{
-      display:flex; gap:4px; padding:4px;
-      border:1px solid rgba(245,176,76,.45); border-radius:999px;
-      background:rgba(242,245,252,.04);
-    }
-    .pp-lang a{
-      position:relative; display:inline-flex; align-items:center; justify-content:center;
-      min-width:52px; min-height:40px; padding:0 14px; border-radius:999px;
-      font-family:var(--font-display); font-weight:600; font-size:15px; letter-spacing:.06em;
-      color:var(--ink-light); text-decoration:none;
-    }
-    .pp-lang a:hover{ background:rgba(245,176,76,.14); }
-    .pp-lang a[aria-current="true"]{
-      background:linear-gradient(135deg, var(--gold-1), var(--gold-2)); color:#1B1204;
-    }
+    /* contenu : colonne de lecture */
+    .pp { outline: none; }
+    .pp-doc { max-width: 820px; margin: 0 auto; padding: clamp(44px, 7vw, 96px) clamp(20px, 5vw, 40px) clamp(56px, 8vw, 96px); font-size: clamp(16.5px, 1.1vw + 12px, 18px); line-height: 1.75; overflow-wrap: break-word; }
+    .pp-doc + .pp-doc { border-top: 1px solid var(--line); }
+    html[lang="ar"] .pp-doc, html[lang="fa"] .pp-doc, html[lang="ur"] .pp-doc { line-height: 1.9; }
+    html[lang="ur"] .pp-doc { line-height: 2.05; }
+    .pp-doc__head { margin-bottom: clamp(36px, 6vw, 56px); padding-bottom: clamp(24px, 4vw, 36px); border-bottom: 1px solid var(--line); }
+    .pp-doc h1 { font-size: clamp(32px, 5vw, 48px); line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 14px; }
+    html[dir="rtl"] .pp-doc h1, html[lang="hi"] .pp-doc h1, html[lang="zh"] .pp-doc h1 { letter-spacing: 0; line-height: 1.35; }
+    .pp-updated { color: var(--gold-soft); font-size: 0.9em; margin-bottom: 14px; }
+    .pp-note { color: var(--dim); font-size: 0.88em; line-height: 1.6; margin-bottom: 20px; }
+    .pp-intro { font-size: 1.06em; color: var(--ink); }
+    .pp-doc section { margin-bottom: clamp(36px, 5vw, 52px); scroll-margin-top: calc(var(--header-h) + 24px); }
+    .pp-doc h2 { font-size: clamp(22px, 2.6vw, 27px); line-height: 1.3; margin-bottom: 16px; }
+    .pp-doc h3 { font-size: clamp(17.5px, 1.8vw, 19.5px); line-height: 1.4; margin: 26px 0 8px; color: var(--gold-soft); }
+    .pp-doc p { margin-bottom: 16px; }
+    .pp-doc ul { margin: 0 0 18px; padding-inline-start: 1.4em; }
+    .pp-doc li { margin-bottom: 8px; }
+    .pp-doc li::marker { color: var(--gold); }
+    .pp-doc strong { color: var(--ink); font-weight: 600; }
+    .pp-doc a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: 3px; }
+    .pp-doc a:hover { color: var(--gold-soft); }
+    .pp-contact { font-style: normal; line-height: 1.9; margin-top: 8px; padding: 20px 24px; border: 1px solid var(--line); background: rgba(238,241,250,0.03); border-radius: 12px; }
+    .pp-contact strong { color: var(--ink); }
 
-    /* ---------- Contenu ---------- */
-    .pp{ outline:none; }
-    .pp-doc{
-      scroll-margin-top:var(--header-h);
-      max-width:880px; margin:0 auto;
-      padding:clamp(48px,8vw,104px) clamp(20px,5vw,40px) clamp(56px,8vw,96px);
-      color:var(--ink-body);
-      font-size:clamp(16.5px, 1.1vw + 12px, 18px); line-height:1.75;
-      overflow-wrap:break-word;
+    /* pied : l'autre page légale et le retour au site */
+    .pp-footer { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 24px; padding: 32px 20px 56px; border-top: 1px solid var(--line); }
+    .pp-footer a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 6px; color: var(--ink); font-size: 16px; text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: 4px; }
+    .pp-footer a:hover { color: var(--gold-soft); }
+
+    .pp-header a:focus-visible, .pp-lang select:focus-visible, .pp-doc a:focus-visible, .pp-footer a:focus-visible, .skip-link:focus-visible { outline: 2px solid var(--gold-soft); outline-offset: 3px; }
+
+    @media (max-width: 420px) {
+      .brand img { height: 27px; }
+      .pp-contact { padding: 16px; }
     }
-    .pp-doc + .pp-doc{ border-top:1px solid rgba(245,176,76,.22); }
-
-    .pp-doc__head{ margin-bottom:clamp(40px,6vw,64px); padding-bottom:clamp(28px,4vw,40px); border-bottom:1px solid rgba(245,176,76,.35); }
-    .pp-doc h1{ font-size:clamp(32px, 5vw, 50px); line-height:1.12; letter-spacing:-.01em; margin-bottom:16px; }
-    .pp-updated{ color:var(--gold-1); font-size:.9em; font-weight:500; letter-spacing:.02em; margin-bottom:24px; }
-    .pp-intro{ font-size:1.08em; color:var(--ink-light); }
-
-    .pp-doc section{ margin-bottom:clamp(40px,5vw,56px); scroll-margin-top:calc(var(--header-h) + 24px); }
-    .pp-doc h2{ font-size:clamp(22px, 2.6vw, 28px); line-height:1.3; margin-bottom:18px; }
-    .pp-doc h3{ font-size:clamp(18px, 1.8vw, 20px); line-height:1.4; margin:28px 0 8px; color:var(--gold-1); }
-    .pp-doc p{ margin-bottom:16px; }
-    .pp-doc ul{ margin:0 0 18px; padding-left:1.4em; }
-    .pp-doc li{ margin-bottom:8px; }
-    .pp-doc li::marker{ color:var(--gold-1); }
-
-    .pp-doc a{ color:var(--ink-light); text-decoration:underline; text-decoration-color:var(--gold-1); text-underline-offset:3px; }
-    .pp-doc a:hover{ color:var(--gold-1); }
-
-    .pp-contact{
-      font-style:normal; line-height:1.9; margin-top:8px;
-      padding:20px 24px; border:1px solid rgba(245,176,76,.35);
-      background:rgba(242,245,252,.04); border-radius:10px;
-    }
-    .pp-contact strong{ color:var(--ink-light); font-family:var(--font-display); }
-    .pp-placeholder{ color:var(--ink-light); font-weight:600; }
-
-    /* ---------- Pied : simple retour ---------- */
-    .pp-footer{
-      text-align:center; padding:36px 20px 56px;
-      border-top:1px solid rgba(245,176,76,.22);
-    }
-    .pp-footer a{
-      display:inline-flex; align-items:center; min-height:44px; padding:0 8px;
-      color:var(--ink-light); font-family:var(--font-display); font-size:16px;
-      text-decoration:underline; text-decoration-color:var(--gold-1); text-underline-offset:4px;
-    }
-    .pp-footer a:hover{ color:var(--gold-1); }
-
-    /* ---------- Focus clavier visible ---------- */
-    .pp-header a:focus-visible, .pp-doc a:focus-visible, .pp-footer a:focus-visible, .skip-link:focus-visible{
-      outline:3px solid var(--gold-1); outline-offset:3px;
-    }
-
-    @media (max-width:420px){
-      .pp-header .brand__logo{ height:26px; }
-      .pp-lang a{ min-width:48px; padding:0 12px; }
-      .pp-contact{ padding:16px 16px; }
-    }
-
-    @media print{
-      .pp-header, .pp-footer, .skip-link{ display:none; }
-      body[data-page="legal"]{ background:#fff; }
-      .pp-doc, .pp-doc h1, .pp-doc h2, .pp-doc h3, .pp-intro, .pp-updated, .pp-doc a{ color:#000; }
+    @media print {
+      .pp-header, .pp-footer, .skip-link { display: none; }
+      body { background: #fff; }
+      .pp-doc, .pp-doc h1, .pp-doc h2, .pp-doc h3, .pp-intro, .pp-updated, .pp-note, .pp-doc a, .pp-doc strong { color: #000; }
     }
   </style>
 </head>
@@ -168,20 +138,16 @@
 
   <header class="pp-header">
     <div class="pp-header__inner">
-      <a href="/" class="brand" data-l10n-label="home" aria-label="Accueil d’aljana">
-        <img class="brand__logo" src="/assets/brand/aljana-logo-v4.webp" alt="aljana" width="102" height="34" />
+      <a href="/" class="brand" data-home data-l10n-label="home" aria-label="Accueil d’aljana">
+        <img src="/assets/brand/aljana-logo-v4.webp" alt="aljana" width="102" height="34" />
       </a>
-      <nav class="pp-lang" aria-label="Langue / Language">
-        <a href="#fr" hreflang="fr" lang="fr" data-lang-switch="fr" aria-current="true">FR<span class="visually-hidden"> (Français)</span></a>
-        <a href="#en" hreflang="en" lang="en" data-lang-switch="en">EN<span class="visually-hidden"> (English)</span></a>
-      </nav>
+      <label class="pp-lang"><span class="visually-hidden" data-l10n="lang">Langue</span><select id="ppLang"><option value="fr" lang="fr" selected>Français</option><option value="en" lang="en">English</option><option value="ar" lang="ar">العربية</option><option value="es" lang="es">Español</option><option value="de" lang="de">Deutsch</option><option value="tr" lang="tr">Türkçe</option><option value="id" lang="id">Indonesia</option><option value="ur" lang="ur">اردو</option><option value="fa" lang="fa">فارسی</option><option value="ru" lang="ru">Русский</option><option value="zh" lang="zh">中文</option><option value="hi" lang="hi">हिन्दी</option></select></label>
     </div>
   </header>
 
   <main id="main" class="pp" tabindex="-1">
 
-    <!-- ===================== VERSION FRANÇAISE ===================== -->
-    <article class="pp-doc" id="fr" lang="fr" data-lang="fr" aria-labelledby="tos-title-fr">
+    <article class="pp-doc" id="doc-fr" lang="fr" dir="ltr" data-lang="fr" aria-labelledby="tos-title-fr">
       <header class="pp-doc__head">
         <h1 id="tos-title-fr">Conditions d’utilisation</h1>
         <p class="pp-updated">Dernière mise à jour : <time datetime="2026-10-20">20 octobre 2026</time></p>
@@ -237,7 +203,7 @@
 
       <section aria-labelledby="tos-fr-7">
         <h2 id="tos-fr-7">7. Retrouver vos achats</h2>
-        <p>aljana ne vous demande pas de compte. Votre achat est lié au compte de votre store. Sur un nouvel appareil, ou après une réinstallation, connectez-vous avec le même compte et touchez « Restaurer les achats » dans l’écran Premium. Un achat fait sur l’App Store n’est pas transférable vers Google Play, et inversement.</p>
+        <p>aljana ne vous demande pas de compte. Votre achat est lié au compte de votre store. Sur un nouvel appareil, ou après une réinstallation, connectez-vous avec le même compte et touchez « Restaurer mes achats » dans l’écran Premium. Un achat fait sur l’App Store n’est pas transférable vers Google Play, et inversement.</p>
       </section>
 
       <section aria-labelledby="tos-fr-8">
@@ -282,11 +248,11 @@
       </section>
     </article>
 
-    <!-- ===================== ENGLISH VERSION ===================== -->
-    <article class="pp-doc" id="en" lang="en" data-lang="en" aria-labelledby="tos-title-en">
+    <article class="pp-doc" id="doc-en" lang="en" dir="ltr" data-lang="en" aria-labelledby="tos-title-en">
       <header class="pp-doc__head">
         <h1 id="tos-title-en">Terms of Use</h1>
         <p class="pp-updated">Last updated: <time datetime="2026-10-20">October 20, 2026</time></p>
+        <p class="pp-note">This English version is a translation provided for convenience. If it differs from the French version, the French version prevails.</p>
         <p class="pp-intro">These terms apply to the aljana app and its Premium offer. By using aljana, you accept them. They are written to be read: if anything is unclear, write to us.</p>
       </header>
 
@@ -359,7 +325,7 @@
 
       <section aria-labelledby="tos-en-11">
         <h2 id="tos-en-11">11. Your data</h2>
-        <p>How aljana handles your data is described in the <a href="/privacy#en">privacy policy</a>.</p>
+        <p>How aljana handles your data is described in the <a href="/privacy">privacy policy</a>.</p>
       </section>
 
       <section aria-labelledby="tos-en-12">
@@ -384,66 +350,1063 @@
       </section>
     </article>
 
+    <article class="pp-doc" id="doc-ar" lang="ar" dir="rtl" data-lang="ar" aria-labelledby="tos-title-ar">
+      <header class="pp-doc__head">
+        <h1 id="tos-title-ar">شروط الاستخدام</h1>
+        <p class="pp-updated">آخر تحديث: <time datetime="2026-10-20">٢٠ أكتوبر ٢٠٢٦</time></p>
+        <p class="pp-note">هذه الترجمة العربية مقدَّمة لتيسير القراءة، وعند وجود أي اختلاف يُعتمد النص الفرنسي.</p>
+        <p class="pp-intro">تسري هذه الشروط على تطبيق aljana وعلى عرض Premium الخاص به. وباستعمالك aljana فإنك تقبلها. وقد كُتبت لتُقرأ: إن لم تتضح لك نقطة منها فراسلنا.</p>
+      </header>
+
+      <section aria-labelledby="tos-ar-1">
+        <h2 id="tos-ar-1">١. الناشر</h2>
+        <p>تنشر aljana شركة SY-ONE SAS، وهي شركة مساهمة مبسّطة خاضعة للقانون الفرنسي (<bdi dir="ltr">SIREN 821 628 708</bdi>)، وعنوانها مذكور في قسم «التواصل» أدناه. للتواصل معنا: <a href="mailto:contact@aljana.app">contact@aljana.app</a>.</p>
+      </section>
+
+      <section aria-labelledby="tos-ar-2">
+        <h2 id="tos-ar-2">٢. الخدمة</h2>
+        <p>يحسب aljana مواقيت الصلاة والقبلة والسماء والقمر والهلال والكسوف والخسوف، ويتيح الوصول إلى المصحف وإلى نصوص للتذكير. وجزء من التطبيق مجاني دون حدّ زمني، ومنه القرآن الكريم كاملًا ومواقيت صلاة اليوم. أما الوظائف الأخرى فمخصّصة لـ aljana Premium، وهي مُشار إليها في التطبيق.</p>
+        <p>aljana أداة للحساب والقراءة. فالمواقيت وتوقعات الهلال والكسوف والخسوف حسابات فلكية، ولا يُصدر aljana أي رأي ديني ولا يعلن بداية الشهور. والآراء المنقولة فيه مأخوذة من مصادر محددة في التطبيق. وفي أي قرار ديني، ارجع إلى العلماء والهيئات المعتمدة في مجتمعك.</p>
+      </section>
+
+      <section aria-labelledby="tos-ar-3">
+        <h2 id="tos-ar-3">٣. عروض Premium</h2>
+        <ul>
+          <li><strong>الاشتراك الشهري</strong>: وصول لمدة شهر، يتجدد تلقائيًا كل شهر.</li>
+          <li><strong>الاشتراك السنوي</strong>: وصول لمدة سنة، يتجدد تلقائيًا كل سنة.</li>
+          <li><strong>اشتراك شهر واحد</strong>: وصول لمدة شهر دون تجديد تلقائي. ويمكنك شراء اشتراك جديد متى شئت.</li>
+        </ul>
+        <p>يُعرض سعر كل عرض في التطبيق بعملة بلدك قبل أي شراء، وقد يختلف من بلد إلى آخر. وإذا قُدّم عرض تجريبي أو عرض إطلاق، تُعرض شروطه قبل الشراء.</p>
+      </section>
+
+      <section aria-labelledby="tos-ar-4">
+        <h2 id="tos-ar-4">٤. الدفع والتجديد</h2>
+        <p>لا تتم المشتريات إلا عبر App Store من Apple أو عبر Google Play، بحساب متجرك ووسائل الدفع فيه. ويُخصم المبلغ من هذا الحساب عند تأكيد الشراء.</p>
+        <p>يتجدد الاشتراك تلقائيًا للمدة نفسها وبالسعر الساري، ما لم تلغه قبل ٢٤ ساعة على الأقل من نهاية الفترة الجارية. ويُخصم مبلغ التجديد خلال الساعات الأربع والعشرين التي تسبق نهاية الفترة. وإذا تغيّر السعر، يُعلمك متجرك وفق قواعده الخاصة.</p>
+      </section>
+
+      <section aria-labelledby="tos-ar-5">
+        <h2 id="tos-ar-5">٥. الإلغاء</h2>
+        <p>يمكنك الإلغاء في أي وقت من إعدادات متجرك:</p>
+        <ul>
+          <li>على iPhone وiPad: الإعدادات، ثم اسمك، ثم الاشتراكات، أو <a href="https://apps.apple.com/account/subscriptions">apps.apple.com/account/subscriptions</a>؛</li>
+          <li>على Android: Google Play، ثم ملفك الشخصي، ثم الدفعات والاشتراكات، ثم الاشتراكات، أو <a href="https://play.google.com/store/account/subscriptions">play.google.com/store/account/subscriptions</a>.</li>
+        </ul>
+        <p>يوقف الإلغاء التجديد، وتحتفظ بالوصول إلى Premium حتى نهاية الفترة المدفوعة. وحذف التطبيق لا يُلغي الاشتراك.</p>
+      </section>
+
+      <section aria-labelledby="tos-ar-6">
+        <h2 id="tos-ar-6">٦. الاسترداد</h2>
+        <p>تحصّل Apple أو Google المدفوعات، وتعالج طلبات الاسترداد وفق شروطها الخاصة:</p>
+        <ul>
+          <li>App Store: <a href="https://reportaproblem.apple.com">reportaproblem.apple.com</a>؛</li>
+          <li>Google Play: <a href="https://support.google.com/googleplay/answer/2479637">support.google.com/googleplay/answer/2479637</a>.</li>
+        </ul>
+        <p>يتيح Premium الوصول إلى محتوى رقمي فور الشراء. وحيث ينص قانون بلدك على حق العدول، يُمارَس هذا الحق وفق قواعد متجرك. ولا شيء في هذه الشروط ينتقص من الحقوق التي يمنحك إياها القانون بصفتك مستهلكًا.</p>
+      </section>
+
+      <section aria-labelledby="tos-ar-7">
+        <h2 id="tos-ar-7">٧. استعادة مشترياتك</h2>
+        <p>لا يطلب منك aljana إنشاء حساب، فمشترياتك مرتبطة بحساب متجرك. وعلى جهاز جديد أو بعد إعادة التثبيت، سجّل الدخول بالحساب نفسه ثم المس «استعادة المشتريات» في شاشة Premium. ولا يمكن نقل شراء تم عبر App Store إلى Google Play، ولا العكس.</p>
+      </section>
+
+      <section aria-labelledby="tos-ar-8">
+        <h2 id="tos-ar-8">٨. تطوّر الخدمة</h2>
+        <p>يتطوّر aljana باستمرار: قد تُضاف وظائف أو تُحسَّن أو تُستبدل. وإذا اضطُررنا إلى سحب وظيفة مهمة من Premium خلال فترة مدفوعة، فسنُعلمك بذلك في التطبيق. وقد تنقطع الخدمة لفترة وجيزة للصيانة أو بسبب خدمة خارجية (الطقس، تنزيل صفحات المصحف)، وتبقى الحسابات الأساسية متاحة دون اتصال.</p>
+      </section>
+
+      <section aria-labelledby="tos-ar-9">
+        <h2 id="tos-ar-9">٩. المسؤولية</h2>
+        <p>نولي دقة الحسابات أكبر العناية، ونتحقق منها بمراجع فلكية عامة. غير أن النتائج تتوقف على مكان جهازك ووقته وإعداداته، وعلى طريقة الحساب المختارة. وفي الحدود التي يسمح بها القانون، لا تتحمل SY-ONE مسؤولية عواقب إعداد غير مناسب، أو جهاز مضبوط ضبطًا خاطئًا، أو انقطاع ناتج عن خدمة خارجية.</p>
+      </section>
+
+      <section aria-labelledby="tos-ar-10">
+        <h2 id="tos-ar-10">١٠. المحتوى والملكية</h2>
+        <p>التطبيق وواجهته ونصوصه ورسومه ملك لشركة SY-ONE. أما نص القرآن الكريم وترجمات معانيه والنصوص الأخرى المنقولة فمأخوذة من مصادر محددة في التطبيق، وفق تراخيصها الخاصة. ويمكنك مشاركة المحتوى المعدّ لذلك عبر زر «مشاركة». وأي نسخ أو استخراج آخر من التطبيق يتطلب موافقتنا الكتابية.</p>
+      </section>
+
+      <section aria-labelledby="tos-ar-11">
+        <h2 id="tos-ar-11">١١. بياناتك</h2>
+        <p>تصف <a href="/privacy">سياسة الخصوصية</a> طريقة معالجة aljana لبياناتك.</p>
+      </section>
+
+      <section aria-labelledby="tos-ar-12">
+        <h2 id="tos-ar-12">١٢. شروط المتاجر</h2>
+        <p>إذا نزّلت aljana من App Store، تسري أيضًا <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">اتفاقية الترخيص القياسية من Apple</a>. وإذا نزّلته من Google Play، تسري أيضًا شروط خدمة Google Play. وعند التعارض في ما يخص عملية شراء، تُقدَّم شروط متجرك.</p>
+      </section>
+
+      <section aria-labelledby="tos-ar-13">
+        <h2 id="tos-ar-13">١٣. التعديلات والقانون الواجب التطبيق</h2>
+        <p>يجوز لنا تعديل هذه الشروط، وعندئذ يُحدَّث التاريخ في أعلى الصفحة، ونُعلمك في التطبيق بأي تغيير مهم. وتخضع هذه الشروط للقانون الفرنسي، دون أن يحرمك ذلك من الحماية التي تمنحك إياها القواعد الآمرة في بلد إقامتك. وإن واجهتك صعوبة، فراسلنا أولًا: فنحن نسعى دائمًا إلى حل ودّي.</p>
+      </section>
+
+      <section aria-labelledby="tos-ar-14">
+        <h2 id="tos-ar-14">١٤. التواصل</h2>
+        <address class="pp-contact">
+          <strong>aljana</strong><br>
+          الناشر: SY-ONE SAS<br>
+          <bdi dir="ltr">14 rue de la Viala, 03300 Creuzier-le-Vieux, France</bdi><br>
+          <bdi dir="ltr">SIREN 821 628 708</bdi><br>
+          البريد الإلكتروني: <a href="mailto:contact@aljana.app">contact@aljana.app</a><br>
+          الموقع: <a href="https://aljana.app">https://aljana.app</a>
+        </address>
+      </section>
+    </article>
+
+    <article class="pp-doc" id="doc-es" lang="es" dir="ltr" data-lang="es" aria-labelledby="tos-title-es">
+      <header class="pp-doc__head">
+        <h1 id="tos-title-es">Condiciones de uso</h1>
+        <p class="pp-updated">Última actualización: <time datetime="2026-10-20">20 de octubre de 2026</time></p>
+        <p class="pp-note">Esta versión en español es una traducción ofrecida para facilitar la lectura. En caso de discrepancia, prevalece la versión francesa.</p>
+        <p class="pp-intro">Estas condiciones se aplican a la aplicación aljana y a su oferta Premium. Al utilizar aljana, usted las acepta. Están escritas para ser leídas: si algún punto no está claro, escríbanos.</p>
+      </header>
+
+      <section aria-labelledby="tos-es-1">
+        <h2 id="tos-es-1">1. El editor</h2>
+        <p>aljana es editada por SY-ONE SAS, sociedad por acciones simplificada de derecho francés (domicilio social: 14 rue de la Viala, 03300 Creuzier-le-Vieux, Francia; SIREN 821 628 708). Para contactarnos: <a href="mailto:contact@aljana.app">contact@aljana.app</a>.</p>
+      </section>
+
+      <section aria-labelledby="tos-es-2">
+        <h2 id="tos-es-2">2. El servicio</h2>
+        <p>aljana calcula los horarios de oración, la Qibla, el cielo, la Luna, el Hilal y los eclipses, y da acceso al Muṣḥaf y a textos de recuerdo. Una parte de la aplicación es gratuita, sin límite de tiempo, en particular el Corán completo y los horarios de oración del día. Las demás funciones están reservadas a aljana Premium; se indican en la aplicación.</p>
+        <p>aljana es una herramienta de cálculo y de lectura. Los horarios, las previsiones del creciente y los eclipses son cálculos astronómicos; aljana no emite ninguna opinión religiosa ni anuncia el comienzo de los meses. Las opiniones citadas proceden de fuentes identificadas en la aplicación. Para cualquier decisión religiosa, consulte a los sabios y a las instituciones de su comunidad.</p>
+      </section>
+
+      <section aria-labelledby="tos-es-3">
+        <h2 id="tos-es-3">3. Las ofertas Premium</h2>
+        <ul>
+          <li><strong>Suscripción mensual</strong>: un mes de acceso, renovado automáticamente cada mes.</li>
+          <li><strong>Suscripción anual</strong>: un año de acceso, renovado automáticamente cada año.</li>
+          <li><strong>Pase de 1 mes</strong>: un mes de acceso, sin renovación automática. Puede comprar uno nuevo cuando lo desee.</li>
+        </ul>
+        <p>El precio de cada oferta se muestra en la aplicación, en la moneda de su país, antes de cualquier compra. Puede variar de un país a otro. Si se propone una oferta de prueba o de lanzamiento, sus condiciones se muestran antes de la compra.</p>
+      </section>
+
+      <section aria-labelledby="tos-es-4">
+        <h2 id="tos-es-4">4. Pago y renovación</h2>
+        <p>Las compras se realizan únicamente a través del App Store de Apple o de Google Play, con la cuenta y los medios de pago de su tienda. El pago se carga en esa cuenta al confirmar la compra.</p>
+        <p>Una suscripción se renueva automáticamente por el mismo periodo, al precio vigente, salvo que la cancele al menos 24 horas antes del final del periodo en curso. La renovación se cobra en las 24 horas anteriores al final del periodo. Si el precio cambia, su tienda le avisa según sus propias normas.</p>
+      </section>
+
+      <section aria-labelledby="tos-es-5">
+        <h2 id="tos-es-5">5. Cancelación</h2>
+        <p>Puede cancelar en cualquier momento, en los ajustes de su tienda:</p>
+        <ul>
+          <li>en iPhone y iPad: Ajustes, su nombre y luego Suscripciones, o <a href="https://apps.apple.com/account/subscriptions">apps.apple.com/account/subscriptions</a>;</li>
+          <li>en Android: Google Play, su perfil, Pagos y suscripciones y luego Suscripciones, o <a href="https://play.google.com/store/account/subscriptions">play.google.com/store/account/subscriptions</a>.</li>
+        </ul>
+        <p>La cancelación detiene la renovación. Conserva el acceso a Premium hasta el final del periodo ya pagado. Eliminar la aplicación no cancela la suscripción.</p>
+      </section>
+
+      <section aria-labelledby="tos-es-6">
+        <h2 id="tos-es-6">6. Reembolso</h2>
+        <p>Los pagos los cobran Apple o Google, que tramitan las solicitudes de reembolso según sus propias condiciones:</p>
+        <ul>
+          <li>App Store: <a href="https://reportaproblem.apple.com">reportaproblem.apple.com</a>;</li>
+          <li>Google Play: <a href="https://support.google.com/googleplay/answer/2479637">support.google.com/googleplay/answer/2479637</a>.</li>
+        </ul>
+        <p>Premium da acceso a un contenido digital desde la compra. Cuando la ley de su país prevé un derecho de desistimiento, su ejercicio sigue las normas de su tienda. Nada en estas condiciones reduce los derechos que la ley le reconoce como consumidor.</p>
+      </section>
+
+      <section aria-labelledby="tos-es-7">
+        <h2 id="tos-es-7">7. Recuperar sus compras</h2>
+        <p>aljana no le pide ninguna cuenta. Su compra está vinculada a la cuenta de su tienda. En un dispositivo nuevo, o tras una reinstalación, inicie sesión con la misma cuenta y toque «Restaurar compras» en la pantalla Premium. Una compra realizada en el App Store no puede transferirse a Google Play, ni a la inversa.</p>
+      </section>
+
+      <section aria-labelledby="tos-es-8">
+        <h2 id="tos-es-8">8. Evolución del servicio</h2>
+        <p>aljana evoluciona: pueden añadirse, mejorarse o sustituirse funciones. Si una función Premium importante tuviera que retirarse durante un periodo ya pagado, se lo comunicaríamos en la aplicación. El servicio puede interrumpirse un momento por mantenimiento o a causa de un servicio de terceros (tiempo meteorológico, descarga de las páginas del Muṣḥaf); los cálculos principales siguen disponibles sin conexión.</p>
+      </section>
+
+      <section aria-labelledby="tos-es-9">
+        <h2 id="tos-es-9">9. Responsabilidad</h2>
+        <p>Ponemos el mayor cuidado en la exactitud de los cálculos, verificados con referencias astronómicas públicas. Sin embargo, los resultados dependen del lugar, de la hora y de los ajustes de su dispositivo, así como del método de cálculo elegido. En la medida en que lo permita la ley, SY-ONE no es responsable de las consecuencias de un ajuste inadecuado, de un dispositivo mal configurado o de una interrupción debida a un servicio de terceros.</p>
+      </section>
+
+      <section aria-labelledby="tos-es-10">
+        <h2 id="tos-es-10">10. Contenidos y propiedad</h2>
+        <p>La aplicación, su interfaz, sus textos y sus ilustraciones pertenecen a SY-ONE. El texto del Corán, las traducciones de sus significados y los demás textos citados proceden de fuentes identificadas en la aplicación, bajo sus propias licencias. Puede compartir los contenidos previstos para ello con el botón «Compartir». Cualquier otra reproducción o extracción de la aplicación requiere nuestro acuerdo por escrito.</p>
+      </section>
+
+      <section aria-labelledby="tos-es-11">
+        <h2 id="tos-es-11">11. Sus datos</h2>
+        <p>La forma en que aljana trata sus datos se describe en la <a href="/privacy">política de privacidad</a>.</p>
+      </section>
+
+      <section aria-labelledby="tos-es-12">
+        <h2 id="tos-es-12">12. Condiciones de las tiendas</h2>
+        <p>Si ha descargado aljana en el App Store, también se aplica el <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">contrato de licencia estándar de Apple</a>. Si la ha descargado en Google Play, también se aplican las condiciones de servicio de Google Play. En caso de contradicción sobre una compra, prevalecen las condiciones de su tienda.</p>
+      </section>
+
+      <section aria-labelledby="tos-es-13">
+        <h2 id="tos-es-13">13. Modificaciones y ley aplicable</h2>
+        <p>Podemos modificar estas condiciones; en ese caso se actualiza la fecha de la parte superior de la página y se le indica en la aplicación cualquier cambio importante. Estas condiciones se rigen por el derecho francés, sin privarle de la protección que le conceden las normas imperativas del país en el que reside. En caso de dificultad, escríbanos primero: siempre buscamos una solución amistosa.</p>
+      </section>
+
+      <section aria-labelledby="tos-es-14">
+        <h2 id="tos-es-14">14. Contacto</h2>
+        <address class="pp-contact">
+          <strong>aljana</strong><br>
+          Editor: SY-ONE SAS<br>
+          14 rue de la Viala, 03300 Creuzier-le-Vieux, Francia<br>SIREN 821 628 708<br>
+          Correo electrónico: <a href="mailto:contact@aljana.app">contact@aljana.app</a><br>
+          Sitio web: <a href="https://aljana.app">https://aljana.app</a>
+        </address>
+      </section>
+    </article>
+
+    <article class="pp-doc" id="doc-de" lang="de" dir="ltr" data-lang="de" aria-labelledby="tos-title-de">
+      <header class="pp-doc__head">
+        <h1 id="tos-title-de">Nutzungsbedingungen</h1>
+        <p class="pp-updated">Zuletzt aktualisiert: <time datetime="2026-10-20">20. Oktober 2026</time></p>
+        <p class="pp-note">Diese deutsche Fassung ist eine Übersetzung zur besseren Lesbarkeit. Bei Abweichungen ist die französische Fassung maßgeblich.</p>
+        <p class="pp-intro">Diese Bedingungen gelten für die App aljana und ihr Premium-Angebot. Indem Sie aljana nutzen, akzeptieren Sie sie. Sie sind so geschrieben, dass man sie lesen kann: Wenn etwas unklar ist, schreiben Sie uns.</p>
+      </header>
+
+      <section aria-labelledby="tos-de-1">
+        <h2 id="tos-de-1">1. Herausgeber</h2>
+        <p>aljana wird herausgegeben von SY-ONE SAS, einer vereinfachten Aktiengesellschaft nach französischem Recht (Sitz: 14 rue de la Viala, 03300 Creuzier-le-Vieux, Frankreich; SIREN 821 628 708). Kontakt: <a href="mailto:contact@aljana.app">contact@aljana.app</a>.</p>
+      </section>
+
+      <section aria-labelledby="tos-de-2">
+        <h2 id="tos-de-2">2. Der Dienst</h2>
+        <p>aljana berechnet die Gebetszeiten, die Qibla, den Himmel, den Mond, den Hilal und die Finsternisse und bietet Zugang zum Muṣḥaf und zu Texten des Gedenkens. Ein Teil der App ist kostenlos und zeitlich unbegrenzt, insbesondere der vollständige Koran und die Gebetszeiten des Tages. Die übrigen Funktionen sind aljana Premium vorbehalten; sie sind in der App gekennzeichnet.</p>
+        <p>aljana ist ein Werkzeug zum Berechnen und Lesen. Die Gebetszeiten, die Vorhersagen der Mondsichel und die Finsternisse sind astronomische Berechnungen; aljana gibt keine religiösen Gutachten ab und verkündet nicht den Beginn der Monate. Die zitierten Ansichten stammen aus Quellen, die in der App angegeben sind. Für jede religiöse Entscheidung wenden Sie sich bitte an die Gelehrten und Gremien Ihrer Gemeinschaft.</p>
+      </section>
+
+      <section aria-labelledby="tos-de-3">
+        <h2 id="tos-de-3">3. Die Premium-Angebote</h2>
+        <ul>
+          <li><strong>Monatsabo</strong>: ein Monat Zugang, der sich jeden Monat automatisch verlängert.</li>
+          <li><strong>Jahresabo</strong>: ein Jahr Zugang, das sich jedes Jahr automatisch verlängert.</li>
+          <li><strong>1-Monats-Pass</strong>: ein Monat Zugang ohne automatische Verlängerung. Sie können jederzeit einen neuen kaufen.</li>
+        </ul>
+        <p>Der Preis jedes Angebots wird vor dem Kauf in der App angezeigt, in der Währung Ihres Landes. Er kann von Land zu Land unterschiedlich sein. Wird ein Probe- oder Einführungsangebot angeboten, werden seine Bedingungen vor dem Kauf angezeigt.</p>
+      </section>
+
+      <section aria-labelledby="tos-de-4">
+        <h2 id="tos-de-4">4. Zahlung und Verlängerung</h2>
+        <p>Käufe erfolgen ausschließlich über den App Store von Apple oder über Google Play, mit dem Konto und den Zahlungsmitteln Ihres Stores. Die Zahlung wird diesem Konto bei der Bestätigung des Kaufs belastet.</p>
+        <p>Ein Abonnement verlängert sich automatisch um denselben Zeitraum zum dann gültigen Preis, sofern Sie es nicht spätestens 24 Stunden vor Ende des laufenden Zeitraums kündigen. Die Verlängerung wird innerhalb der 24 Stunden vor Ende des Zeitraums belastet. Ändert sich der Preis, informiert Sie Ihr Store nach seinen eigenen Regeln.</p>
+      </section>
+
+      <section aria-labelledby="tos-de-5">
+        <h2 id="tos-de-5">5. Kündigung</h2>
+        <p>Sie können jederzeit in den Einstellungen Ihres Stores kündigen:</p>
+        <ul>
+          <li>auf iPhone und iPad: Einstellungen, Ihr Name, dann Abonnements, oder <a href="https://apps.apple.com/account/subscriptions">apps.apple.com/account/subscriptions</a>;</li>
+          <li>auf Android: Google Play, Ihr Profil, Zahlungen und Abos, dann Abos, oder <a href="https://play.google.com/store/account/subscriptions">play.google.com/store/account/subscriptions</a>.</li>
+        </ul>
+        <p>Die Kündigung beendet die Verlängerung. Sie behalten den Zugang zu Premium bis zum Ende des bereits bezahlten Zeitraums. Das Löschen der App kündigt das Abonnement nicht.</p>
+      </section>
+
+      <section aria-labelledby="tos-de-6">
+        <h2 id="tos-de-6">6. Erstattung</h2>
+        <p>Die Zahlungen werden von Apple oder Google eingezogen, die Erstattungsanträge nach ihren eigenen Bedingungen bearbeiten:</p>
+        <ul>
+          <li>App Store: <a href="https://reportaproblem.apple.com">reportaproblem.apple.com</a>;</li>
+          <li>Google Play: <a href="https://support.google.com/googleplay/answer/2479637">support.google.com/googleplay/answer/2479637</a>.</li>
+        </ul>
+        <p>Premium gewährt ab dem Kauf Zugang zu digitalen Inhalten. Sieht das Recht Ihres Landes ein Widerrufsrecht vor, richtet sich dessen Ausübung nach den Regeln Ihres Stores. Nichts in diesen Bedingungen schränkt die Rechte ein, die Ihnen das Gesetz als Verbraucher gewährt.</p>
+      </section>
+
+      <section aria-labelledby="tos-de-7">
+        <h2 id="tos-de-7">7. Käufe wiederherstellen</h2>
+        <p>aljana verlangt kein Konto. Ihr Kauf ist mit dem Konto Ihres Stores verknüpft. Melden Sie sich auf einem neuen Gerät oder nach einer Neuinstallation mit demselben Konto an und tippen Sie im Premium-Bildschirm auf „Käufe wiederherstellen“. Ein im App Store getätigter Kauf kann nicht zu Google Play übertragen werden und umgekehrt.</p>
+      </section>
+
+      <section aria-labelledby="tos-de-8">
+        <h2 id="tos-de-8">8. Weiterentwicklung des Dienstes</h2>
+        <p>aljana entwickelt sich weiter: Funktionen können hinzugefügt, verbessert oder ersetzt werden. Sollte eine wichtige Premium-Funktion während eines bereits bezahlten Zeitraums entfallen, würden wir Sie in der App darüber informieren. Der Dienst kann kurzzeitig wegen Wartung oder wegen eines Drittdienstes (Wetter, Herunterladen der Seiten des Muṣḥaf) unterbrochen sein; die wichtigsten Berechnungen bleiben offline verfügbar.</p>
+      </section>
+
+      <section aria-labelledby="tos-de-9">
+        <h2 id="tos-de-9">9. Haftung</h2>
+        <p>Wir verwenden größte Sorgfalt auf die Genauigkeit der Berechnungen, die anhand öffentlicher astronomischer Referenzen geprüft werden. Die Ergebnisse hängen jedoch vom Ort, von der Uhrzeit und von den Einstellungen Ihres Geräts sowie von der gewählten Berechnungsmethode ab. Soweit gesetzlich zulässig, haftet SY-ONE nicht für die Folgen einer ungeeigneten Einstellung, eines falsch eingestellten Geräts oder einer Unterbrechung durch einen Drittdienst.</p>
+      </section>
+
+      <section aria-labelledby="tos-de-10">
+        <h2 id="tos-de-10">10. Inhalte und Eigentum</h2>
+        <p>Die App, ihre Oberfläche, ihre Texte und ihre Illustrationen gehören SY-ONE. Der Text des Korans, die Übersetzungen seiner Bedeutungen und die übrigen zitierten Texte stammen aus Quellen, die in der App angegeben sind, unter deren eigenen Lizenzen. Sie dürfen die dafür vorgesehenen Inhalte über die Schaltfläche „Teilen“ weitergeben. Jede andere Vervielfältigung oder Entnahme aus der App bedarf unserer schriftlichen Zustimmung.</p>
+      </section>
+
+      <section aria-labelledby="tos-de-11">
+        <h2 id="tos-de-11">11. Ihre Daten</h2>
+        <p>Wie aljana Ihre Daten verarbeitet, ist in der <a href="/privacy">Datenschutzerklärung</a> beschrieben.</p>
+      </section>
+
+      <section aria-labelledby="tos-de-12">
+        <h2 id="tos-de-12">12. Bedingungen der Stores</h2>
+        <p>Wenn Sie aljana aus dem App Store geladen haben, gilt zusätzlich der <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Standard-Lizenzvertrag von Apple</a>. Wenn Sie die App aus Google Play geladen haben, gelten zusätzlich die Nutzungsbedingungen von Google Play. Bei Widersprüchen in Bezug auf einen Kauf haben die Bedingungen Ihres Stores Vorrang.</p>
+      </section>
+
+      <section aria-labelledby="tos-de-13">
+        <h2 id="tos-de-13">13. Änderungen und anwendbares Recht</h2>
+        <p>Wir können diese Bedingungen ändern; das Datum oben auf der Seite wird dann aktualisiert, und auf eine wesentliche Änderung weisen wir Sie in der App hin. Diese Bedingungen unterliegen französischem Recht, ohne Ihnen den Schutz zu entziehen, den Ihnen die zwingenden Vorschriften Ihres Wohnsitzlandes gewähren. Bei Schwierigkeiten schreiben Sie uns bitte zuerst: Wir suchen immer eine gütliche Lösung.</p>
+      </section>
+
+      <section aria-labelledby="tos-de-14">
+        <h2 id="tos-de-14">14. Kontakt</h2>
+        <address class="pp-contact">
+          <strong>aljana</strong><br>
+          Herausgeber: SY-ONE SAS<br>
+          14 rue de la Viala, 03300 Creuzier-le-Vieux, Frankreich<br>SIREN 821 628 708<br>
+          E-Mail: <a href="mailto:contact@aljana.app">contact@aljana.app</a><br>
+          Website: <a href="https://aljana.app">https://aljana.app</a>
+        </address>
+      </section>
+    </article>
+
+    <article class="pp-doc" id="doc-tr" lang="tr" dir="ltr" data-lang="tr" aria-labelledby="tos-title-tr">
+      <header class="pp-doc__head">
+        <h1 id="tos-title-tr">Kullanım koşulları</h1>
+        <p class="pp-updated">Son güncelleme: <time datetime="2026-10-20">20 Ekim 2026</time></p>
+        <p class="pp-note">Bu Türkçe metin, okumayı kolaylaştırmak için sunulan bir çeviridir. Farklılık olması halinde Fransızca metin esas alınır.</p>
+        <p class="pp-intro">Bu koşullar aljana uygulaması ve Premium teklifi için geçerlidir. aljana’yı kullanarak bunları kabul etmiş olursunuz. Okunmak için yazılmıştır: bir nokta açık değilse bize yazın.</p>
+      </header>
+
+      <section aria-labelledby="tos-tr-1">
+        <h2 id="tos-tr-1">1. Yayıncı</h2>
+        <p>aljana, Fransız hukukuna tabi bir basitleştirilmiş anonim şirket olan SY-ONE SAS tarafından yayımlanır (merkez: 14 rue de la Viala, 03300 Creuzier-le-Vieux, Fransa; SIREN 821 628 708). Bize ulaşmak için: <a href="mailto:contact@aljana.app">contact@aljana.app</a>.</p>
+      </section>
+
+      <section aria-labelledby="tos-tr-2">
+        <h2 id="tos-tr-2">2. Hizmet</h2>
+        <p>aljana namaz vakitlerini, kıbleyi, gökyüzünü, Ay’ı, hilali ve tutulmaları hesaplar; Mushaf’a ve zikir metinlerine erişim sağlar. Uygulamanın bir bölümü süre sınırı olmaksızın ücretsizdir; tam Kur’an ve günün namaz vakitleri bunlar arasındadır. Diğer işlevler aljana Premium’a ayrılmıştır ve uygulamada belirtilmiştir.</p>
+        <p>aljana bir hesaplama ve okuma aracıdır. Vakitler, hilal tahminleri ve tutulmalar astronomik hesaplamalardır; aljana hiçbir dini görüş bildirmez ve ayların başlangıcını ilan etmez. Aktarılan görüşler uygulamada belirtilen kaynaklardan gelir. Her türlü dini karar için topluluğunuzun âlimlerine ve kurumlarına başvurun.</p>
+      </section>
+
+      <section aria-labelledby="tos-tr-3">
+        <h2 id="tos-tr-3">3. Premium teklifleri</h2>
+        <ul>
+          <li><strong>Aylık abonelik</strong>: bir aylık erişim, her ay otomatik olarak yenilenir.</li>
+          <li><strong>Yıllık abonelik</strong>: bir yıllık erişim, her yıl otomatik olarak yenilenir.</li>
+          <li><strong>1 aylık geçiş</strong>: otomatik yenilemesiz bir aylık erişim. İstediğiniz zaman yenisini satın alabilirsiniz.</li>
+        </ul>
+        <p>Her teklifin fiyatı, satın almadan önce uygulamada ülkenizin para biriminde gösterilir. Fiyat ülkeden ülkeye değişebilir. Bir deneme veya lansman teklifi sunulursa, koşulları satın almadan önce gösterilir.</p>
+      </section>
+
+      <section aria-labelledby="tos-tr-4">
+        <h2 id="tos-tr-4">4. Ödeme ve yenileme</h2>
+        <p>Satın alımlar yalnızca Apple App Store veya Google Play üzerinden, mağazanızın hesabı ve ödeme yöntemleriyle yapılır. Ödeme, satın alma onaylandığında bu hesaptan tahsil edilir.</p>
+        <p>Bir abonelik, mevcut dönemin bitiminden en az 24 saat önce iptal etmediğiniz sürece, aynı süre için ve geçerli fiyattan otomatik olarak yenilenir. Yenileme ücreti dönemin bitiminden önceki 24 saat içinde tahsil edilir. Fiyat değişirse mağazanız sizi kendi kurallarına göre bilgilendirir.</p>
+      </section>
+
+      <section aria-labelledby="tos-tr-5">
+        <h2 id="tos-tr-5">5. İptal</h2>
+        <p>Mağazanızın ayarlarından istediğiniz zaman iptal edebilirsiniz:</p>
+        <ul>
+          <li>iPhone ve iPad’de: Ayarlar, adınız, ardından Abonelikler veya <a href="https://apps.apple.com/account/subscriptions">apps.apple.com/account/subscriptions</a>;</li>
+          <li>Android’de: Google Play, profiliniz, Ödemeler ve abonelikler, ardından Abonelikler veya <a href="https://play.google.com/store/account/subscriptions">play.google.com/store/account/subscriptions</a>.</li>
+        </ul>
+        <p>İptal, yenilemeyi durdurur. Premium erişiminiz, ödenmiş dönemin sonuna kadar devam eder. Uygulamayı silmek aboneliği iptal etmez.</p>
+      </section>
+
+      <section aria-labelledby="tos-tr-6">
+        <h2 id="tos-tr-6">6. İade</h2>
+        <p>Ödemeleri Apple veya Google tahsil eder ve iade taleplerini kendi koşullarına göre işler:</p>
+        <ul>
+          <li>App Store: <a href="https://reportaproblem.apple.com">reportaproblem.apple.com</a>;</li>
+          <li>Google Play: <a href="https://support.google.com/googleplay/answer/2479637">support.google.com/googleplay/answer/2479637</a>.</li>
+        </ul>
+        <p>Premium, satın alındığı andan itibaren dijital içeriğe erişim sağlar. Ülkenizin yasası bir cayma hakkı öngörüyorsa, bu hakkın kullanımı mağazanızın kurallarına tabidir. Bu koşullardaki hiçbir hüküm, yasanın size tüketici olarak tanıdığı hakları azaltmaz.</p>
+      </section>
+
+      <section aria-labelledby="tos-tr-7">
+        <h2 id="tos-tr-7">7. Satın alımlarınızı geri almak</h2>
+        <p>aljana sizden hesap istemez. Satın alımınız mağazanızın hesabına bağlıdır. Yeni bir cihazda veya yeniden yüklemeden sonra aynı hesapla oturum açın ve Premium ekranında “Satın alımları geri yükle”ye dokunun. App Store’da yapılan bir satın alım Google Play’e aktarılamaz; bunun tersi de geçerlidir.</p>
+      </section>
+
+      <section aria-labelledby="tos-tr-8">
+        <h2 id="tos-tr-8">8. Hizmetin gelişimi</h2>
+        <p>aljana gelişir: işlevler eklenebilir, iyileştirilebilir veya değiştirilebilir. Önemli bir Premium işlevin, ücreti ödenmiş bir dönem içinde kaldırılması gerekirse sizi uygulamada bilgilendiririz. Hizmet, bakım nedeniyle veya bir üçüncü taraf hizmeti yüzünden (hava durumu, Mushaf sayfalarının indirilmesi) kısa bir süre kesintiye uğrayabilir; temel hesaplamalar çevrimdışı kullanılabilir kalır.</p>
+      </section>
+
+      <section aria-labelledby="tos-tr-9">
+        <h2 id="tos-tr-9">9. Sorumluluk</h2>
+        <p>Kamuya açık astronomik referanslarla doğrulanan hesaplamaların doğruluğuna büyük özen gösteririz. Ancak sonuçlar cihazınızın yerine, saatine ve ayarlarına, ayrıca seçilen hesaplama yöntemine bağlıdır. Yasanın izin verdiği ölçüde SY-ONE, uygun olmayan bir ayarın, yanlış ayarlanmış bir cihazın veya bir üçüncü taraf hizmetinden kaynaklanan bir kesintinin sonuçlarından sorumlu değildir.</p>
+      </section>
+
+      <section aria-labelledby="tos-tr-10">
+        <h2 id="tos-tr-10">10. İçerikler ve mülkiyet</h2>
+        <p>Uygulama, arayüzü, metinleri ve görselleri SY-ONE’a aittir. Kur’an metni, anlamlarının çevirileri ve aktarılan diğer metinler, uygulamada belirtilen kaynaklardan kendi lisansları altında gelir. Paylaşılmak üzere tasarlanan içerikleri “Paylaş” düğmesiyle paylaşabilirsiniz. Uygulamadan başka her türlü çoğaltma veya veri çekme yazılı iznimizi gerektirir.</p>
+      </section>
+
+      <section aria-labelledby="tos-tr-11">
+        <h2 id="tos-tr-11">11. Verileriniz</h2>
+        <p>aljana’nın verilerinizi nasıl işlediği <a href="/privacy">gizlilik politikasında</a> açıklanmıştır.</p>
+      </section>
+
+      <section aria-labelledby="tos-tr-12">
+        <h2 id="tos-tr-12">12. Mağaza koşulları</h2>
+        <p>aljana’yı App Store’dan indirdiyseniz <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Apple’ın standart lisans sözleşmesi</a> de geçerlidir. Google Play’den indirdiyseniz Google Play hizmet şartları da geçerlidir. Bir satın alımla ilgili çelişki durumunda mağazanızın koşulları önceliklidir.</p>
+      </section>
+
+      <section aria-labelledby="tos-tr-13">
+        <h2 id="tos-tr-13">13. Değişiklikler ve uygulanacak hukuk</h2>
+        <p>Bu koşulları değiştirebiliriz; bu durumda sayfanın üstündeki tarih güncellenir ve önemli bir değişiklik size uygulamada bildirilir. Bu koşullar, ikamet ettiğiniz ülkenin emredici kurallarının size sağladığı korumadan sizi yoksun bırakmaksızın Fransız hukukuna tabidir. Bir sorun yaşarsanız önce bize yazın: her zaman dostane bir çözüm ararız.</p>
+      </section>
+
+      <section aria-labelledby="tos-tr-14">
+        <h2 id="tos-tr-14">14. İletişim</h2>
+        <address class="pp-contact">
+          <strong>aljana</strong><br>
+          Yayıncı: SY-ONE SAS<br>
+          14 rue de la Viala, 03300 Creuzier-le-Vieux, Fransa<br>SIREN 821 628 708<br>
+          E-posta: <a href="mailto:contact@aljana.app">contact@aljana.app</a><br>
+          Site: <a href="https://aljana.app">https://aljana.app</a>
+        </address>
+      </section>
+    </article>
+
+    <article class="pp-doc" id="doc-id" lang="id" dir="ltr" data-lang="id" aria-labelledby="tos-title-id">
+      <header class="pp-doc__head">
+        <h1 id="tos-title-id">Ketentuan penggunaan</h1>
+        <p class="pp-updated">Terakhir diperbarui: <time datetime="2026-10-20">20 Oktober 2026</time></p>
+        <p class="pp-note">Versi bahasa Indonesia ini adalah terjemahan untuk memudahkan pembacaan. Jika terdapat perbedaan, versi bahasa Prancis yang berlaku.</p>
+        <p class="pp-intro">Ketentuan ini berlaku untuk aplikasi aljana dan penawaran Premium-nya. Dengan menggunakan aljana, Anda menyetujuinya. Ketentuan ini ditulis untuk dibaca: jika ada hal yang kurang jelas, tulislah kepada kami.</p>
+      </header>
+
+      <section aria-labelledby="tos-id-1">
+        <h2 id="tos-id-1">1. Penerbit</h2>
+        <p>aljana diterbitkan oleh SY-ONE SAS, perseroan saham sederhana berdasarkan hukum Prancis (kantor pusat: 14 rue de la Viala, 03300 Creuzier-le-Vieux, Prancis; SIREN 821 628 708). Untuk menghubungi kami: <a href="mailto:contact@aljana.app">contact@aljana.app</a>.</p>
+      </section>
+
+      <section aria-labelledby="tos-id-2">
+        <h2 id="tos-id-2">2. Layanan</h2>
+        <p>aljana menghitung waktu salat, arah kiblat, langit, Bulan, hilal, dan gerhana, serta memberikan akses ke Mushaf dan teks-teks zikir. Sebagian aplikasi gratis tanpa batas waktu, termasuk Al-Qur’an lengkap dan waktu salat hari ini. Fungsi lainnya khusus untuk aljana Premium dan ditandai di dalam aplikasi.</p>
+        <p>aljana adalah alat untuk menghitung dan membaca. Waktu salat, perkiraan hilal, dan gerhana adalah perhitungan astronomis; aljana tidak mengeluarkan pendapat keagamaan dan tidak mengumumkan awal bulan. Pendapat yang dikutip berasal dari sumber yang disebutkan di dalam aplikasi. Untuk setiap keputusan keagamaan, rujuklah para ulama dan lembaga di komunitas Anda.</p>
+      </section>
+
+      <section aria-labelledby="tos-id-3">
+        <h2 id="tos-id-3">3. Penawaran Premium</h2>
+        <ul>
+          <li><strong>Langganan bulanan</strong>: akses selama satu bulan, diperpanjang otomatis setiap bulan.</li>
+          <li><strong>Langganan tahunan</strong>: akses selama satu tahun, diperpanjang otomatis setiap tahun.</li>
+          <li><strong>Pass 1 bulan</strong>: akses selama satu bulan tanpa perpanjangan otomatis. Anda dapat membeli yang baru kapan saja.</li>
+        </ul>
+        <p>Harga setiap penawaran ditampilkan di aplikasi dalam mata uang negara Anda sebelum pembelian. Harga dapat berbeda dari satu negara ke negara lain. Jika ada penawaran uji coba atau peluncuran, ketentuannya ditampilkan sebelum pembelian.</p>
+      </section>
+
+      <section aria-labelledby="tos-id-4">
+        <h2 id="tos-id-4">4. Pembayaran dan perpanjangan</h2>
+        <p>Pembelian hanya dilakukan melalui App Store milik Apple atau Google Play, dengan akun dan metode pembayaran toko Anda. Pembayaran ditagihkan ke akun tersebut saat pembelian dikonfirmasi.</p>
+        <p>Langganan diperpanjang otomatis untuk jangka waktu yang sama dengan harga yang berlaku, kecuali Anda membatalkannya paling lambat 24 jam sebelum berakhirnya periode yang sedang berjalan. Biaya perpanjangan ditagihkan dalam 24 jam sebelum periode berakhir. Jika harga berubah, toko Anda akan memberi tahu sesuai aturannya sendiri.</p>
+      </section>
+
+      <section aria-labelledby="tos-id-5">
+        <h2 id="tos-id-5">5. Pembatalan</h2>
+        <p>Anda dapat membatalkan kapan saja di pengaturan toko Anda:</p>
+        <ul>
+          <li>di iPhone dan iPad: Pengaturan, nama Anda, lalu Langganan, atau <a href="https://apps.apple.com/account/subscriptions">apps.apple.com/account/subscriptions</a>;</li>
+          <li>di Android: Google Play, profil Anda, Pembayaran dan langganan, lalu Langganan, atau <a href="https://play.google.com/store/account/subscriptions">play.google.com/store/account/subscriptions</a>.</li>
+        </ul>
+        <p>Pembatalan menghentikan perpanjangan. Anda tetap memiliki akses ke Premium sampai akhir periode yang sudah dibayar. Menghapus aplikasi tidak membatalkan langganan.</p>
+      </section>
+
+      <section aria-labelledby="tos-id-6">
+        <h2 id="tos-id-6">6. Pengembalian dana</h2>
+        <p>Pembayaran diterima oleh Apple atau Google, yang menangani permintaan pengembalian dana sesuai ketentuan mereka sendiri:</p>
+        <ul>
+          <li>App Store: <a href="https://reportaproblem.apple.com">reportaproblem.apple.com</a>;</li>
+          <li>Google Play: <a href="https://support.google.com/googleplay/answer/2479637">support.google.com/googleplay/answer/2479637</a>.</li>
+        </ul>
+        <p>Premium memberikan akses ke konten digital sejak pembelian. Jika hukum negara Anda menetapkan hak pembatalan, penggunaannya mengikuti aturan toko Anda. Tidak ada satu pun dalam ketentuan ini yang mengurangi hak yang diberikan hukum kepada Anda sebagai konsumen.</p>
+      </section>
+
+      <section aria-labelledby="tos-id-7">
+        <h2 id="tos-id-7">7. Memulihkan pembelian Anda</h2>
+        <p>aljana tidak meminta Anda membuat akun. Pembelian Anda terhubung dengan akun toko Anda. Di perangkat baru atau setelah pemasangan ulang, masuklah dengan akun yang sama lalu ketuk “Pulihkan pembelian” di layar Premium. Pembelian yang dilakukan di App Store tidak dapat dipindahkan ke Google Play, begitu pula sebaliknya.</p>
+      </section>
+
+      <section aria-labelledby="tos-id-8">
+        <h2 id="tos-id-8">8. Perkembangan layanan</h2>
+        <p>aljana terus berkembang: fungsi dapat ditambahkan, diperbaiki, atau diganti. Jika fungsi Premium yang penting terpaksa dihapus selama periode yang sudah dibayar, kami akan memberi tahu Anda di dalam aplikasi. Layanan dapat terhenti sebentar karena pemeliharaan atau karena layanan pihak ketiga (cuaca, pengunduhan halaman Mushaf); perhitungan utama tetap tersedia secara luring.</p>
+      </section>
+
+      <section aria-labelledby="tos-id-9">
+        <h2 id="tos-id-9">9. Tanggung jawab</h2>
+        <p>Kami sangat memperhatikan ketepatan perhitungan, yang diverifikasi dengan rujukan astronomi publik. Namun hasilnya bergantung pada tempat, waktu, dan pengaturan perangkat Anda, serta metode perhitungan yang dipilih. Sejauh diizinkan oleh hukum, SY-ONE tidak bertanggung jawab atas akibat pengaturan yang tidak sesuai, perangkat yang salah diatur, atau gangguan yang disebabkan oleh layanan pihak ketiga.</p>
+      </section>
+
+      <section aria-labelledby="tos-id-10">
+        <h2 id="tos-id-10">10. Konten dan kepemilikan</h2>
+        <p>Aplikasi, antarmuka, teks, dan ilustrasinya adalah milik SY-ONE. Teks Al-Qur’an, terjemahan maknanya, dan teks-teks lain yang dikutip berasal dari sumber yang disebutkan di dalam aplikasi, dengan lisensinya masing-masing. Anda dapat membagikan konten yang memang disediakan untuk itu melalui tombol “Bagikan”. Setiap reproduksi atau ekstraksi lain dari aplikasi memerlukan persetujuan tertulis kami.</p>
+      </section>
+
+      <section aria-labelledby="tos-id-11">
+        <h2 id="tos-id-11">11. Data Anda</h2>
+        <p>Cara aljana memproses data Anda dijelaskan dalam <a href="/privacy">kebijakan privasi</a>.</p>
+      </section>
+
+      <section aria-labelledby="tos-id-12">
+        <h2 id="tos-id-12">12. Ketentuan toko</h2>
+        <p>Jika Anda mengunduh aljana dari App Store, <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">perjanjian lisensi standar Apple</a> juga berlaku. Jika Anda mengunduhnya dari Google Play, persyaratan layanan Google Play juga berlaku. Jika terjadi pertentangan terkait suatu pembelian, ketentuan toko Anda yang diutamakan.</p>
+      </section>
+
+      <section aria-labelledby="tos-id-13">
+        <h2 id="tos-id-13">13. Perubahan dan hukum yang berlaku</h2>
+        <p>Kami dapat mengubah ketentuan ini; tanggal di bagian atas halaman akan diperbarui, dan perubahan penting akan diberitahukan kepada Anda di dalam aplikasi. Ketentuan ini tunduk pada hukum Prancis, tanpa menghilangkan perlindungan yang diberikan kepada Anda oleh aturan memaksa di negara tempat Anda tinggal. Jika timbul masalah, tulislah kepada kami terlebih dahulu: kami selalu mengupayakan penyelesaian secara damai.</p>
+      </section>
+
+      <section aria-labelledby="tos-id-14">
+        <h2 id="tos-id-14">14. Kontak</h2>
+        <address class="pp-contact">
+          <strong>aljana</strong><br>
+          Penerbit: SY-ONE SAS<br>
+          14 rue de la Viala, 03300 Creuzier-le-Vieux, Prancis<br>SIREN 821 628 708<br>
+          Email: <a href="mailto:contact@aljana.app">contact@aljana.app</a><br>
+          Situs: <a href="https://aljana.app">https://aljana.app</a>
+        </address>
+      </section>
+    </article>
+
+    <article class="pp-doc" id="doc-ur" lang="ur" dir="rtl" data-lang="ur" aria-labelledby="tos-title-ur">
+      <header class="pp-doc__head">
+        <h1 id="tos-title-ur">شرائطِ استعمال</h1>
+        <p class="pp-updated">آخری تازہ کاری: <time datetime="2026-10-20">20 اکتوبر 2026</time></p>
+        <p class="pp-note">یہ اردو متن پڑھنے میں آسانی کے لیے فراہم کردہ ترجمہ ہے۔ کسی فرق کی صورت میں فرانسیسی متن معتبر ہوگا۔</p>
+        <p class="pp-intro">یہ شرائط aljana ایپ اور اس کی Premium پیشکش پر لاگو ہوتی ہیں۔ aljana استعمال کر کے آپ انہیں قبول کرتے ہیں۔ یہ پڑھے جانے کے لیے لکھی گئی ہیں: اگر کوئی بات واضح نہ ہو تو ہمیں لکھیں۔</p>
+      </header>
+
+      <section aria-labelledby="tos-ur-1">
+        <h2 id="tos-ur-1">1۔ ناشر</h2>
+        <p>aljana کو SY-ONE SAS شائع کرتی ہے، جو فرانسیسی قانون کے تحت ایک سادہ مشترکہ سرمایہ کمپنی ہے (<bdi dir="ltr">SIREN 821 628 708</bdi>)؛ اس کا پتہ نیچے «رابطہ» میں درج ہے۔ ہم سے رابطے کے لیے: <a href="mailto:contact@aljana.app">contact@aljana.app</a>۔</p>
+      </section>
+
+      <section aria-labelledby="tos-ur-2">
+        <h2 id="tos-ur-2">2۔ خدمت</h2>
+        <p>aljana نماز کے اوقات، قبلہ، آسمان، چاند، ہلال اور گرہنوں کا حساب کرتا ہے، اور مصحف اور ذکر کے متون تک رسائی دیتا ہے۔ ایپ کا ایک حصہ بغیر کسی مدت کی حد کے مفت ہے، جس میں مکمل قرآن اور آج کے نماز کے اوقات شامل ہیں۔ باقی خصوصیات aljana Premium کے لیے مخصوص ہیں اور ایپ میں ان کی نشاندہی کی گئی ہے۔</p>
+        <p>aljana حساب اور مطالعے کا ایک آلہ ہے۔ نماز کے اوقات، ہلال کی پیش گوئیاں اور گرہن فلکیاتی حسابات ہیں؛ aljana کوئی دینی رائے جاری نہیں کرتا اور مہینوں کے آغاز کا اعلان نہیں کرتا۔ نقل کی گئی آراء ایپ میں مذکور ذرائع سے لی گئی ہیں۔ کسی بھی دینی فیصلے کے لیے اپنی برادری کے علماء اور اداروں سے رجوع کریں۔</p>
+      </section>
+
+      <section aria-labelledby="tos-ur-3">
+        <h2 id="tos-ur-3">3۔ Premium کی پیشکشیں</h2>
+        <ul>
+          <li><strong>ماہانہ سبسکرپشن</strong>: ایک ماہ کی رسائی، جو ہر ماہ خود بخود تجدید ہوتی ہے۔</li>
+          <li><strong>سالانہ سبسکرپشن</strong>: ایک سال کی رسائی، جو ہر سال خود بخود تجدید ہوتی ہے۔</li>
+          <li><strong>ایک ماہ کا پاس</strong>: ایک ماہ کی رسائی، خودکار تجدید کے بغیر۔ آپ جب چاہیں نیا پاس خرید سکتے ہیں۔</li>
+        </ul>
+        <p>ہر پیشکش کی قیمت خریداری سے پہلے ایپ میں آپ کے ملک کی کرنسی میں دکھائی جاتی ہے۔ یہ ایک ملک سے دوسرے ملک میں مختلف ہو سکتی ہے۔ اگر کوئی آزمائشی یا تعارفی پیشکش دی جائے تو اس کی شرائط خریداری سے پہلے دکھائی جاتی ہیں۔</p>
+      </section>
+
+      <section aria-labelledby="tos-ur-4">
+        <h2 id="tos-ur-4">4۔ ادائیگی اور تجدید</h2>
+        <p>خریداری صرف Apple کے App Store یا Google Play کے ذریعے، آپ کے اسٹور کے اکاؤنٹ اور ادائیگی کے طریقوں سے ہوتی ہے۔ خریداری کی تصدیق پر ادائیگی اسی اکاؤنٹ سے وصول کی جاتی ہے۔</p>
+        <p>سبسکرپشن اسی مدت کے لیے رائج قیمت پر خود بخود تجدید ہوتی ہے، الا یہ کہ آپ موجودہ مدت کے ختم ہونے سے کم از کم 24 گھنٹے پہلے اسے منسوخ کر دیں۔ تجدید کی رقم مدت ختم ہونے سے پہلے کے 24 گھنٹوں میں وصول کی جاتی ہے۔ اگر قیمت بدلے تو آپ کا اسٹور اپنے قواعد کے مطابق آپ کو مطلع کرتا ہے۔</p>
+      </section>
+
+      <section aria-labelledby="tos-ur-5">
+        <h2 id="tos-ur-5">5۔ منسوخی</h2>
+        <p>آپ کسی بھی وقت اپنے اسٹور کی ترتیبات میں منسوخ کر سکتے ہیں:</p>
+        <ul>
+          <li>iPhone اور iPad پر: سیٹنگز، اپنا نام، پھر سبسکرپشنز، یا <a href="https://apps.apple.com/account/subscriptions">apps.apple.com/account/subscriptions</a>؛</li>
+          <li>Android پر: Google Play، اپنی پروفائل، ادائیگیاں اور سبسکرپشنز، پھر سبسکرپشنز، یا <a href="https://play.google.com/store/account/subscriptions">play.google.com/store/account/subscriptions</a>۔</li>
+        </ul>
+        <p>منسوخی تجدید روک دیتی ہے۔ آپ کی Premium رسائی پہلے سے ادا شدہ مدت کے اختتام تک برقرار رہتی ہے۔ ایپ حذف کرنے سے سبسکرپشن منسوخ نہیں ہوتی۔</p>
+      </section>
+
+      <section aria-labelledby="tos-ur-6">
+        <h2 id="tos-ur-6">6۔ رقم کی واپسی</h2>
+        <p>ادائیگیاں Apple یا Google وصول کرتے ہیں، جو رقم کی واپسی کی درخواستیں اپنی شرائط کے مطابق نمٹاتے ہیں:</p>
+        <ul>
+          <li>App Store: <a href="https://reportaproblem.apple.com">reportaproblem.apple.com</a>؛</li>
+          <li>Google Play: <a href="https://support.google.com/googleplay/answer/2479637">support.google.com/googleplay/answer/2479637</a>۔</li>
+        </ul>
+        <p>Premium خریداری کے فوراً بعد ڈیجیٹل مواد تک رسائی دیتا ہے۔ جہاں آپ کے ملک کا قانون واپسی کا حق دیتا ہو، وہاں اس حق کا استعمال آپ کے اسٹور کے قواعد کے مطابق ہوتا ہے۔ ان شرائط میں کوئی چیز ان حقوق کو کم نہیں کرتی جو قانون آپ کو صارف کی حیثیت سے دیتا ہے۔</p>
+      </section>
+
+      <section aria-labelledby="tos-ur-7">
+        <h2 id="tos-ur-7">7۔ اپنی خریداریاں واپس پانا</h2>
+        <p>aljana آپ سے اکاؤنٹ نہیں مانگتا۔ آپ کی خریداری آپ کے اسٹور کے اکاؤنٹ سے منسلک ہے۔ نئے آلے پر یا دوبارہ انسٹال کرنے کے بعد اسی اکاؤنٹ سے سائن ان کریں اور Premium کی اسکرین میں «خریداری بحال کریں» کو چھوئیں۔ App Store پر کی گئی خریداری Google Play پر منتقل نہیں ہو سکتی، اور نہ اس کے برعکس۔</p>
+      </section>
+
+      <section aria-labelledby="tos-ur-8">
+        <h2 id="tos-ur-8">8۔ خدمت میں تبدیلیاں</h2>
+        <p>aljana ترقی کرتا رہتا ہے: خصوصیات شامل، بہتر یا تبدیل کی جا سکتی ہیں۔ اگر Premium کی کوئی اہم خصوصیت کسی ادا شدہ مدت کے دوران ہٹانی پڑے تو ہم ایپ میں آپ کو مطلع کریں گے۔ خدمت دیکھ بھال کی وجہ سے یا کسی بیرونی خدمت (موسم، مصحف کے صفحات کا ڈاؤن لوڈ) کی وجہ سے کچھ دیر کے لیے رک سکتی ہے؛ بنیادی حسابات آف لائن دستیاب رہتے ہیں۔</p>
+      </section>
+
+      <section aria-labelledby="tos-ur-9">
+        <h2 id="tos-ur-9">9۔ ذمہ داری</h2>
+        <p>ہم حسابات کی درستی کا بہت خیال رکھتے ہیں اور انہیں عوامی فلکیاتی حوالوں سے جانچتے ہیں۔ تاہم نتائج آپ کے آلے کی جگہ، وقت اور ترتیبات، نیز منتخب کردہ حساب کے طریقے پر منحصر ہیں۔ قانون کی اجازت کی حد تک، SY-ONE کسی نامناسب ترتیب، غلط ترتیب والے آلے یا کسی بیرونی خدمت کی وجہ سے ہونے والے تعطل کے نتائج کی ذمہ دار نہیں ہے۔</p>
+      </section>
+
+      <section aria-labelledby="tos-ur-10">
+        <h2 id="tos-ur-10">10۔ مواد اور ملکیت</h2>
+        <p>ایپ، اس کا انٹرفیس، متون اور تصاویر SY-ONE کی ملکیت ہیں۔ قرآن کا متن، اس کے معانی کے تراجم اور دیگر نقل کردہ متون ایپ میں مذکور ذرائع سے، ان کے اپنے لائسنس کے تحت لیے گئے ہیں۔ آپ شیئر کرنے کے لیے بنائے گئے مواد کو «شیئر» کے بٹن سے شیئر کر سکتے ہیں۔ ایپ سے کسی بھی دوسری نقل یا اخراج کے لیے ہماری تحریری اجازت درکار ہے۔</p>
+      </section>
+
+      <section aria-labelledby="tos-ur-11">
+        <h2 id="tos-ur-11">11۔ آپ کا ڈیٹا</h2>
+        <p>aljana آپ کے ڈیٹا کو کیسے پروسیس کرتا ہے، یہ <a href="/privacy">رازداری کی پالیسی</a> میں بیان کیا گیا ہے۔</p>
+      </section>
+
+      <section aria-labelledby="tos-ur-12">
+        <h2 id="tos-ur-12">12۔ اسٹورز کی شرائط</h2>
+        <p>اگر آپ نے aljana کو App Store سے ڈاؤن لوڈ کیا ہے تو <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Apple کا معیاری لائسنس معاہدہ</a> بھی لاگو ہوتا ہے۔ اگر Google Play سے ڈاؤن لوڈ کیا ہے تو Google Play کی سروس کی شرائط بھی لاگو ہوتی ہیں۔ کسی خریداری کے بارے میں تضاد کی صورت میں آپ کے اسٹور کی شرائط کو ترجیح حاصل ہے۔</p>
+      </section>
+
+      <section aria-labelledby="tos-ur-13">
+        <h2 id="tos-ur-13">13۔ تبدیلیاں اور قابلِ اطلاق قانون</h2>
+        <p>ہم ان شرائط میں تبدیلی کر سکتے ہیں؛ اس صورت میں صفحے کے اوپر کی تاریخ تازہ کی جاتی ہے، اور کسی اہم تبدیلی کی اطلاع آپ کو ایپ میں دی جاتی ہے۔ یہ شرائط فرانسیسی قانون کے تابع ہیں، بغیر اس کے کہ آپ اس تحفظ سے محروم ہوں جو آپ کے ملکِ رہائش کے لازمی قواعد آپ کو دیتے ہیں۔ کسی مشکل کی صورت میں پہلے ہمیں لکھیں: ہم ہمیشہ خوش اسلوبی سے حل تلاش کرتے ہیں۔</p>
+      </section>
+
+      <section aria-labelledby="tos-ur-14">
+        <h2 id="tos-ur-14">14۔ رابطہ</h2>
+        <address class="pp-contact">
+          <strong>aljana</strong><br>
+          ناشر: SY-ONE SAS<br>
+          <bdi dir="ltr">14 rue de la Viala, 03300 Creuzier-le-Vieux, France</bdi><br>
+          <bdi dir="ltr">SIREN 821 628 708</bdi><br>
+          ای میل: <a href="mailto:contact@aljana.app">contact@aljana.app</a><br>
+          ویب سائٹ: <a href="https://aljana.app">https://aljana.app</a>
+        </address>
+      </section>
+    </article>
+
+    <article class="pp-doc" id="doc-fa" lang="fa" dir="rtl" data-lang="fa" aria-labelledby="tos-title-fa">
+      <header class="pp-doc__head">
+        <h1 id="tos-title-fa">شرایط استفاده</h1>
+        <p class="pp-updated">آخرین به‌روزرسانی: <time datetime="2026-10-20">۲۰ اکتبر ۲۰۲۶</time></p>
+        <p class="pp-note">این متن فارسی ترجمه‌ای برای سهولت خواندن است. در صورت هرگونه اختلاف، متن فرانسوی ملاک است.</p>
+        <p class="pp-intro">این شرایط برای برنامهٔ aljana و پیشنهاد Premium آن اعمال می‌شود. با استفاده از aljana، آن‌ها را می‌پذیرید. این شرایط برای خوانده شدن نوشته شده‌اند: اگر نکته‌ای روشن نیست، برای ما بنویسید.</p>
+      </header>
+
+      <section aria-labelledby="tos-fa-1">
+        <h2 id="tos-fa-1">۱. ناشر</h2>
+        <p>aljana را شرکت SY-ONE SAS منتشر می‌کند که یک شرکت سهامی ساده‌شده تابع قانون فرانسه است (<bdi dir="ltr">SIREN 821 628 708</bdi>)؛ نشانی آن در بخش «تماس» در پایین آمده است. برای تماس با ما: <a href="mailto:contact@aljana.app">contact@aljana.app</a>.</p>
+      </section>
+
+      <section aria-labelledby="tos-fa-2">
+        <h2 id="tos-fa-2">۲. سرویس</h2>
+        <p>aljana اوقات نماز، قبله، آسمان، ماه، هلال و گرفت‌ها را محاسبه می‌کند و دسترسی به مصحف و متن‌های ذکر را فراهم می‌سازد. بخشی از برنامه بدون محدودیت زمانی رایگان است، از جمله قرآن کامل و اوقات نماز امروز. سایر قابلیت‌ها ویژهٔ aljana Premium هستند و در برنامه مشخص شده‌اند.</p>
+        <p>aljana ابزاری برای محاسبه و خواندن است. اوقات نماز، پیش‌بینی‌های هلال و گرفت‌ها محاسبات نجومی‌اند؛ aljana هیچ نظر دینی صادر نمی‌کند و آغاز ماه‌ها را اعلام نمی‌کند. نظرهای نقل‌شده از منابعی گرفته شده‌اند که در برنامه مشخص شده‌اند. برای هر تصمیم دینی، به عالمان و نهادهای جامعهٔ خود مراجعه کنید.</p>
+      </section>
+
+      <section aria-labelledby="tos-fa-3">
+        <h2 id="tos-fa-3">۳. پیشنهادهای Premium</h2>
+        <ul>
+          <li><strong>اشتراک ماهانه</strong>: یک ماه دسترسی که هر ماه به‌طور خودکار تمدید می‌شود.</li>
+          <li><strong>اشتراک سالانه</strong>: یک سال دسترسی که هر سال به‌طور خودکار تمدید می‌شود.</li>
+          <li><strong>پاس یک‌ماهه</strong>: یک ماه دسترسی بدون تمدید خودکار. هر زمان بخواهید می‌توانید پاس تازه‌ای بخرید.</li>
+        </ul>
+        <p>قیمت هر پیشنهاد پیش از هر خرید و به واحد پول کشور شما در برنامه نمایش داده می‌شود و ممکن است از کشوری به کشور دیگر فرق کند. اگر پیشنهاد آزمایشی یا آغازین ارائه شود، شرایط آن پیش از خرید نمایش داده می‌شود.</p>
+      </section>
+
+      <section aria-labelledby="tos-fa-4">
+        <h2 id="tos-fa-4">۴. پرداخت و تمدید</h2>
+        <p>خریدها فقط از طریق App Store اپل یا Google Play و با حساب و روش‌های پرداخت فروشگاه شما انجام می‌شود. مبلغ هنگام تأیید خرید از همین حساب برداشت می‌شود.</p>
+        <p>اشتراک برای همان مدت و با قیمت جاری به‌طور خودکار تمدید می‌شود، مگر آنکه دست‌کم ۲۴ ساعت پیش از پایان دورهٔ جاری آن را لغو کنید. مبلغ تمدید در ۲۴ ساعت پیش از پایان دوره برداشت می‌شود. اگر قیمت تغییر کند، فروشگاه شما طبق قواعد خود به شما اطلاع می‌دهد.</p>
+      </section>
+
+      <section aria-labelledby="tos-fa-5">
+        <h2 id="tos-fa-5">۵. لغو</h2>
+        <p>می‌توانید هر زمان در تنظیمات فروشگاه خود لغو کنید:</p>
+        <ul>
+          <li>در iPhone و iPad: تنظیمات، نام شما، سپس اشتراک‌ها، یا <a href="https://apps.apple.com/account/subscriptions">apps.apple.com/account/subscriptions</a>؛</li>
+          <li>در Android: Google Play، نمایه‌تان، پرداخت‌ها و اشتراک‌ها، سپس اشتراک‌ها، یا <a href="https://play.google.com/store/account/subscriptions">play.google.com/store/account/subscriptions</a>.</li>
+        </ul>
+        <p>لغو، تمدید را متوقف می‌کند. دسترسی شما به Premium تا پایان دورهٔ پرداخت‌شده ادامه دارد. حذف برنامه اشتراک را لغو نمی‌کند.</p>
+      </section>
+
+      <section aria-labelledby="tos-fa-6">
+        <h2 id="tos-fa-6">۶. بازپرداخت</h2>
+        <p>پرداخت‌ها را اپل یا گوگل دریافت می‌کنند و درخواست‌های بازپرداخت را طبق شرایط خود بررسی می‌کنند:</p>
+        <ul>
+          <li>App Store: <a href="https://reportaproblem.apple.com">reportaproblem.apple.com</a>؛</li>
+          <li>Google Play: <a href="https://support.google.com/googleplay/answer/2479637">support.google.com/googleplay/answer/2479637</a>.</li>
+        </ul>
+        <p>Premium از لحظهٔ خرید دسترسی به محتوای دیجیتال را فراهم می‌کند. اگر قانون کشور شما حق انصراف پیش‌بینی کرده باشد، اعمال آن تابع قواعد فروشگاه شماست. هیچ چیز در این شرایط از حقوقی که قانون به‌عنوان مصرف‌کننده به شما می‌دهد نمی‌کاهد.</p>
+      </section>
+
+      <section aria-labelledby="tos-fa-7">
+        <h2 id="tos-fa-7">۷. بازیابی خریدهای شما</h2>
+        <p>aljana از شما حساب کاربری نمی‌خواهد. خرید شما به حساب فروشگاهتان پیوند خورده است. در دستگاه تازه یا پس از نصب دوباره، با همان حساب وارد شوید و در صفحهٔ Premium «بازیابی خریدها» را لمس کنید. خریدی که در App Store انجام شده به Google Play منتقل نمی‌شود و برعکس.</p>
+      </section>
+
+      <section aria-labelledby="tos-fa-8">
+        <h2 id="tos-fa-8">۸. تحول سرویس</h2>
+        <p>aljana پیوسته تحول می‌یابد: قابلیت‌هایی ممکن است افزوده، بهتر یا جایگزین شوند. اگر ناچار شویم قابلیت مهمی از Premium را در طول دوره‌ای که هزینه‌اش پرداخت شده حذف کنیم، در برنامه به شما اطلاع می‌دهیم. سرویس ممکن است برای نگهداری یا به سبب یک سرویس بیرونی (هوا، بارگیری صفحه‌های مصحف) مدتی کوتاه قطع شود؛ محاسبات اصلی بدون اتصال در دسترس می‌مانند.</p>
+      </section>
+
+      <section aria-labelledby="tos-fa-9">
+        <h2 id="tos-fa-9">۹. مسئولیت</h2>
+        <p>ما نهایت دقت را در درستی محاسبات به کار می‌بریم و آن‌ها را با مراجع نجومی عمومی بررسی می‌کنیم. با این حال، نتایج به مکان، زمان و تنظیمات دستگاه شما و نیز روش محاسبهٔ انتخاب‌شده بستگی دارد. تا حدی که قانون اجازه دهد، SY-ONE مسئول پیامدهای یک تنظیم نامناسب، دستگاهی که درست تنظیم نشده یا قطعی ناشی از یک سرویس بیرونی نیست.</p>
+      </section>
+
+      <section aria-labelledby="tos-fa-10">
+        <h2 id="tos-fa-10">۱۰. محتوا و مالکیت</h2>
+        <p>برنامه، رابط کاربری، متن‌ها و تصاویر آن متعلق به SY-ONE است. متن قرآن، ترجمه‌های معانی آن و سایر متن‌های نقل‌شده از منابعی گرفته شده‌اند که در برنامه مشخص شده‌اند و تابع مجوزهای خودشان هستند. محتوایی را که برای اشتراک‌گذاری در نظر گرفته شده می‌توانید با دکمهٔ «اشتراک‌گذاری» به اشتراک بگذارید. هرگونه تکثیر یا استخراج دیگر از برنامه نیازمند موافقت کتبی ماست.</p>
+      </section>
+
+      <section aria-labelledby="tos-fa-11">
+        <h2 id="tos-fa-11">۱۱. داده‌های شما</h2>
+        <p>شیوهٔ پردازش داده‌های شما توسط aljana در <a href="/privacy">سیاست حریم خصوصی</a> شرح داده شده است.</p>
+      </section>
+
+      <section aria-labelledby="tos-fa-12">
+        <h2 id="tos-fa-12">۱۲. شرایط فروشگاه‌ها</h2>
+        <p>اگر aljana را از App Store بارگیری کرده‌اید، <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">قرارداد مجوز استاندارد اپل</a> نیز اعمال می‌شود. اگر آن را از Google Play بارگیری کرده‌اید، شرایط خدمات Google Play نیز اعمال می‌شود. در صورت تعارض دربارهٔ یک خرید، شرایط فروشگاه شما مقدم است.</p>
+      </section>
+
+      <section aria-labelledby="tos-fa-13">
+        <h2 id="tos-fa-13">۱۳. تغییرات و قانون حاکم</h2>
+        <p>ممکن است این شرایط را تغییر دهیم؛ در این صورت تاریخ بالای صفحه به‌روز می‌شود و تغییر مهم در برنامه به اطلاع شما می‌رسد. این شرایط تابع قانون فرانسه است، بی‌آنکه شما را از حمایتی که قواعد آمرهٔ کشور محل اقامتتان به شما می‌دهد محروم کند. اگر مشکلی پیش آمد، ابتدا برای ما بنویسید: ما همواره به دنبال راه‌حلی دوستانه هستیم.</p>
+      </section>
+
+      <section aria-labelledby="tos-fa-14">
+        <h2 id="tos-fa-14">۱۴. تماس</h2>
+        <address class="pp-contact">
+          <strong>aljana</strong><br>
+          ناشر: SY-ONE SAS<br>
+          <bdi dir="ltr">14 rue de la Viala, 03300 Creuzier-le-Vieux, France</bdi><br>
+          <bdi dir="ltr">SIREN 821 628 708</bdi><br>
+          ایمیل: <a href="mailto:contact@aljana.app">contact@aljana.app</a><br>
+          وب‌سایت: <a href="https://aljana.app">https://aljana.app</a>
+        </address>
+      </section>
+    </article>
+
+    <article class="pp-doc" id="doc-ru" lang="ru" dir="ltr" data-lang="ru" aria-labelledby="tos-title-ru">
+      <header class="pp-doc__head">
+        <h1 id="tos-title-ru">Условия использования</h1>
+        <p class="pp-updated">Последнее обновление: <time datetime="2026-10-20">20 октября 2026 г.</time></p>
+        <p class="pp-note">Эта русская версия является переводом, предоставленным для удобства чтения. При расхождениях действует французская версия.</p>
+        <p class="pp-intro">Эти условия распространяются на приложение aljana и его предложение Premium. Пользуясь aljana, вы их принимаете. Они написаны так, чтобы их можно было прочитать: если что-то непонятно, напишите нам.</p>
+      </header>
+
+      <section aria-labelledby="tos-ru-1">
+        <h2 id="tos-ru-1">1. Издатель</h2>
+        <p>Издателем aljana является SY-ONE SAS, упрощённое акционерное общество по французскому праву (юридический адрес: 14 rue de la Viala, 03300 Creuzier-le-Vieux, Франция; SIREN 821 628 708). Связаться с нами: <a href="mailto:contact@aljana.app">contact@aljana.app</a>.</p>
+      </section>
+
+      <section aria-labelledby="tos-ru-2">
+        <h2 id="tos-ru-2">2. Сервис</h2>
+        <p>aljana рассчитывает время молитв, киблу, небо, Луну, хиляль и затмения, а также даёт доступ к Мусхафу и текстам поминания. Часть приложения бесплатна без ограничения срока, в том числе полный Коран и время молитв на сегодня. Остальные функции доступны только в aljana Premium; они отмечены в приложении.</p>
+        <p>aljana является инструментом для расчётов и чтения. Время молитв, прогнозы видимости серпа и затмения представляют собой астрономические расчёты; aljana не выносит никаких религиозных заключений и не объявляет начало месяцев. Приводимые мнения взяты из источников, указанных в приложении. По любым религиозным решениям обращайтесь к учёным и организациям своей общины.</p>
+      </section>
+
+      <section aria-labelledby="tos-ru-3">
+        <h2 id="tos-ru-3">3. Предложения Premium</h2>
+        <ul>
+          <li><strong>Месячная подписка</strong>: доступ на один месяц, автоматически продлеваемый каждый месяц.</li>
+          <li><strong>Годовая подписка</strong>: доступ на один год, автоматически продлеваемый каждый год.</li>
+          <li><strong>Пропуск на 1 месяц</strong>: доступ на один месяц без автоматического продления. Вы можете купить новый, когда пожелаете.</li>
+        </ul>
+        <p>Цена каждого предложения показывается в приложении в валюте вашей страны до совершения покупки. Она может различаться в разных странах. Если доступно пробное или стартовое предложение, его условия показываются до покупки.</p>
+      </section>
+
+      <section aria-labelledby="tos-ru-4">
+        <h2 id="tos-ru-4">4. Оплата и продление</h2>
+        <p>Покупки совершаются только через App Store компании Apple или через Google Play с использованием учётной записи и платёжных средств вашего магазина. Оплата списывается с этой учётной записи при подтверждении покупки.</p>
+        <p>Подписка автоматически продлевается на тот же срок по действующей цене, если вы не отмените её не позднее чем за 24 часа до окончания текущего периода. Плата за продление списывается в течение 24 часов до окончания периода. Если цена меняется, ваш магазин уведомляет вас по своим правилам.</p>
+      </section>
+
+      <section aria-labelledby="tos-ru-5">
+        <h2 id="tos-ru-5">5. Отмена</h2>
+        <p>Вы можете отменить подписку в любой момент в настройках своего магазина:</p>
+        <ul>
+          <li>на iPhone и iPad: «Настройки», ваше имя, затем «Подписки», или <a href="https://apps.apple.com/account/subscriptions">apps.apple.com/account/subscriptions</a>;</li>
+          <li>на Android: Google Play, ваш профиль, «Платежи и подписки», затем «Подписки», или <a href="https://play.google.com/store/account/subscriptions">play.google.com/store/account/subscriptions</a>.</li>
+        </ul>
+        <p>Отмена прекращает продление. Вы сохраняете доступ к Premium до конца уже оплаченного периода. Удаление приложения не отменяет подписку.</p>
+      </section>
+
+      <section aria-labelledby="tos-ru-6">
+        <h2 id="tos-ru-6">6. Возврат средств</h2>
+        <p>Платежи получают Apple или Google, которые рассматривают запросы на возврат средств по своим условиям:</p>
+        <ul>
+          <li>App Store: <a href="https://reportaproblem.apple.com">reportaproblem.apple.com</a>;</li>
+          <li>Google Play: <a href="https://support.google.com/googleplay/answer/2479637">support.google.com/googleplay/answer/2479637</a>.</li>
+        </ul>
+        <p>Premium даёт доступ к цифровому контенту сразу после покупки. Если закон вашей страны предусматривает право на отказ от покупки, оно осуществляется по правилам вашего магазина. Ничто в этих условиях не ограничивает права, которые закон предоставляет вам как потребителю.</p>
+      </section>
+
+      <section aria-labelledby="tos-ru-7">
+        <h2 id="tos-ru-7">7. Восстановление покупок</h2>
+        <p>aljana не требует учётной записи. Ваша покупка привязана к учётной записи вашего магазина. На новом устройстве или после переустановки войдите в ту же учётную запись и нажмите «Восстановить покупки» на экране Premium. Покупку, совершённую в App Store, нельзя перенести в Google Play, и наоборот.</p>
+      </section>
+
+      <section aria-labelledby="tos-ru-8">
+        <h2 id="tos-ru-8">8. Развитие сервиса</h2>
+        <p>aljana развивается: функции могут добавляться, улучшаться или заменяться. Если важную функцию Premium придётся убрать в течение уже оплаченного периода, мы сообщим вам об этом в приложении. Сервис может ненадолго прерываться из-за технического обслуживания или стороннего сервиса (погода, загрузка страниц Мусхафа); основные расчёты остаются доступны без подключения к сети.</p>
+      </section>
+
+      <section aria-labelledby="tos-ru-9">
+        <h2 id="tos-ru-9">9. Ответственность</h2>
+        <p>Мы уделяем максимум внимания точности расчётов, которые проверяются по открытым астрономическим источникам. Однако результаты зависят от места, времени и настроек вашего устройства, а также от выбранного метода расчёта. В пределах, допускаемых законом, SY-ONE не несёт ответственности за последствия неподходящей настройки, неправильно настроенного устройства или перерыва в работе по вине стороннего сервиса.</p>
+      </section>
+
+      <section aria-labelledby="tos-ru-10">
+        <h2 id="tos-ru-10">10. Содержимое и права</h2>
+        <p>Приложение, его интерфейс, тексты и иллюстрации принадлежат SY-ONE. Текст Корана, переводы его смыслов и другие приводимые тексты взяты из источников, указанных в приложении, на условиях их собственных лицензий. Вы можете делиться предназначенным для этого содержимым с помощью кнопки «Поделиться». Любое иное воспроизведение или извлечение данных из приложения требует нашего письменного согласия.</p>
+      </section>
+
+      <section aria-labelledby="tos-ru-11">
+        <h2 id="tos-ru-11">11. Ваши данные</h2>
+        <p>То, как aljana обрабатывает ваши данные, описано в <a href="/privacy">политике конфиденциальности</a>.</p>
+      </section>
+
+      <section aria-labelledby="tos-ru-12">
+        <h2 id="tos-ru-12">12. Условия магазинов</h2>
+        <p>Если вы загрузили aljana из App Store, также действует <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">стандартное лицензионное соглашение Apple</a>. Если вы загрузили приложение из Google Play, также действуют условия использования Google Play. При противоречиях, касающихся покупки, преимущество имеют условия вашего магазина.</p>
+      </section>
+
+      <section aria-labelledby="tos-ru-13">
+        <h2 id="tos-ru-13">13. Изменения и применимое право</h2>
+        <p>Мы можем изменять эти условия; в этом случае дата вверху страницы обновляется, а о существенном изменении вам сообщается в приложении. Эти условия регулируются правом Франции, не лишая вас защиты, которую предоставляют вам императивные нормы страны вашего проживания. Если возникнет трудность, сначала напишите нам: мы всегда ищем мирное решение.</p>
+      </section>
+
+      <section aria-labelledby="tos-ru-14">
+        <h2 id="tos-ru-14">14. Контакты</h2>
+        <address class="pp-contact">
+          <strong>aljana</strong><br>
+          Издатель: SY-ONE SAS<br>
+          14 rue de la Viala, 03300 Creuzier-le-Vieux, Франция<br>SIREN 821 628 708<br>
+          Электронная почта: <a href="mailto:contact@aljana.app">contact@aljana.app</a><br>
+          Сайт: <a href="https://aljana.app">https://aljana.app</a>
+        </address>
+      </section>
+    </article>
+
+    <article class="pp-doc" id="doc-zh" lang="zh" dir="ltr" data-lang="zh" aria-labelledby="tos-title-zh">
+      <header class="pp-doc__head">
+        <h1 id="tos-title-zh">使用条款</h1>
+        <p class="pp-updated">最后更新：<time datetime="2026-10-20">2026年10月20日</time></p>
+        <p class="pp-note">本中文版本为便于阅读而提供的译文。如与法文版本不一致，以法文版本为准。</p>
+        <p class="pp-intro">本条款适用于 aljana 应用及其 Premium 方案。使用 aljana 即表示您接受本条款。本条款力求通俗易读：如有任何不清楚之处，请写信给我们。</p>
+      </header>
+
+      <section aria-labelledby="tos-zh-1">
+        <h2 id="tos-zh-1">1. 发行方</h2>
+        <p>aljana 由 SY-ONE SAS 发行，这是一家依据法国法律设立的简易股份有限公司（注册地址：14 rue de la Viala, 03300 Creuzier-le-Vieux, France；SIREN 821 628 708）。联系我们：<a href="mailto:contact@aljana.app">contact@aljana.app</a>。</p>
+      </section>
+
+      <section aria-labelledby="tos-zh-2">
+        <h2 id="tos-zh-2">2. 服务</h2>
+        <p>aljana 计算礼拜时间、朝向、星空、月亮、新月和日月食，并提供《古兰经》经本和记念文本。应用的一部分免费且不限时间，包括完整的《古兰经》和当天的礼拜时间。其他功能仅供 aljana Premium 使用，并在应用中有所标注。</p>
+        <p>aljana 是一款计算和阅读工具。礼拜时间、新月预测和日月食都是天文计算；aljana 不发布任何宗教裁决，也不宣布月份的开始。所引用的观点来自应用中注明的来源。如需作出任何宗教决定，请咨询您所在社群的学者和机构。</p>
+      </section>
+
+      <section aria-labelledby="tos-zh-3">
+        <h2 id="tos-zh-3">3. Premium 方案</h2>
+        <ul>
+          <li><strong>月度订阅</strong>：一个月的访问权限，每月自动续订。</li>
+          <li><strong>年度订阅</strong>：一年的访问权限，每年自动续订。</li>
+          <li><strong>1 个月通行证</strong>：一个月的访问权限，不自动续订。您可以随时再次购买。</li>
+        </ul>
+        <p>每个方案的价格会在购买前以您所在国家或地区的货币显示在应用中，不同国家或地区的价格可能不同。如提供试用或上市优惠，其条件会在购买前显示。</p>
+      </section>
+
+      <section aria-labelledby="tos-zh-4">
+        <h2 id="tos-zh-4">4. 付款和续订</h2>
+        <p>购买只能通过 Apple 的 App Store 或 Google Play 进行，使用您所在商店的账户和支付方式。确认购买时即从该账户扣款。</p>
+        <p>订阅会按当时的价格自动续订相同时长，除非您在当前周期结束前至少 24 小时取消。续订费用会在周期结束前的 24 小时内扣除。如价格变动，您的商店会按其自身规则通知您。</p>
+      </section>
+
+      <section aria-labelledby="tos-zh-5">
+        <h2 id="tos-zh-5">5. 取消</h2>
+        <p>您可以随时在商店设置中取消：</p>
+        <ul>
+          <li>在 iPhone 和 iPad 上：设置，您的姓名，然后是订阅，或访问 <a href="https://apps.apple.com/account/subscriptions">apps.apple.com/account/subscriptions</a>；</li>
+          <li>在 Android 上：Google Play，您的个人资料，付款和订阅，然后是订阅，或访问 <a href="https://play.google.com/store/account/subscriptions">play.google.com/store/account/subscriptions</a>。</li>
+        </ul>
+        <p>取消后将停止续订。在已付费周期结束之前，您仍可使用 Premium。删除应用并不会取消订阅。</p>
+      </section>
+
+      <section aria-labelledby="tos-zh-6">
+        <h2 id="tos-zh-6">6. 退款</h2>
+        <p>款项由 Apple 或 Google 收取，并由其按照各自条款处理退款申请：</p>
+        <ul>
+          <li>App Store：<a href="https://reportaproblem.apple.com">reportaproblem.apple.com</a>；</li>
+          <li>Google Play：<a href="https://support.google.com/googleplay/answer/2479637">support.google.com/googleplay/answer/2479637</a>。</li>
+        </ul>
+        <p>Premium 自购买起即提供数字内容的访问权限。如您所在国家或地区的法律规定了撤回权，其行使遵循您所在商店的规则。本条款中的任何内容均不减损法律赋予您作为消费者的权利。</p>
+      </section>
+
+      <section aria-labelledby="tos-zh-7">
+        <h2 id="tos-zh-7">7. 恢复您的购买</h2>
+        <p>aljana 不要求您注册账户。您的购买与您的商店账户绑定。在新设备上或重新安装后，请使用同一账户登录，并在 Premium 页面点按“恢复购买”。在 App Store 完成的购买不能转移到 Google Play，反之亦然。</p>
+      </section>
+
+      <section aria-labelledby="tos-zh-8">
+        <h2 id="tos-zh-8">8. 服务的演进</h2>
+        <p>aljana 会不断发展：功能可能会被新增、改进或替换。如果在已付费期间不得不移除某项重要的 Premium 功能，我们会在应用中告知您。服务可能会因维护或第三方服务（天气、经本页面下载）而短暂中断；主要计算功能在离线时仍可使用。</p>
+      </section>
+
+      <section aria-labelledby="tos-zh-9">
+        <h2 id="tos-zh-9">9. 责任</h2>
+        <p>我们竭力确保计算准确，并以公开的天文参考资料加以核验。但结果取决于您设备的地点、时间和设置，以及所选择的计算方法。在法律允许的范围内，SY-ONE 不对设置不当、设备设置错误或第三方服务导致的中断所造成的后果承担责任。</p>
+      </section>
+
+      <section aria-labelledby="tos-zh-10">
+        <h2 id="tos-zh-10">10. 内容和所有权</h2>
+        <p>应用及其界面、文字和插图归 SY-ONE 所有。《古兰经》经文、经义译文以及其他引用的文本来自应用中注明的来源，并适用其各自的许可。您可以通过“分享”按钮分享专为分享而设计的内容。对应用的任何其他复制或提取均须事先取得我们的书面同意。</p>
+      </section>
+
+      <section aria-labelledby="tos-zh-11">
+        <h2 id="tos-zh-11">11. 您的数据</h2>
+        <p>aljana 处理您数据的方式载于<a href="/privacy">隐私政策</a>。</p>
+      </section>
+
+      <section aria-labelledby="tos-zh-12">
+        <h2 id="tos-zh-12">12. 商店条款</h2>
+        <p>如果您从 App Store 下载 aljana，<a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Apple 标准许可协议</a>同样适用。如果您从 Google Play 下载，Google Play 服务条款同样适用。如就某项购买发生冲突，以您所在商店的条款为准。</p>
+      </section>
+
+      <section aria-labelledby="tos-zh-13">
+        <h2 id="tos-zh-13">13. 变更和适用法律</h2>
+        <p>我们可能修改本条款；届时将更新页面顶部的日期，重大变更会在应用中提示您。本条款受法国法律管辖，但不剥夺您居住国家或地区强制性规定给予您的保护。如遇问题，请先写信给我们：我们始终寻求友好解决。</p>
+      </section>
+
+      <section aria-labelledby="tos-zh-14">
+        <h2 id="tos-zh-14">14. 联系方式</h2>
+        <address class="pp-contact">
+          <strong>aljana</strong><br>
+          发行方：SY-ONE SAS<br>
+          14 rue de la Viala, 03300 Creuzier-le-Vieux, France（法国）<br>SIREN 821 628 708<br>
+          电子邮箱：<a href="mailto:contact@aljana.app">contact@aljana.app</a><br>
+          网站：<a href="https://aljana.app">https://aljana.app</a>
+        </address>
+      </section>
+    </article>
+
+    <article class="pp-doc" id="doc-hi" lang="hi" dir="ltr" data-lang="hi" aria-labelledby="tos-title-hi">
+      <header class="pp-doc__head">
+        <h1 id="tos-title-hi">उपयोग की शर्तें</h1>
+        <p class="pp-updated">अंतिम अद्यतन: <time datetime="2026-10-20">20 अक्टूबर 2026</time></p>
+        <p class="pp-note">यह हिन्दी संस्करण पढ़ने में सुविधा के लिए दिया गया अनुवाद है। किसी भी अंतर की स्थिति में फ़्रांसीसी संस्करण मान्य होगा।</p>
+        <p class="pp-intro">ये शर्तें aljana ऐप और उसके Premium ऑफ़र पर लागू होती हैं। aljana का उपयोग करके आप इन्हें स्वीकार करते हैं। ये पढ़ी जाने के लिए लिखी गई हैं: यदि कोई बात स्पष्ट न हो, तो हमें लिखें।</p>
+      </header>
+
+      <section aria-labelledby="tos-hi-1">
+        <h2 id="tos-hi-1">1. प्रकाशक</h2>
+        <p>aljana का प्रकाशन SY-ONE SAS करती है, जो फ़्रांसीसी क़ानून के अंतर्गत एक सरलीकृत संयुक्त स्टॉक कंपनी है (पंजीकृत कार्यालय: 14 rue de la Viala, 03300 Creuzier-le-Vieux, France; SIREN 821 628 708)। हमसे संपर्क के लिए: <a href="mailto:contact@aljana.app">contact@aljana.app</a>।</p>
+      </section>
+
+      <section aria-labelledby="tos-hi-2">
+        <h2 id="tos-hi-2">2. सेवा</h2>
+        <p>aljana नमाज़ के समय, क़िबला, आकाश, चंद्रमा, हिलाल और ग्रहणों की गणना करता है, और मुसहफ़ तथा ज़िक्र के पाठों तक पहुँच देता है। ऐप का एक भाग बिना किसी समय-सीमा के निःशुल्क है, जिसमें संपूर्ण क़ुरआन और आज की नमाज़ों के समय शामिल हैं। अन्य सुविधाएँ aljana Premium के लिए आरक्षित हैं; ऐप में इन्हें चिह्नित किया गया है।</p>
+        <p>aljana गणना और पठन का एक साधन है। नमाज़ के समय, हिलाल के पूर्वानुमान और ग्रहण खगोलीय गणनाएँ हैं; aljana कोई धार्मिक राय जारी नहीं करता और महीनों की शुरुआत की घोषणा नहीं करता। उद्धृत राय ऐप में बताए गए स्रोतों से ली गई हैं। किसी भी धार्मिक निर्णय के लिए अपने समुदाय के विद्वानों और संस्थाओं से संपर्क करें।</p>
+      </section>
+
+      <section aria-labelledby="tos-hi-3">
+        <h2 id="tos-hi-3">3. Premium ऑफ़र</h2>
+        <ul>
+          <li><strong>मासिक सदस्यता</strong>: एक महीने की पहुँच, जो हर महीने अपने-आप नवीनीकृत होती है।</li>
+          <li><strong>वार्षिक सदस्यता</strong>: एक वर्ष की पहुँच, जो हर वर्ष अपने-आप नवीनीकृत होती है।</li>
+          <li><strong>1 महीने का पास</strong>: एक महीने की पहुँच, बिना स्वचालित नवीनीकरण के। आप जब चाहें नया पास ख़रीद सकते हैं।</li>
+        </ul>
+        <p>हर ऑफ़र का मूल्य ख़रीद से पहले ऐप में आपके देश की मुद्रा में दिखाया जाता है। यह एक देश से दूसरे देश में अलग हो सकता है। यदि कोई परीक्षण या शुरुआती ऑफ़र दिया जाता है, तो उसकी शर्तें ख़रीद से पहले दिखाई जाती हैं।</p>
+      </section>
+
+      <section aria-labelledby="tos-hi-4">
+        <h2 id="tos-hi-4">4. भुगतान और नवीनीकरण</h2>
+        <p>ख़रीद केवल Apple के App Store या Google Play के ज़रिए, आपके स्टोर के खाते और भुगतान साधनों से होती है। ख़रीद की पुष्टि होते ही भुगतान इसी खाते से लिया जाता है।</p>
+        <p>सदस्यता उसी अवधि के लिए, उस समय के मूल्य पर, अपने-आप नवीनीकृत होती है, जब तक कि आप वर्तमान अवधि के समाप्त होने से कम से कम 24 घंटे पहले उसे रद्द न कर दें। नवीनीकरण का शुल्क अवधि समाप्त होने से पहले के 24 घंटों में लिया जाता है। यदि मूल्य बदलता है, तो आपका स्टोर अपने नियमों के अनुसार आपको सूचित करता है।</p>
+      </section>
+
+      <section aria-labelledby="tos-hi-5">
+        <h2 id="tos-hi-5">5. रद्दीकरण</h2>
+        <p>आप कभी भी अपने स्टोर की सेटिंग में रद्द कर सकते हैं:</p>
+        <ul>
+          <li>iPhone और iPad पर: सेटिंग्स, आपका नाम, फिर सब्सक्रिप्शन, या <a href="https://apps.apple.com/account/subscriptions">apps.apple.com/account/subscriptions</a>;</li>
+          <li>Android पर: Google Play, आपकी प्रोफ़ाइल, भुगतान और सदस्यताएँ, फिर सदस्यताएँ, या <a href="https://play.google.com/store/account/subscriptions">play.google.com/store/account/subscriptions</a>।</li>
+        </ul>
+        <p>रद्द करने से नवीनीकरण रुक जाता है। पहले से भुगतान की गई अवधि के अंत तक आपकी Premium पहुँच बनी रहती है। ऐप हटाने से सदस्यता रद्द नहीं होती।</p>
+      </section>
+
+      <section aria-labelledby="tos-hi-6">
+        <h2 id="tos-hi-6">6. धनवापसी</h2>
+        <p>भुगतान Apple या Google प्राप्त करते हैं, जो धनवापसी के अनुरोधों का निपटारा अपनी शर्तों के अनुसार करते हैं:</p>
+        <ul>
+          <li>App Store: <a href="https://reportaproblem.apple.com">reportaproblem.apple.com</a>;</li>
+          <li>Google Play: <a href="https://support.google.com/googleplay/answer/2479637">support.google.com/googleplay/answer/2479637</a>।</li>
+        </ul>
+        <p>Premium ख़रीद के तुरंत बाद डिजिटल सामग्री तक पहुँच देता है। जहाँ आपके देश का क़ानून वापसी का अधिकार देता है, वहाँ उसका उपयोग आपके स्टोर के नियमों के अनुसार होता है। इन शर्तों में कुछ भी उन अधिकारों को कम नहीं करता जो क़ानून आपको उपभोक्ता के रूप में देता है।</p>
+      </section>
+
+      <section aria-labelledby="tos-hi-7">
+        <h2 id="tos-hi-7">7. अपनी ख़रीद वापस पाना</h2>
+        <p>aljana आपसे खाता नहीं माँगता। आपकी ख़रीद आपके स्टोर के खाते से जुड़ी है। नए डिवाइस पर या दोबारा इंस्टॉल करने के बाद उसी खाते से साइन इन करें और Premium स्क्रीन में «ख़रीद बहाल करें» छुएँ। App Store पर की गई ख़रीद Google Play पर स्थानांतरित नहीं की जा सकती, और न ही इसका उल्टा।</p>
+      </section>
+
+      <section aria-labelledby="tos-hi-8">
+        <h2 id="tos-hi-8">8. सेवा का विकास</h2>
+        <p>aljana विकसित होता रहता है: सुविधाएँ जोड़ी, बेहतर या बदली जा सकती हैं। यदि किसी भुगतान की गई अवधि के दौरान Premium की कोई महत्वपूर्ण सुविधा हटानी पड़े, तो हम ऐप में आपको सूचित करेंगे। सेवा रखरखाव के कारण या किसी तीसरे पक्ष की सेवा (मौसम, मुसहफ़ के पृष्ठों का डाउनलोड) के कारण कुछ समय के लिए रुक सकती है; मुख्य गणनाएँ ऑफ़लाइन उपलब्ध रहती हैं।</p>
+      </section>
+
+      <section aria-labelledby="tos-hi-9">
+        <h2 id="tos-hi-9">9. दायित्व</h2>
+        <p>हम गणनाओं की सटीकता पर अत्यधिक ध्यान देते हैं और उन्हें सार्वजनिक खगोलीय संदर्भों से जाँचते हैं। फिर भी परिणाम आपके डिवाइस के स्थान, समय और सेटिंग पर, तथा चुनी गई गणना विधि पर निर्भर करते हैं। क़ानून द्वारा अनुमत सीमा तक, SY-ONE किसी अनुपयुक्त सेटिंग, ग़लत ढंग से सेट किए गए डिवाइस या किसी तीसरे पक्ष की सेवा के कारण हुई रुकावट के परिणामों के लिए उत्तरदायी नहीं है।</p>
+      </section>
+
+      <section aria-labelledby="tos-hi-10">
+        <h2 id="tos-hi-10">10. सामग्री और स्वामित्व</h2>
+        <p>ऐप, उसका इंटरफ़ेस, पाठ और चित्र SY-ONE के हैं। क़ुरआन का पाठ, उसके अर्थों के अनुवाद और अन्य उद्धृत पाठ ऐप में बताए गए स्रोतों से, उनके अपने लाइसेंस के अंतर्गत, लिए गए हैं। साझा करने के लिए बनाई गई सामग्री को आप «साझा करें» बटन से साझा कर सकते हैं। ऐप से किसी भी अन्य पुनरुत्पादन या निष्कर्षण के लिए हमारी लिखित सहमति आवश्यक है।</p>
+      </section>
+
+      <section aria-labelledby="tos-hi-11">
+        <h2 id="tos-hi-11">11. आपका डेटा</h2>
+        <p>aljana आपके डेटा को कैसे संसाधित करता है, इसका वर्णन <a href="/privacy">गोपनीयता नीति</a> में किया गया है।</p>
+      </section>
+
+      <section aria-labelledby="tos-hi-12">
+        <h2 id="tos-hi-12">12. स्टोर की शर्तें</h2>
+        <p>यदि आपने aljana को App Store से डाउनलोड किया है, तो <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Apple का मानक लाइसेंस अनुबंध</a> भी लागू होता है। यदि आपने इसे Google Play से डाउनलोड किया है, तो Google Play की सेवा की शर्तें भी लागू होती हैं। किसी ख़रीद के बारे में विरोधाभास होने पर आपके स्टोर की शर्तें मान्य होंगी।</p>
+      </section>
+
+      <section aria-labelledby="tos-hi-13">
+        <h2 id="tos-hi-13">13. बदलाव और लागू क़ानून</h2>
+        <p>हम इन शर्तों में बदलाव कर सकते हैं; तब पृष्ठ के ऊपर की तारीख़ अद्यतन की जाती है, और किसी महत्वपूर्ण बदलाव की सूचना आपको ऐप में दी जाती है। ये शर्तें फ़्रांसीसी क़ानून के अधीन हैं, पर इससे आप उस सुरक्षा से वंचित नहीं होते जो आपके निवास के देश के अनिवार्य नियम आपको देते हैं। कोई कठिनाई होने पर पहले हमें लिखें: हम हमेशा सौहार्दपूर्ण समाधान खोजते हैं।</p>
+      </section>
+
+      <section aria-labelledby="tos-hi-14">
+        <h2 id="tos-hi-14">14. संपर्क</h2>
+        <address class="pp-contact">
+          <strong>aljana</strong><br>
+          प्रकाशक: SY-ONE SAS<br>
+          14 rue de la Viala, 03300 Creuzier-le-Vieux, France (फ़्रांस)<br>SIREN 821 628 708<br>
+          ईमेल: <a href="mailto:contact@aljana.app">contact@aljana.app</a><br>
+          वेबसाइट: <a href="https://aljana.app">https://aljana.app</a>
+        </address>
+      </section>
+    </article>
+
   </main>
 
   <footer class="pp-footer">
-    <a href="/" data-l10n="back">Retour à aljana</a>
+    <a href="/privacy" data-l10n="other">Politique de confidentialité</a>
+    <a href="/" data-home data-l10n="back">Retour à aljana</a>
   </footer>
 
   <script>
     (function () {
-    /* Conditions d’utilisation : bascule FR / EN sans rechargement (même fonctionnement que /privacy). */
-    const L10N = {
-      fr: {
-        title: 'aljana : conditions d’utilisation',
-        description: 'Les conditions d’utilisation d’aljana et de son offre Premium : abonnements, Pass, renouvellement, résiliation et remboursement.',
-        skip: 'Aller au contenu',
-        home: 'Accueil d’aljana',
-        back: 'Retour à aljana',
-      },
-      en: {
-        title: 'aljana: Terms of Use',
-        description: 'The terms of use of aljana and its Premium offer: subscriptions, pass, renewal, cancellation and refunds.',
-        skip: 'Skip to content',
-        home: 'aljana home page',
-        back: 'Back to aljana',
-      },
-    }
-
-    const root = document.documentElement
-    const setMeta = (sel, value) => document.querySelector(sel)?.setAttribute('content', value)
-
-    function apply(lang) {
-      const t = L10N[lang]
-      root.lang = lang
-      root.dataset.ppLang = lang
+    /* bascule de langue sans rechargement ; le choix est gardé comme sur le reste du site (aljana.site.lang) */
+    var UI = {"fr":{"title":"aljana : conditions d’utilisation","description":"Les conditions d’utilisation d’aljana et de son offre Premium : abonnements, Pass, renouvellement, résiliation et remboursement.","skip":"Aller au contenu","home":"Accueil d’aljana","back":"Retour à aljana","lang":"Langue","other":"Politique de confidentialité"},"en":{"title":"aljana: Terms of Use","description":"The terms of use of aljana and its Premium offer: subscriptions, pass, renewal, cancellation and refunds.","skip":"Skip to content","home":"aljana home page","back":"Back to aljana","lang":"Language","other":"Privacy policy"},"ar":{"title":"aljana: شروط الاستخدام","description":"شروط استخدام aljana وعرض Premium: الاشتراكات، واشتراك الشهر الواحد، والتجديد، والإلغاء، والاسترداد.","skip":"انتقل إلى المحتوى","home":"الصفحة الرئيسية لـ aljana","back":"العودة إلى aljana","lang":"اللغة","other":"سياسة الخصوصية"},"es":{"title":"aljana: condiciones de uso","description":"Las condiciones de uso de aljana y de su oferta Premium: suscripciones, pase, renovación, cancelación y reembolso.","skip":"Ir al contenido","home":"Página de inicio de aljana","back":"Volver a aljana","lang":"Idioma","other":"Política de privacidad"},"de":{"title":"aljana: Nutzungsbedingungen","description":"Die Nutzungsbedingungen von aljana und seinem Premium-Angebot: Abos, Pass, Verlängerung, Kündigung und Erstattung.","skip":"Zum Inhalt springen","home":"Startseite von aljana","back":"Zurück zu aljana","lang":"Sprache","other":"Datenschutzerklärung"},"tr":{"title":"aljana: kullanım koşulları","description":"aljana ve Premium teklifinin kullanım koşulları: abonelikler, geçiş, yenileme, iptal ve iade.","skip":"İçeriğe geç","home":"aljana ana sayfası","back":"aljana’ya dön","lang":"Dil","other":"Gizlilik politikası"},"id":{"title":"aljana: ketentuan penggunaan","description":"Ketentuan penggunaan aljana dan penawaran Premium-nya: langganan, pass, perpanjangan, pembatalan, dan pengembalian dana.","skip":"Langsung ke konten","home":"Beranda aljana","back":"Kembali ke aljana","lang":"Bahasa","other":"Kebijakan privasi"},"ur":{"title":"aljana: شرائطِ استعمال","description":"aljana اور اس کی Premium پیشکش کی شرائطِ استعمال: سبسکرپشنز، پاس، تجدید، منسوخی اور رقم کی واپسی۔","skip":"مواد پر جائیں","home":"aljana کا صفحۂ اول","back":"aljana پر واپس","lang":"زبان","other":"رازداری کی پالیسی"},"fa":{"title":"aljana: شرایط استفاده","description":"شرایط استفاده از aljana و پیشنهاد Premium آن: اشتراک‌ها، پاس، تمدید، لغو و بازپرداخت.","skip":"رفتن به محتوا","home":"صفحهٔ اصلی aljana","back":"بازگشت به aljana","lang":"زبان","other":"سیاست حریم خصوصی"},"ru":{"title":"aljana: условия использования","description":"Условия использования aljana и предложения Premium: подписки, пропуск, продление, отмена и возврат средств.","skip":"Перейти к содержанию","home":"Главная страница aljana","back":"Вернуться на aljana","lang":"Язык","other":"Политика конфиденциальности"},"zh":{"title":"aljana：使用条款","description":"aljana 及其 Premium 方案的使用条款：订阅、通行证、续订、取消和退款。","skip":"跳到正文","home":"aljana 首页","back":"返回 aljana","lang":"语言","other":"隐私政策"},"hi":{"title":"aljana: उपयोग की शर्तें","description":"aljana और उसके Premium ऑफ़र की उपयोग की शर्तें: सदस्यताएँ, पास, नवीनीकरण, रद्दीकरण और धनवापसी।","skip":"सामग्री पर जाएँ","home":"aljana का मुखपृष्ठ","back":"aljana पर वापस जाएँ","lang":"भाषा","other":"गोपनीयता नीति"}}
+    var FONTS = { ar: 'IBM+Plex+Sans+Arabic:wght@400;500;600;700', fa: 'Vazirmatn:wght@400..700', ur: 'Noto+Naskh+Arabic:wght@400..700', hi: 'Noto+Sans+Devanagari:wght@400..700', zh: 'Noto+Sans+SC:wght@400..700' }
+    var root = document.documentElement, sel = document.getElementById('ppLang')
+    var setMeta = function (s, v) { var e = document.querySelector(s); if (e) e.setAttribute('content', v) }
+    function font (l) { if (!FONTS[l] || document.getElementById('font-' + l)) return; var k = document.createElement('link'); k.id = 'font-' + l; k.rel = 'stylesheet'; k.href = 'https://fonts.googleapis.com/css2?family=' + FONTS[l] + '&display=swap'; document.head.appendChild(k) }
+    function apply (l) {
+      var t = UI[l]
+      root.lang = l; root.dir = /^(ar|ur|fa)$/.test(l) ? 'rtl' : 'ltr'; root.setAttribute('data-pp-lang', l); font(l)
       document.title = t.title
-      setMeta('meta[name="description"]', t.description)
-      setMeta('meta[property="og:title"]', t.title)
-      setMeta('meta[property="og:description"]', t.description)
-      document.querySelectorAll('[data-lang]').forEach((el) => { el.hidden = el.dataset.lang !== lang })
-      document.querySelectorAll('[data-lang-switch]').forEach((a) => {
-        if (a.dataset.langSwitch === lang) a.setAttribute('aria-current', 'true')
-        else a.removeAttribute('aria-current')
-      })
-      document.querySelectorAll('[data-l10n]').forEach((el) => { el.textContent = t[el.dataset.l10n] })
-      document.querySelectorAll('[data-l10n-label]').forEach((el) => el.setAttribute('aria-label', t[el.dataset.l10nLabel]))
+      setMeta('meta[name="description"]', t.description); setMeta('meta[property="og:title"]', t.title); setMeta('meta[property="og:description"]', t.description)
+      document.querySelectorAll('[data-lang]').forEach(function (el) { el.hidden = el.getAttribute('data-lang') !== l })
+      document.querySelectorAll('[data-l10n]').forEach(function (el) { el.textContent = t[el.getAttribute('data-l10n')] })
+      document.querySelectorAll('[data-l10n-label]').forEach(function (el) { el.setAttribute('aria-label', t[el.getAttribute('data-l10n-label')]) })
+      /* liens vers le site et l'autre page légale : dans la même langue */
+      document.querySelectorAll('a[href^="/"]').forEach(function (a) { var p = a.getAttribute('href').split('?')[0].split('#')[0]; if (p === '/' || p === '/privacy' || p === '/terms') a.setAttribute('href', p + '?lang=' + l) })
+      sel.value = l
     }
-
-    const fromHash = () => (location.hash === '#en' ? 'en' : location.hash === '#fr' ? 'fr' : null)
-
-    apply(L10N[root.dataset.ppLang] ? root.dataset.ppLang : 'fr')
-
-    document.querySelectorAll('[data-lang-switch]').forEach((a) => {
-      a.addEventListener('click', (e) => {
-        e.preventDefault()
-        const lang = a.dataset.langSwitch
-        apply(lang)
-        history.replaceState(null, '', lang === 'en' ? '#en' : location.pathname + location.search)
-      })
+    apply(root.getAttribute('data-pp-lang') || 'en')
+    sel.addEventListener('change', function () {
+      var l = sel.value; apply(l)
+      try { var s = localStorage.getItem('aljana.site.lang') || ''; localStorage.setItem('aljana.site.lang', l === 'en' ? (/^en/.test(s) ? s : 'en-US') : l) } catch (e) { /* stockage indisponible */ }
+      history.replaceState(null, '', location.pathname + '?lang=' + l)
+      window.scrollTo(0, 0)
     })
-
-    window.addEventListener('hashchange', () => { const lang = fromHash(); if (lang) apply(lang) })
     })()
   </script>
 </body>
