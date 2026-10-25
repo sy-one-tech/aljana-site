@@ -143,7 +143,7 @@
     var L = sec.querySelector('.lens'), cv = L.querySelector('canvas'), cp = sec.querySelector('.lens-cap'), ln = sec.querySelector('.lens-line')
     L.style.width = L.style.height = c.size + 'px'; L.style.left = c.cx + 'px'; L.style.top = c.cy + 'px'; if (c.halo != null) L.style.setProperty('--halo', c.halo)
     var mp = Math.round(c.size * 0.74)
-    if (c.drawMoon !== false) window.ALJ_MOON.render(cv, mp, A.moonOrientation(at, place.lat, place.lon), { ash: c.ash, gain: 1.15, bump: 1.4 })
+    if (c.drawMoon !== false) window.ALJ_MOON.render(cv, mp, A.moonOrientation(at, place.lat, place.lon), { ash: c.ash, gain: 1.15, bump: 1.4, nasa: true, at: at, alt: A.moonAltAz(at, place.lat, place.lon).alt, sunAlt: A.sunAltAz(at, place.lat, place.lon).alt })
     cp.innerHTML = fill(c.cap, Object.assign({ n: num(Math.round(mp / c.realPx)) }, c.vals || {}))
     cp.style.left = (c.capX != null ? c.capX : c.cx) + 'px'; cp.style.top = (c.capY != null ? c.capY : c.cy + mp / 2 + 18) + 'px'; cp.style.width = c.capW ? c.capW + 'px' : ''; cp.style.whiteSpace = c.capW ? 'normal' : ''
     cp.classList.toggle('side', !!c.side); cp.classList.toggle('look', !!c.look)
@@ -391,7 +391,7 @@
     document.getElementById('v2ans').textContent = fill(T.ans, { d: cap(fmtD(at, { weekday: 'long', day: 'numeric', month: 'long' })), v: T.advTxt[cres.ev.aljanaAdvisory] })
     document.getElementById('tag2').style.display = 'none'; document.getElementById('tagline').style.display = 'none'
   }
-  function renderBigMoon(at) { var M = mobile(); window.ALJ_MOON.render(document.getElementById('bigmoon'), M ? Math.min(380, window.innerWidth - 16) : 700, A.moonOrientation(at, place.lat, place.lon), { gain: 1.12, opaque: false, bump: 1.8 }) }
+  function renderBigMoon(at) { var M = mobile(); window.ALJ_MOON.render(document.getElementById('bigmoon'), M ? Math.min(380, window.innerWidth - 16) : 700, A.moonOrientation(at, place.lat, place.lon), { gain: 1.12, opaque: false, bump: 1.8, nasa: true, at: at }) }
   /* vue 3 : chaque élément devient le centre de la scène à son tour */
   var actIdx = -1, LIGHT = [['#04081F', '#13224A66'], ['#020510', '#0A133099'], ['#030817', '#1A3570aa']]
   function stageLight() { var st = document.querySelector('.stage3'), L = LIGHT[mobile() ? 0 : Math.max(0, actIdx)] || LIGHT[0]; st.style.setProperty('--top', L[0]); st.style.setProperty('--glow', L[1]) }
