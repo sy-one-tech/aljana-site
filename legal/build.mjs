@@ -41,7 +41,7 @@ function page (kind) {
   }).join('\n\n')
   const hide = codes.map((c) => `html[data-pp-lang="${c}"] .pp-doc:not([data-lang="${c}"])`).join(',\n    ')
   const options = LANGS.map(([c, n]) => `<option value="${c}" lang="${c}"${c === 'fr' ? ' selected' : ''}>${n}</option>`).join('')
-  const og = isP ? 'https://aljana.app/assets/og/privacy.jpg?v=2' : 'https://aljana.app/assets/og/fr.jpg?v=2'
+  const og = isP ? 'https://aljana.app/assets/og/privacy.jpg?v=2' : 'https://aljana.app/assets/og/fr.jpg?v=3'
   return `<!doctype html>
 <html lang="fr" dir="ltr">
 <head>

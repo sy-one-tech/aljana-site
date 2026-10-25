@@ -26,7 +26,7 @@ export const onRequest = async (ctx) => {
   const code = resolve(url.searchParams.get('lang'))
   if (!code || code === 'fr') return res
   if (!(res.headers.get('content-type') || '').includes('text/html')) return res
-  const m = OG[code], img = `${ORIGIN}/assets/og/${code}.jpg?v=2`, page = `${ORIGIN}/?lang=${code}`
+  const m = OG[code], img = `${ORIGIN}/assets/og/${code}.jpg?v=3`, page = `${ORIGIN}/?lang=${code}`
   const out = new HTMLRewriter()
     .on('html', { element (el) { el.setAttribute('lang', code); el.setAttribute('dir', m.rtl ? 'rtl' : 'ltr') } })
     .on('title', { element (el) { el.setInnerContent(m.title) } })
