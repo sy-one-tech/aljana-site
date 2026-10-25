@@ -7,44 +7,71 @@
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#060B18">
 <script>
-  /* langue déjà choisie sur le site, sinon celle du navigateur : français ou anglais */
+  /* page introuvable dans les 12 langues du site : langue déjà choisie sur le site, sinon celle du navigateur, sinon anglais */
+  window.T404 = {
+    fr: ["aljana : page introuvable", "Cette page n’existe pas.", "L’adresse a peut-être changé, ou elle contient une erreur.", "Retour à l’accueil"],
+    en: ["aljana: page not found", "This page does not exist.", "The address may have changed, or it may contain a typo.", "Back to home"],
+    ar: ["aljana: الصفحة غير موجودة", "هذه الصفحة غير موجودة.", "ربما تغيّر العنوان، أو فيه خطأ.", "العودة إلى الصفحة الرئيسية"],
+    es: ["aljana: página no encontrada", "Esta página no existe.", "Es posible que la dirección haya cambiado o que contenga un error.", "Volver al inicio"],
+    de: ["aljana: Seite nicht gefunden", "Diese Seite gibt es nicht.", "Die Adresse hat sich vielleicht geändert oder enthält einen Fehler.", "Zur Startseite"],
+    tr: ["aljana: sayfa bulunamadı", "Bu sayfa mevcut değil.", "Adres değişmiş ya da bir hata içeriyor olabilir.", "Ana sayfaya dön"],
+    id: ["aljana: halaman tidak ditemukan", "Halaman ini tidak ada.", "Alamatnya mungkin sudah berubah, atau ada kesalahan ketik.", "Kembali ke beranda"],
+    ur: ["aljana: صفحہ نہیں ملا", "یہ صفحہ موجود نہیں۔", "ہو سکتا ہے پتہ بدل گیا ہو، یا اس میں کوئی غلطی ہو۔", "صفحۂ اول پر واپس"],
+    fa: ["aljana: صفحه پیدا نشد", "این صفحه وجود ندارد.", "شاید نشانی تغییر کرده باشد یا اشتباهی در آن باشد.", "بازگشت به صفحهٔ اصلی"],
+    ru: ["aljana: страница не найдена", "Такой страницы нет.", "Возможно, адрес изменился или в нём есть ошибка.", "На главную"],
+    zh: ["aljana：找不到页面", "此页面不存在。", "地址可能已更改，或者有误。", "返回首页"],
+    hi: ["aljana: पृष्ठ नहीं मिला", "यह पृष्ठ मौजूद नहीं है।", "हो सकता है पता बदल गया हो, या उसमें कोई त्रुटि हो।", "मुखपृष्ठ पर वापस जाएँ"]
+  };
   (function (h) {
+    var norm = function (t) { t = String(t || "").toLowerCase(); if (/^en/.test(t)) return "en"; t = t.slice(0, 2); return window.T404[t] ? t : null; };
     var l = null;
-    try { l = localStorage.getItem("aljana.site.lang"); } catch (e) { /* stockage indisponible */ }
-    l = l || navigator.language || "en";
-    if (!/^fr/i.test(l)) { h.lang = "en"; document.title = "aljana: page not found"; }
+    try { l = norm(localStorage.getItem("aljana.site.lang")); } catch (e) { /* stockage indisponible */ }
+    if (!l) { var n = navigator.languages || [navigator.language]; for (var i = 0; i < n.length && !l; i++) l = norm(n[i]); }
+    l = l || "en";
+    h.lang = l; h.dir = /^(ar|ur|fa)$/.test(l) ? "rtl" : "ltr"; document.title = window.T404[l][0];
   })(document.documentElement);
 </script>
 <link rel="icon" href="/assets/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@400..700&family=IBM+Plex+Sans+Arabic:wght@400;600&family=Noto+Naskh+Arabic:wght@400;600&family=Vazirmatn:wght@400;600&family=Noto+Sans+Devanagari:wght@400;600&family=Noto+Sans+SC:wght@400;600&display=swap" rel="stylesheet">
 <style>
-  :root { --bg: #060B18; --ink: #EEF1FA; --soft: #C9D1EA; --faint: #6F7A9C; --gold: #E2B659; --gold-soft: #F3DFAE; }
+  /* mêmes jetons et mêmes polices que la page d'accueil du site */
+  :root { --bg: #060B18; --ink: #EEF1FA; --soft: #C9D1EA; --faint: #6F7A9C; --gold: #E2B659; --gold-soft: #F3DFAE; --sans: "Commissioner", system-ui, -apple-system, "Segoe UI", sans-serif; }
+  html[lang="ar"] { --sans: "IBM Plex Sans Arabic", system-ui, sans-serif; }
+  html[lang="fa"] { --sans: "Vazirmatn", "Noto Sans Arabic", Tahoma, sans-serif; }
+  html[lang="ur"] { --sans: "Noto Naskh Arabic", "Noto Sans Arabic", Tahoma, sans-serif; }
+  html[lang="hi"] { --sans: "Noto Sans Devanagari", "Nirmala UI", sans-serif; }
+  html[lang="zh"] { --sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif; }
   * { box-sizing: border-box; }
   html, body { height: 100%; }
-  body { margin: 0; background: var(--bg); color: var(--soft); font-family: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 17px; line-height: 1.62; -webkit-font-smoothing: antialiased; }
+  body { margin: 0; background: var(--bg); color: var(--soft); font-family: var(--sans); font-size: 17px; line-height: 1.62; -webkit-font-smoothing: antialiased; }
   main { min-height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px 20px; }
   img { display: block; width: 150px; height: 50px; }
-  .code { margin: 44px 0 0; font-size: 13.5px; font-weight: 600; letter-spacing: 0.14em; color: var(--faint); }
-  h1 { margin: 10px 0 0; font-family: "Newsreader", Georgia, serif; font-weight: 500; font-size: clamp(30px, 5vw, 44px); line-height: 1.12; letter-spacing: -0.015em; color: var(--ink); text-wrap: balance; }
-  p { margin: 14px 0 0; max-width: 440px; }
+  .code { margin: 44px 0 0; font: 600 13.5px/1 "Commissioner", system-ui, sans-serif; letter-spacing: 0.14em; color: var(--faint); }
+  h1 { margin: 12px 0 0; font-weight: 600; font-size: clamp(30px, 5vw, 44px); line-height: 1.15; letter-spacing: -0.02em; color: var(--ink); text-wrap: balance; }
+  html[dir="rtl"] h1, html[lang="hi"] h1, html[lang="zh"] h1 { letter-spacing: 0; line-height: 1.4; }
+  p { margin: 14px 0 0; max-width: 460px; }
   a.btn { display: inline-flex; align-items: center; min-height: 46px; margin-top: 30px; padding: 0 24px; border-radius: 11px; background: var(--gold); color: #1B1405; font-weight: 600; font-size: 15px; text-decoration: none; }
   a.btn:hover { background: #ECC46E; }
   a.btn:focus-visible { outline: 2px solid var(--gold-soft); outline-offset: 3px; }
-  html[lang="fr"] [lang="en"], html[lang="en"] [lang="fr"] { display: none; }
 </style>
 </head>
 <body>
 <main>
   <a href="/" aria-label="aljana"><img src="/assets/brand/aljana-logo-v4.webp" alt="aljana" width="1086" height="362"></a>
   <p class="code">404</p>
-  <h1 lang="fr">Cette page n'existe pas.</h1>
-  <h1 lang="en">This page does not exist.</h1>
-  <p lang="fr">L'adresse a peut-être changé, ou elle contient une erreur.</p>
-  <p lang="en">The address may have changed, or it may contain a typo.</p>
-  <a class="btn" href="/" lang="fr">Retour à l'accueil</a>
-  <a class="btn" href="/" lang="en">Back to home</a>
+  <h1 id="t1">Cette page n’existe pas.</h1>
+  <p id="t2">L’adresse a peut-être changé, ou elle contient une erreur.</p>
+  <a class="btn" id="t3" href="/">Retour à l’accueil</a>
 </main>
+<script>
+  (function () {
+    var l = document.documentElement.lang, t = window.T404[l] || window.T404.en;
+    document.getElementById("t1").textContent = t[1];
+    document.getElementById("t2").textContent = t[2];
+    var b = document.getElementById("t3"); b.textContent = t[3]; b.setAttribute("href", "/?lang=" + l);
+  })();
+</script>
 </body>
 </html>

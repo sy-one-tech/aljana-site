@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -17,185 +17,150 @@
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://aljana.app/assets/og/privacy.jpg?v=2" />
-  <meta name="theme-color" content="#050A18" />
+  <meta name="theme-color" content="#060B18" />
+  <!-- Page générée par legal/build.mjs à partir de legal/src : modifier les sources, puis régénérer. -->
   <script>
-    /* langue affichée dès le premier rendu (évite d'apercevoir l'autre version) :
-       ancre #en / #fr, sinon langue déjà choisie sur le site (fr ou en), sinon français */
+    /* langue dès le premier rendu, mêmes règles que le site : ?lang=, sinon langue déjà choisie sur le site,
+       sinon langue du navigateur, sinon anglais. Une ancienne ancre (#en, #fr…) est encore comprise. */
     (function () {
-      var h = location.hash, l = h === '#en' ? 'en' : h === '#fr' ? 'fr' : null
-      if (!l) { try { var s = localStorage.getItem('aljana.site.lang'); if (s === 'fr') l = 'fr'; else if (/^en/.test(s || '')) l = 'en' } catch (e) { /* stockage indisponible */ } }
-      l = l || 'fr'
-      document.documentElement.lang = l
-      document.documentElement.setAttribute('data-pp-lang', l)
-      if (l === 'en') document.title = 'aljana: Privacy Policy'
+      var C = ["fr","en","ar","es","de","tr","id","ur","fa","ru","zh","hi"], T = {"fr":"aljana : politique de confidentialité","en":"aljana: Privacy Policy","ar":"aljana: سياسة الخصوصية","es":"aljana: política de privacidad","de":"aljana: Datenschutzerklärung","tr":"aljana: gizlilik politikası","id":"aljana: kebijakan privasi","ur":"aljana: رازداری کی پالیسی","fa":"aljana: سیاست حریم خصوصی","ru":"aljana: политика конфиденциальности","zh":"aljana：隐私政策","hi":"aljana: गोपनीयता नीति"}
+      var norm = function (t) { t = String(t || '').toLowerCase(); if (/^en/.test(t)) return 'en'; t = t.slice(0, 2); return C.indexOf(t) >= 0 ? t : null }
+      var l = norm(new URLSearchParams(location.search).get('lang')) || (C.indexOf(location.hash.slice(1)) >= 0 ? location.hash.slice(1) : null)
+      if (!l) { try { l = norm(localStorage.getItem('aljana.site.lang')) } catch (e) { /* stockage indisponible */ } }
+      if (!l) { var n = navigator.languages || [navigator.language]; for (var i = 0; i < n.length && !l; i++) l = norm(n[i]) }
+      l = l || 'en'
+      var h = document.documentElement
+      h.lang = l; h.dir = /^(ar|ur|fa)$/.test(l) ? 'rtl' : 'ltr'; h.setAttribute('data-pp-lang', l); document.title = T[l]
     })()
   </script>
   <link rel="icon" href="/assets/icon-192.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@400..700&display=swap" rel="stylesheet">
   <style>
-    /* Jetons et bases du site (repris de src/style.css : page autonome, sans lien avec le bundle des autres pages) */
-    :root{
-      --night-deep:#050A18; --night-ink:#0B1230;
-      --ink-light:#F2F5FC; --ink-body:#C9D3E8;
-      --gold-1:#F5B04C; --gold-2:#E8833A;
-      --font-display:'Space Grotesk', system-ui, sans-serif;
-      --font-body:'Inter', system-ui, sans-serif;
-      --header-h:68px;
+    /* mêmes jetons et mêmes polices que la page d'accueil du site (index.html) */
+    :root {
+      --bg: #060B18; --band: #0A1326; --ink: #EEF1FA; --soft: #C9D1EA; --dim: #93A0C2;
+      --gold: #E2B659; --gold-soft: #F3DFAE; --line: rgba(160,172,205,0.14);
+      --sans: "Commissioner", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --header-h: 68px;
     }
-    *{ box-sizing:border-box; }
-    html,body{ margin:0; min-height:100%; }
-    html{ scroll-padding-top:var(--header-h); }
-    body{ font-family:var(--font-body); color:var(--ink-body); overflow-x:hidden; }
-    h1,h2,h3{ font-family:var(--font-display); color:var(--ink-light); margin:0; }
-    p{ margin:0; }
-    .skip-link{ position:absolute; left:-999px; top:0; }
-    .skip-link:focus{ left:8px; top:8px; background:var(--night-ink); color:var(--ink-light); padding:8px 12px; border-radius:6px; z-index:200; }
-    .visually-hidden{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
-    .brand{ display:flex; align-items:center; text-decoration:none; }
-    .brand__logo{ height:30px; width:auto; display:block; flex:none; }
-    @media (min-width:900px){ .brand__logo{ height:34px; } }
+    html[lang="ar"] { --sans: "IBM Plex Sans Arabic", system-ui, sans-serif; }
+    html[lang="fa"] { --sans: "Vazirmatn", "Noto Sans Arabic", Tahoma, sans-serif; }
+    html[lang="ur"] { --sans: "Noto Naskh Arabic", "Noto Sans Arabic", Tahoma, sans-serif; }
+    html[lang="hi"] { --sans: "Noto Sans Devanagari", "Nirmala UI", sans-serif; }
+    html[lang="zh"] { --sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    html { scroll-padding-top: var(--header-h); -webkit-text-size-adjust: 100%; }
+    body { background: var(--bg); color: var(--soft); font-family: var(--sans); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    h1, h2, h3 { color: var(--ink); margin: 0; font-weight: 600; }
+    p { margin: 0; }
+    .skip-link { position: absolute; inset-inline-start: -999px; top: 0; }
+    .skip-link:focus { inset-inline-start: 8px; top: 8px; background: var(--band); color: var(--ink); padding: 8px 12px; border-radius: 6px; z-index: 200; }
+    .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-    /* ---------- Politique de confidentialité (/privacy) ----------
-       Page autonome, centrée sur la lecture : fond nuit du site, titres Space Grotesk,
-       filets et accents dorés, aucune animation. Colonne de lecture ~ 880 px. */
+    /* une seule langue affichée (sans JavaScript : toutes, l'une sous l'autre) */
+    html[data-pp-lang="fr"] .pp-doc:not([data-lang="fr"]),
+    html[data-pp-lang="en"] .pp-doc:not([data-lang="en"]),
+    html[data-pp-lang="ar"] .pp-doc:not([data-lang="ar"]),
+    html[data-pp-lang="es"] .pp-doc:not([data-lang="es"]),
+    html[data-pp-lang="de"] .pp-doc:not([data-lang="de"]),
+    html[data-pp-lang="tr"] .pp-doc:not([data-lang="tr"]),
+    html[data-pp-lang="id"] .pp-doc:not([data-lang="id"]),
+    html[data-pp-lang="ur"] .pp-doc:not([data-lang="ur"]),
+    html[data-pp-lang="fa"] .pp-doc:not([data-lang="fa"]),
+    html[data-pp-lang="ru"] .pp-doc:not([data-lang="ru"]),
+    html[data-pp-lang="zh"] .pp-doc:not([data-lang="zh"]),
+    html[data-pp-lang="hi"] .pp-doc:not([data-lang="hi"]) { display: none; }
 
-    /* seule la langue active est affichée (sans JavaScript : les deux, l'une sous l'autre) */
-    html[data-pp-lang="fr"] .pp-doc[data-lang="en"],
-    html[data-pp-lang="en"] .pp-doc[data-lang="fr"],
-    .pp-doc[hidden]{ display:none; }
-
-    body[data-page="privacy"]{ background:var(--night-deep); }
-
-    /* ---------- En-tête : logo + sélecteur FR / EN ---------- */
-    .pp-header{
-      position:sticky; top:0; z-index:40;
-      background:rgba(5,10,24,.94);
-      border-bottom:1px solid rgba(245,176,76,.22);
+    /* en-tête : logo et choix de la langue */
+    .pp-header { position: sticky; top: 0; z-index: 40; background: rgba(6,11,24,0.94); border-bottom: 1px solid var(--line); }
+    .pp-header__inner { max-width: 960px; margin: 0 auto; min-height: var(--header-h); display: flex; align-items: center; justify-content: space-between; gap: 12px 16px; padding: 10px clamp(16px, 4vw, 32px); }
+    .brand { display: flex; align-items: center; border-radius: 6px; }
+    .brand img { height: 32px; width: auto; display: block; }
+    .pp-lang select {
+      appearance: none; -webkit-appearance: none; min-height: 42px; padding: 0 40px 0 16px; border-radius: 999px;
+      border: 1px solid rgba(226,182,89,0.45); background-color: rgba(238,241,250,0.04); color: var(--ink);
+      font: 600 15px/1 "Commissioner", system-ui, sans-serif; cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23F3DFAE' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 16px center;
     }
-    .pp-header__inner{
-      max-width:960px; margin:0 auto; min-height:var(--header-h);
-      display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px 16px;
-      padding:10px clamp(16px,4vw,32px);
-    }
-    .pp-header .brand{ border-radius:6px; }
+    html[dir="rtl"] .pp-lang select { padding: 0 16px 0 40px; background-position: left 16px center; }
+    .pp-lang select option { background: var(--band); color: var(--ink); }
 
-    .pp-lang{
-      display:flex; gap:4px; padding:4px;
-      border:1px solid rgba(245,176,76,.45); border-radius:999px;
-      background:rgba(242,245,252,.04);
-    }
-    .pp-lang a{
-      position:relative; display:inline-flex; align-items:center; justify-content:center;
-      min-width:52px; min-height:40px; padding:0 14px; border-radius:999px;
-      font-family:var(--font-display); font-weight:600; font-size:15px; letter-spacing:.06em;
-      color:var(--ink-light); text-decoration:none;
-    }
-    .pp-lang a:hover{ background:rgba(245,176,76,.14); }
-    .pp-lang a[aria-current="true"]{
-      background:linear-gradient(135deg, var(--gold-1), var(--gold-2)); color:#1B1204;
-    }
+    /* contenu : colonne de lecture */
+    .pp { outline: none; }
+    .pp-doc { max-width: 820px; margin: 0 auto; padding: clamp(44px, 7vw, 96px) clamp(20px, 5vw, 40px) clamp(56px, 8vw, 96px); font-size: clamp(16.5px, 1.1vw + 12px, 18px); line-height: 1.75; overflow-wrap: break-word; }
+    .pp-doc + .pp-doc { border-top: 1px solid var(--line); }
+    html[lang="ar"] .pp-doc, html[lang="fa"] .pp-doc, html[lang="ur"] .pp-doc { line-height: 1.9; }
+    html[lang="ur"] .pp-doc { line-height: 2.05; }
+    .pp-doc__head { margin-bottom: clamp(36px, 6vw, 56px); padding-bottom: clamp(24px, 4vw, 36px); border-bottom: 1px solid var(--line); }
+    .pp-doc h1 { font-size: clamp(32px, 5vw, 48px); line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 14px; }
+    html[dir="rtl"] .pp-doc h1, html[lang="hi"] .pp-doc h1, html[lang="zh"] .pp-doc h1 { letter-spacing: 0; line-height: 1.35; }
+    .pp-updated { color: var(--gold-soft); font-size: 0.9em; margin-bottom: 14px; }
+    .pp-note { color: var(--dim); font-size: 0.88em; line-height: 1.6; margin-bottom: 20px; }
+    .pp-intro { font-size: 1.06em; color: var(--ink); }
+    .pp-doc section { margin-bottom: clamp(36px, 5vw, 52px); scroll-margin-top: calc(var(--header-h) + 24px); }
+    .pp-doc h2 { font-size: clamp(22px, 2.6vw, 27px); line-height: 1.3; margin-bottom: 16px; }
+    .pp-doc h3 { font-size: clamp(17.5px, 1.8vw, 19.5px); line-height: 1.4; margin: 26px 0 8px; color: var(--gold-soft); }
+    .pp-doc p { margin-bottom: 16px; }
+    .pp-doc ul { margin: 0 0 18px; padding-inline-start: 1.4em; }
+    .pp-doc li { margin-bottom: 8px; }
+    .pp-doc li::marker { color: var(--gold); }
+    .pp-doc strong { color: var(--ink); font-weight: 600; }
+    .pp-doc a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: 3px; }
+    .pp-doc a:hover { color: var(--gold-soft); }
+    .pp-contact { font-style: normal; line-height: 1.9; margin-top: 8px; padding: 20px 24px; border: 1px solid var(--line); background: rgba(238,241,250,0.03); border-radius: 12px; }
+    .pp-contact strong { color: var(--ink); }
 
-    /* ---------- Contenu ---------- */
-    .pp{ outline:none; }
-    .pp-doc{
-      scroll-margin-top:var(--header-h);
-      max-width:880px; margin:0 auto;
-      padding:clamp(48px,8vw,104px) clamp(20px,5vw,40px) clamp(56px,8vw,96px);
-      color:var(--ink-body);
-      font-size:clamp(16.5px, 1.1vw + 12px, 18px); line-height:1.75;
-      overflow-wrap:break-word;
+    /* pied : l'autre page légale et le retour au site */
+    .pp-footer { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 24px; padding: 32px 20px 56px; border-top: 1px solid var(--line); }
+    .pp-footer a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 6px; color: var(--ink); font-size: 16px; text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: 4px; }
+    .pp-footer a:hover { color: var(--gold-soft); }
+
+    .pp-header a:focus-visible, .pp-lang select:focus-visible, .pp-doc a:focus-visible, .pp-footer a:focus-visible, .skip-link:focus-visible { outline: 2px solid var(--gold-soft); outline-offset: 3px; }
+
+    @media (max-width: 420px) {
+      .brand img { height: 27px; }
+      .pp-contact { padding: 16px; }
     }
-    .pp-doc + .pp-doc{ border-top:1px solid rgba(245,176,76,.22); }
-
-    .pp-doc__head{ margin-bottom:clamp(40px,6vw,64px); padding-bottom:clamp(28px,4vw,40px); border-bottom:1px solid rgba(245,176,76,.35); }
-    .pp-doc h1{ font-size:clamp(32px, 5vw, 50px); line-height:1.12; letter-spacing:-.01em; margin-bottom:16px; }
-    .pp-updated{ color:var(--gold-1); font-size:.9em; font-weight:500; letter-spacing:.02em; margin-bottom:24px; }
-    .pp-intro{ font-size:1.08em; color:var(--ink-light); }
-
-    .pp-doc section{ margin-bottom:clamp(40px,5vw,56px); scroll-margin-top:calc(var(--header-h) + 24px); }
-    .pp-doc h2{ font-size:clamp(22px, 2.6vw, 28px); line-height:1.3; margin-bottom:18px; }
-    .pp-doc h3{ font-size:clamp(18px, 1.8vw, 20px); line-height:1.4; margin:28px 0 8px; color:var(--gold-1); }
-    .pp-doc p{ margin-bottom:16px; }
-    .pp-doc ul{ margin:0 0 18px; padding-left:1.4em; }
-    .pp-doc li{ margin-bottom:8px; }
-    .pp-doc li::marker{ color:var(--gold-1); }
-
-    .pp-doc a{ color:var(--ink-light); text-decoration:underline; text-decoration-color:var(--gold-1); text-underline-offset:3px; }
-    .pp-doc a:hover{ color:var(--gold-1); }
-
-    .pp-contact{
-      font-style:normal; line-height:1.9; margin-top:8px;
-      padding:20px 24px; border-left:3px solid var(--gold-1);
-      background:rgba(242,245,252,.04); border-radius:0 10px 10px 0;
-    }
-    .pp-contact strong{ color:var(--ink-light); font-family:var(--font-display); }
-    .pp-placeholder{ color:var(--ink-light); font-weight:600; }
-
-    /* ---------- Pied : simple retour ---------- */
-    .pp-footer{
-      text-align:center; padding:36px 20px 56px;
-      border-top:1px solid rgba(245,176,76,.22);
-    }
-    .pp-footer a{
-      display:inline-flex; align-items:center; min-height:44px; padding:0 8px;
-      color:var(--ink-light); font-family:var(--font-display); font-size:16px;
-      text-decoration:underline; text-decoration-color:var(--gold-1); text-underline-offset:4px;
-    }
-    .pp-footer a:hover{ color:var(--gold-1); }
-
-    /* ---------- Focus clavier visible ---------- */
-    .pp-header a:focus-visible, .pp-doc a:focus-visible, .pp-footer a:focus-visible, .skip-link:focus-visible{
-      outline:3px solid var(--gold-1); outline-offset:3px;
-    }
-
-    @media (max-width:420px){
-      .pp-header .brand__logo{ height:26px; }
-      .pp-lang a{ min-width:48px; padding:0 12px; }
-      .pp-contact{ padding:16px 16px; }
-    }
-
-    @media print{
-      .pp-header, .pp-footer, .skip-link{ display:none; }
-      body[data-page="privacy"]{ background:#fff; }
-      .pp-doc, .pp-doc h1, .pp-doc h2, .pp-doc h3, .pp-intro, .pp-updated, .pp-doc a{ color:#000; }
+    @media print {
+      .pp-header, .pp-footer, .skip-link { display: none; }
+      body { background: #fff; }
+      .pp-doc, .pp-doc h1, .pp-doc h2, .pp-doc h3, .pp-intro, .pp-updated, .pp-note, .pp-doc a, .pp-doc strong { color: #000; }
     }
   </style>
 </head>
-<body data-page="privacy">
+<body data-page="legal">
 
   <a class="skip-link" href="#main" data-l10n="skip">Aller au contenu</a>
 
   <header class="pp-header">
     <div class="pp-header__inner">
-      <a href="/" class="brand" data-l10n-label="home" aria-label="Accueil d’aljana">
-        <img class="brand__logo" src="/assets/brand/aljana-logo-v4.webp" alt="aljana" width="102" height="34" />
+      <a href="/" class="brand" data-home data-l10n-label="home" aria-label="Accueil d’aljana">
+        <img src="/assets/brand/aljana-logo-v4.webp" alt="aljana" width="102" height="34" />
       </a>
-      <nav class="pp-lang" aria-label="Langue / Language">
-        <a href="#fr" hreflang="fr" lang="fr" data-lang-switch="fr" aria-current="true">FR<span class="visually-hidden"> (Français)</span></a>
-        <a href="#en" hreflang="en" lang="en" data-lang-switch="en">EN<span class="visually-hidden"> (English)</span></a>
-      </nav>
+      <label class="pp-lang"><span class="visually-hidden" data-l10n="lang">Langue</span><select id="ppLang"><option value="fr" lang="fr" selected>Français</option><option value="en" lang="en">English</option><option value="ar" lang="ar">العربية</option><option value="es" lang="es">Español</option><option value="de" lang="de">Deutsch</option><option value="tr" lang="tr">Türkçe</option><option value="id" lang="id">Indonesia</option><option value="ur" lang="ur">اردو</option><option value="fa" lang="fa">فارسی</option><option value="ru" lang="ru">Русский</option><option value="zh" lang="zh">中文</option><option value="hi" lang="hi">हिन्दी</option></select></label>
     </div>
   </header>
 
   <main id="main" class="pp" tabindex="-1">
 
-    <!-- ===================== VERSION FRANÇAISE ===================== -->
-    <article class="pp-doc" id="fr" lang="fr" data-lang="fr" aria-labelledby="pp-title-fr">
+    <article class="pp-doc" id="doc-fr" lang="fr" dir="ltr" data-lang="fr" aria-labelledby="pp-title-fr">
       <header class="pp-doc__head">
         <h1 id="pp-title-fr">Politique de confidentialité</h1>
-        <p class="pp-updated">Dernière mise à jour : <time datetime="2026-10-07">7 octobre 2026</time></p>
-        <p class="pp-intro">aljana calcule vos horaires de prière, la Qibla, le ciel, la Lune, le Hilal et les éclipses directement sur votre appareil. Cette page décrit, sans détour, les seules informations qui en sortent, vers qui, et pourquoi.</p>
+        <p class="pp-updated">Dernière mise à jour : <time datetime="2026-10-20">20 octobre 2026</time></p>
+        <p class="pp-intro">aljana calcule vos horaires de prière, la Qibla, le ciel, la Lune, le Hilal et les éclipses directement sur votre appareil. Cette page décrit, sans détour, les informations qui en sortent, vers qui, pourquoi et pour combien de temps.</p>
       </header>
 
       <section aria-labelledby="fr-1">
         <h2 id="fr-1">1. En bref</h2>
         <ul>
           <li>Pas de compte, pas d’inscription : aljana ne vous demande ni nom, ni adresse e-mail, ni numéro de téléphone.</li>
-          <li>Pas d’achat intégré ni d’abonnement dans la version actuelle de l’application.</li>
+          <li>Les achats Premium passent par l’App Store ou Google Play : aljana ne voit ni vos coordonnées bancaires ni votre identité (voir « Achats Premium »).</li>
           <li>Pas de publicité, pas de traceur, pas d’outil de mesure d’audience, pas de rapport de plantage envoyé.</li>
-          <li>aljana n’a pas de serveur qui enregistre votre position, vos réglages ou votre usage de l’application.</li>
+          <li>Les serveurs d’aljana n’enregistrent ni votre position, ni vos réglages, ni votre usage de l’application.</li>
           <li>aljana ne vend pas vos données et ne les utilise pas pour vous suivre sur d’autres applications ou sites.</li>
         </ul>
       </section>
@@ -218,45 +183,59 @@
 
       <section aria-labelledby="fr-3">
         <h2 id="fr-3">3. Contenus téléchargés</h2>
-        <p>Pour afficher le Muṣḥaf et les traductions de ses sens, l’application télécharge des pages, des polices et des textes :</p>
+        <p>Pour afficher le Muṣḥaf, les traductions de ses sens et le tafsīr, l’application télécharge des pages, des polices et des textes :</p>
         <ul>
-          <li>depuis les serveurs d’aljana, hébergés par <strong>Cloudflare</strong> (pages du Muṣḥaf, traductions) ;</li>
+          <li>depuis les serveurs d’aljana, hébergés par <strong>Cloudflare</strong> (pages du Muṣḥaf, traductions, tafsīr) ;</li>
           <li>depuis <strong>Quran Foundation</strong> (polices des pages du Muṣḥaf Ḥafṣ).</li>
         </ul>
-        <p>Ces demandes ne contiennent que le numéro de la page ou la langue de la traduction. Vos réglages, votre position et votre lecture ne sont pas transmis. Les serveurs d’aljana utilisent votre adresse IP un court instant pour limiter les abus (nombre de demandes par minute) ; aljana ne l’enregistre pas.</p>
+        <p>Ces demandes ne contiennent que le numéro de la page, le verset ou la langue demandés. Vos réglages, votre position et votre lecture ne sont pas transmis. Les serveurs d’aljana utilisent votre adresse IP un court instant pour limiter les abus (nombre de demandes par minute) ; aljana n’en tient aucun journal. Notre hébergeur Cloudflare traite les données techniques de connexion nécessaires pour acheminer les demandes et protéger le service, selon sa propre politique.</p>
       </section>
 
       <section aria-labelledby="fr-4">
         <h2 id="fr-4">4. Ce qui reste sur votre appareil</h2>
         <p>Les éléments suivants sont enregistrés uniquement sur votre appareil et ne sont jamais envoyés à aljana :</p>
         <ul>
-          <li>vos réglages (méthode de calcul, école de l’ʿaṣr, adhan, affichage, accessibilité) ;</li>
+          <li>vos réglages (méthode de calcul, école de l’ʿaṣr, adhan, rappels, langue, affichage, accessibilité) ;</li>
           <li>le lieu choisi et vos derniers lieux ;</li>
           <li>votre page, vos signets et le mode nuit dans le Muṣḥaf ;</li>
           <li>votre compteur de tasbīḥ ;</li>
           <li>vos observations du Hilal et leurs notes ;</li>
-          <li>les pages, polices et traductions téléchargées.</li>
+          <li>les pages, polices, traductions et textes de tafsīr téléchargés ;</li>
+          <li>l’état de votre accès Premium, gardé pour que Premium fonctionne hors ligne.</li>
         </ul>
-        <p>Vous les supprimez en effaçant les données de l’application ou en la désinstallant. Selon les réglages de votre appareil, elles peuvent être incluses dans sa sauvegarde automatique, gérée par le fabricant du système de votre appareil.</p>
+        <p>Vous les supprimez en effaçant les données de l’application ou en la désinstallant. Selon les réglages de votre appareil, elles peuvent être incluses dans sa sauvegarde automatique (iCloud ou sauvegarde Google), gérée par le fabricant du système de votre appareil.</p>
       </section>
 
       <section aria-labelledby="fr-5">
         <h2 id="fr-5">5. Notifications, adhan et boussole</h2>
         <ul>
           <li>Les rappels et l’adhan sont programmés sur votre appareil, à partir des horaires calculés sur votre appareil. aljana n’utilise pas de notifications envoyées depuis un serveur et ne collecte aucun identifiant de notification.</li>
-          <li>L’autorisation d’envoyer des notifications ou des alarmes n’est demandée que si vous activez l’adhan.</li>
+          <li>L’autorisation d’envoyer des notifications ou des alarmes n’est demandée que si vous activez l’adhan ou un rappel.</li>
           <li>La boussole de la Qibla lit les capteurs d’orientation de votre appareil, après votre accord. Ces mesures restent sur votre appareil.</li>
         </ul>
       </section>
 
+      <section aria-labelledby="fr-achats">
+        <h2 id="fr-achats">6. Achats Premium</h2>
+        <p>Les achats Premium passent par l’App Store d’Apple ou par Google Play, avec les moyens de paiement de votre store. Votre store traite le paiement : aljana ne reçoit jamais vos coordonnées bancaires, ni votre nom, ni l’adresse e-mail de votre compte. Apple et Google agissent alors selon leurs propres politiques de confidentialité.</p>
+        <p>Pour vérifier vos achats et ouvrir Premium sur vos appareils, aljana fait appel à <strong>RevenueCat</strong>, prestataire qui agit pour notre compte. L’application lui transmet :</p>
+        <ul>
+          <li>un identifiant aléatoire créé par l’application ; il ne contient ni votre nom ni votre adresse e-mail, mais il relie entre eux vos achats : c’est donc une donnée pseudonyme ;</li>
+          <li>les informations d’achat fournies par votre store (offre, date, prix, devise, pays du store, renouvellement, remboursement, numéro de transaction) ;</li>
+          <li>des informations techniques (système et version de l’appareil, version de l’application, langue, adresse IP).</li>
+        </ul>
+        <p>Apple et Google informent aussi RevenueCat directement des renouvellements, des résiliations et des remboursements. Pour le Pass 1 mois sur iPhone, le serveur d’aljana lit l’historique d’achat chez RevenueCat, avec cet identifiant, pour calculer la fin de votre accès ; il ne garde rien.</p>
+        <p>Ces informations servent uniquement à fournir Premium, à restaurer vos achats, à prévenir la fraude et à suivre les ventes d’aljana de façon globale. Elles ne servent ni à la publicité ni à vous suivre. RevenueCat les traite selon sa <a href="https://www.revenuecat.com/privacy">politique de confidentialité</a>.</p>
+      </section>
+
       <section aria-labelledby="fr-6">
-        <h2 id="fr-6">6. Partage et liens externes</h2>
+        <h2 id="fr-6">7. Partage et liens externes</h2>
         <p>Rien n’est partagé sans votre action. Quand vous touchez « Partager » (Qibla, éclipse, observation du Hilal, verset, invocation, hadith), vous voyez le contenu et choisissez vous-même le destinataire. Selon l’écran, ce contenu peut inclure le nom de votre ville ou ses coordonnées.</p>
         <p>Certains liens ouvrent des sites tiers (par exemple Quran Foundation, QuranEnc, HadeethEnc ou Google Agenda pour ajouter une éclipse à votre calendrier). Ils ne s’ouvrent que si vous les touchez, et leurs propres politiques de confidentialité s’appliquent alors.</p>
       </section>
 
       <section aria-labelledby="fr-7">
-        <h2 id="fr-7">7. Le site aljana.app</h2>
+        <h2 id="fr-7">8. Le site aljana.app</h2>
         <ul>
           <li><strong>Ville affichée</strong> : la ville montrée sur le site est déduite de votre adresse IP par notre hébergeur Cloudflare, au niveau de la ville. Elle n’est ni enregistrée ni partagée. Le site ne demande jamais la position de votre appareil.</li>
           <li><strong>Polices de caractères</strong> : le site charge ses polices depuis Google Fonts ; Google reçoit donc votre adresse IP.</li>
@@ -266,52 +245,79 @@
       </section>
 
       <section aria-labelledby="fr-8">
-        <h2 id="fr-8">8. Conservation et sécurité</h2>
-        <p>aljana ne conserve aucune donnée personnelle sur ses serveurs. Les données enregistrées sur votre appareil y restent jusqu’à ce que vous les effaciez. Toutes les connexions de l’application et du site sont chiffrées (HTTPS).</p>
+        <h2 id="fr-8">9. Durées de conservation et sécurité</h2>
+        <ul>
+          <li><strong>Données sur votre appareil</strong> : jusqu’à ce que vous les effaciez ou désinstalliez l’application.</li>
+          <li><strong>Coordonnées et recherches envoyées aux services de la section 2</strong> : aljana n’en garde aucune copie ; chaque service les conserve selon sa propre politique.</li>
+          <li><strong>Adresse IP sur les serveurs d’aljana</strong> : le temps de traiter la demande ; aucun journal n’est tenu par aljana.</li>
+          <li><strong>Historique d’achat chez RevenueCat</strong> : tant qu’il est utile pour restaurer vos achats et traiter une réclamation, sauf demande de suppression de votre part (voir « Vos droits »).</li>
+          <li><strong>Pièces comptables de SY-ONE</strong> : elles sont établies à partir des rapports de ventes d’Apple et de Google, sans votre identité, et conservées dix ans comme l’impose le Code de commerce.</li>
+          <li><strong>Messages que vous nous envoyez</strong> : le temps de vous répondre et de suivre votre demande.</li>
+        </ul>
+        <p>Toutes les connexions de l’application et du site sont chiffrées (HTTPS).</p>
+      </section>
+
+      <section aria-labelledby="fr-bases">
+        <h2 id="fr-bases">10. Bases légales et transferts hors d’Europe</h2>
+        <h3>Pourquoi nous pouvons traiter ces données</h3>
+        <ul>
+          <li><strong>Fournir le service que vous demandez</strong> (calculs liés au lieu choisi, téléchargements, achats et accès Premium) : exécution des conditions d’utilisation que vous acceptez.</li>
+          <li><strong>Lire la position de votre appareil</strong> : votre accord, donné dans l’autorisation de localisation, que vous pouvez retirer à tout moment dans les réglages de votre appareil.</li>
+          <li><strong>Protéger le service contre les abus et la fraude</strong> (limite du nombre de demandes, vérification des achats) et suivre les ventes de façon globale : intérêt légitime de SY-ONE.</li>
+          <li><strong>Conserver les pièces comptables</strong> : obligation légale.</li>
+        </ul>
+        <h3>Transferts hors de l’Union européenne</h3>
+        <p>Certains prestataires sont établis ou traitent des données hors de l’Union européenne, notamment RevenueCat, Cloudflare et Google pour les polices du site (États-Unis), BigDataCloud (Australie) et Quran Foundation. Selon le prestataire, ces transferts reposent sur les garanties prévues par le RGPD (décision d’adéquation, dont le cadre de protection des données UE et États-Unis pour les entreprises certifiées, ou clauses contractuelles types de la Commission européenne) ou, pour un service que vous sollicitez vous-même, sur sa nécessité pour vous le fournir.</p>
       </section>
 
       <section aria-labelledby="fr-9">
-        <h2 id="fr-9">9. Vos droits</h2>
-        <p>Selon la réglementation applicable, notamment le Règlement général sur la protection des données (RGPD), vous disposez de droits d’accès, de rectification, d’effacement, de limitation, d’opposition et de portabilité. aljana ne détenant pas de données vous concernant sur ses serveurs, vous gardez la maîtrise directe de vos données : elles sont sur votre appareil, et vous pouvez les effacer à tout moment.</p>
-        <p>Pour toute question, écrivez-nous (voir « Contact »). Vous pouvez aussi adresser une réclamation à l’autorité de protection des données de votre pays (en France, la CNIL).</p>
+        <h2 id="fr-9">11. Vos droits</h2>
+        <p>Selon la réglementation applicable, notamment le Règlement général sur la protection des données (RGPD), vous disposez de droits d’accès, de rectification, d’effacement, de limitation, d’opposition et de portabilité, et du droit de retirer votre accord à tout moment.</p>
+        <ul>
+          <li><strong>Données sur votre appareil</strong> : vous en gardez la maîtrise directe et pouvez les effacer à tout moment.</li>
+          <li><strong>Données d’achat</strong> : comme aljana n’a pas de compte, écrivez-nous avec le numéro de commande de votre reçu (Apple ou Google). Il nous suffit pour retrouver votre historique chez RevenueCat, vous le communiquer ou le supprimer. Nous ne vous demanderons pas d’autre information que celle nécessaire. La suppression n’annule pas un abonnement en cours, qui se résilie dans votre store, et ne touche pas les pièces comptables que la loi nous oblige à garder.</li>
+        </ul>
+        <p>Nous répondons dans un délai d’un mois. Vous pouvez aussi adresser une réclamation à l’autorité de protection des données de votre pays (en France, la CNIL).</p>
       </section>
 
       <section aria-labelledby="fr-10">
-        <h2 id="fr-10">10. Enfants</h2>
-        <p>aljana peut être utilisée par tous et ne collecte de données personnelles auprès de personne, y compris les enfants.</p>
+        <h2 id="fr-10">12. Enfants</h2>
+        <p>aljana peut être utilisée par tous. Elle ne demande de données personnelles à personne, y compris aux enfants. Les seules données liées à un utilisateur sont celles des achats décrits plus haut ; les achats sont soumis aux contrôles parentaux de votre store.</p>
       </section>
 
       <section aria-labelledby="fr-11">
-        <h2 id="fr-11">11. Modifications</h2>
-        <p>Si une évolution d’aljana change la façon dont vos données sont traitées (par exemple un compte, des achats ou un nouveau service), cette politique sera mise à jour avant que cette évolution ne soit disponible, et la date en haut de la page sera modifiée.</p>
+        <h2 id="fr-11">13. Modifications</h2>
+        <p>Si une évolution d’aljana change la façon dont vos données sont traitées (par exemple un compte ou un nouveau service), cette politique sera mise à jour avant que cette évolution ne soit disponible, et la date en haut de la page sera modifiée.</p>
       </section>
 
       <section aria-labelledby="fr-12">
-        <h2 id="fr-12">12. Contact</h2>
-        <p>Pour toute question relative à la confidentialité ou à vos données :</p>
+        <h2 id="fr-12">14. Responsable du traitement et contact</h2>
+        <p>Le responsable du traitement est SY-ONE, éditeur d’aljana. Pour toute question relative à la confidentialité ou pour exercer vos droits :</p>
         <address class="pp-contact">
-          <strong>aljana</strong><br>
-          Éditeur : SY-ONE<br>
+          <strong>SY-ONE SAS</strong><br>
+          14 rue de la Viala, 03300 Creuzier-le-Vieux, France<br>
+          SIREN 821 628 708<br>
           E-mail : <a href="mailto:contact@aljana.app">contact@aljana.app</a><br>
           Site : <a href="https://aljana.app">https://aljana.app</a>
         </address>
       </section>
     </article>
 
-    <article class="pp-doc" id="en" lang="en" data-lang="en" aria-labelledby="pp-title-en">
+    <article class="pp-doc" id="doc-en" lang="en" dir="ltr" data-lang="en" aria-labelledby="pp-title-en">
       <header class="pp-doc__head">
         <h1 id="pp-title-en">Privacy Policy</h1>
-        <p class="pp-updated">Last updated: <time datetime="2026-10-07">October 7, 2026</time></p>
-        <p class="pp-intro">aljana calculates your prayer times, the Qibla, the sky, the Moon, the Hilal and eclipses directly on your device. This page states plainly the only information that leaves it, where it goes, and why.</p>
+        <p class="pp-updated">Last updated: <time datetime="2026-10-20">October 20, 2026</time></p>
+        <p class="pp-note">This English version is a translation provided for convenience. If it differs from the French version, the French version prevails.</p>
+        <p class="pp-intro">aljana calculates your prayer times, the Qibla, the sky, the Moon, the Hilal and eclipses directly on your device. This page states plainly the information that leaves it, where it goes, why, and for how long.</p>
       </header>
 
       <section aria-labelledby="en-1">
         <h2 id="en-1">1. In short</h2>
         <ul>
           <li>No account, no sign-up: aljana does not ask for your name, email address or phone number.</li>
-          <li>No in-app purchases or subscriptions in the current version of the app.</li>
-          <li>No advertising, no trackers, no analytics, no crash reports sent.</li>
-          <li>aljana has no server that records your location, your settings or how you use the app.</li>
+          <li>Premium purchases go through the App Store or Google Play: aljana never sees your payment details or your identity (see “Premium purchases”).</li>
+          <li>No advertising, no trackers, no analytics tools, no crash reports sent.</li>
+          <li>aljana’s servers do not record your location, your settings or how you use the app.</li>
           <li>aljana does not sell your data or use it to track you across other apps or websites.</li>
         </ul>
       </section>
@@ -334,45 +340,59 @@
 
       <section aria-labelledby="en-3">
         <h2 id="en-3">3. Downloaded content</h2>
-        <p>To display the Muṣḥaf and the translations of its meanings, the app downloads pages, fonts and texts:</p>
+        <p>To display the Muṣḥaf, the translations of its meanings and the tafsīr, the app downloads pages, fonts and texts:</p>
         <ul>
-          <li>from aljana’s servers, hosted by <strong>Cloudflare</strong> (Muṣḥaf pages, translations);</li>
+          <li>from aljana’s servers, hosted by <strong>Cloudflare</strong> (Muṣḥaf pages, translations, tafsīr);</li>
           <li>from <strong>Quran Foundation</strong> (page fonts of the Ḥafṣ Muṣḥaf).</li>
         </ul>
-        <p>These requests contain only the page number or the language of the translation. Your settings, location and reading are not transmitted. aljana’s servers use your IP address briefly to limit abuse (number of requests per minute); aljana does not record it.</p>
+        <p>These requests contain only the page number, verse or language requested. Your settings, location and reading are not transmitted. aljana’s servers use your IP address briefly to limit abuse (number of requests per minute); aljana keeps no log of it. Our hosting provider Cloudflare processes the technical connection data needed to route requests and protect the service, under its own policy.</p>
       </section>
 
       <section aria-labelledby="en-4">
         <h2 id="en-4">4. What stays on your device</h2>
         <p>The following are stored only on your device and are never sent to aljana:</p>
         <ul>
-          <li>your settings (calculation method, ʿaṣr school, adhan, display, accessibility);</li>
+          <li>your settings (calculation method, ʿaṣr school, adhan, reminders, language, display, accessibility);</li>
           <li>the chosen place and your recent places;</li>
           <li>your page, bookmarks and night mode in the Muṣḥaf;</li>
           <li>your tasbīḥ counter;</li>
           <li>your Hilal observations and their notes;</li>
-          <li>downloaded pages, fonts and translations.</li>
+          <li>downloaded pages, fonts, translations and tafsīr texts;</li>
+          <li>the status of your Premium access, kept so that Premium works offline.</li>
         </ul>
-        <p>You delete them by clearing the app’s data or uninstalling it. Depending on your device settings, they may be included in its automatic backup, managed by the maker of your device’s operating system.</p>
+        <p>You delete them by clearing the app’s data or uninstalling it. Depending on your device settings, they may be included in its automatic backup (iCloud or Google backup), managed by the maker of your device’s operating system.</p>
       </section>
 
       <section aria-labelledby="en-5">
         <h2 id="en-5">5. Notifications, adhan and compass</h2>
         <ul>
           <li>Reminders and the adhan are scheduled on your device, from times calculated on your device. aljana does not use server-sent notifications and collects no notification identifier.</li>
-          <li>Permission to send notifications or alarms is requested only if you turn on the adhan.</li>
+          <li>Permission to send notifications or alarms is requested only if you turn on the adhan or a reminder.</li>
           <li>The Qibla compass reads your device’s orientation sensors, with your consent. These readings stay on your device.</li>
         </ul>
       </section>
 
+      <section aria-labelledby="en-purchases">
+        <h2 id="en-purchases">6. Premium purchases</h2>
+        <p>Premium purchases go through Apple’s App Store or Google Play, with your store’s payment methods. Your store processes the payment: aljana never receives your payment details, your name or your account’s email address. Apple and Google then act under their own privacy policies.</p>
+        <p>To verify your purchases and unlock Premium on your devices, aljana uses <strong>RevenueCat</strong>, a provider acting on our behalf. The app sends it:</p>
+        <ul>
+          <li>a random identifier created by the app; it contains neither your name nor your email address, but it links your purchases together, so it is pseudonymous data;</li>
+          <li>the purchase information provided by your store (offer, date, price, currency, store country, renewal, refund, transaction number);</li>
+          <li>technical information (device system and version, app version, language, IP address).</li>
+        </ul>
+        <p>Apple and Google also inform RevenueCat directly of renewals, cancellations and refunds. For the 1-month pass on iPhone, aljana’s server reads the purchase history from RevenueCat, using this identifier, to calculate when your access ends; it keeps nothing.</p>
+        <p>This information is used only to provide Premium, restore your purchases, prevent fraud and follow aljana’s sales as a whole. It is never used for advertising or to track you. RevenueCat processes it under its <a href="https://www.revenuecat.com/privacy">privacy policy</a>.</p>
+      </section>
+
       <section aria-labelledby="en-6">
-        <h2 id="en-6">6. Sharing and external links</h2>
+        <h2 id="en-6">7. Sharing and external links</h2>
         <p>Nothing is shared without your action. When you tap “Share” (Qibla, eclipse, Hilal observation, verse, supplication, hadith), you see the content and choose the recipient yourself. Depending on the screen, this content may include your city name or its coordinates.</p>
         <p>Some links open third-party websites (for example Quran Foundation, QuranEnc, HadeethEnc, or Google Calendar to add an eclipse to your calendar). They open only if you tap them, and their own privacy policies then apply.</p>
       </section>
 
       <section aria-labelledby="en-7">
-        <h2 id="en-7">7. The aljana.app website</h2>
+        <h2 id="en-7">8. The aljana.app website</h2>
         <ul>
           <li><strong>City shown</strong>: the city shown on the website is derived from your IP address by our hosting provider, Cloudflare, at city level. It is neither stored nor shared. The website never asks for your device’s location.</li>
           <li><strong>Fonts</strong>: the website loads its fonts from Google Fonts, so Google receives your IP address.</li>
@@ -382,34 +402,1630 @@
       </section>
 
       <section aria-labelledby="en-8">
-        <h2 id="en-8">8. Retention and security</h2>
-        <p>aljana keeps no personal data on its servers. Data stored on your device stays there until you delete it. All connections made by the app and the website are encrypted (HTTPS).</p>
+        <h2 id="en-8">9. Retention and security</h2>
+        <ul>
+          <li><strong>Data on your device</strong>: until you delete it or uninstall the app.</li>
+          <li><strong>Coordinates and searches sent to the services in section 2</strong>: aljana keeps no copy; each service keeps them under its own policy.</li>
+          <li><strong>IP address on aljana’s servers</strong>: for the time needed to handle the request; aljana keeps no log.</li>
+          <li><strong>Purchase history at RevenueCat</strong>: as long as it is useful to restore your purchases and handle a claim, unless you ask us to delete it (see “Your rights”).</li>
+          <li><strong>SY-ONE’s accounting records</strong>: they are drawn from Apple’s and Google’s sales reports, without your identity, and kept for ten years as required by the French Commercial Code.</li>
+          <li><strong>Messages you send us</strong>: for the time needed to answer and follow up on your request.</li>
+        </ul>
+        <p>All connections made by the app and the website are encrypted (HTTPS).</p>
+      </section>
+
+      <section aria-labelledby="en-bases">
+        <h2 id="en-bases">10. Legal bases and transfers outside Europe</h2>
+        <h3>Why we may process this data</h3>
+        <ul>
+          <li><strong>Providing the service you ask for</strong> (calculations for the chosen place, downloads, Premium purchases and access): performance of the terms of use you accept.</li>
+          <li><strong>Reading your device’s location</strong>: your consent, given through the location permission, which you can withdraw at any time in your device settings.</li>
+          <li><strong>Protecting the service against abuse and fraud</strong> (request limits, purchase verification) and following sales as a whole: SY-ONE’s legitimate interest.</li>
+          <li><strong>Keeping accounting records</strong>: legal obligation.</li>
+        </ul>
+        <h3>Transfers outside the European Union</h3>
+        <p>Some providers are based or process data outside the European Union, including RevenueCat, Cloudflare and Google for the website fonts (United States), BigDataCloud (Australia) and Quran Foundation. Depending on the provider, these transfers rely on the safeguards provided by the GDPR (an adequacy decision, including the EU and US Data Privacy Framework for certified companies, or the European Commission’s standard contractual clauses) or, for a service you request yourself, on their necessity to provide it to you.</p>
       </section>
 
       <section aria-labelledby="en-9">
-        <h2 id="en-9">9. Your rights</h2>
-        <p>Under applicable law, including the General Data Protection Regulation (GDPR), you have rights of access, rectification, erasure, restriction, objection and portability. Since aljana holds no data about you on its servers, you keep direct control of your data: it is on your device, and you can delete it at any time.</p>
-        <p>For any question, write to us (see “Contact”). You may also lodge a complaint with the data protection authority of your country (in France, the CNIL).</p>
+        <h2 id="en-9">11. Your rights</h2>
+        <p>Under applicable law, including the General Data Protection Regulation (GDPR), you have rights of access, rectification, erasure, restriction, objection and portability, and the right to withdraw your consent at any time.</p>
+        <ul>
+          <li><strong>Data on your device</strong>: you keep direct control of it and can delete it at any time.</li>
+          <li><strong>Purchase data</strong>: since aljana has no accounts, write to us with the order number from your receipt (Apple or Google). It is enough for us to find your history at RevenueCat, send it to you or delete it. We will not ask for more information than needed. Deletion does not cancel an active subscription, which you cancel in your store, and does not affect the accounting records the law requires us to keep.</li>
+        </ul>
+        <p>We answer within one month. You may also lodge a complaint with the data protection authority of your country (in France, the CNIL).</p>
       </section>
 
       <section aria-labelledby="en-10">
-        <h2 id="en-10">10. Children</h2>
-        <p>aljana can be used by everyone and collects personal data from no one, including children.</p>
+        <h2 id="en-10">12. Children</h2>
+        <p>aljana can be used by everyone. It asks no one for personal data, including children. The only data linked to a user is the purchase data described above; purchases are subject to your store’s parental controls.</p>
       </section>
 
       <section aria-labelledby="en-11">
-        <h2 id="en-11">11. Changes</h2>
-        <p>If a change to aljana alters how your data is handled (for example an account, purchases or a new service), this policy will be updated before that change becomes available, and the date at the top of this page will be revised.</p>
+        <h2 id="en-11">13. Changes</h2>
+        <p>If a change to aljana alters how your data is handled (for example an account or a new service), this policy will be updated before that change becomes available, and the date at the top of this page will be revised.</p>
       </section>
 
       <section aria-labelledby="en-12">
-        <h2 id="en-12">12. Contact</h2>
-        <p>For any question about privacy or your data:</p>
+        <h2 id="en-12">14. Data controller and contact</h2>
+        <p>The data controller is SY-ONE, publisher of aljana. For any question about privacy or to exercise your rights:</p>
         <address class="pp-contact">
-          <strong>aljana</strong><br>
-          Publisher: SY-ONE<br>
+          <strong>SY-ONE SAS</strong><br>
+          14 rue de la Viala, 03300 Creuzier-le-Vieux, France<br>
+          SIREN 821 628 708<br>
           Email: <a href="mailto:contact@aljana.app">contact@aljana.app</a><br>
           Website: <a href="https://aljana.app">https://aljana.app</a>
+        </address>
+      </section>
+    </article>
+
+    <article class="pp-doc" id="doc-ar" lang="ar" dir="rtl" data-lang="ar" aria-labelledby="pp-title-ar">
+      <header class="pp-doc__head">
+        <h1 id="pp-title-ar">سياسة الخصوصية</h1>
+        <p class="pp-updated">آخر تحديث: <time datetime="2026-10-20">٢٠ أكتوبر ٢٠٢٦</time></p>
+        <p class="pp-note">هذه الترجمة العربية مقدَّمة لتيسير القراءة، وعند وجود أي اختلاف يُعتمد النص الفرنسي.</p>
+        <p class="pp-intro">يحسب aljana مواقيت صلاتك والقبلة والسماء والقمر والهلال والكسوف والخسوف على جهازك مباشرة. وتوضّح هذه الصفحة بلا مواربة ما يخرج من جهازك من معلومات، وإلى من، ولماذا، ولأي مدة.</p>
+      </header>
+
+      <section aria-labelledby="ar-1">
+        <h2 id="ar-1">١. باختصار</h2>
+        <ul>
+          <li>لا حساب ولا تسجيل: لا يطلب منك aljana اسمك ولا بريدك الإلكتروني ولا رقم هاتفك.</li>
+          <li>تتم مشتريات Premium عبر App Store أو Google Play، ولا يطّلع aljana على بياناتك المصرفية ولا على هويتك (انظر «مشتريات Premium»).</li>
+          <li>لا إعلانات، ولا أدوات تتبّع، ولا أدوات لقياس الجمهور، ولا تقارير أعطال تُرسَل.</li>
+          <li>لا تسجّل خوادم aljana موقعك ولا إعداداتك ولا طريقة استخدامك للتطبيق.</li>
+          <li>لا يبيع aljana بياناتك، ولا يستعملها لتتبّعك عبر تطبيقات أو مواقع أخرى.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="ar-2">
+        <h2 id="ar-2">٢. موقعك</h2>
+        <h3>كيف يُحصَل عليه</h3>
+        <p>لا يُقرأ موقع جهازك إلا عندما تلمس زر تحديد الموقع، وبشرط أن تأذن بذلك (إذن «أثناء استخدام التطبيق»). ويمكنك أيضًا اختيار مكان دون أن تشارك موقعك أبدًا: بالبحث عن مدينة، أو باختيار إحدى المدن المقترحة، أو بإدخال الإحداثيات يدويًا.</p>
+        <h3>فيمَ يُستعمل</h3>
+        <p>تُحسب مواقيت الصلاة والقبلة والسماء والقمر والهلال والكسوف والخسوف على جهازك انطلاقًا من المكان المختار. ويُحفظ المكان الحالي وآخر خمسة أماكن على جهازك حتى لا يُطلب منك إدخالها من جديد.</p>
+        <h3>ما الذي يُرسَل، وإلى من</h3>
+        <p>بعض المعلومات لا يمكن حسابها دون اتصال. وللحصول عليها يرسل التطبيق إحداثيات المكان المختار إلى خدمات متخصصة:</p>
+        <ul>
+          <li><strong>Open-Meteo</strong>: المنطقة الزمنية للمكان وارتفاعه، والطقس والغطاء السحابي (شاشات السماء والهلال والكسوف)، وتضاريس الأفق حول المكان (شاشة الهلال).</li>
+          <li><strong>BigDataCloud</strong>: اسم المدينة الموافق لموقعك، وذلك فقط بعد أن تلمس زر تحديد الموقع.</li>
+        </ul>
+        <p>عندما تبحث عن مدينة، يُرسَل النص الذي تكتبه إلى <strong>Open-Meteo</strong> (البحث عن الأماكن)، وإن لم يُعثر على نتيجة فإلى <strong>Photon</strong> (خدمة البحث الجغرافي التابعة لشركة Komoot والمبنية على OpenStreetMap).</p>
+        <p>لا يرسل aljana إلى هذه الخدمات أي اسم ولا أي معرّف ولا أي معلومة عن جهازك. وكما في أي اتصال بالإنترنت، تتلقى هذه الخدمات أيضًا عنوان IP الخاص بك، وتعالج هذه البيانات وفق سياسات الخصوصية الخاصة بها.</p>
+      </section>
+
+      <section aria-labelledby="ar-3">
+        <h2 id="ar-3">٣. المحتوى الذي يُنزَّل</h2>
+        <p>لعرض المصحف وترجمات معانيه والتفسير، ينزّل التطبيق صفحات وخطوطًا ونصوصًا:</p>
+        <ul>
+          <li>من خوادم aljana، المستضافة لدى <strong>Cloudflare</strong> (صفحات المصحف، والترجمات، والتفسير)؛</li>
+          <li>من <strong>Quran Foundation</strong> (خطوط صفحات مصحف حفص).</li>
+        </ul>
+        <p>لا تحتوي هذه الطلبات إلا على رقم الصفحة أو الآية أو اللغة المطلوبة، ولا تُنقل إعداداتك ولا موقعك ولا قراءتك. وتستعمل خوادم aljana عنوان IP الخاص بك لحظة قصيرة للحدّ من إساءة الاستخدام (عدد الطلبات في الدقيقة)، ولا يحتفظ aljana بأي سجل له. أما المستضيف Cloudflare فيعالج بيانات الاتصال التقنية اللازمة لتوجيه الطلبات وحماية الخدمة، وفق سياسته الخاصة.</p>
+      </section>
+
+      <section aria-labelledby="ar-4">
+        <h2 id="ar-4">٤. ما يبقى على جهازك</h2>
+        <p>تُحفظ العناصر الآتية على جهازك فقط، ولا تُرسَل إلى aljana أبدًا:</p>
+        <ul>
+          <li>إعداداتك (طريقة الحساب، ومذهب العصر، والأذان، والتذكيرات، واللغة، والعرض، وإمكانية الوصول)؛</li>
+          <li>المكان المختار وآخر الأماكن التي استعملتها؛</li>
+          <li>صفحتك وعلاماتك والوضع الليلي في المصحف؛</li>
+          <li>عدّاد التسبيح؛</li>
+          <li>رصدك للهلال وملاحظاتك عليه؛</li>
+          <li>الصفحات والخطوط والترجمات ونصوص التفسير التي نزّلتها؛</li>
+          <li>حالة اشتراكك في Premium، محفوظةً ليعمل Premium دون اتصال.</li>
+        </ul>
+        <p>تحذفها بمسح بيانات التطبيق أو بإلغاء تثبيته. وبحسب إعدادات جهازك، قد تُدرَج في نسخه الاحتياطي التلقائي (iCloud أو النسخ الاحتياطي من Google)، الذي تديره الشركة المصنّعة لنظام تشغيل جهازك.</p>
+      </section>
+
+      <section aria-labelledby="ar-5">
+        <h2 id="ar-5">٥. الإشعارات والأذان والبوصلة</h2>
+        <ul>
+          <li>تُبرمَج التذكيرات والأذان على جهازك، انطلاقًا من مواقيت محسوبة على جهازك. ولا يستعمل aljana إشعارات مرسَلة من خادم، ولا يجمع أي معرّف للإشعارات.</li>
+          <li>لا يُطلب إذن إرسال الإشعارات أو المنبّهات إلا إذا فعّلت الأذان أو أحد التذكيرات.</li>
+          <li>تقرأ بوصلة القبلة مستشعرات الاتجاه في جهازك بعد موافقتك، وتبقى هذه القياسات على جهازك.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="ar-achats">
+        <h2 id="ar-achats">٦. مشتريات Premium</h2>
+        <p>تتم مشتريات Premium عبر App Store من Apple أو عبر Google Play، بوسائل الدفع الخاصة بمتجرك. ويتولّى متجرك معالجة الدفع، فلا يتلقى aljana أبدًا بياناتك المصرفية ولا اسمك ولا البريد الإلكتروني لحسابك. وتعمل Apple وGoogle في ذلك وفق سياسات الخصوصية الخاصة بهما.</p>
+        <p>للتحقق من مشترياتك وتفعيل Premium على أجهزتك، يستعين aljana بشركة <strong>RevenueCat</strong>، وهي مزوّد خدمة يعمل لحسابنا. ويرسل إليها التطبيق:</p>
+        <ul>
+          <li>معرّفًا عشوائيًا ينشئه التطبيق، لا يتضمن اسمك ولا بريدك الإلكتروني، لكنه يربط مشترياتك بعضها ببعض، ولذلك فهو بيانات مستعارة؛</li>
+          <li>معلومات الشراء التي يقدّمها متجرك (العرض، والتاريخ، والسعر، والعملة، وبلد المتجر، والتجديد، والاسترداد، ورقم المعاملة)؛</li>
+          <li>معلومات تقنية (نظام الجهاز وإصداره، وإصدار التطبيق، واللغة، وعنوان IP).</li>
+        </ul>
+        <p>وتُبلغ Apple وGoogle شركة RevenueCat مباشرة بعمليات التجديد والإلغاء والاسترداد. وبالنسبة إلى «اشتراك شهر واحد» على iPhone، يقرأ خادم aljana سجل الشراء لدى RevenueCat بهذا المعرّف لحساب موعد انتهاء اشتراكك، ولا يحتفظ بشيء.</p>
+        <p>لا تُستعمل هذه المعلومات إلا لتقديم Premium، واستعادة مشترياتك، ومنع الاحتيال، ومتابعة مبيعات aljana بصورة إجمالية. ولا تُستعمل للإعلان ولا لتتبّعك. وتعالجها RevenueCat وفق <a href="https://www.revenuecat.com/privacy">سياسة الخصوصية</a> الخاصة بها.</p>
+      </section>
+
+      <section aria-labelledby="ar-6">
+        <h2 id="ar-6">٧. المشاركة والروابط الخارجية</h2>
+        <p>لا يُشارَك شيء دون فعل منك. عندما تلمس «مشاركة» (القبلة، الكسوف، رصد الهلال، آية، دعاء، حديث)، ترى المحتوى وتختار المستلم بنفسك. وبحسب الشاشة، قد يتضمن هذا المحتوى اسم مدينتك أو إحداثياتها.</p>
+        <p>تفتح بعض الروابط مواقع خارجية (مثل Quran Foundation وQuranEnc وHadeethEnc، أو تقويم Google لإضافة كسوف إلى تقويمك). ولا تُفتح إلا إذا لمستها، وتسري عندئذ سياسات الخصوصية الخاصة بتلك المواقع.</p>
+      </section>
+
+      <section aria-labelledby="ar-7">
+        <h2 id="ar-7">٨. موقع aljana.app</h2>
+        <ul>
+          <li><strong>المدينة المعروضة</strong>: يستنتج المستضيف Cloudflare المدينة المعروضة على الموقع من عنوان IP الخاص بك، على مستوى المدينة. ولا تُحفظ ولا تُشارَك. ولا يطلب الموقع أبدًا موقع جهازك.</li>
+          <li><strong>الخطوط</strong>: يحمّل الموقع خطوطه من Google Fonts، ولذلك تتلقى Google عنوان IP الخاص بك.</li>
+          <li><strong>التخزين في متصفحك</strong>: يحتفظ متصفحك باللغة التي تختارها، أما شاشة البداية وموضع التمرير فلا يُحفظان إلا طوال زيارتك.</li>
+          <li><strong>لا ملفات تعريف ارتباط ولا قياس للجمهور</strong>. وتعالج Cloudflare بيانات الاتصال التقنية اللازمة لتقديم الصفحات وحماية الموقع.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="ar-8">
+        <h2 id="ar-8">٩. مدد الاحتفاظ والأمان</h2>
+        <ul>
+          <li><strong>البيانات الموجودة على جهازك</strong>: إلى أن تحذفها أو تلغي تثبيت التطبيق.</li>
+          <li><strong>الإحداثيات وعمليات البحث المرسلة إلى الخدمات المذكورة في القسم ٢</strong>: لا يحتفظ aljana بأي نسخة منها، وتحتفظ بها كل خدمة وفق سياستها الخاصة.</li>
+          <li><strong>عنوان IP على خوادم aljana</strong>: طوال مدة معالجة الطلب فقط، ولا يحتفظ aljana بأي سجل.</li>
+          <li><strong>سجل الشراء لدى RevenueCat</strong>: ما دام مفيدًا لاستعادة مشترياتك ومعالجة أي مطالبة، ما لم تطلب حذفه (انظر «حقوقك»).</li>
+          <li><strong>المستندات المحاسبية لشركة SY-ONE</strong>: تُعَدّ انطلاقًا من تقارير مبيعات Apple وGoogle دون هويتك، وتُحفظ عشر سنوات كما يفرض القانون التجاري الفرنسي.</li>
+          <li><strong>الرسائل التي ترسلها إلينا</strong>: طوال المدة اللازمة للرد عليك ومتابعة طلبك.</li>
+        </ul>
+        <p>جميع اتصالات التطبيق والموقع مشفّرة (HTTPS).</p>
+      </section>
+
+      <section aria-labelledby="ar-bases">
+        <h2 id="ar-bases">١٠. الأسس القانونية والنقل خارج أوروبا</h2>
+        <h3>لماذا يحق لنا معالجة هذه البيانات</h3>
+        <ul>
+          <li><strong>تقديم الخدمة التي تطلبها</strong> (الحسابات المرتبطة بالمكان المختار، والتنزيلات، ومشتريات Premium والوصول إليه): تنفيذ شروط الاستخدام التي تقبلها.</li>
+          <li><strong>قراءة موقع جهازك</strong>: موافقتك المعطاة من خلال إذن الموقع، ويمكنك سحبها في أي وقت من إعدادات جهازك.</li>
+          <li><strong>حماية الخدمة من إساءة الاستخدام والاحتيال</strong> (تحديد عدد الطلبات، والتحقق من المشتريات) ومتابعة المبيعات بصورة إجمالية: المصلحة المشروعة لشركة SY-ONE.</li>
+          <li><strong>حفظ المستندات المحاسبية</strong>: التزام قانوني.</li>
+        </ul>
+        <h3>النقل خارج الاتحاد الأوروبي</h3>
+        <p>بعض مزوّدي الخدمة مقيمون خارج الاتحاد الأوروبي أو يعالجون البيانات خارجه، ومنهم RevenueCat وCloudflare وGoogle لخطوط الموقع (الولايات المتحدة)، وBigDataCloud (أستراليا)، وQuran Foundation. وبحسب كل مزوّد، يستند هذا النقل إلى الضمانات التي ينص عليها النظام الأوروبي العام لحماية البيانات (قرار ملاءمة، ومنه إطار حماية البيانات بين الاتحاد الأوروبي والولايات المتحدة للشركات المعتمدة، أو البنود التعاقدية النموذجية للمفوضية الأوروبية)، أو، بالنسبة إلى خدمة تطلبها بنفسك، إلى ضرورته لتقديمها إليك.</p>
+      </section>
+
+      <section aria-labelledby="ar-9">
+        <h2 id="ar-9">١١. حقوقك</h2>
+        <p>وفق التشريعات المعمول بها، ولا سيما النظام الأوروبي العام لحماية البيانات (RGPD)، لك حق الاطلاع والتصحيح والمحو وتقييد المعالجة والاعتراض ونقل البيانات، وحق سحب موافقتك في أي وقت.</p>
+        <ul>
+          <li><strong>البيانات الموجودة على جهازك</strong>: تبقى تحت تصرّفك المباشر، ويمكنك حذفها في أي وقت.</li>
+          <li><strong>بيانات الشراء</strong>: بما أن aljana لا يستعمل حسابات، راسلنا مع رقم الطلب الوارد في إيصالك (من Apple أو Google)، فهو يكفينا للعثور على سجلك لدى RevenueCat وإرساله إليك أو حذفه. ولن نطلب منك إلا ما هو ضروري. ولا يُلغي الحذف اشتراكًا جاريًا، فإلغاؤه يتم من متجرك، ولا يمسّ المستندات المحاسبية التي يلزمنا القانون بحفظها.</li>
+        </ul>
+        <p>نجيب في غضون شهر واحد. ويمكنك أيضًا تقديم شكوى إلى سلطة حماية البيانات في بلدك (في فرنسا: CNIL).</p>
+      </section>
+
+      <section aria-labelledby="ar-10">
+        <h2 id="ar-10">١٢. الأطفال</h2>
+        <p>يمكن للجميع استعمال aljana، ولا يطلب بيانات شخصية من أحد، بما في ذلك الأطفال. والبيانات الوحيدة المرتبطة بمستخدم هي بيانات المشتريات المذكورة أعلاه، والمشتريات خاضعة لأدوات الرقابة الأبوية في متجرك.</p>
+      </section>
+
+      <section aria-labelledby="ar-11">
+        <h2 id="ar-11">١٣. التعديلات</h2>
+        <p>إذا غيّر تطوّرٌ في aljana طريقة معالجة بياناتك (كإضافة حساب أو خدمة جديدة)، فستُحدَّث هذه السياسة قبل إتاحة هذا التطوّر، ويُعدَّل التاريخ في أعلى الصفحة.</p>
+      </section>
+
+      <section aria-labelledby="ar-12">
+        <h2 id="ar-12">١٤. المسؤول عن المعالجة والتواصل</h2>
+        <p>المسؤول عن معالجة البيانات هو شركة SY-ONE، ناشرة aljana. لأي سؤال يتعلق بالخصوصية أو لممارسة حقوقك:</p>
+        <address class="pp-contact">
+          <strong>SY-ONE SAS</strong><br>
+          <bdi dir="ltr">14 rue de la Viala, 03300 Creuzier-le-Vieux, France</bdi><br>
+          <bdi dir="ltr">SIREN 821 628 708</bdi><br>
+          البريد الإلكتروني: <a href="mailto:contact@aljana.app">contact@aljana.app</a><br>
+          الموقع: <a href="https://aljana.app">https://aljana.app</a>
+        </address>
+      </section>
+    </article>
+
+    <article class="pp-doc" id="doc-es" lang="es" dir="ltr" data-lang="es" aria-labelledby="pp-title-es">
+      <header class="pp-doc__head">
+        <h1 id="pp-title-es">Política de privacidad</h1>
+        <p class="pp-updated">Última actualización: <time datetime="2026-10-20">20 de octubre de 2026</time></p>
+        <p class="pp-note">Esta versión en español es una traducción ofrecida para facilitar la lectura. En caso de discrepancia, prevalece la versión francesa.</p>
+        <p class="pp-intro">aljana calcula sus horarios de oración, la Qibla, el cielo, la Luna, el Hilal y los eclipses directamente en su dispositivo. Esta página explica sin rodeos qué información sale de él, hacia quién, por qué y durante cuánto tiempo.</p>
+      </header>
+
+      <section aria-labelledby="es-1">
+        <h2 id="es-1">1. En resumen</h2>
+        <ul>
+          <li>Sin cuenta ni registro: aljana no le pide su nombre, su dirección de correo electrónico ni su número de teléfono.</li>
+          <li>Las compras Premium se realizan a través del App Store o de Google Play: aljana no ve sus datos bancarios ni su identidad (véase «Compras Premium»).</li>
+          <li>Sin publicidad, sin rastreadores, sin herramientas de medición de audiencia, sin envío de informes de errores.</li>
+          <li>Los servidores de aljana no registran su ubicación, sus ajustes ni el uso que hace de la aplicación.</li>
+          <li>aljana no vende sus datos ni los utiliza para seguirle en otras aplicaciones o sitios web.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="es-2">
+        <h2 id="es-2">2. Su ubicación</h2>
+        <h3>Cómo se obtiene</h3>
+        <p>La ubicación de su dispositivo solo se lee cuando toca el botón de localización, y solo si usted lo autoriza (permiso «mientras se usa la app»). También puede elegir un lugar sin compartir nunca su ubicación: buscando una ciudad, eligiendo una de las ciudades propuestas o introduciendo coordenadas a mano.</p>
+        <h3>Para qué sirve</h3>
+        <p>Los horarios de oración, la Qibla, el cielo, la Luna, el Hilal y los eclipses se calculan en su dispositivo a partir del lugar elegido. El lugar actual y sus cinco últimos lugares se guardan en su dispositivo para no tener que pedírselos de nuevo.</p>
+        <h3>Qué se envía y a quién</h3>
+        <p>Algunos datos no pueden calcularse sin conexión. Para obtenerlos, la aplicación envía las coordenadas del lugar elegido a servicios especializados:</p>
+        <ul>
+          <li><strong>Open-Meteo</strong>: zona horaria y altitud del lugar, tiempo y nubosidad (pantallas Cielo, Hilal y Eclipses), relieve del horizonte alrededor del lugar (pantalla Hilal).</li>
+          <li><strong>BigDataCloud</strong>: nombre de la ciudad correspondiente a su ubicación, solo después de que haya tocado el botón de localización.</li>
+        </ul>
+        <p>Cuando busca una ciudad, el texto que escribe se envía a <strong>Open-Meteo</strong> (búsqueda de lugares) y, si no se encuentra ningún resultado, a <strong>Photon</strong> (servicio de búsqueda geográfica de Komoot, basado en OpenStreetMap).</p>
+        <p>aljana no envía a estos servicios ningún nombre, ningún identificador ni ninguna información sobre su dispositivo. Como en cualquier conexión a Internet, también reciben su dirección IP. Tratan estos datos según sus propias políticas de privacidad.</p>
+      </section>
+
+      <section aria-labelledby="es-3">
+        <h2 id="es-3">3. Contenidos descargados</h2>
+        <p>Para mostrar el Muṣḥaf, las traducciones de sus significados y el tafsīr, la aplicación descarga páginas, fuentes y textos:</p>
+        <ul>
+          <li>desde los servidores de aljana, alojados por <strong>Cloudflare</strong> (páginas del Muṣḥaf, traducciones, tafsīr);</li>
+          <li>desde <strong>Quran Foundation</strong> (fuentes de las páginas del Muṣḥaf Ḥafṣ).</li>
+        </ul>
+        <p>Estas solicitudes solo contienen el número de página, el versículo o el idioma solicitados. No se transmiten sus ajustes, su ubicación ni su lectura. Los servidores de aljana utilizan su dirección IP durante un breve instante para limitar los abusos (número de solicitudes por minuto); aljana no guarda ningún registro de ella. Nuestro proveedor de alojamiento, Cloudflare, trata los datos técnicos de conexión necesarios para encaminar las solicitudes y proteger el servicio, según su propia política.</p>
+      </section>
+
+      <section aria-labelledby="es-4">
+        <h2 id="es-4">4. Lo que permanece en su dispositivo</h2>
+        <p>Los siguientes elementos se guardan únicamente en su dispositivo y nunca se envían a aljana:</p>
+        <ul>
+          <li>sus ajustes (método de cálculo, escuela del ʿaṣr, adhan, recordatorios, idioma, visualización, accesibilidad);</li>
+          <li>el lugar elegido y sus últimos lugares;</li>
+          <li>su página, sus marcadores y el modo nocturno del Muṣḥaf;</li>
+          <li>su contador de tasbīḥ;</li>
+          <li>sus observaciones del Hilal y sus notas;</li>
+          <li>las páginas, fuentes, traducciones y textos de tafsīr descargados;</li>
+          <li>el estado de su acceso Premium, guardado para que Premium funcione sin conexión.</li>
+        </ul>
+        <p>Puede eliminarlos borrando los datos de la aplicación o desinstalándola. Según los ajustes de su dispositivo, pueden incluirse en su copia de seguridad automática (iCloud o copia de seguridad de Google), gestionada por el fabricante del sistema de su dispositivo.</p>
+      </section>
+
+      <section aria-labelledby="es-5">
+        <h2 id="es-5">5. Notificaciones, adhan y brújula</h2>
+        <ul>
+          <li>Los recordatorios y el adhan se programan en su dispositivo, a partir de horarios calculados en su dispositivo. aljana no utiliza notificaciones enviadas desde un servidor y no recoge ningún identificador de notificaciones.</li>
+          <li>El permiso para enviar notificaciones o alarmas solo se solicita si activa el adhan o un recordatorio.</li>
+          <li>La brújula de la Qibla lee los sensores de orientación de su dispositivo, con su consentimiento. Estas mediciones permanecen en su dispositivo.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="es-achats">
+        <h2 id="es-achats">6. Compras Premium</h2>
+        <p>Las compras Premium se realizan a través del App Store de Apple o de Google Play, con los medios de pago de su tienda. Su tienda procesa el pago: aljana nunca recibe sus datos bancarios, ni su nombre, ni la dirección de correo electrónico de su cuenta. Apple y Google actúan entonces según sus propias políticas de privacidad.</p>
+        <p>Para verificar sus compras y activar Premium en sus dispositivos, aljana recurre a <strong>RevenueCat</strong>, un proveedor que actúa por nuestra cuenta. La aplicación le transmite:</p>
+        <ul>
+          <li>un identificador aleatorio creado por la aplicación; no contiene su nombre ni su dirección de correo electrónico, pero vincula sus compras entre sí, por lo que se trata de un dato seudónimo;</li>
+          <li>la información de compra facilitada por su tienda (oferta, fecha, precio, moneda, país de la tienda, renovación, reembolso, número de transacción);</li>
+          <li>información técnica (sistema y versión del dispositivo, versión de la aplicación, idioma, dirección IP).</li>
+        </ul>
+        <p>Apple y Google también informan directamente a RevenueCat de las renovaciones, cancelaciones y reembolsos. Para el pase de 1 mes en iPhone, el servidor de aljana consulta el historial de compras en RevenueCat, con ese identificador, para calcular cuándo termina su acceso; no guarda nada.</p>
+        <p>Esta información solo se utiliza para ofrecer Premium, restaurar sus compras, prevenir el fraude y seguir las ventas de aljana de forma global. No se utiliza para publicidad ni para seguirle. RevenueCat la trata según su <a href="https://www.revenuecat.com/privacy">política de privacidad</a>.</p>
+      </section>
+
+      <section aria-labelledby="es-6">
+        <h2 id="es-6">7. Compartir y enlaces externos</h2>
+        <p>Nada se comparte sin una acción suya. Cuando toca «Compartir» (Qibla, eclipse, observación del Hilal, versículo, súplica, hadiz), ve el contenido y elige usted mismo el destinatario. Según la pantalla, este contenido puede incluir el nombre de su ciudad o sus coordenadas.</p>
+        <p>Algunos enlaces abren sitios de terceros (por ejemplo Quran Foundation, QuranEnc, HadeethEnc o Google Calendar para añadir un eclipse a su calendario). Solo se abren si los toca, y entonces se aplican sus propias políticas de privacidad.</p>
+      </section>
+
+      <section aria-labelledby="es-7">
+        <h2 id="es-7">8. El sitio aljana.app</h2>
+        <ul>
+          <li><strong>Ciudad mostrada</strong>: la ciudad que muestra el sitio la deduce de su dirección IP nuestro proveedor de alojamiento, Cloudflare, a nivel de ciudad. No se guarda ni se comparte. El sitio nunca pide la ubicación de su dispositivo.</li>
+          <li><strong>Fuentes tipográficas</strong>: el sitio carga sus fuentes desde Google Fonts; por tanto, Google recibe su dirección IP.</li>
+          <li><strong>Almacenamiento en su navegador</strong>: su navegador guarda el idioma que elige; la pantalla de inicio y la posición de desplazamiento solo se guardan durante su visita.</li>
+          <li><strong>Sin cookies ni medición de audiencia</strong>. Cloudflare trata los datos técnicos de conexión necesarios para servirle las páginas y proteger el sitio.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="es-8">
+        <h2 id="es-8">9. Plazos de conservación y seguridad</h2>
+        <ul>
+          <li><strong>Datos en su dispositivo</strong>: hasta que los borre o desinstale la aplicación.</li>
+          <li><strong>Coordenadas y búsquedas enviadas a los servicios de la sección 2</strong>: aljana no guarda ninguna copia; cada servicio las conserva según su propia política.</li>
+          <li><strong>Dirección IP en los servidores de aljana</strong>: el tiempo necesario para tratar la solicitud; aljana no guarda ningún registro.</li>
+          <li><strong>Historial de compras en RevenueCat</strong>: mientras sea útil para restaurar sus compras y atender una reclamación, salvo que usted pida su supresión (véase «Sus derechos»).</li>
+          <li><strong>Documentos contables de SY-ONE</strong>: se elaboran a partir de los informes de ventas de Apple y de Google, sin su identidad, y se conservan diez años, como exige el Código de Comercio francés.</li>
+          <li><strong>Mensajes que nos envía</strong>: el tiempo necesario para responderle y hacer el seguimiento de su solicitud.</li>
+        </ul>
+        <p>Todas las conexiones de la aplicación y del sitio están cifradas (HTTPS).</p>
+      </section>
+
+      <section aria-labelledby="es-bases">
+        <h2 id="es-bases">10. Bases jurídicas y transferencias fuera de Europa</h2>
+        <h3>Por qué podemos tratar estos datos</h3>
+        <ul>
+          <li><strong>Prestar el servicio que usted solicita</strong> (cálculos vinculados al lugar elegido, descargas, compras y acceso Premium): ejecución de las condiciones de uso que usted acepta.</li>
+          <li><strong>Leer la ubicación de su dispositivo</strong>: su consentimiento, otorgado mediante el permiso de ubicación, que puede retirar en cualquier momento en los ajustes de su dispositivo.</li>
+          <li><strong>Proteger el servicio contra abusos y fraudes</strong> (límite de solicitudes, verificación de compras) y seguir las ventas de forma global: interés legítimo de SY-ONE.</li>
+          <li><strong>Conservar los documentos contables</strong>: obligación legal.</li>
+        </ul>
+        <h3>Transferencias fuera de la Unión Europea</h3>
+        <p>Algunos proveedores están establecidos o tratan datos fuera de la Unión Europea, en particular RevenueCat, Cloudflare y Google para las fuentes del sitio (Estados Unidos), BigDataCloud (Australia) y Quran Foundation. Según el proveedor, estas transferencias se basan en las garantías previstas por el RGPD (decisión de adecuación, incluido el Marco de Privacidad de Datos entre la UE y los Estados Unidos para las empresas certificadas, o cláusulas contractuales tipo de la Comisión Europea) o, para un servicio que usted mismo solicita, en su necesidad para prestárselo.</p>
+      </section>
+
+      <section aria-labelledby="es-9">
+        <h2 id="es-9">11. Sus derechos</h2>
+        <p>Según la normativa aplicable, en particular el Reglamento General de Protección de Datos (RGPD), usted tiene derecho de acceso, rectificación, supresión, limitación, oposición y portabilidad, así como derecho a retirar su consentimiento en cualquier momento.</p>
+        <ul>
+          <li><strong>Datos en su dispositivo</strong>: usted conserva su control directo y puede borrarlos en cualquier momento.</li>
+          <li><strong>Datos de compra</strong>: como aljana no tiene cuentas, escríbanos con el número de pedido que figura en su recibo (de Apple o de Google). Nos basta para encontrar su historial en RevenueCat, comunicárselo o suprimirlo. No le pediremos más información que la necesaria. La supresión no cancela una suscripción en curso, que se cancela en su tienda, ni afecta a los documentos contables que la ley nos obliga a conservar.</li>
+        </ul>
+        <p>Respondemos en el plazo de un mes. También puede presentar una reclamación ante la autoridad de protección de datos de su país (en Francia, la CNIL).</p>
+      </section>
+
+      <section aria-labelledby="es-10">
+        <h2 id="es-10">12. Menores</h2>
+        <p>aljana puede ser utilizada por todos. No pide datos personales a nadie, tampoco a los menores. Los únicos datos vinculados a un usuario son los de las compras descritas más arriba; las compras están sujetas a los controles parentales de su tienda.</p>
+      </section>
+
+      <section aria-labelledby="es-11">
+        <h2 id="es-11">13. Modificaciones</h2>
+        <p>Si una evolución de aljana cambia la forma en que se tratan sus datos (por ejemplo, una cuenta o un nuevo servicio), esta política se actualizará antes de que dicha evolución esté disponible, y se modificará la fecha que figura en la parte superior de la página.</p>
+      </section>
+
+      <section aria-labelledby="es-12">
+        <h2 id="es-12">14. Responsable del tratamiento y contacto</h2>
+        <p>El responsable del tratamiento es SY-ONE, editor de aljana. Para cualquier pregunta sobre privacidad o para ejercer sus derechos:</p>
+        <address class="pp-contact">
+          <strong>SY-ONE SAS</strong><br>
+          14 rue de la Viala, 03300 Creuzier-le-Vieux, Francia<br>
+          SIREN 821 628 708<br>
+          Correo electrónico: <a href="mailto:contact@aljana.app">contact@aljana.app</a><br>
+          Sitio web: <a href="https://aljana.app">https://aljana.app</a>
+        </address>
+      </section>
+    </article>
+
+    <article class="pp-doc" id="doc-de" lang="de" dir="ltr" data-lang="de" aria-labelledby="pp-title-de">
+      <header class="pp-doc__head">
+        <h1 id="pp-title-de">Datenschutzerklärung</h1>
+        <p class="pp-updated">Zuletzt aktualisiert: <time datetime="2026-10-20">20. Oktober 2026</time></p>
+        <p class="pp-note">Diese deutsche Fassung ist eine Übersetzung zur besseren Lesbarkeit. Bei Abweichungen ist die französische Fassung maßgeblich.</p>
+        <p class="pp-intro">aljana berechnet Ihre Gebetszeiten, die Qibla, den Himmel, den Mond, den Hilal und die Finsternisse direkt auf Ihrem Gerät. Diese Seite erklärt ohne Umschweife, welche Informationen Ihr Gerät verlassen, an wen, warum und wie lange.</p>
+      </header>
+
+      <section aria-labelledby="de-1">
+        <h2 id="de-1">1. Kurz gesagt</h2>
+        <ul>
+          <li>Kein Konto, keine Registrierung: aljana fragt weder nach Ihrem Namen noch nach Ihrer E-Mail-Adresse oder Telefonnummer.</li>
+          <li>Premium-Käufe laufen über den App Store oder Google Play: aljana sieht weder Ihre Zahlungsdaten noch Ihre Identität (siehe „Premium-Käufe“).</li>
+          <li>Keine Werbung, keine Tracker, keine Reichweitenmessung, keine Absturzberichte.</li>
+          <li>Die Server von aljana speichern weder Ihren Standort noch Ihre Einstellungen noch Ihre Nutzung der App.</li>
+          <li>aljana verkauft Ihre Daten nicht und nutzt sie nicht, um Sie in anderen Apps oder auf anderen Websites zu verfolgen.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="de-2">
+        <h2 id="de-2">2. Ihr Standort</h2>
+        <h3>Wie er ermittelt wird</h3>
+        <p>Der Standort Ihres Geräts wird nur gelesen, wenn Sie auf die Standort-Schaltfläche tippen, und nur, wenn Sie es erlauben (Berechtigung „Beim Verwenden der App“). Sie können auch einen Ort wählen, ohne jemals Ihren Standort zu teilen: über die Suche nach einer Stadt, über vorgeschlagene Städte oder durch die manuelle Eingabe von Koordinaten.</p>
+        <h3>Wofür er dient</h3>
+        <p>Gebetszeiten, Qibla, Himmel, Mond, Hilal und Finsternisse werden auf Ihrem Gerät anhand des gewählten Ortes berechnet. Der aktuelle Ort und Ihre letzten fünf Orte werden auf Ihrem Gerät gespeichert, damit Sie sie nicht erneut eingeben müssen.</p>
+        <h3>Was gesendet wird, und an wen</h3>
+        <p>Manche Informationen lassen sich nicht offline berechnen. Um sie zu erhalten, sendet die App die Koordinaten des gewählten Ortes an spezialisierte Dienste:</p>
+        <ul>
+          <li><strong>Open-Meteo</strong>: Zeitzone und Höhe des Ortes, Wetter und Bewölkung (Bildschirme Himmel, Hilal und Finsternisse), Horizontprofil rund um den Ort (Bildschirm Hilal).</li>
+          <li><strong>BigDataCloud</strong>: Name der Stadt, die Ihrem Standort entspricht, und zwar nur, nachdem Sie auf die Standort-Schaltfläche getippt haben.</li>
+        </ul>
+        <p>Wenn Sie nach einer Stadt suchen, wird der eingegebene Text an <strong>Open-Meteo</strong> (Ortssuche) gesendet und, falls kein Ergebnis gefunden wird, an <strong>Photon</strong> (geografischer Suchdienst von Komoot auf Grundlage von OpenStreetMap).</p>
+        <p>aljana übermittelt diesen Diensten weder einen Namen noch eine Kennung noch Informationen über Ihr Gerät. Wie bei jeder Internetverbindung erhalten sie auch Ihre IP-Adresse. Sie verarbeiten diese Daten nach ihren eigenen Datenschutzrichtlinien.</p>
+      </section>
+
+      <section aria-labelledby="de-3">
+        <h2 id="de-3">3. Heruntergeladene Inhalte</h2>
+        <p>Um den Muṣḥaf, die Übersetzungen seiner Bedeutungen und den Tafsīr anzuzeigen, lädt die App Seiten, Schriften und Texte herunter:</p>
+        <ul>
+          <li>von den Servern von aljana, gehostet bei <strong>Cloudflare</strong> (Seiten des Muṣḥaf, Übersetzungen, Tafsīr);</li>
+          <li>von <strong>Quran Foundation</strong> (Schriften der Seiten des Muṣḥaf Ḥafṣ).</li>
+        </ul>
+        <p>Diese Anfragen enthalten nur die angeforderte Seitenzahl, den Vers oder die Sprache. Ihre Einstellungen, Ihr Standort und Ihre Lektüre werden nicht übermittelt. Die Server von aljana verwenden Ihre IP-Adresse kurz, um Missbrauch zu begrenzen (Anzahl der Anfragen pro Minute); aljana führt darüber kein Protokoll. Unser Hoster Cloudflare verarbeitet die technischen Verbindungsdaten, die zur Weiterleitung der Anfragen und zum Schutz des Dienstes nötig sind, nach seinen eigenen Richtlinien.</p>
+      </section>
+
+      <section aria-labelledby="de-4">
+        <h2 id="de-4">4. Was auf Ihrem Gerät bleibt</h2>
+        <p>Folgendes wird ausschließlich auf Ihrem Gerät gespeichert und niemals an aljana gesendet:</p>
+        <ul>
+          <li>Ihre Einstellungen (Berechnungsmethode, Rechtsschule für ʿAṣr, Adhan, Erinnerungen, Sprache, Darstellung, Barrierefreiheit);</li>
+          <li>der gewählte Ort und Ihre letzten Orte;</li>
+          <li>Ihre Seite, Ihre Lesezeichen und der Nachtmodus im Muṣḥaf;</li>
+          <li>Ihr Tasbīḥ-Zähler;</li>
+          <li>Ihre Hilal-Beobachtungen und Ihre Notizen dazu;</li>
+          <li>die heruntergeladenen Seiten, Schriften, Übersetzungen und Tafsīr-Texte;</li>
+          <li>der Status Ihres Premium-Zugangs, gespeichert, damit Premium auch offline funktioniert.</li>
+        </ul>
+        <p>Sie löschen diese Daten, indem Sie die App-Daten löschen oder die App deinstallieren. Je nach Einstellungen Ihres Geräts können sie in dessen automatische Datensicherung (iCloud oder Google-Sicherung) aufgenommen werden, die vom Hersteller des Betriebssystems Ihres Geräts verwaltet wird.</p>
+      </section>
+
+      <section aria-labelledby="de-5">
+        <h2 id="de-5">5. Benachrichtigungen, Adhan und Kompass</h2>
+        <ul>
+          <li>Erinnerungen und der Adhan werden auf Ihrem Gerät geplant, anhand von Zeiten, die auf Ihrem Gerät berechnet werden. aljana verwendet keine von einem Server gesendeten Benachrichtigungen und erhebt keine Benachrichtigungskennung.</li>
+          <li>Die Berechtigung für Benachrichtigungen oder Wecker wird nur angefragt, wenn Sie den Adhan oder eine Erinnerung aktivieren.</li>
+          <li>Der Qibla-Kompass liest mit Ihrer Zustimmung die Lagesensoren Ihres Geräts. Diese Messwerte bleiben auf Ihrem Gerät.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="de-achats">
+        <h2 id="de-achats">6. Premium-Käufe</h2>
+        <p>Premium-Käufe laufen über den App Store von Apple oder über Google Play, mit den Zahlungsmitteln Ihres Stores. Ihr Store wickelt die Zahlung ab: aljana erhält niemals Ihre Zahlungsdaten, Ihren Namen oder die E-Mail-Adresse Ihres Kontos. Apple und Google handeln dabei nach ihren eigenen Datenschutzrichtlinien.</p>
+        <p>Um Ihre Käufe zu prüfen und Premium auf Ihren Geräten freizuschalten, nutzt aljana <strong>RevenueCat</strong>, einen Dienstleister, der in unserem Auftrag handelt. Die App übermittelt ihm:</p>
+        <ul>
+          <li>eine von der App erzeugte Zufallskennung; sie enthält weder Ihren Namen noch Ihre E-Mail-Adresse, verknüpft aber Ihre Käufe miteinander und ist daher ein pseudonymes Datum;</li>
+          <li>die von Ihrem Store bereitgestellten Kaufinformationen (Angebot, Datum, Preis, Währung, Store-Land, Verlängerung, Erstattung, Transaktionsnummer);</li>
+          <li>technische Informationen (System und Version des Geräts, Version der App, Sprache, IP-Adresse).</li>
+        </ul>
+        <p>Apple und Google informieren RevenueCat außerdem direkt über Verlängerungen, Kündigungen und Erstattungen. Für den 1-Monats-Pass auf dem iPhone liest der Server von aljana mit dieser Kennung den Kaufverlauf bei RevenueCat, um das Ende Ihres Zugangs zu berechnen; er speichert nichts.</p>
+        <p>Diese Informationen dienen ausschließlich dazu, Premium bereitzustellen, Ihre Käufe wiederherzustellen, Betrug zu verhindern und die Verkäufe von aljana insgesamt zu verfolgen. Sie dienen weder der Werbung noch dazu, Sie zu verfolgen. RevenueCat verarbeitet sie nach seiner <a href="https://www.revenuecat.com/privacy">Datenschutzrichtlinie</a>.</p>
+      </section>
+
+      <section aria-labelledby="de-6">
+        <h2 id="de-6">7. Teilen und externe Links</h2>
+        <p>Nichts wird ohne Ihr Zutun geteilt. Wenn Sie auf „Teilen“ tippen (Qibla, Finsternis, Hilal-Beobachtung, Vers, Bittgebet, Hadith), sehen Sie den Inhalt und wählen den Empfänger selbst. Je nach Bildschirm kann dieser Inhalt den Namen Ihrer Stadt oder deren Koordinaten enthalten.</p>
+        <p>Manche Links öffnen Websites Dritter (zum Beispiel Quran Foundation, QuranEnc, HadeethEnc oder Google Kalender, um eine Finsternis in Ihren Kalender einzutragen). Sie öffnen sich nur, wenn Sie sie antippen, und dann gelten deren eigene Datenschutzrichtlinien.</p>
+      </section>
+
+      <section aria-labelledby="de-7">
+        <h2 id="de-7">8. Die Website aljana.app</h2>
+        <ul>
+          <li><strong>Angezeigte Stadt</strong>: Die auf der Website angezeigte Stadt leitet unser Hoster Cloudflare aus Ihrer IP-Adresse ab, auf Ebene der Stadt. Sie wird weder gespeichert noch weitergegeben. Die Website fragt niemals nach dem Standort Ihres Geräts.</li>
+          <li><strong>Schriften</strong>: Die Website lädt ihre Schriften von Google Fonts; Google erhält daher Ihre IP-Adresse.</li>
+          <li><strong>Speicherung in Ihrem Browser</strong>: Die von Ihnen gewählte Sprache wird von Ihrem Browser gespeichert; der Startbildschirm und die Scrollposition werden nur für die Dauer Ihres Besuchs gespeichert.</li>
+          <li><strong>Keine Cookies, keine Reichweitenmessung</strong>. Cloudflare verarbeitet die technischen Verbindungsdaten, die nötig sind, um Ihnen die Seiten auszuliefern und die Website zu schützen.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="de-8">
+        <h2 id="de-8">9. Speicherdauer und Sicherheit</h2>
+        <ul>
+          <li><strong>Daten auf Ihrem Gerät</strong>: bis Sie sie löschen oder die App deinstallieren.</li>
+          <li><strong>An die Dienste aus Abschnitt 2 gesendete Koordinaten und Suchanfragen</strong>: aljana behält keine Kopie; jeder Dienst speichert sie nach seinen eigenen Richtlinien.</li>
+          <li><strong>IP-Adresse auf den Servern von aljana</strong>: für die Dauer der Bearbeitung der Anfrage; aljana führt kein Protokoll.</li>
+          <li><strong>Kaufverlauf bei RevenueCat</strong>: solange er nötig ist, um Ihre Käufe wiederherzustellen und eine Reklamation zu bearbeiten, sofern Sie nicht die Löschung verlangen (siehe „Ihre Rechte“).</li>
+          <li><strong>Buchhaltungsunterlagen von SY-ONE</strong>: Sie werden auf Grundlage der Verkaufsberichte von Apple und Google ohne Ihre Identität erstellt und, wie im französischen Handelsgesetzbuch vorgeschrieben, zehn Jahre aufbewahrt.</li>
+          <li><strong>Nachrichten, die Sie uns senden</strong>: so lange, wie es nötig ist, um Ihnen zu antworten und Ihr Anliegen zu bearbeiten.</li>
+        </ul>
+        <p>Alle Verbindungen der App und der Website sind verschlüsselt (HTTPS).</p>
+      </section>
+
+      <section aria-labelledby="de-bases">
+        <h2 id="de-bases">10. Rechtsgrundlagen und Übermittlungen außerhalb Europas</h2>
+        <h3>Warum wir diese Daten verarbeiten dürfen</h3>
+        <ul>
+          <li><strong>Erbringung des von Ihnen gewünschten Dienstes</strong> (Berechnungen für den gewählten Ort, Downloads, Premium-Käufe und Premium-Zugang): Erfüllung der Nutzungsbedingungen, die Sie akzeptieren.</li>
+          <li><strong>Lesen des Standorts Ihres Geräts</strong>: Ihre Einwilligung, erteilt über die Standortberechtigung, die Sie jederzeit in den Einstellungen Ihres Geräts widerrufen können.</li>
+          <li><strong>Schutz des Dienstes vor Missbrauch und Betrug</strong> (Begrenzung der Anfragen, Prüfung der Käufe) und Verfolgung der Verkäufe insgesamt: berechtigtes Interesse von SY-ONE.</li>
+          <li><strong>Aufbewahrung der Buchhaltungsunterlagen</strong>: gesetzliche Pflicht.</li>
+        </ul>
+        <h3>Übermittlungen außerhalb der Europäischen Union</h3>
+        <p>Einige Dienstleister haben ihren Sitz außerhalb der Europäischen Union oder verarbeiten Daten dort, insbesondere RevenueCat, Cloudflare und Google für die Schriften der Website (Vereinigte Staaten), BigDataCloud (Australien) und Quran Foundation. Je nach Dienstleister stützen sich diese Übermittlungen auf die in der DSGVO vorgesehenen Garantien (Angemessenheitsbeschluss, darunter der Datenschutzrahmen zwischen der EU und den USA für zertifizierte Unternehmen, oder Standardvertragsklauseln der Europäischen Kommission) oder, bei einem Dienst, den Sie selbst anfordern, auf ihre Erforderlichkeit, um ihn Ihnen bereitzustellen.</p>
+      </section>
+
+      <section aria-labelledby="de-9">
+        <h2 id="de-9">11. Ihre Rechte</h2>
+        <p>Nach geltendem Recht, insbesondere der Datenschutz-Grundverordnung (DSGVO), haben Sie das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Widerspruch und Datenübertragbarkeit sowie das Recht, Ihre Einwilligung jederzeit zu widerrufen.</p>
+        <ul>
+          <li><strong>Daten auf Ihrem Gerät</strong>: Sie behalten die direkte Kontrolle darüber und können sie jederzeit löschen.</li>
+          <li><strong>Kaufdaten</strong>: Da aljana keine Konten hat, schreiben Sie uns bitte mit der Bestellnummer aus Ihrem Beleg (von Apple oder Google). Sie genügt uns, um Ihren Verlauf bei RevenueCat zu finden, ihn Ihnen mitzuteilen oder ihn zu löschen. Wir fragen nur nach den unbedingt nötigen Informationen. Die Löschung beendet kein laufendes Abonnement, das Sie in Ihrem Store kündigen, und betrifft nicht die Buchhaltungsunterlagen, die wir gesetzlich aufbewahren müssen.</li>
+        </ul>
+        <p>Wir antworten innerhalb eines Monats. Sie können sich auch bei der Datenschutzbehörde Ihres Landes beschweren (in Frankreich bei der CNIL).</p>
+      </section>
+
+      <section aria-labelledby="de-10">
+        <h2 id="de-10">12. Kinder</h2>
+        <p>aljana kann von allen genutzt werden. Die App verlangt von niemandem personenbezogene Daten, auch nicht von Kindern. Die einzigen Daten, die mit einem Nutzer verknüpft sind, sind die oben beschriebenen Kaufdaten; Käufe unterliegen der Kindersicherung Ihres Stores.</p>
+      </section>
+
+      <section aria-labelledby="de-11">
+        <h2 id="de-11">13. Änderungen</h2>
+        <p>Wenn eine Weiterentwicklung von aljana die Verarbeitung Ihrer Daten verändert (zum Beispiel ein Konto oder ein neuer Dienst), wird diese Erklärung vor der Bereitstellung dieser Weiterentwicklung aktualisiert, und das Datum oben auf der Seite wird geändert.</p>
+      </section>
+
+      <section aria-labelledby="de-12">
+        <h2 id="de-12">14. Verantwortlicher und Kontakt</h2>
+        <p>Verantwortlicher für die Verarbeitung ist SY-ONE, Herausgeber von aljana. Für Fragen zum Datenschutz oder zur Ausübung Ihrer Rechte:</p>
+        <address class="pp-contact">
+          <strong>SY-ONE SAS</strong><br>
+          14 rue de la Viala, 03300 Creuzier-le-Vieux, Frankreich<br>
+          SIREN 821 628 708<br>
+          E-Mail: <a href="mailto:contact@aljana.app">contact@aljana.app</a><br>
+          Website: <a href="https://aljana.app">https://aljana.app</a>
+        </address>
+      </section>
+    </article>
+
+    <article class="pp-doc" id="doc-tr" lang="tr" dir="ltr" data-lang="tr" aria-labelledby="pp-title-tr">
+      <header class="pp-doc__head">
+        <h1 id="pp-title-tr">Gizlilik politikası</h1>
+        <p class="pp-updated">Son güncelleme: <time datetime="2026-10-20">20 Ekim 2026</time></p>
+        <p class="pp-note">Bu Türkçe metin, okumayı kolaylaştırmak için sunulan bir çeviridir. Farklılık olması halinde Fransızca metin esas alınır.</p>
+        <p class="pp-intro">aljana namaz vakitlerinizi, kıbleyi, gökyüzünü, Ay’ı, hilali ve tutulmaları doğrudan cihazınızda hesaplar. Bu sayfa, cihazınızdan hangi bilgilerin çıktığını, kime gittiğini, neden ve ne kadar süreyle tutulduğunu açıkça anlatır.</p>
+      </header>
+
+      <section aria-labelledby="tr-1">
+        <h2 id="tr-1">1. Kısaca</h2>
+        <ul>
+          <li>Hesap yok, kayıt yok: aljana sizden adınızı, e-posta adresinizi veya telefon numaranızı istemez.</li>
+          <li>Premium satın alımları App Store veya Google Play üzerinden yapılır: aljana banka bilgilerinizi ve kimliğinizi görmez (bkz. “Premium satın alımları”).</li>
+          <li>Reklam yok, izleyici yok, kitle ölçüm aracı yok, çökme raporu gönderilmez.</li>
+          <li>aljana sunucuları konumunuzu, ayarlarınızı ve uygulamayı nasıl kullandığınızı kaydetmez.</li>
+          <li>aljana verilerinizi satmaz ve sizi başka uygulamalarda veya sitelerde izlemek için kullanmaz.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="tr-2">
+        <h2 id="tr-2">2. Konumunuz</h2>
+        <h3>Nasıl alınır</h3>
+        <p>Cihazınızın konumu yalnızca konum düğmesine dokunduğunuzda ve yalnızca izin verirseniz (“Uygulamayı kullanırken” izni) okunur. Konumunuzu hiç paylaşmadan da bir yer seçebilirsiniz: bir şehir arayarak, önerilen şehirlerden birini seçerek veya koordinatları elle girerek.</p>
+        <h3>Ne için kullanılır</h3>
+        <p>Namaz vakitleri, kıble, gökyüzü, Ay, hilal ve tutulmalar, seçilen yere göre cihazınızda hesaplanır. Mevcut yer ve son beş yeriniz, sizden yeniden istenmemesi için cihazınızda saklanır.</p>
+        <h3>Ne gönderilir ve kime</h3>
+        <p>Bazı bilgiler çevrimdışı hesaplanamaz. Bunları elde etmek için uygulama, seçilen yerin koordinatlarını uzman hizmetlere gönderir:</p>
+        <ul>
+          <li><strong>Open-Meteo</strong>: yerin saat dilimi ve rakımı, hava durumu ve bulutluluk (Gökyüzü, Hilal ve Tutulmalar ekranları), yerin çevresindeki ufuk profili (Hilal ekranı).</li>
+          <li><strong>BigDataCloud</strong>: konumunuza karşılık gelen şehrin adı, yalnızca konum düğmesine dokunduktan sonra.</li>
+        </ul>
+        <p>Bir şehir aradığınızda, yazdığınız metin <strong>Open-Meteo</strong>’ya (yer arama) ve hiçbir sonuç bulunmazsa <strong>Photon</strong>’a (Komoot’un OpenStreetMap tabanlı coğrafi arama hizmeti) gönderilir.</p>
+        <p>aljana bu hizmetlere hiçbir ad, kimlik numarası veya cihazınıza ilişkin bilgi göndermez. Her internet bağlantısında olduğu gibi, bu hizmetler IP adresinizi de alır. Bu verileri kendi gizlilik politikalarına göre işlerler.</p>
+      </section>
+
+      <section aria-labelledby="tr-3">
+        <h2 id="tr-3">3. İndirilen içerikler</h2>
+        <p>Mushaf’ı, anlamlarının çevirilerini ve tefsiri göstermek için uygulama sayfalar, yazı tipleri ve metinler indirir:</p>
+        <ul>
+          <li><strong>Cloudflare</strong> tarafından barındırılan aljana sunucularından (Mushaf sayfaları, çeviriler, tefsir);</li>
+          <li><strong>Quran Foundation</strong>’dan (Hafs Mushaf’ı sayfalarının yazı tipleri).</li>
+        </ul>
+        <p>Bu istekler yalnızca istenen sayfa numarasını, ayeti veya dili içerir. Ayarlarınız, konumunuz ve okumanız iletilmez. aljana sunucuları, kötüye kullanımı sınırlamak için (dakika başına istek sayısı) IP adresinizi kısa bir süre kullanır; aljana bunun kaydını tutmaz. Barındırma sağlayıcımız Cloudflare, istekleri yönlendirmek ve hizmeti korumak için gereken teknik bağlantı verilerini kendi politikasına göre işler.</p>
+      </section>
+
+      <section aria-labelledby="tr-4">
+        <h2 id="tr-4">4. Cihazınızda kalanlar</h2>
+        <p>Aşağıdakiler yalnızca cihazınızda saklanır ve asla aljana’ya gönderilmez:</p>
+        <ul>
+          <li>ayarlarınız (hesaplama yöntemi, ikindi için mezhep, ezan, hatırlatmalar, dil, görünüm, erişilebilirlik);</li>
+          <li>seçilen yer ve son yerleriniz;</li>
+          <li>Mushaf’taki sayfanız, yer imleriniz ve gece modu;</li>
+          <li>tesbih sayacınız;</li>
+          <li>hilal gözlemleriniz ve notlarınız;</li>
+          <li>indirilen sayfalar, yazı tipleri, çeviriler ve tefsir metinleri;</li>
+          <li>Premium çevrimdışı da çalışsın diye saklanan Premium erişim durumunuz.</li>
+        </ul>
+        <p>Bunları uygulamanın verilerini silerek veya uygulamayı kaldırarak silebilirsiniz. Cihazınızın ayarlarına bağlı olarak, cihazınızın işletim sistemi üreticisinin yönettiği otomatik yedeklemeye (iCloud veya Google yedeklemesi) dahil edilebilirler.</p>
+      </section>
+
+      <section aria-labelledby="tr-5">
+        <h2 id="tr-5">5. Bildirimler, ezan ve pusula</h2>
+        <ul>
+          <li>Hatırlatmalar ve ezan, cihazınızda hesaplanan vakitlere göre cihazınızda planlanır. aljana bir sunucudan gönderilen bildirimler kullanmaz ve hiçbir bildirim kimliği toplamaz.</li>
+          <li>Bildirim veya alarm gönderme izni yalnızca ezanı veya bir hatırlatmayı etkinleştirirseniz istenir.</li>
+          <li>Kıble pusulası, onayınızla cihazınızın yön sensörlerini okur. Bu ölçümler cihazınızda kalır.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="tr-achats">
+        <h2 id="tr-achats">6. Premium satın alımları</h2>
+        <p>Premium satın alımları, mağazanızın ödeme yöntemleriyle Apple App Store veya Google Play üzerinden yapılır. Ödemeyi mağazanız işler: aljana banka bilgilerinizi, adınızı veya hesabınızın e-posta adresini asla almaz. Apple ve Google bu konuda kendi gizlilik politikalarına göre hareket eder.</p>
+        <p>Satın alımlarınızı doğrulamak ve Premium’u cihazlarınızda açmak için aljana, bizim adımıza hareket eden bir hizmet sağlayıcı olan <strong>RevenueCat</strong>’i kullanır. Uygulama ona şunları iletir:</p>
+        <ul>
+          <li>uygulama tarafından oluşturulan rastgele bir kimlik; adınızı veya e-posta adresinizi içermez, ancak satın alımlarınızı birbirine bağlar; bu nedenle takma adlı bir veridir;</li>
+          <li>mağazanızın sağladığı satın alma bilgileri (teklif, tarih, fiyat, para birimi, mağaza ülkesi, yenileme, iade, işlem numarası);</li>
+          <li>teknik bilgiler (cihazın sistemi ve sürümü, uygulama sürümü, dil, IP adresi).</li>
+        </ul>
+        <p>Apple ve Google, yenilemeleri, iptalleri ve iadeleri RevenueCat’e doğrudan da bildirir. iPhone’daki 1 aylık geçiş için aljana sunucusu, erişiminizin ne zaman sona ereceğini hesaplamak amacıyla bu kimlikle RevenueCat’teki satın alma geçmişini okur; hiçbir şey saklamaz.</p>
+        <p>Bu bilgiler yalnızca Premium’u sağlamak, satın alımlarınızı geri yüklemek, dolandırıcılığı önlemek ve aljana satışlarını genel olarak izlemek için kullanılır. Reklam için veya sizi izlemek için kullanılmaz. RevenueCat bunları kendi <a href="https://www.revenuecat.com/privacy">gizlilik politikasına</a> göre işler.</p>
+      </section>
+
+      <section aria-labelledby="tr-6">
+        <h2 id="tr-6">7. Paylaşım ve dış bağlantılar</h2>
+        <p>Siz bir işlem yapmadan hiçbir şey paylaşılmaz. “Paylaş”a dokunduğunuzda (kıble, tutulma, hilal gözlemi, ayet, dua, hadis) içeriği görür ve alıcıyı kendiniz seçersiniz. Ekrana göre bu içerik şehrinizin adını veya koordinatlarını içerebilir.</p>
+        <p>Bazı bağlantılar üçüncü taraf siteleri açar (örneğin Quran Foundation, QuranEnc, HadeethEnc veya bir tutulmayı takviminize eklemek için Google Takvim). Yalnızca dokunduğunuzda açılırlar ve o zaman bu sitelerin kendi gizlilik politikaları geçerli olur.</p>
+      </section>
+
+      <section aria-labelledby="tr-7">
+        <h2 id="tr-7">8. aljana.app sitesi</h2>
+        <ul>
+          <li><strong>Gösterilen şehir</strong>: Sitede gösterilen şehir, barındırma sağlayıcımız Cloudflare tarafından IP adresinizden şehir düzeyinde çıkarılır. Saklanmaz ve paylaşılmaz. Site cihazınızın konumunu asla istemez.</li>
+          <li><strong>Yazı tipleri</strong>: Site yazı tiplerini Google Fonts’tan yükler; bu nedenle Google IP adresinizi alır.</li>
+          <li><strong>Tarayıcınızdaki depolama</strong>: Seçtiğiniz dili tarayıcınız saklar; açılış ekranı ve kaydırma konumu yalnızca ziyaretiniz süresince saklanır.</li>
+          <li><strong>Çerez yok, kitle ölçümü yok</strong>. Cloudflare, sayfaları size sunmak ve siteyi korumak için gereken teknik bağlantı verilerini işler.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="tr-8">
+        <h2 id="tr-8">9. Saklama süreleri ve güvenlik</h2>
+        <ul>
+          <li><strong>Cihazınızdaki veriler</strong>: siz silene veya uygulamayı kaldırana kadar.</li>
+          <li><strong>2. bölümdeki hizmetlere gönderilen koordinatlar ve aramalar</strong>: aljana hiçbir kopya saklamaz; her hizmet bunları kendi politikasına göre saklar.</li>
+          <li><strong>aljana sunucularındaki IP adresi</strong>: isteği işlemek için gereken süre boyunca; aljana kayıt tutmaz.</li>
+          <li><strong>RevenueCat’teki satın alma geçmişi</strong>: satın alımlarınızı geri yüklemek ve bir şikâyeti işlemek için yararlı olduğu sürece, siz silinmesini istemedikçe (bkz. “Haklarınız”).</li>
+          <li><strong>SY-ONE’ın muhasebe belgeleri</strong>: Apple ve Google satış raporlarından kimliğiniz olmadan hazırlanır ve Fransız Ticaret Kanunu’nun gerektirdiği şekilde on yıl saklanır.</li>
+          <li><strong>Bize gönderdiğiniz mesajlar</strong>: size yanıt vermek ve talebinizi takip etmek için gereken süre boyunca.</li>
+        </ul>
+        <p>Uygulamanın ve sitenin tüm bağlantıları şifrelidir (HTTPS).</p>
+      </section>
+
+      <section aria-labelledby="tr-bases">
+        <h2 id="tr-bases">10. Hukuki dayanaklar ve Avrupa dışına aktarımlar</h2>
+        <h3>Bu verileri neden işleyebiliyoruz</h3>
+        <ul>
+          <li><strong>İstediğiniz hizmeti sağlamak</strong> (seçilen yere bağlı hesaplamalar, indirmeler, Premium satın alımları ve erişimi): kabul ettiğiniz kullanım koşullarının ifası.</li>
+          <li><strong>Cihazınızın konumunu okumak</strong>: konum izniyle verdiğiniz ve cihazınızın ayarlarından istediğiniz zaman geri çekebileceğiniz onayınız.</li>
+          <li><strong>Hizmeti kötüye kullanıma ve dolandırıcılığa karşı korumak</strong> (istek sınırı, satın alma doğrulaması) ve satışları genel olarak izlemek: SY-ONE’ın meşru menfaati.</li>
+          <li><strong>Muhasebe belgelerini saklamak</strong>: yasal yükümlülük.</li>
+        </ul>
+        <h3>Avrupa Birliği dışına aktarımlar</h3>
+        <p>Bazı hizmet sağlayıcılar Avrupa Birliği dışında yerleşiktir veya verileri orada işler; bunlar arasında RevenueCat, Cloudflare ve site yazı tipleri için Google (Amerika Birleşik Devletleri), BigDataCloud (Avustralya) ve Quran Foundation bulunur. Sağlayıcıya göre bu aktarımlar GDPR’nin öngördüğü güvencelere (sertifikalı şirketler için AB ve ABD Veri Gizliliği Çerçevesi dahil yeterlilik kararı veya Avrupa Komisyonu’nun standart sözleşme maddeleri) ya da sizin talep ettiğiniz bir hizmet için, o hizmeti size sunmanın gerekliliğine dayanır.</p>
+      </section>
+
+      <section aria-labelledby="tr-9">
+        <h2 id="tr-9">11. Haklarınız</h2>
+        <p>Yürürlükteki mevzuata, özellikle Genel Veri Koruma Tüzüğü’ne (GDPR) göre erişim, düzeltme, silme, işlemeyi kısıtlama, itiraz ve veri taşınabilirliği haklarına, ayrıca onayınızı istediğiniz zaman geri çekme hakkına sahipsiniz.</p>
+        <ul>
+          <li><strong>Cihazınızdaki veriler</strong>: doğrudan kontrolü sizdedir ve istediğiniz zaman silebilirsiniz.</li>
+          <li><strong>Satın alma verileri</strong>: aljana’da hesap olmadığından, makbuzunuzdaki (Apple veya Google) sipariş numarasıyla bize yazın. Bu numara, RevenueCat’teki geçmişinizi bulmamız, size iletmemiz veya silmemiz için yeterlidir. Sizden gerekli olandan fazla bilgi istemeyiz. Silme işlemi, mağazanızdan iptal edilen devam eden bir aboneliği iptal etmez ve yasanın saklamamızı zorunlu kıldığı muhasebe belgelerini etkilemez.</li>
+        </ul>
+        <p>Bir ay içinde yanıt veririz. Ülkenizin veri koruma otoritesine de şikâyette bulunabilirsiniz (Fransa’da CNIL).</p>
+      </section>
+
+      <section aria-labelledby="tr-10">
+        <h2 id="tr-10">12. Çocuklar</h2>
+        <p>aljana herkes tarafından kullanılabilir. Çocuklar dahil kimseden kişisel veri istemez. Bir kullanıcıya bağlı tek veriler yukarıda açıklanan satın alma verileridir; satın alımlar mağazanızın ebeveyn denetimlerine tabidir.</p>
+      </section>
+
+      <section aria-labelledby="tr-11">
+        <h2 id="tr-11">13. Değişiklikler</h2>
+        <p>aljana’daki bir gelişme verilerinizin işlenme biçimini değiştirirse (örneğin bir hesap veya yeni bir hizmet), bu politika söz konusu gelişme kullanıma sunulmadan önce güncellenir ve sayfanın üstündeki tarih değiştirilir.</p>
+      </section>
+
+      <section aria-labelledby="tr-12">
+        <h2 id="tr-12">14. Veri sorumlusu ve iletişim</h2>
+        <p>Veri sorumlusu, aljana’nın yayıncısı SY-ONE’dır. Gizlilikle ilgili her türlü soru veya haklarınızı kullanmak için:</p>
+        <address class="pp-contact">
+          <strong>SY-ONE SAS</strong><br>
+          14 rue de la Viala, 03300 Creuzier-le-Vieux, Fransa<br>
+          SIREN 821 628 708<br>
+          E-posta: <a href="mailto:contact@aljana.app">contact@aljana.app</a><br>
+          Site: <a href="https://aljana.app">https://aljana.app</a>
+        </address>
+      </section>
+    </article>
+
+    <article class="pp-doc" id="doc-id" lang="id" dir="ltr" data-lang="id" aria-labelledby="pp-title-id">
+      <header class="pp-doc__head">
+        <h1 id="pp-title-id">Kebijakan privasi</h1>
+        <p class="pp-updated">Terakhir diperbarui: <time datetime="2026-10-20">20 Oktober 2026</time></p>
+        <p class="pp-note">Versi bahasa Indonesia ini adalah terjemahan untuk memudahkan pembacaan. Jika terdapat perbedaan, versi bahasa Prancis yang berlaku.</p>
+        <p class="pp-intro">aljana menghitung waktu salat Anda, arah kiblat, langit, Bulan, hilal, dan gerhana langsung di perangkat Anda. Halaman ini menjelaskan secara terus terang informasi apa saja yang keluar dari perangkat Anda, ke mana, untuk apa, dan berapa lama.</p>
+      </header>
+
+      <section aria-labelledby="id-1">
+        <h2 id="id-1">1. Ringkasnya</h2>
+        <ul>
+          <li>Tanpa akun dan tanpa pendaftaran: aljana tidak meminta nama, alamat email, atau nomor telepon Anda.</li>
+          <li>Pembelian Premium dilakukan melalui App Store atau Google Play: aljana tidak melihat data pembayaran maupun identitas Anda (lihat “Pembelian Premium”).</li>
+          <li>Tanpa iklan, tanpa pelacak, tanpa alat pengukur audiens, dan tanpa pengiriman laporan kerusakan aplikasi.</li>
+          <li>Server aljana tidak mencatat lokasi, pengaturan, atau cara Anda menggunakan aplikasi.</li>
+          <li>aljana tidak menjual data Anda dan tidak menggunakannya untuk melacak Anda di aplikasi atau situs lain.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="id-2">
+        <h2 id="id-2">2. Lokasi Anda</h2>
+        <h3>Cara memperolehnya</h3>
+        <p>Lokasi perangkat Anda hanya dibaca saat Anda mengetuk tombol lokasi, dan hanya jika Anda mengizinkannya (izin “Saat aplikasi digunakan”). Anda juga dapat memilih tempat tanpa pernah membagikan lokasi Anda: dengan mencari kota, memilih salah satu kota yang disarankan, atau memasukkan koordinat secara manual.</p>
+        <h3>Kegunaannya</h3>
+        <p>Waktu salat, arah kiblat, langit, Bulan, hilal, dan gerhana dihitung di perangkat Anda berdasarkan tempat yang dipilih. Tempat saat ini dan lima tempat terakhir Anda disimpan di perangkat Anda agar tidak perlu ditanyakan lagi.</p>
+        <h3>Apa yang dikirim, dan kepada siapa</h3>
+        <p>Beberapa informasi tidak dapat dihitung secara luring. Untuk memperolehnya, aplikasi mengirimkan koordinat tempat yang dipilih ke layanan khusus:</p>
+        <ul>
+          <li><strong>Open-Meteo</strong>: zona waktu dan ketinggian tempat, cuaca dan tutupan awan (layar Langit, Hilal, dan Gerhana), serta profil cakrawala di sekitar tempat (layar Hilal).</li>
+          <li><strong>BigDataCloud</strong>: nama kota yang sesuai dengan lokasi Anda, hanya setelah Anda mengetuk tombol lokasi.</li>
+        </ul>
+        <p>Saat Anda mencari kota, teks yang Anda ketik dikirim ke <strong>Open-Meteo</strong> (pencarian tempat) dan, jika tidak ditemukan hasil, ke <strong>Photon</strong> (layanan pencarian geografis milik Komoot yang berbasis OpenStreetMap).</p>
+        <p>aljana tidak mengirimkan nama, pengenal, atau informasi apa pun tentang perangkat Anda ke layanan-layanan ini. Seperti setiap koneksi internet, layanan tersebut juga menerima alamat IP Anda. Mereka memproses data ini sesuai kebijakan privasi masing-masing.</p>
+      </section>
+
+      <section aria-labelledby="id-3">
+        <h2 id="id-3">3. Konten yang diunduh</h2>
+        <p>Untuk menampilkan Mushaf, terjemahan maknanya, dan tafsir, aplikasi mengunduh halaman, font, dan teks:</p>
+        <ul>
+          <li>dari server aljana yang di-hosting oleh <strong>Cloudflare</strong> (halaman Mushaf, terjemahan, tafsir);</li>
+          <li>dari <strong>Quran Foundation</strong> (font halaman Mushaf Hafs).</li>
+        </ul>
+        <p>Permintaan ini hanya berisi nomor halaman, ayat, atau bahasa yang diminta. Pengaturan, lokasi, dan bacaan Anda tidak dikirimkan. Server aljana menggunakan alamat IP Anda sesaat untuk membatasi penyalahgunaan (jumlah permintaan per menit); aljana tidak menyimpan catatannya. Penyedia hosting kami, Cloudflare, memproses data teknis koneksi yang diperlukan untuk meneruskan permintaan dan melindungi layanan, sesuai kebijakannya sendiri.</p>
+      </section>
+
+      <section aria-labelledby="id-4">
+        <h2 id="id-4">4. Yang tetap ada di perangkat Anda</h2>
+        <p>Hal-hal berikut hanya disimpan di perangkat Anda dan tidak pernah dikirim ke aljana:</p>
+        <ul>
+          <li>pengaturan Anda (metode perhitungan, mazhab untuk Asar, azan, pengingat, bahasa, tampilan, aksesibilitas);</li>
+          <li>tempat yang dipilih dan tempat-tempat terakhir Anda;</li>
+          <li>halaman, penanda, dan mode malam Anda di Mushaf;</li>
+          <li>penghitung tasbih Anda;</li>
+          <li>pengamatan hilal Anda beserta catatannya;</li>
+          <li>halaman, font, terjemahan, dan teks tafsir yang diunduh;</li>
+          <li>status akses Premium Anda, disimpan agar Premium tetap berfungsi secara luring.</li>
+        </ul>
+        <p>Anda dapat menghapusnya dengan menghapus data aplikasi atau mencopot pemasangan aplikasi. Bergantung pada pengaturan perangkat Anda, data ini dapat ikut dalam pencadangan otomatis perangkat (iCloud atau pencadangan Google), yang dikelola oleh pembuat sistem operasi perangkat Anda.</p>
+      </section>
+
+      <section aria-labelledby="id-5">
+        <h2 id="id-5">5. Notifikasi, azan, dan kompas</h2>
+        <ul>
+          <li>Pengingat dan azan dijadwalkan di perangkat Anda, berdasarkan waktu yang dihitung di perangkat Anda. aljana tidak menggunakan notifikasi yang dikirim dari server dan tidak mengumpulkan pengenal notifikasi apa pun.</li>
+          <li>Izin untuk mengirim notifikasi atau alarm hanya diminta jika Anda mengaktifkan azan atau pengingat.</li>
+          <li>Kompas kiblat membaca sensor orientasi perangkat Anda setelah Anda menyetujuinya. Hasil pengukuran ini tetap berada di perangkat Anda.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="id-achats">
+        <h2 id="id-achats">6. Pembelian Premium</h2>
+        <p>Pembelian Premium dilakukan melalui App Store milik Apple atau Google Play, dengan metode pembayaran toko Anda. Toko Anda yang memproses pembayaran: aljana tidak pernah menerima data pembayaran, nama, atau alamat email akun Anda. Apple dan Google bertindak sesuai kebijakan privasi masing-masing.</p>
+        <p>Untuk memverifikasi pembelian Anda dan membuka Premium di perangkat Anda, aljana menggunakan <strong>RevenueCat</strong>, penyedia layanan yang bertindak atas nama kami. Aplikasi mengirimkan kepadanya:</p>
+        <ul>
+          <li>pengenal acak yang dibuat oleh aplikasi; pengenal ini tidak berisi nama atau alamat email Anda, tetapi menghubungkan pembelian-pembelian Anda, sehingga merupakan data pseudonim;</li>
+          <li>informasi pembelian yang diberikan oleh toko Anda (penawaran, tanggal, harga, mata uang, negara toko, perpanjangan, pengembalian dana, nomor transaksi);</li>
+          <li>informasi teknis (sistem dan versi perangkat, versi aplikasi, bahasa, alamat IP).</li>
+        </ul>
+        <p>Apple dan Google juga memberi tahu RevenueCat secara langsung tentang perpanjangan, pembatalan, dan pengembalian dana. Untuk Pass 1 bulan di iPhone, server aljana membaca riwayat pembelian di RevenueCat dengan pengenal tersebut untuk menghitung kapan akses Anda berakhir; server tidak menyimpan apa pun.</p>
+        <p>Informasi ini hanya digunakan untuk menyediakan Premium, memulihkan pembelian Anda, mencegah penipuan, dan memantau penjualan aljana secara keseluruhan. Informasi ini tidak digunakan untuk iklan atau untuk melacak Anda. RevenueCat memprosesnya sesuai <a href="https://www.revenuecat.com/privacy">kebijakan privasinya</a>.</p>
+      </section>
+
+      <section aria-labelledby="id-6">
+        <h2 id="id-6">7. Berbagi dan tautan eksternal</h2>
+        <p>Tidak ada yang dibagikan tanpa tindakan Anda. Saat Anda mengetuk “Bagikan” (kiblat, gerhana, pengamatan hilal, ayat, doa, hadis), Anda melihat isinya dan memilih sendiri penerimanya. Bergantung pada layarnya, isi tersebut dapat mencakup nama kota Anda atau koordinatnya.</p>
+        <p>Beberapa tautan membuka situs pihak ketiga (misalnya Quran Foundation, QuranEnc, HadeethEnc, atau Google Kalender untuk menambahkan gerhana ke kalender Anda). Tautan itu hanya terbuka jika Anda mengetuknya, dan kebijakan privasi situs tersebut yang kemudian berlaku.</p>
+      </section>
+
+      <section aria-labelledby="id-7">
+        <h2 id="id-7">8. Situs aljana.app</h2>
+        <ul>
+          <li><strong>Kota yang ditampilkan</strong>: kota yang ditampilkan di situs disimpulkan dari alamat IP Anda oleh penyedia hosting kami, Cloudflare, pada tingkat kota. Kota ini tidak disimpan dan tidak dibagikan. Situs tidak pernah meminta lokasi perangkat Anda.</li>
+          <li><strong>Font</strong>: situs memuat fontnya dari Google Fonts; karena itu Google menerima alamat IP Anda.</li>
+          <li><strong>Penyimpanan di peramban Anda</strong>: bahasa yang Anda pilih disimpan oleh peramban Anda; layar pembuka dan posisi gulir hanya disimpan selama kunjungan Anda.</li>
+          <li><strong>Tanpa cookie, tanpa pengukuran audiens</strong>. Cloudflare memproses data teknis koneksi yang diperlukan untuk menyajikan halaman dan melindungi situs.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="id-8">
+        <h2 id="id-8">9. Masa penyimpanan dan keamanan</h2>
+        <ul>
+          <li><strong>Data di perangkat Anda</strong>: sampai Anda menghapusnya atau mencopot pemasangan aplikasi.</li>
+          <li><strong>Koordinat dan pencarian yang dikirim ke layanan di bagian 2</strong>: aljana tidak menyimpan salinannya; setiap layanan menyimpannya sesuai kebijakannya sendiri.</li>
+          <li><strong>Alamat IP di server aljana</strong>: selama waktu yang diperlukan untuk memproses permintaan; aljana tidak menyimpan catatan.</li>
+          <li><strong>Riwayat pembelian di RevenueCat</strong>: selama masih berguna untuk memulihkan pembelian Anda dan menangani keluhan, kecuali Anda meminta penghapusannya (lihat “Hak-hak Anda”).</li>
+          <li><strong>Dokumen akuntansi SY-ONE</strong>: disusun dari laporan penjualan Apple dan Google tanpa identitas Anda, dan disimpan selama sepuluh tahun sebagaimana diwajibkan oleh Kitab Undang-Undang Hukum Dagang Prancis.</li>
+          <li><strong>Pesan yang Anda kirimkan kepada kami</strong>: selama waktu yang diperlukan untuk menjawab dan menindaklanjuti permintaan Anda.</li>
+        </ul>
+        <p>Semua koneksi aplikasi dan situs dienkripsi (HTTPS).</p>
+      </section>
+
+      <section aria-labelledby="id-bases">
+        <h2 id="id-bases">10. Dasar hukum dan transfer ke luar Eropa</h2>
+        <h3>Mengapa kami boleh memproses data ini</h3>
+        <ul>
+          <li><strong>Menyediakan layanan yang Anda minta</strong> (perhitungan untuk tempat yang dipilih, unduhan, pembelian dan akses Premium): pelaksanaan ketentuan penggunaan yang Anda setujui.</li>
+          <li><strong>Membaca lokasi perangkat Anda</strong>: persetujuan Anda, yang diberikan melalui izin lokasi dan dapat Anda cabut kapan saja di pengaturan perangkat.</li>
+          <li><strong>Melindungi layanan dari penyalahgunaan dan penipuan</strong> (batas permintaan, verifikasi pembelian) serta memantau penjualan secara keseluruhan: kepentingan sah SY-ONE.</li>
+          <li><strong>Menyimpan dokumen akuntansi</strong>: kewajiban hukum.</li>
+        </ul>
+        <h3>Transfer ke luar Uni Eropa</h3>
+        <p>Beberapa penyedia berkedudukan atau memproses data di luar Uni Eropa, antara lain RevenueCat, Cloudflare, dan Google untuk font situs (Amerika Serikat), BigDataCloud (Australia), dan Quran Foundation. Bergantung pada penyedianya, transfer ini didasarkan pada jaminan yang diatur oleh GDPR (keputusan kecukupan, termasuk Kerangka Privasi Data UE dan AS bagi perusahaan bersertifikat, atau klausul kontrak standar Komisi Eropa) atau, untuk layanan yang Anda minta sendiri, pada kebutuhan untuk menyediakannya kepada Anda.</p>
+      </section>
+
+      <section aria-labelledby="id-9">
+        <h2 id="id-9">11. Hak-hak Anda</h2>
+        <p>Berdasarkan peraturan yang berlaku, khususnya Peraturan Perlindungan Data Umum Uni Eropa (GDPR), Anda memiliki hak akses, perbaikan, penghapusan, pembatasan pemrosesan, keberatan, dan portabilitas data, serta hak untuk mencabut persetujuan Anda kapan saja.</p>
+        <ul>
+          <li><strong>Data di perangkat Anda</strong>: tetap berada dalam kendali langsung Anda dan dapat Anda hapus kapan saja.</li>
+          <li><strong>Data pembelian</strong>: karena aljana tidak memiliki akun, tulislah kepada kami dengan nomor pesanan yang tertera pada tanda terima Anda (dari Apple atau Google). Nomor itu cukup bagi kami untuk menemukan riwayat Anda di RevenueCat, mengirimkannya kepada Anda, atau menghapusnya. Kami tidak akan meminta informasi lebih dari yang diperlukan. Penghapusan tidak membatalkan langganan yang sedang berjalan, yang dibatalkan melalui toko Anda, dan tidak memengaruhi dokumen akuntansi yang wajib kami simpan menurut hukum.</li>
+        </ul>
+        <p>Kami menjawab dalam waktu satu bulan. Anda juga dapat mengajukan pengaduan kepada otoritas perlindungan data di negara Anda (di Prancis, CNIL).</p>
+      </section>
+
+      <section aria-labelledby="id-10">
+        <h2 id="id-10">12. Anak-anak</h2>
+        <p>aljana dapat digunakan oleh siapa saja. Aplikasi ini tidak meminta data pribadi dari siapa pun, termasuk anak-anak. Satu-satunya data yang terkait dengan pengguna adalah data pembelian yang dijelaskan di atas; pembelian tunduk pada kontrol orang tua di toko Anda.</p>
+      </section>
+
+      <section aria-labelledby="id-11">
+        <h2 id="id-11">13. Perubahan</h2>
+        <p>Jika suatu perkembangan aljana mengubah cara data Anda diproses (misalnya adanya akun atau layanan baru), kebijakan ini akan diperbarui sebelum perkembangan tersebut tersedia, dan tanggal di bagian atas halaman akan diubah.</p>
+      </section>
+
+      <section aria-labelledby="id-12">
+        <h2 id="id-12">14. Pengendali data dan kontak</h2>
+        <p>Pengendali data adalah SY-ONE, penerbit aljana. Untuk pertanyaan apa pun tentang privasi atau untuk menggunakan hak-hak Anda:</p>
+        <address class="pp-contact">
+          <strong>SY-ONE SAS</strong><br>
+          14 rue de la Viala, 03300 Creuzier-le-Vieux, Prancis<br>
+          SIREN 821 628 708<br>
+          Email: <a href="mailto:contact@aljana.app">contact@aljana.app</a><br>
+          Situs: <a href="https://aljana.app">https://aljana.app</a>
+        </address>
+      </section>
+    </article>
+
+    <article class="pp-doc" id="doc-ur" lang="ur" dir="rtl" data-lang="ur" aria-labelledby="pp-title-ur">
+      <header class="pp-doc__head">
+        <h1 id="pp-title-ur">رازداری کی پالیسی</h1>
+        <p class="pp-updated">آخری تازہ کاری: <time datetime="2026-10-20">20 اکتوبر 2026</time></p>
+        <p class="pp-note">یہ اردو متن پڑھنے میں آسانی کے لیے فراہم کردہ ترجمہ ہے۔ کسی فرق کی صورت میں فرانسیسی متن معتبر ہوگا۔</p>
+        <p class="pp-intro">aljana آپ کے نماز کے اوقات، قبلہ، آسمان، چاند، ہلال اور گرہنوں کا حساب براہِ راست آپ کے آلے پر کرتا ہے۔ یہ صفحہ صاف صاف بتاتا ہے کہ آپ کے آلے سے کون سی معلومات باہر جاتی ہیں، کس کے پاس، کیوں اور کتنی مدت کے لیے۔</p>
+      </header>
+
+      <section aria-labelledby="ur-1">
+        <h2 id="ur-1">1۔ مختصراً</h2>
+        <ul>
+          <li>نہ اکاؤنٹ، نہ رجسٹریشن: aljana آپ سے آپ کا نام، ای میل پتہ یا فون نمبر نہیں مانگتا۔</li>
+          <li>Premium کی خریداری App Store یا Google Play کے ذریعے ہوتی ہے: aljana نہ آپ کی بینک تفصیلات دیکھتا ہے نہ آپ کی شناخت (دیکھیے «Premium کی خریداری»)۔</li>
+          <li>نہ اشتہار، نہ ٹریکر، نہ ناظرین کی پیمائش کا کوئی آلہ، نہ کریش رپورٹیں بھیجی جاتی ہیں۔</li>
+          <li>aljana کے سرور نہ آپ کا مقام محفوظ کرتے ہیں، نہ آپ کی ترتیبات، نہ ایپ کے استعمال کا انداز۔</li>
+          <li>aljana آپ کا ڈیٹا فروخت نہیں کرتا اور اسے دوسری ایپس یا ویب سائٹس پر آپ کا پیچھا کرنے کے لیے استعمال نہیں کرتا۔</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="ur-2">
+        <h2 id="ur-2">2۔ آپ کا مقام</h2>
+        <h3>یہ کیسے حاصل کیا جاتا ہے</h3>
+        <p>آپ کے آلے کا مقام صرف اس وقت پڑھا جاتا ہے جب آپ مقام کے بٹن کو چھوتے ہیں، اور صرف اس صورت میں جب آپ اس کی اجازت دیں («ایپ استعمال کرتے وقت» کی اجازت)۔ آپ اپنا مقام کبھی شیئر کیے بغیر بھی کوئی جگہ منتخب کر سکتے ہیں: کسی شہر کو تلاش کر کے، تجویز کردہ شہروں میں سے کوئی چن کر، یا نقاط خود درج کر کے۔</p>
+        <h3>یہ کس کام آتا ہے</h3>
+        <p>نماز کے اوقات، قبلہ، آسمان، چاند، ہلال اور گرہن منتخب جگہ کی بنیاد پر آپ کے آلے پر ہی شمار کیے جاتے ہیں۔ موجودہ جگہ اور آپ کی آخری پانچ جگہیں آپ کے آلے پر محفوظ رہتی ہیں تاکہ آپ سے دوبارہ نہ پوچھا جائے۔</p>
+        <h3>کیا بھیجا جاتا ہے، اور کسے</h3>
+        <p>کچھ معلومات آف لائن شمار نہیں کی جا سکتیں۔ انہیں حاصل کرنے کے لیے ایپ منتخب جگہ کے نقاط خصوصی خدمات کو بھیجتی ہے:</p>
+        <ul>
+          <li><strong>Open-Meteo</strong>: جگہ کا ٹائم زون اور بلندی، موسم اور بادل (آسمان، ہلال اور گرہن کی اسکرینیں)، جگہ کے اردگرد افق کی ناہمواری (ہلال کی اسکرین)۔</li>
+          <li><strong>BigDataCloud</strong>: آپ کے مقام کے مطابق شہر کا نام، صرف اس کے بعد جب آپ مقام کے بٹن کو چھو لیں۔</li>
+        </ul>
+        <p>جب آپ کوئی شہر تلاش کرتے ہیں تو آپ کا لکھا ہوا متن <strong>Open-Meteo</strong> (جگہوں کی تلاش) کو بھیجا جاتا ہے، اور اگر کوئی نتیجہ نہ ملے تو <strong>Photon</strong> کو (Komoot کی جغرافیائی تلاش کی خدمت، جو OpenStreetMap پر مبنی ہے)۔</p>
+        <p>aljana ان خدمات کو نہ کوئی نام بھیجتا ہے، نہ کوئی شناخت کنندہ، نہ آپ کے آلے کے بارے میں کوئی معلومات۔ ہر انٹرنیٹ کنکشن کی طرح، انہیں آپ کا IP پتہ بھی ملتا ہے۔ وہ یہ ڈیٹا اپنی رازداری کی پالیسیوں کے مطابق پروسیس کرتی ہیں۔</p>
+      </section>
+
+      <section aria-labelledby="ur-3">
+        <h2 id="ur-3">3۔ ڈاؤن لوڈ کیا جانے والا مواد</h2>
+        <p>مصحف، اس کے معانی کے تراجم اور تفسیر دکھانے کے لیے ایپ صفحات، فونٹس اور متون ڈاؤن لوڈ کرتی ہے:</p>
+        <ul>
+          <li>aljana کے سرورز سے، جن کی میزبانی <strong>Cloudflare</strong> کرتا ہے (مصحف کے صفحات، تراجم، تفسیر)؛</li>
+          <li><strong>Quran Foundation</strong> سے (مصحفِ حفص کے صفحات کے فونٹس)۔</li>
+        </ul>
+        <p>ان درخواستوں میں صرف مطلوبہ صفحہ نمبر، آیت یا زبان ہوتی ہے۔ آپ کی ترتیبات، مقام اور مطالعہ منتقل نہیں کیے جاتے۔ aljana کے سرور غلط استعمال کو محدود کرنے کے لیے (فی منٹ درخواستوں کی تعداد) آپ کا IP پتہ ایک مختصر لمحے کے لیے استعمال کرتے ہیں؛ aljana اس کا کوئی ریکارڈ نہیں رکھتا۔ ہمارا میزبان Cloudflare درخواستوں کی ترسیل اور خدمت کے تحفظ کے لیے ضروری تکنیکی کنکشن ڈیٹا اپنی پالیسی کے مطابق پروسیس کرتا ہے۔</p>
+      </section>
+
+      <section aria-labelledby="ur-4">
+        <h2 id="ur-4">4۔ جو آپ کے آلے پر رہتا ہے</h2>
+        <p>درج ذیل چیزیں صرف آپ کے آلے پر محفوظ ہوتی ہیں اور کبھی aljana کو نہیں بھیجی جاتیں:</p>
+        <ul>
+          <li>آپ کی ترتیبات (حساب کا طریقہ، عصر کے لیے فقہی مسلک، اذان، یاددہانیاں، زبان، ڈسپلے، رسائی)؛</li>
+          <li>منتخب جگہ اور آپ کی حالیہ جگہیں؛</li>
+          <li>مصحف میں آپ کا صفحہ، نشانات اور نائٹ موڈ؛</li>
+          <li>آپ کا تسبیح شمار؛</li>
+          <li>ہلال کے آپ کے مشاہدات اور ان پر نوٹس؛</li>
+          <li>ڈاؤن لوڈ کیے گئے صفحات، فونٹس، تراجم اور تفسیر کے متون؛</li>
+          <li>آپ کی Premium رسائی کی حالت، تاکہ Premium آف لائن بھی کام کرے۔</li>
+        </ul>
+        <p>آپ ایپ کا ڈیٹا صاف کر کے یا ایپ ان انسٹال کر کے انہیں حذف کر سکتے ہیں۔ آپ کے آلے کی ترتیبات کے مطابق، یہ اس کے خودکار بیک اپ (iCloud یا Google بیک اپ) میں شامل ہو سکتی ہیں، جس کا انتظام آپ کے آلے کے آپریٹنگ سسٹم کا بنانے والا کرتا ہے۔</p>
+      </section>
+
+      <section aria-labelledby="ur-5">
+        <h2 id="ur-5">5۔ اطلاعات، اذان اور قطب نما</h2>
+        <ul>
+          <li>یاددہانیاں اور اذان آپ کے آلے پر شمار کیے گئے اوقات کی بنیاد پر آپ کے آلے پر ہی طے کی جاتی ہیں۔ aljana سرور سے بھیجی جانے والی اطلاعات استعمال نہیں کرتا اور اطلاعات کا کوئی شناخت کنندہ جمع نہیں کرتا۔</li>
+          <li>اطلاعات یا الارم بھیجنے کی اجازت صرف اس وقت مانگی جاتی ہے جب آپ اذان یا کوئی یاددہانی فعال کریں۔</li>
+          <li>قبلہ کا قطب نما آپ کی رضامندی کے بعد آپ کے آلے کے سمت کے سینسر پڑھتا ہے۔ یہ پیمائشیں آپ کے آلے پر ہی رہتی ہیں۔</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="ur-achats">
+        <h2 id="ur-achats">6۔ Premium کی خریداری</h2>
+        <p>Premium کی خریداری Apple کے App Store یا Google Play کے ذریعے، آپ کے اسٹور کے ادائیگی کے طریقوں سے ہوتی ہے۔ ادائیگی آپ کا اسٹور پروسیس کرتا ہے: aljana کو کبھی آپ کی بینک تفصیلات، آپ کا نام یا آپ کے اکاؤنٹ کا ای میل پتہ نہیں ملتا۔ Apple اور Google اس معاملے میں اپنی رازداری کی پالیسیوں کے مطابق عمل کرتے ہیں۔</p>
+        <p>آپ کی خریداری کی تصدیق اور آپ کے آلات پر Premium کھولنے کے لیے aljana <strong>RevenueCat</strong> سے مدد لیتا ہے، جو ہماری طرف سے کام کرنے والا ایک خدمت فراہم کنندہ ہے۔ ایپ اسے یہ معلومات بھیجتی ہے:</p>
+        <ul>
+          <li>ایپ کا بنایا ہوا ایک بے ترتیب شناخت کنندہ؛ اس میں نہ آپ کا نام ہوتا ہے نہ ای میل پتہ، لیکن یہ آپ کی خریداریوں کو آپس میں جوڑتا ہے، اس لیے یہ ایک فرضی نام والا ڈیٹا ہے؛</li>
+          <li>آپ کے اسٹور کی فراہم کردہ خریداری کی معلومات (پیشکش، تاریخ، قیمت، کرنسی، اسٹور کا ملک، تجدید، رقم کی واپسی، لین دین کا نمبر)؛</li>
+          <li>تکنیکی معلومات (آلے کا سسٹم اور ورژن، ایپ کا ورژن، زبان، IP پتہ)۔</li>
+        </ul>
+        <p>Apple اور Google تجدید، منسوخی اور رقم کی واپسی کی اطلاع براہِ راست بھی RevenueCat کو دیتے ہیں۔ iPhone پر «ایک ماہ کا پاس» کے لیے aljana کا سرور اس شناخت کنندہ کے ذریعے RevenueCat میں خریداری کی تاریخ پڑھتا ہے تاکہ آپ کی رسائی ختم ہونے کا وقت شمار کرے؛ وہ کچھ محفوظ نہیں رکھتا۔</p>
+        <p>یہ معلومات صرف Premium فراہم کرنے، آپ کی خریداریاں بحال کرنے، دھوکہ دہی روکنے اور aljana کی فروخت کا مجموعی جائزہ لینے کے لیے استعمال ہوتی ہیں۔ یہ نہ اشتہار کے لیے استعمال ہوتی ہیں نہ آپ کا پیچھا کرنے کے لیے۔ RevenueCat انہیں اپنی <a href="https://www.revenuecat.com/privacy">رازداری کی پالیسی</a> کے مطابق پروسیس کرتا ہے۔</p>
+      </section>
+
+      <section aria-labelledby="ur-6">
+        <h2 id="ur-6">7۔ شیئر کرنا اور بیرونی روابط</h2>
+        <p>آپ کے عمل کے بغیر کچھ شیئر نہیں ہوتا۔ جب آپ «شیئر» کو چھوتے ہیں (قبلہ، گرہن، ہلال کا مشاہدہ، آیت، دعا، حدیث)، آپ مواد دیکھتے ہیں اور وصول کنندہ خود چنتے ہیں۔ اسکرین کے مطابق اس مواد میں آپ کے شہر کا نام یا اس کے نقاط شامل ہو سکتے ہیں۔</p>
+        <p>کچھ روابط بیرونی ویب سائٹس کھولتے ہیں (مثلاً Quran Foundation، QuranEnc، HadeethEnc، یا کسی گرہن کو اپنے کیلنڈر میں شامل کرنے کے لیے Google Calendar)۔ یہ صرف اس وقت کھلتے ہیں جب آپ انہیں چھوئیں، اور تب ان کی اپنی رازداری کی پالیسیاں لاگو ہوتی ہیں۔</p>
+      </section>
+
+      <section aria-labelledby="ur-7">
+        <h2 id="ur-7">8۔ ویب سائٹ aljana.app</h2>
+        <ul>
+          <li><strong>دکھایا جانے والا شہر</strong>: ویب سائٹ پر دکھایا جانے والا شہر ہمارا میزبان Cloudflare آپ کے IP پتے سے شہر کی سطح پر اخذ کرتا ہے۔ یہ نہ محفوظ کیا جاتا ہے نہ شیئر۔ ویب سائٹ کبھی آپ کے آلے کا مقام نہیں مانگتی۔</li>
+          <li><strong>فونٹس</strong>: ویب سائٹ اپنے فونٹس Google Fonts سے لوڈ کرتی ہے؛ اس لیے Google کو آپ کا IP پتہ ملتا ہے۔</li>
+          <li><strong>آپ کے براؤزر میں ذخیرہ</strong>: آپ کی منتخب کردہ زبان آپ کا براؤزر محفوظ رکھتا ہے؛ ابتدائی اسکرین اور اسکرول کی جگہ صرف آپ کے دورے کے دوران محفوظ رہتی ہیں۔</li>
+          <li><strong>نہ کوکیز، نہ ناظرین کی پیمائش</strong>۔ Cloudflare صفحات پیش کرنے اور ویب سائٹ کے تحفظ کے لیے ضروری تکنیکی کنکشن ڈیٹا پروسیس کرتا ہے۔</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="ur-8">
+        <h2 id="ur-8">9۔ محفوظ رکھنے کی مدت اور سلامتی</h2>
+        <ul>
+          <li><strong>آپ کے آلے پر موجود ڈیٹا</strong>: جب تک آپ اسے حذف نہ کریں یا ایپ ان انسٹال نہ کریں۔</li>
+          <li><strong>حصہ 2 کی خدمات کو بھیجے گئے نقاط اور تلاشیں</strong>: aljana ان کی کوئی نقل نہیں رکھتا؛ ہر خدمت انہیں اپنی پالیسی کے مطابق رکھتی ہے۔</li>
+          <li><strong>aljana کے سرورز پر IP پتہ</strong>: درخواست پروسیس کرنے کے لیے درکار وقت تک؛ aljana کوئی ریکارڈ نہیں رکھتا۔</li>
+          <li><strong>RevenueCat میں خریداری کی تاریخ</strong>: جب تک یہ آپ کی خریداریاں بحال کرنے اور کسی شکایت کو نمٹانے کے لیے مفید ہو، الا یہ کہ آپ اسے حذف کرنے کی درخواست کریں (دیکھیے «آپ کے حقوق»)۔</li>
+          <li><strong>SY-ONE کے حسابی دستاویزات</strong>: یہ Apple اور Google کی فروخت کی رپورٹوں سے آپ کی شناخت کے بغیر تیار کیے جاتے ہیں، اور فرانسیسی تجارتی قانون کے تقاضے کے مطابق دس سال تک محفوظ رکھے جاتے ہیں۔</li>
+          <li><strong>آپ کے ہمیں بھیجے گئے پیغامات</strong>: آپ کو جواب دینے اور آپ کی درخواست کی پیروی کے لیے درکار وقت تک۔</li>
+        </ul>
+        <p>ایپ اور ویب سائٹ کے تمام کنکشن خفیہ کاری سے محفوظ ہیں (HTTPS)۔</p>
+      </section>
+
+      <section aria-labelledby="ur-bases">
+        <h2 id="ur-bases">10۔ قانونی بنیادیں اور یورپ سے باہر منتقلی</h2>
+        <h3>ہم یہ ڈیٹا کیوں پروسیس کر سکتے ہیں</h3>
+        <ul>
+          <li><strong>آپ کی مطلوبہ خدمت فراہم کرنا</strong> (منتخب جگہ سے متعلق حسابات، ڈاؤن لوڈ، Premium کی خریداری اور رسائی): آپ کی قبول کردہ شرائطِ استعمال پر عمل درآمد۔</li>
+          <li><strong>آپ کے آلے کا مقام پڑھنا</strong>: مقام کی اجازت کے ذریعے دی گئی آپ کی رضامندی، جسے آپ کسی بھی وقت اپنے آلے کی ترتیبات میں واپس لے سکتے ہیں۔</li>
+          <li><strong>خدمت کو غلط استعمال اور دھوکہ دہی سے بچانا</strong> (درخواستوں کی حد، خریداری کی تصدیق) اور فروخت کا مجموعی جائزہ لینا: SY-ONE کا جائز مفاد۔</li>
+          <li><strong>حسابی دستاویزات محفوظ رکھنا</strong>: قانونی ذمہ داری۔</li>
+        </ul>
+        <h3>یورپی یونین سے باہر منتقلی</h3>
+        <p>کچھ خدمت فراہم کنندگان یورپی یونین سے باہر قائم ہیں یا وہاں ڈیٹا پروسیس کرتے ہیں، جن میں RevenueCat، Cloudflare اور ویب سائٹ کے فونٹس کے لیے Google (ریاست ہائے متحدہ امریکہ)، BigDataCloud (آسٹریلیا) اور Quran Foundation شامل ہیں۔ فراہم کنندہ کے لحاظ سے، یہ منتقلیاں GDPR میں مقرر کردہ ضمانتوں پر مبنی ہیں (موزونیت کا فیصلہ، جس میں مصدقہ کمپنیوں کے لیے یورپی یونین اور امریکہ کا ڈیٹا پرائیویسی فریم ورک شامل ہے، یا یورپی کمیشن کی معیاری معاہداتی شقیں)، یا اس خدمت کے لیے جو آپ خود طلب کریں، اسے آپ تک پہنچانے کی ضرورت پر۔</p>
+      </section>
+
+      <section aria-labelledby="ur-9">
+        <h2 id="ur-9">11۔ آپ کے حقوق</h2>
+        <p>قابلِ اطلاق قوانین، خصوصاً یورپی یونین کے جنرل ڈیٹا پروٹیکشن ریگولیشن (GDPR) کے تحت، آپ کو رسائی، تصحیح، حذف، پروسیسنگ کی تحدید، اعتراض اور ڈیٹا کی منتقلی کے حقوق حاصل ہیں، نیز کسی بھی وقت اپنی رضامندی واپس لینے کا حق۔</p>
+        <ul>
+          <li><strong>آپ کے آلے پر موجود ڈیٹا</strong>: یہ براہِ راست آپ کے اختیار میں ہے اور آپ اسے کسی بھی وقت حذف کر سکتے ہیں۔</li>
+          <li><strong>خریداری کا ڈیٹا</strong>: چونکہ aljana میں اکاؤنٹ نہیں ہوتا، اپنی رسید (Apple یا Google) کے آرڈر نمبر کے ساتھ ہمیں لکھیں۔ RevenueCat میں آپ کی تاریخ تلاش کرنے، آپ کو بھیجنے یا حذف کرنے کے لیے یہ کافی ہے۔ ہم ضرورت سے زیادہ معلومات نہیں مانگیں گے۔ حذف کرنے سے جاری سبسکرپشن منسوخ نہیں ہوتی، جو آپ کے اسٹور میں منسوخ کی جاتی ہے، اور نہ ہی ان حسابی دستاویزات پر اثر پڑتا ہے جنہیں قانوناً محفوظ رکھنا ہم پر لازم ہے۔</li>
+        </ul>
+        <p>ہم ایک ماہ کے اندر جواب دیتے ہیں۔ آپ اپنے ملک کے ڈیٹا پروٹیکشن ادارے کے پاس شکایت بھی درج کرا سکتے ہیں (فرانس میں CNIL)۔</p>
+      </section>
+
+      <section aria-labelledby="ur-10">
+        <h2 id="ur-10">12۔ بچے</h2>
+        <p>aljana ہر کوئی استعمال کر سکتا ہے۔ یہ کسی سے ذاتی ڈیٹا نہیں مانگتا، بچوں سے بھی نہیں۔ کسی صارف سے منسلک واحد ڈیٹا اوپر بیان کردہ خریداری کا ڈیٹا ہے؛ خریداریاں آپ کے اسٹور کے والدین کے کنٹرول کے تابع ہیں۔</p>
+      </section>
+
+      <section aria-labelledby="ur-11">
+        <h2 id="ur-11">13۔ تبدیلیاں</h2>
+        <p>اگر aljana میں کوئی تبدیلی آپ کے ڈیٹا کی پروسیسنگ کا طریقہ بدلے (مثلاً کوئی اکاؤنٹ یا نئی خدمت)، تو یہ پالیسی اس تبدیلی کے دستیاب ہونے سے پہلے تازہ کی جائے گی، اور صفحے کے اوپر کی تاریخ بدل دی جائے گی۔</p>
+      </section>
+
+      <section aria-labelledby="ur-12">
+        <h2 id="ur-12">14۔ ڈیٹا کنٹرولر اور رابطہ</h2>
+        <p>ڈیٹا کا ذمہ دار SY-ONE ہے، جو aljana کا ناشر ہے۔ رازداری سے متعلق کسی بھی سوال یا اپنے حقوق کے استعمال کے لیے:</p>
+        <address class="pp-contact">
+          <strong>SY-ONE SAS</strong><br>
+          <bdi dir="ltr">14 rue de la Viala, 03300 Creuzier-le-Vieux, France</bdi><br>
+          <bdi dir="ltr">SIREN 821 628 708</bdi><br>
+          ای میل: <a href="mailto:contact@aljana.app">contact@aljana.app</a><br>
+          ویب سائٹ: <a href="https://aljana.app">https://aljana.app</a>
+        </address>
+      </section>
+    </article>
+
+    <article class="pp-doc" id="doc-fa" lang="fa" dir="rtl" data-lang="fa" aria-labelledby="pp-title-fa">
+      <header class="pp-doc__head">
+        <h1 id="pp-title-fa">سیاست حریم خصوصی</h1>
+        <p class="pp-updated">آخرین به‌روزرسانی: <time datetime="2026-10-20">۲۰ اکتبر ۲۰۲۶</time></p>
+        <p class="pp-note">این متن فارسی ترجمه‌ای برای سهولت خواندن است. در صورت هرگونه اختلاف، متن فرانسوی ملاک است.</p>
+        <p class="pp-intro">aljana اوقات نماز، قبله، آسمان، ماه، هلال و گرفت‌ها را مستقیماً روی دستگاه شما محاسبه می‌کند. این صفحه بی‌پرده توضیح می‌دهد که چه اطلاعاتی از دستگاه شما خارج می‌شود، به کجا می‌رود، چرا و برای چه مدت.</p>
+      </header>
+
+      <section aria-labelledby="fa-1">
+        <h2 id="fa-1">۱. به‌طور خلاصه</h2>
+        <ul>
+          <li>نه حساب کاربری، نه ثبت‌نام: aljana نام، نشانی ایمیل یا شمارهٔ تلفن شما را نمی‌خواهد.</li>
+          <li>خرید Premium از طریق App Store یا Google Play انجام می‌شود: aljana اطلاعات بانکی و هویت شما را نمی‌بیند (نگاه کنید به «خرید Premium»).</li>
+          <li>نه تبلیغات، نه ردیاب، نه ابزار سنجش مخاطب، و هیچ گزارش خرابی‌ای ارسال نمی‌شود.</li>
+          <li>سرورهای aljana نه موقعیت شما را ثبت می‌کنند، نه تنظیمات شما را، نه نحوهٔ استفادهٔ شما از برنامه را.</li>
+          <li>aljana داده‌های شما را نمی‌فروشد و از آن‌ها برای دنبال کردن شما در برنامه‌ها یا وب‌سایت‌های دیگر استفاده نمی‌کند.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="fa-2">
+        <h2 id="fa-2">۲. موقعیت شما</h2>
+        <h3>چگونه به دست می‌آید</h3>
+        <p>موقعیت دستگاه شما فقط وقتی خوانده می‌شود که دکمهٔ موقعیت‌یابی را لمس کنید، و فقط اگر اجازه دهید (اجازهٔ «هنگام استفاده از برنامه»). همچنین می‌توانید بدون آنکه هرگز موقعیت خود را به اشتراک بگذارید مکانی را انتخاب کنید: با جست‌وجوی یک شهر، انتخاب یکی از شهرهای پیشنهادی یا وارد کردن مختصات به‌صورت دستی.</p>
+        <h3>به چه کاری می‌آید</h3>
+        <p>اوقات نماز، قبله، آسمان، ماه، هلال و گرفت‌ها بر اساس مکان انتخاب‌شده روی دستگاه شما محاسبه می‌شوند. مکان فعلی و پنج مکان آخر شما روی دستگاهتان ذخیره می‌شوند تا دوباره از شما پرسیده نشود.</p>
+        <h3>چه چیزی ارسال می‌شود و به چه کسی</h3>
+        <p>برخی اطلاعات را نمی‌توان بدون اتصال محاسبه کرد. برای به دست آوردن آن‌ها، برنامه مختصات مکان انتخاب‌شده را به سرویس‌های تخصصی می‌فرستد:</p>
+        <ul>
+          <li><strong>Open-Meteo</strong>: منطقهٔ زمانی و ارتفاع مکان، هوا و پوشش ابر (صفحه‌های آسمان، هلال و گرفت‌ها)، ناهمواری افق در اطراف مکان (صفحهٔ هلال).</li>
+          <li><strong>BigDataCloud</strong>: نام شهر متناظر با موقعیت شما، فقط پس از آنکه دکمهٔ موقعیت‌یابی را لمس کرده باشید.</li>
+        </ul>
+        <p>وقتی شهری را جست‌وجو می‌کنید، متنی که تایپ می‌کنید به <strong>Open-Meteo</strong> (جست‌وجوی مکان) فرستاده می‌شود و اگر نتیجه‌ای پیدا نشود به <strong>Photon</strong> (سرویس جست‌وجوی جغرافیایی شرکت Komoot که بر پایهٔ OpenStreetMap است).</p>
+        <p>aljana هیچ نام، هیچ شناسه و هیچ اطلاعاتی دربارهٔ دستگاه شما به این سرویس‌ها نمی‌فرستد. مانند هر اتصال اینترنتی، این سرویس‌ها نشانی IP شما را نیز دریافت می‌کنند و این داده‌ها را طبق سیاست‌های حریم خصوصی خود پردازش می‌کنند.</p>
+      </section>
+
+      <section aria-labelledby="fa-3">
+        <h2 id="fa-3">۳. محتوای بارگیری‌شده</h2>
+        <p>برای نمایش مصحف، ترجمه‌های معانی آن و تفسیر، برنامه صفحه‌ها، قلم‌ها و متن‌هایی را بارگیری می‌کند:</p>
+        <ul>
+          <li>از سرورهای aljana که میزبان آن‌ها <strong>Cloudflare</strong> است (صفحه‌های مصحف، ترجمه‌ها، تفسیر)؛</li>
+          <li>از <strong>Quran Foundation</strong> (قلم‌های صفحه‌های مصحف حفص).</li>
+        </ul>
+        <p>این درخواست‌ها فقط شمارهٔ صفحه، آیه یا زبان درخواستی را در بر دارند. تنظیمات، موقعیت و مطالعهٔ شما منتقل نمی‌شود. سرورهای aljana برای محدود کردن سوءاستفاده (تعداد درخواست‌ها در دقیقه) لحظه‌ای کوتاه از نشانی IP شما استفاده می‌کنند و aljana هیچ سابقه‌ای از آن نگه نمی‌دارد. میزبان ما، Cloudflare، داده‌های فنی اتصال را که برای رساندن درخواست‌ها و حفاظت از سرویس لازم است، طبق سیاست خود پردازش می‌کند.</p>
+      </section>
+
+      <section aria-labelledby="fa-4">
+        <h2 id="fa-4">۴. آنچه روی دستگاه شما می‌ماند</h2>
+        <p>موارد زیر فقط روی دستگاه شما ذخیره می‌شوند و هرگز به aljana فرستاده نمی‌شوند:</p>
+        <ul>
+          <li>تنظیمات شما (روش محاسبه، مذهب فقهی برای عصر، اذان، یادآوری‌ها، زبان، نمایش، دسترس‌پذیری)؛</li>
+          <li>مکان انتخاب‌شده و مکان‌های اخیر شما؛</li>
+          <li>صفحه، نشانک‌ها و حالت شب شما در مصحف؛</li>
+          <li>شمارندهٔ تسبیح شما؛</li>
+          <li>رصدهای هلال و یادداشت‌های شما دربارهٔ آن‌ها؛</li>
+          <li>صفحه‌ها، قلم‌ها، ترجمه‌ها و متن‌های تفسیر بارگیری‌شده؛</li>
+          <li>وضعیت دسترسی Premium شما، که نگه داشته می‌شود تا Premium بدون اتصال هم کار کند.</li>
+        </ul>
+        <p>با پاک کردن داده‌های برنامه یا حذف نصب آن، این موارد را حذف می‌کنید. بسته به تنظیمات دستگاه، ممکن است در پشتیبان‌گیری خودکار آن (iCloud یا پشتیبان‌گیری Google) گنجانده شوند که سازندهٔ سیستم‌عامل دستگاه شما آن را مدیریت می‌کند.</p>
+      </section>
+
+      <section aria-labelledby="fa-5">
+        <h2 id="fa-5">۵. اعلان‌ها، اذان و قطب‌نما</h2>
+        <ul>
+          <li>یادآوری‌ها و اذان روی دستگاه شما و بر اساس اوقاتی که روی دستگاهتان محاسبه شده‌اند برنامه‌ریزی می‌شوند. aljana از اعلان‌های ارسالی از سرور استفاده نمی‌کند و هیچ شناسهٔ اعلانی جمع‌آوری نمی‌کند.</li>
+          <li>اجازهٔ ارسال اعلان یا هشدار فقط وقتی درخواست می‌شود که اذان یا یک یادآوری را فعال کنید.</li>
+          <li>قطب‌نمای قبله با موافقت شما حسگرهای جهت‌یابی دستگاهتان را می‌خواند. این اندازه‌گیری‌ها روی دستگاه شما می‌مانند.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="fa-achats">
+        <h2 id="fa-achats">۶. خرید Premium</h2>
+        <p>خرید Premium از طریق App Store اپل یا Google Play و با روش‌های پرداخت فروشگاه شما انجام می‌شود. پرداخت را فروشگاه شما پردازش می‌کند: aljana هرگز اطلاعات بانکی، نام یا نشانی ایمیل حساب شما را دریافت نمی‌کند. اپل و گوگل در این زمینه طبق سیاست‌های حریم خصوصی خود عمل می‌کنند.</p>
+        <p>برای تأیید خریدهای شما و فعال کردن Premium روی دستگاه‌هایتان، aljana از <strong>RevenueCat</strong> کمک می‌گیرد که ارائه‌دهنده‌ای است که از طرف ما عمل می‌کند. برنامه این موارد را برای آن می‌فرستد:</p>
+        <ul>
+          <li>یک شناسهٔ تصادفی که برنامه می‌سازد؛ این شناسه نه نام شما را در بر دارد و نه نشانی ایمیلتان را، اما خریدهای شما را به هم پیوند می‌دهد و بنابراین دادهٔ مستعار است؛</li>
+          <li>اطلاعات خرید که فروشگاه شما ارائه می‌دهد (پیشنهاد، تاریخ، قیمت، واحد پول، کشور فروشگاه، تمدید، بازپرداخت، شمارهٔ تراکنش)؛</li>
+          <li>اطلاعات فنی (سیستم و نسخهٔ دستگاه، نسخهٔ برنامه، زبان، نشانی IP).</li>
+        </ul>
+        <p>اپل و گوگل همچنین تمدیدها، لغوها و بازپرداخت‌ها را مستقیماً به RevenueCat اطلاع می‌دهند. برای پاس یک‌ماهه روی iPhone، سرور aljana با همین شناسه سابقهٔ خرید را در RevenueCat می‌خواند تا زمان پایان دسترسی شما را محاسبه کند و چیزی نگه نمی‌دارد.</p>
+        <p>این اطلاعات فقط برای ارائهٔ Premium، بازیابی خریدهای شما، پیشگیری از تقلب و پیگیری کلی فروش aljana به کار می‌رود. هرگز برای تبلیغات یا دنبال کردن شما استفاده نمی‌شود. RevenueCat آن را طبق <a href="https://www.revenuecat.com/privacy">سیاست حریم خصوصی</a> خود پردازش می‌کند.</p>
+      </section>
+
+      <section aria-labelledby="fa-6">
+        <h2 id="fa-6">۷. اشتراک‌گذاری و پیوندهای بیرونی</h2>
+        <p>هیچ چیز بدون اقدام شما به اشتراک گذاشته نمی‌شود. وقتی «اشتراک‌گذاری» را لمس می‌کنید (قبله، گرفت، رصد هلال، آیه، دعا، حدیث)، محتوا را می‌بینید و گیرنده را خودتان انتخاب می‌کنید. بسته به صفحه، این محتوا ممکن است نام شهر شما یا مختصات آن را در بر داشته باشد.</p>
+        <p>برخی پیوندها وب‌سایت‌های دیگری را باز می‌کنند (برای نمونه Quran Foundation، QuranEnc، HadeethEnc یا تقویم Google برای افزودن یک گرفت به تقویم شما). این پیوندها فقط وقتی باز می‌شوند که آن‌ها را لمس کنید و در آن صورت سیاست‌های حریم خصوصی همان وب‌سایت‌ها اعمال می‌شود.</p>
+      </section>
+
+      <section aria-labelledby="fa-7">
+        <h2 id="fa-7">۸. وب‌سایت aljana.app</h2>
+        <ul>
+          <li><strong>شهر نمایش‌داده‌شده</strong>: شهری که در وب‌سایت نمایش داده می‌شود، توسط میزبان ما Cloudflare و در سطح شهر از نشانی IP شما استنباط می‌شود. نه ذخیره می‌شود و نه به اشتراک گذاشته می‌شود. وب‌سایت هرگز موقعیت دستگاه شما را نمی‌خواهد.</li>
+          <li><strong>قلم‌ها</strong>: وب‌سایت قلم‌های خود را از Google Fonts بارگیری می‌کند؛ بنابراین Google نشانی IP شما را دریافت می‌کند.</li>
+          <li><strong>ذخیره‌سازی در مرورگر شما</strong>: زبانی که انتخاب می‌کنید در مرورگرتان نگه داشته می‌شود؛ صفحهٔ آغازین و موقعیت پیمایش فقط در طول بازدید شما نگه داشته می‌شوند.</li>
+          <li><strong>نه کوکی، نه سنجش مخاطب</strong>. Cloudflare داده‌های فنی اتصال را که برای ارائهٔ صفحه‌ها و حفاظت از وب‌سایت لازم است پردازش می‌کند.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="fa-8">
+        <h2 id="fa-8">۹. مدت نگهداری و امنیت</h2>
+        <ul>
+          <li><strong>داده‌های روی دستگاه شما</strong>: تا زمانی که آن‌ها را پاک کنید یا برنامه را حذف کنید.</li>
+          <li><strong>مختصات و جست‌وجوهای ارسال‌شده به سرویس‌های بخش ۲</strong>: aljana هیچ نسخه‌ای از آن‌ها نگه نمی‌دارد؛ هر سرویس آن‌ها را طبق سیاست خود نگه می‌دارد.</li>
+          <li><strong>نشانی IP روی سرورهای aljana</strong>: فقط به مدت لازم برای پردازش درخواست؛ aljana هیچ سابقه‌ای نگه نمی‌دارد.</li>
+          <li><strong>سابقهٔ خرید در RevenueCat</strong>: تا زمانی که برای بازیابی خریدهای شما و رسیدگی به یک شکایت مفید باشد، مگر آنکه حذف آن را درخواست کنید (نگاه کنید به «حقوق شما»).</li>
+          <li><strong>اسناد حسابداری SY-ONE</strong>: این اسناد بر پایهٔ گزارش‌های فروش اپل و گوگل و بدون هویت شما تهیه می‌شوند و طبق الزام قانون تجارت فرانسه ده سال نگهداری می‌شوند.</li>
+          <li><strong>پیام‌هایی که برای ما می‌فرستید</strong>: به مدت لازم برای پاسخ دادن و پیگیری درخواست شما.</li>
+        </ul>
+        <p>همهٔ اتصال‌های برنامه و وب‌سایت رمزگذاری شده‌اند (HTTPS).</p>
+      </section>
+
+      <section aria-labelledby="fa-bases">
+        <h2 id="fa-bases">۱۰. مبانی قانونی و انتقال به خارج از اروپا</h2>
+        <h3>چرا مجاز به پردازش این داده‌ها هستیم</h3>
+        <ul>
+          <li><strong>ارائهٔ سرویسی که درخواست می‌کنید</strong> (محاسبات مربوط به مکان انتخاب‌شده، بارگیری‌ها، خرید و دسترسی Premium): اجرای شرایط استفاده‌ای که می‌پذیرید.</li>
+          <li><strong>خواندن موقعیت دستگاه شما</strong>: رضایت شما که از طریق اجازهٔ موقعیت داده می‌شود و می‌توانید هر زمان در تنظیمات دستگاه آن را پس بگیرید.</li>
+          <li><strong>حفاظت از سرویس در برابر سوءاستفاده و تقلب</strong> (محدودیت تعداد درخواست‌ها، تأیید خریدها) و پیگیری کلی فروش: منفعت مشروع SY-ONE.</li>
+          <li><strong>نگهداری اسناد حسابداری</strong>: الزام قانونی.</li>
+        </ul>
+        <h3>انتقال به خارج از اتحادیهٔ اروپا</h3>
+        <p>برخی ارائه‌دهندگان در خارج از اتحادیهٔ اروپا مستقرند یا داده‌ها را در آنجا پردازش می‌کنند، از جمله RevenueCat، Cloudflare و Google برای قلم‌های وب‌سایت (ایالات متحده)، BigDataCloud (استرالیا) و Quran Foundation. بسته به ارائه‌دهنده، این انتقال‌ها بر تضمین‌های پیش‌بینی‌شده در مقررات عمومی حفاظت از داده‌ها (GDPR) استوارند (تصمیم کفایت، از جمله چارچوب حریم خصوصی داده‌های اتحادیهٔ اروپا و ایالات متحده برای شرکت‌های دارای گواهی، یا بندهای قراردادی استاندارد کمیسیون اروپا) یا، برای سرویسی که خودتان درخواست می‌کنید، بر ضرورت آن برای ارائهٔ سرویس به شما.</p>
+      </section>
+
+      <section aria-labelledby="fa-9">
+        <h2 id="fa-9">۱۱. حقوق شما</h2>
+        <p>طبق مقررات قابل اجرا، به‌ویژه مقررات عمومی حفاظت از داده‌های اتحادیهٔ اروپا (GDPR)، شما حق دسترسی، اصلاح، پاک کردن، محدود کردن پردازش، اعتراض و انتقال‌پذیری داده‌ها را دارید، و نیز حق دارید هر زمان رضایت خود را پس بگیرید.</p>
+        <ul>
+          <li><strong>داده‌های روی دستگاه شما</strong>: مستقیماً در اختیار شما می‌مانند و می‌توانید هر زمان آن‌ها را پاک کنید.</li>
+          <li><strong>داده‌های خرید</strong>: چون aljana حساب کاربری ندارد، با شمارهٔ سفارشی که در رسید شما (از اپل یا گوگل) آمده است برای ما بنویسید. همین برای یافتن سابقهٔ شما در RevenueCat، فرستادن آن برای شما یا حذفش کافی است. بیش از اطلاعات لازم از شما نخواهیم خواست. حذف، اشتراک در جریان را لغو نمی‌کند (لغو آن در فروشگاه شما انجام می‌شود) و بر اسناد حسابداری‌ای که قانون ما را به نگهداری آن‌ها ملزم می‌کند اثری ندارد.</li>
+        </ul>
+        <p>ظرف یک ماه پاسخ می‌دهیم. همچنین می‌توانید به مرجع حفاظت از داده‌های کشور خود شکایت کنید (در فرانسه، CNIL).</p>
+      </section>
+
+      <section aria-labelledby="fa-10">
+        <h2 id="fa-10">۱۲. کودکان</h2>
+        <p>همه می‌توانند از aljana استفاده کنند. این برنامه از هیچ‌کس، از جمله کودکان، دادهٔ شخصی نمی‌خواهد. تنها داده‌های مرتبط با یک کاربر، داده‌های خرید شرح‌داده‌شده در بالاست؛ خریدها تابع کنترل‌های والدین فروشگاه شما هستند.</p>
+      </section>
+
+      <section aria-labelledby="fa-11">
+        <h2 id="fa-11">۱۳. تغییرات</h2>
+        <p>اگر تحولی در aljana نحوهٔ پردازش داده‌های شما را تغییر دهد (مثلاً یک حساب کاربری یا سرویسی تازه)، این سیاست پیش از در دسترس قرار گرفتن آن تحول به‌روز می‌شود و تاریخ بالای صفحه تغییر می‌کند.</p>
+      </section>
+
+      <section aria-labelledby="fa-12">
+        <h2 id="fa-12">۱۴. مسئول پردازش و تماس</h2>
+        <p>مسئول پردازش داده‌ها SY-ONE، ناشر aljana، است. برای هر پرسشی دربارهٔ حریم خصوصی یا برای اعمال حقوق خود:</p>
+        <address class="pp-contact">
+          <strong>SY-ONE SAS</strong><br>
+          <bdi dir="ltr">14 rue de la Viala, 03300 Creuzier-le-Vieux, France</bdi><br>
+          <bdi dir="ltr">SIREN 821 628 708</bdi><br>
+          ایمیل: <a href="mailto:contact@aljana.app">contact@aljana.app</a><br>
+          وب‌سایت: <a href="https://aljana.app">https://aljana.app</a>
+        </address>
+      </section>
+    </article>
+
+    <article class="pp-doc" id="doc-ru" lang="ru" dir="ltr" data-lang="ru" aria-labelledby="pp-title-ru">
+      <header class="pp-doc__head">
+        <h1 id="pp-title-ru">Политика конфиденциальности</h1>
+        <p class="pp-updated">Последнее обновление: <time datetime="2026-10-20">20 октября 2026 г.</time></p>
+        <p class="pp-note">Эта русская версия является переводом, предоставленным для удобства чтения. При расхождениях действует французская версия.</p>
+        <p class="pp-intro">aljana рассчитывает время ваших молитв, киблу, небо, Луну, хиляль и затмения прямо на вашем устройстве. На этой странице без обиняков описано, какая информация покидает его, кому она передаётся, зачем и на какой срок.</p>
+      </header>
+
+      <section aria-labelledby="ru-1">
+        <h2 id="ru-1">1. Коротко</h2>
+        <ul>
+          <li>Ни учётной записи, ни регистрации: aljana не спрашивает ваше имя, адрес электронной почты или номер телефона.</li>
+          <li>Покупки Premium проходят через App Store или Google Play: aljana не видит ни ваших платёжных данных, ни вашей личности (см. «Покупки Premium»).</li>
+          <li>Ни рекламы, ни трекеров, ни инструментов измерения аудитории, ни отправки отчётов о сбоях.</li>
+          <li>Серверы aljana не сохраняют ни ваше местоположение, ни ваши настройки, ни то, как вы пользуетесь приложением.</li>
+          <li>aljana не продаёт ваши данные и не использует их, чтобы отслеживать вас в других приложениях или на других сайтах.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="ru-2">
+        <h2 id="ru-2">2. Ваше местоположение</h2>
+        <h3>Как оно определяется</h3>
+        <p>Местоположение вашего устройства считывается только тогда, когда вы нажимаете кнопку определения местоположения, и только если вы это разрешаете (разрешение «При использовании приложения»). Вы также можете выбрать место, ни разу не сообщая своё местоположение: найти город поиском, выбрать один из предложенных городов или ввести координаты вручную.</p>
+        <h3>Для чего оно нужно</h3>
+        <p>Время молитв, кибла, небо, Луна, хиляль и затмения рассчитываются на вашем устройстве для выбранного места. Текущее место и пять последних мест сохраняются на вашем устройстве, чтобы не спрашивать их снова.</p>
+        <h3>Что передаётся и кому</h3>
+        <p>Некоторые сведения нельзя рассчитать без подключения к сети. Чтобы получить их, приложение отправляет координаты выбранного места специализированным сервисам:</p>
+        <ul>
+          <li><strong>Open-Meteo</strong>: часовой пояс и высота места, погода и облачность (экраны «Небо», «Хиляль» и «Затмения»), рельеф горизонта вокруг места (экран «Хиляль»).</li>
+          <li><strong>BigDataCloud</strong>: название города, соответствующего вашему местоположению, только после того, как вы нажали кнопку определения местоположения.</li>
+        </ul>
+        <p>Когда вы ищете город, введённый текст отправляется в <strong>Open-Meteo</strong> (поиск мест), а если ничего не найдено, в <strong>Photon</strong> (сервис географического поиска компании Komoot на основе OpenStreetMap).</p>
+        <p>aljana не передаёт этим сервисам ни имени, ни идентификатора, ни сведений о вашем устройстве. Как и при любом подключении к интернету, они также получают ваш IP-адрес. Они обрабатывают эти данные согласно своим политикам конфиденциальности.</p>
+      </section>
+
+      <section aria-labelledby="ru-3">
+        <h2 id="ru-3">3. Загружаемое содержимое</h2>
+        <p>Чтобы показывать Мусхаф, переводы его смыслов и тафсир, приложение загружает страницы, шрифты и тексты:</p>
+        <ul>
+          <li>с серверов aljana, размещённых у <strong>Cloudflare</strong> (страницы Мусхафа, переводы, тафсир);</li>
+          <li>от <strong>Quran Foundation</strong> (шрифты страниц Мусхафа в чтении Хафса).</li>
+        </ul>
+        <p>Эти запросы содержат только номер страницы, аят или запрошенный язык. Ваши настройки, местоположение и чтение не передаются. Серверы aljana на короткое время используют ваш IP-адрес, чтобы ограничивать злоупотребления (число запросов в минуту); aljana не ведёт никакого журнала. Наш хостинг-провайдер Cloudflare обрабатывает технические данные соединения, необходимые для доставки запросов и защиты сервиса, согласно своей политике.</p>
+      </section>
+
+      <section aria-labelledby="ru-4">
+        <h2 id="ru-4">4. Что остаётся на вашем устройстве</h2>
+        <p>Следующие данные хранятся только на вашем устройстве и никогда не передаются aljana:</p>
+        <ul>
+          <li>ваши настройки (метод расчёта, мазхаб для аср, азан, напоминания, язык, отображение, специальные возможности);</li>
+          <li>выбранное место и ваши недавние места;</li>
+          <li>ваша страница, закладки и ночной режим в Мусхафе;</li>
+          <li>ваш счётчик тасбиха;</li>
+          <li>ваши наблюдения хиляля и заметки к ним;</li>
+          <li>загруженные страницы, шрифты, переводы и тексты тафсира;</li>
+          <li>состояние вашего доступа к Premium, сохраняемое, чтобы Premium работал без подключения к сети.</li>
+        </ul>
+        <p>Вы удаляете их, очистив данные приложения или удалив его. В зависимости от настроек устройства они могут попадать в его автоматическую резервную копию (iCloud или резервное копирование Google), которой управляет производитель операционной системы вашего устройства.</p>
+      </section>
+
+      <section aria-labelledby="ru-5">
+        <h2 id="ru-5">5. Уведомления, азан и компас</h2>
+        <ul>
+          <li>Напоминания и азан планируются на вашем устройстве по времени, рассчитанному на вашем устройстве. aljana не использует уведомления, отправляемые с сервера, и не собирает никаких идентификаторов уведомлений.</li>
+          <li>Разрешение на уведомления или будильники запрашивается, только если вы включаете азан или напоминание.</li>
+          <li>Компас киблы с вашего согласия считывает датчики ориентации устройства. Эти измерения остаются на вашем устройстве.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="ru-achats">
+        <h2 id="ru-achats">6. Покупки Premium</h2>
+        <p>Покупки Premium проходят через App Store компании Apple или через Google Play с использованием платёжных средств вашего магазина. Платёж обрабатывает ваш магазин: aljana никогда не получает ваши платёжные данные, ваше имя или адрес электронной почты вашей учётной записи. Apple и Google действуют при этом согласно своим политикам конфиденциальности.</p>
+        <p>Чтобы проверять ваши покупки и открывать Premium на ваших устройствах, aljana пользуется услугами <strong>RevenueCat</strong>, поставщика, действующего от нашего имени. Приложение передаёт ему:</p>
+        <ul>
+          <li>случайный идентификатор, созданный приложением; он не содержит ни вашего имени, ни адреса электронной почты, но связывает ваши покупки между собой, поэтому является псевдонимными данными;</li>
+          <li>сведения о покупке, предоставленные вашим магазином (предложение, дата, цена, валюта, страна магазина, продление, возврат средств, номер транзакции);</li>
+          <li>технические сведения (система и версия устройства, версия приложения, язык, IP-адрес).</li>
+        </ul>
+        <p>Apple и Google также напрямую сообщают RevenueCat о продлениях, отменах и возвратах средств. Для пропуска на 1 месяц на iPhone сервер aljana по этому идентификатору читает историю покупок в RevenueCat, чтобы рассчитать окончание вашего доступа; он ничего не сохраняет.</p>
+        <p>Эти сведения используются только для предоставления Premium, восстановления ваших покупок, предотвращения мошенничества и общего учёта продаж aljana. Они не используются ни для рекламы, ни для отслеживания вас. RevenueCat обрабатывает их согласно своей <a href="https://www.revenuecat.com/privacy">политике конфиденциальности</a>.</p>
+      </section>
+
+      <section aria-labelledby="ru-6">
+        <h2 id="ru-6">7. Отправка и внешние ссылки</h2>
+        <p>Ничего не отправляется без вашего действия. Когда вы нажимаете «Поделиться» (кибла, затмение, наблюдение хиляля, аят, дуа, хадис), вы видите содержимое и сами выбираете получателя. В зависимости от экрана это содержимое может включать название вашего города или его координаты.</p>
+        <p>Некоторые ссылки открывают сторонние сайты (например, Quran Foundation, QuranEnc, HadeethEnc или Google Календарь, чтобы добавить затмение в ваш календарь). Они открываются, только если вы на них нажмёте, и тогда действуют политики конфиденциальности этих сайтов.</p>
+      </section>
+
+      <section aria-labelledby="ru-7">
+        <h2 id="ru-7">8. Сайт aljana.app</h2>
+        <ul>
+          <li><strong>Показываемый город</strong>: город, показываемый на сайте, определяет по вашему IP-адресу наш хостинг-провайдер Cloudflare с точностью до города. Он не сохраняется и не передаётся. Сайт никогда не запрашивает местоположение вашего устройства.</li>
+          <li><strong>Шрифты</strong>: сайт загружает свои шрифты из Google Fonts, поэтому Google получает ваш IP-адрес.</li>
+          <li><strong>Хранение в браузере</strong>: выбранный вами язык сохраняет ваш браузер; заставка и положение прокрутки сохраняются только на время вашего посещения.</li>
+          <li><strong>Никаких файлов cookie и измерения аудитории</strong>. Cloudflare обрабатывает технические данные соединения, необходимые, чтобы показывать вам страницы и защищать сайт.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="ru-8">
+        <h2 id="ru-8">9. Сроки хранения и безопасность</h2>
+        <ul>
+          <li><strong>Данные на вашем устройстве</strong>: пока вы их не удалите или не удалите приложение.</li>
+          <li><strong>Координаты и поисковые запросы, отправленные сервисам из раздела 2</strong>: aljana не хранит их копий; каждый сервис хранит их согласно своей политике.</li>
+          <li><strong>IP-адрес на серверах aljana</strong>: на время обработки запроса; aljana не ведёт журнала.</li>
+          <li><strong>История покупок в RevenueCat</strong>: пока она нужна для восстановления ваших покупок и рассмотрения претензий, если вы не попросите её удалить (см. «Ваши права»).</li>
+          <li><strong>Бухгалтерские документы SY-ONE</strong>: они составляются по отчётам о продажах Apple и Google без вашей личности и хранятся десять лет, как того требует Торговый кодекс Франции.</li>
+          <li><strong>Сообщения, которые вы нам присылаете</strong>: на время, необходимое, чтобы ответить и довести ваш запрос до конца.</li>
+        </ul>
+        <p>Все соединения приложения и сайта зашифрованы (HTTPS).</p>
+      </section>
+
+      <section aria-labelledby="ru-bases">
+        <h2 id="ru-bases">10. Правовые основания и передача данных за пределы Европы</h2>
+        <h3>Почему мы вправе обрабатывать эти данные</h3>
+        <ul>
+          <li><strong>Предоставление запрошенного вами сервиса</strong> (расчёты для выбранного места, загрузки, покупки Premium и доступ к нему): исполнение принятых вами условий использования.</li>
+          <li><strong>Считывание местоположения устройства</strong>: ваше согласие, данное через разрешение на доступ к местоположению, которое вы можете отозвать в любой момент в настройках устройства.</li>
+          <li><strong>Защита сервиса от злоупотреблений и мошенничества</strong> (ограничение числа запросов, проверка покупок) и общий учёт продаж: законный интерес SY-ONE.</li>
+          <li><strong>Хранение бухгалтерских документов</strong>: обязанность по закону.</li>
+        </ul>
+        <h3>Передача данных за пределы Европейского союза</h3>
+        <p>Некоторые поставщики находятся за пределами Европейского союза или обрабатывают данные там, в частности RevenueCat, Cloudflare и Google для шрифтов сайта (США), BigDataCloud (Австралия) и Quran Foundation. В зависимости от поставщика такая передача основана на гарантиях, предусмотренных GDPR (решение об адекватности, в том числе Рамочное соглашение о конфиденциальности данных между ЕС и США для сертифицированных компаний, или стандартные договорные положения Европейской комиссии), либо, для сервиса, который вы запрашиваете сами, на её необходимости для его предоставления.</p>
+      </section>
+
+      <section aria-labelledby="ru-9">
+        <h2 id="ru-9">11. Ваши права</h2>
+        <p>Согласно применимому законодательству, в частности Общему регламенту по защите данных (GDPR), у вас есть право на доступ, исправление, удаление, ограничение обработки, возражение и переносимость данных, а также право в любой момент отозвать своё согласие.</p>
+        <ul>
+          <li><strong>Данные на вашем устройстве</strong>: вы напрямую распоряжаетесь ими и можете удалить их в любой момент.</li>
+          <li><strong>Данные о покупках</strong>: так как в aljana нет учётных записей, напишите нам, указав номер заказа из вашей квитанции (Apple или Google). Его достаточно, чтобы найти вашу историю в RevenueCat, передать её вам или удалить. Мы не попросим больше сведений, чем необходимо. Удаление не отменяет действующую подписку, которая отменяется в вашем магазине, и не затрагивает бухгалтерские документы, которые закон обязывает нас хранить.</li>
+        </ul>
+        <p>Мы отвечаем в течение месяца. Вы также можете подать жалобу в орган по защите данных своей страны (во Франции это CNIL).</p>
+      </section>
+
+      <section aria-labelledby="ru-10">
+        <h2 id="ru-10">12. Дети</h2>
+        <p>aljana может пользоваться каждый. Приложение ни у кого не запрашивает персональные данные, в том числе у детей. Единственные данные, связанные с пользователем, это описанные выше данные о покупках; покупки подчиняются родительскому контролю вашего магазина.</p>
+      </section>
+
+      <section aria-labelledby="ru-11">
+        <h2 id="ru-11">13. Изменения</h2>
+        <p>Если развитие aljana изменит способ обработки ваших данных (например, появится учётная запись или новый сервис), эта политика будет обновлена до того, как такое изменение станет доступно, а дата вверху страницы будет изменена.</p>
+      </section>
+
+      <section aria-labelledby="ru-12">
+        <h2 id="ru-12">14. Ответственный за обработку и контакты</h2>
+        <p>Ответственным за обработку данных является SY-ONE, издатель aljana. По любым вопросам о конфиденциальности или для осуществления своих прав:</p>
+        <address class="pp-contact">
+          <strong>SY-ONE SAS</strong><br>
+          14 rue de la Viala, 03300 Creuzier-le-Vieux, Франция<br>
+          SIREN 821 628 708<br>
+          Электронная почта: <a href="mailto:contact@aljana.app">contact@aljana.app</a><br>
+          Сайт: <a href="https://aljana.app">https://aljana.app</a>
+        </address>
+      </section>
+    </article>
+
+    <article class="pp-doc" id="doc-zh" lang="zh" dir="ltr" data-lang="zh" aria-labelledby="pp-title-zh">
+      <header class="pp-doc__head">
+        <h1 id="pp-title-zh">隐私政策</h1>
+        <p class="pp-updated">最后更新：<time datetime="2026-10-20">2026年10月20日</time></p>
+        <p class="pp-note">本中文版本为便于阅读而提供的译文。如与法文版本不一致，以法文版本为准。</p>
+        <p class="pp-intro">aljana 直接在您的设备上计算礼拜时间、朝向、星空、月亮、新月和日月食。本页坦率说明哪些信息会离开您的设备、发送给谁、用途是什么以及保存多久。</p>
+      </header>
+
+      <section aria-labelledby="zh-1">
+        <h2 id="zh-1">1. 简要说明</h2>
+        <ul>
+          <li>无需账户，无需注册：aljana 不会向您索取姓名、电子邮箱地址或电话号码。</li>
+          <li>Premium 通过 App Store 或 Google Play 购买：aljana 看不到您的支付信息，也看不到您的身份（见“Premium 购买”）。</li>
+          <li>没有广告，没有跟踪器，没有受众统计工具，也不发送崩溃报告。</li>
+          <li>aljana 的服务器不记录您的位置、您的设置或您使用应用的方式。</li>
+          <li>aljana 不出售您的数据，也不利用它们在其他应用或网站上跟踪您。</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="zh-2">
+        <h2 id="zh-2">2. 您的位置</h2>
+        <h3>如何获取</h3>
+        <p>只有在您点按定位按钮、并且您给予授权（“使用应用期间”权限）时，才会读取设备的位置。您也可以在完全不分享位置的情况下选择地点：搜索城市、选择推荐的城市，或手动输入坐标。</p>
+        <h3>用途</h3>
+        <p>礼拜时间、朝向、星空、月亮、新月和日月食都在您的设备上根据所选地点计算。当前地点和您最近使用的五个地点保存在您的设备上，以免再次询问。</p>
+        <h3>发送什么，发送给谁</h3>
+        <p>有些信息无法离线计算。为获取这些信息，应用会把所选地点的坐标发送给专门的服务：</p>
+        <ul>
+          <li><strong>Open-Meteo</strong>：地点的时区和海拔，天气和云量（星空、新月和日月食页面），以及地点周围的地平线起伏（新月页面）。</li>
+          <li><strong>BigDataCloud</strong>：与您的位置对应的城市名称，仅在您点按定位按钮之后。</li>
+        </ul>
+        <p>当您搜索城市时，您输入的文字会发送给 <strong>Open-Meteo</strong>（地点搜索）；如果没有找到结果，则发送给 <strong>Photon</strong>（Komoot 公司基于 OpenStreetMap 的地理搜索服务）。</p>
+        <p>aljana 不会向这些服务发送任何姓名、任何标识符或任何有关您设备的信息。与任何互联网连接一样，这些服务也会收到您的 IP 地址，并按照各自的隐私政策处理这些数据。</p>
+      </section>
+
+      <section aria-labelledby="zh-3">
+        <h2 id="zh-3">3. 下载的内容</h2>
+        <p>为了显示《古兰经》经本（Muṣḥaf）、经义译文和经注，应用会下载页面、字体和文本：</p>
+        <ul>
+          <li>来自 aljana 的服务器，由 <strong>Cloudflare</strong> 托管（经本页面、译文、经注）；</li>
+          <li>来自 <strong>Quran Foundation</strong>（哈夫斯传本经本页面的字体）。</li>
+        </ul>
+        <p>这些请求只包含所请求的页码、经文或语言。您的设置、位置和阅读内容都不会被传送。aljana 的服务器会短暂使用您的 IP 地址来限制滥用（每分钟请求次数）；aljana 不保存任何记录。我们的托管服务商 Cloudflare 按照其自身政策，处理转发请求和保护服务所需的技术连接数据。</p>
+      </section>
+
+      <section aria-labelledby="zh-4">
+        <h2 id="zh-4">4. 保留在您设备上的内容</h2>
+        <p>以下内容只保存在您的设备上，绝不会发送给 aljana：</p>
+        <ul>
+          <li>您的设置（计算方法、晡礼所依学派、宣礼、提醒、语言、显示、辅助功能）；</li>
+          <li>所选地点和您最近使用的地点；</li>
+          <li>您在经本中的页码、书签和夜间模式；</li>
+          <li>您的赞念计数器；</li>
+          <li>您的新月观测及其笔记；</li>
+          <li>已下载的页面、字体、译文和经注文本；</li>
+          <li>您的 Premium 访问状态，保存下来以便 Premium 离线也能使用。</li>
+        </ul>
+        <p>您可以清除应用数据或卸载应用来删除这些内容。根据设备设置，它们可能会包含在设备的自动备份中（iCloud 或 Google 备份），该备份由您设备操作系统的厂商管理。</p>
+      </section>
+
+      <section aria-labelledby="zh-5">
+        <h2 id="zh-5">5. 通知、宣礼和指南针</h2>
+        <ul>
+          <li>提醒和宣礼在您的设备上安排，依据的是在您设备上计算出的时间。aljana 不使用从服务器发送的通知，也不收集任何通知标识符。</li>
+          <li>只有在您开启宣礼或提醒时，才会请求发送通知或闹钟的权限。</li>
+          <li>朝向指南针在您同意后读取设备的方向传感器。这些测量数据保留在您的设备上。</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="zh-achats">
+        <h2 id="zh-achats">6. Premium 购买</h2>
+        <p>Premium 通过 Apple 的 App Store 或 Google Play 购买，使用您所在商店的支付方式。付款由您的商店处理：aljana 永远不会收到您的支付信息、姓名或账户电子邮箱地址。Apple 和 Google 在此过程中按照各自的隐私政策行事。</p>
+        <p>为了验证您的购买并在您的设备上开通 Premium，aljana 使用代表我们行事的服务商 <strong>RevenueCat</strong>。应用会向其发送：</p>
+        <ul>
+          <li>由应用生成的随机标识符；它不包含您的姓名或电子邮箱地址，但会把您的各次购买关联起来，因此属于假名化数据；</li>
+          <li>由您的商店提供的购买信息（方案、日期、价格、币种、商店所在国家或地区、续订、退款、交易编号）；</li>
+          <li>技术信息（设备系统及版本、应用版本、语言、IP 地址）。</li>
+        </ul>
+        <p>Apple 和 Google 还会直接将续订、取消和退款通知 RevenueCat。对于 iPhone 上的“1 个月通行证”，aljana 的服务器会凭该标识符读取 RevenueCat 中的购买记录，以计算您的访问何时结束；服务器不保存任何内容。</p>
+        <p>这些信息仅用于提供 Premium、恢复您的购买、防范欺诈，以及从总体上了解 aljana 的销售情况。它们绝不会用于广告或跟踪您。RevenueCat 按照其<a href="https://www.revenuecat.com/privacy">隐私政策</a>处理这些信息。</p>
+      </section>
+
+      <section aria-labelledby="zh-6">
+        <h2 id="zh-6">7. 分享和外部链接</h2>
+        <p>没有您的操作，任何内容都不会被分享。当您点按“分享”（朝向、日月食、新月观测、经文、祈祷词、圣训）时，您可以看到内容，并自行选择接收者。根据页面不同，这些内容可能包含您所在城市的名称或其坐标。</p>
+        <p>有些链接会打开第三方网站（例如 Quran Foundation、QuranEnc、HadeethEnc，或用于把日月食添加到日历的 Google 日历）。只有在您点按时才会打开，届时适用这些网站各自的隐私政策。</p>
+      </section>
+
+      <section aria-labelledby="zh-7">
+        <h2 id="zh-7">8. aljana.app 网站</h2>
+        <ul>
+          <li><strong>显示的城市</strong>：网站上显示的城市由我们的托管服务商 Cloudflare 根据您的 IP 地址推断，精确到城市级别。该信息不会被保存，也不会被分享。网站从不请求您设备的位置。</li>
+          <li><strong>字体</strong>：网站从 Google Fonts 加载字体，因此 Google 会收到您的 IP 地址。</li>
+          <li><strong>浏览器中的存储</strong>：您选择的语言由浏览器保存；启动画面和滚动位置只在您访问期间保存。</li>
+          <li><strong>不使用 Cookie，不做受众统计</strong>。Cloudflare 处理为您提供页面和保护网站所需的技术连接数据。</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="zh-8">
+        <h2 id="zh-8">9. 保存期限和安全</h2>
+        <ul>
+          <li><strong>您设备上的数据</strong>：直到您删除这些数据或卸载应用。</li>
+          <li><strong>发送给第 2 节所述服务的坐标和搜索内容</strong>：aljana 不保留任何副本；各服务按照其自身政策保存。</li>
+          <li><strong>aljana 服务器上的 IP 地址</strong>：仅在处理请求所需的时间内；aljana 不保存任何记录。</li>
+          <li><strong>RevenueCat 中的购买记录</strong>：在恢复您的购买和处理投诉所需期间保存，除非您要求删除（见“您的权利”）。</li>
+          <li><strong>SY-ONE 的会计凭证</strong>：根据 Apple 和 Google 的销售报告编制，不含您的身份，并按照《法国商法典》的要求保存十年。</li>
+          <li><strong>您发给我们的消息</strong>：在答复您并跟进您的请求所需的时间内保存。</li>
+        </ul>
+        <p>应用和网站的所有连接均经过加密（HTTPS）。</p>
+      </section>
+
+      <section aria-labelledby="zh-bases">
+        <h2 id="zh-bases">10. 法律依据和向欧洲以外的传输</h2>
+        <h3>我们为什么可以处理这些数据</h3>
+        <ul>
+          <li><strong>提供您所请求的服务</strong>（与所选地点有关的计算、下载、Premium 购买和访问）：履行您所接受的使用条款。</li>
+          <li><strong>读取您设备的位置</strong>：您通过位置权限给予的同意，您可以随时在设备设置中撤回。</li>
+          <li><strong>保护服务免遭滥用和欺诈</strong>（限制请求次数、验证购买）以及从总体上了解销售情况：SY-ONE 的正当利益。</li>
+          <li><strong>保存会计凭证</strong>：法定义务。</li>
+        </ul>
+        <h3>向欧盟以外的传输</h3>
+        <p>部分服务商设立在欧盟以外或在欧盟以外处理数据，包括 RevenueCat、Cloudflare 和用于网站字体的 Google（美国）、BigDataCloud（澳大利亚）以及 Quran Foundation。视服务商而定，这些传输依据 GDPR 规定的保障措施（充分性认定，包括适用于获认证企业的欧盟与美国数据隐私框架，或欧盟委员会的标准合同条款），或者对于您本人请求的服务，依据向您提供该服务的必要性。</p>
+      </section>
+
+      <section aria-labelledby="zh-9">
+        <h2 id="zh-9">11. 您的权利</h2>
+        <p>根据适用法规，特别是欧盟《通用数据保护条例》（GDPR），您享有访问、更正、删除、限制处理、反对和数据可携带的权利，并有权随时撤回同意。</p>
+        <ul>
+          <li><strong>您设备上的数据</strong>：始终由您直接掌控，您可以随时删除。</li>
+          <li><strong>购买数据</strong>：由于 aljana 没有账户，请附上您收据（Apple 或 Google）上的订单号写信给我们。凭此订单号，我们即可在 RevenueCat 中找到您的记录，发送给您或予以删除。我们不会索取超出必要范围的信息。删除不会取消正在进行的订阅（订阅需在您的商店中取消），也不影响法律要求我们保存的会计凭证。</li>
+        </ul>
+        <p>我们会在一个月内答复。您也可以向您所在国家或地区的数据保护机构投诉（在法国为 CNIL）。</p>
+      </section>
+
+      <section aria-labelledby="zh-10">
+        <h2 id="zh-10">12. 儿童</h2>
+        <p>aljana 人人可用。它不向任何人索取个人数据，包括儿童。唯一与用户相关联的数据是上文所述的购买数据；购买受您所在商店的家长控制约束。</p>
+      </section>
+
+      <section aria-labelledby="zh-11">
+        <h2 id="zh-11">13. 变更</h2>
+        <p>如果 aljana 的某项变化改变了处理您数据的方式（例如引入账户或新服务），本政策将在该变化上线之前更新，并修改页面顶部的日期。</p>
+      </section>
+
+      <section aria-labelledby="zh-12">
+        <h2 id="zh-12">14. 数据控制者和联系方式</h2>
+        <p>数据控制者为 aljana 的发行方 SY-ONE。如对隐私有任何疑问，或希望行使您的权利，请联系：</p>
+        <address class="pp-contact">
+          <strong>SY-ONE SAS</strong><br>
+          14 rue de la Viala, 03300 Creuzier-le-Vieux, France（法国）<br>
+          SIREN 821 628 708<br>
+          电子邮箱：<a href="mailto:contact@aljana.app">contact@aljana.app</a><br>
+          网站：<a href="https://aljana.app">https://aljana.app</a>
+        </address>
+      </section>
+    </article>
+
+    <article class="pp-doc" id="doc-hi" lang="hi" dir="ltr" data-lang="hi" aria-labelledby="pp-title-hi">
+      <header class="pp-doc__head">
+        <h1 id="pp-title-hi">गोपनीयता नीति</h1>
+        <p class="pp-updated">अंतिम अद्यतन: <time datetime="2026-10-20">20 अक्टूबर 2026</time></p>
+        <p class="pp-note">यह हिन्दी संस्करण पढ़ने में सुविधा के लिए दिया गया अनुवाद है। किसी भी अंतर की स्थिति में फ़्रांसीसी संस्करण मान्य होगा।</p>
+        <p class="pp-intro">aljana आपकी नमाज़ों के समय, क़िबला, आकाश, चंद्रमा, हिलाल और ग्रहणों की गणना सीधे आपके डिवाइस पर करता है। यह पृष्ठ साफ़-साफ़ बताता है कि कौन-सी जानकारी आपके डिवाइस से बाहर जाती है, किसके पास, क्यों और कितने समय के लिए।</p>
+      </header>
+
+      <section aria-labelledby="hi-1">
+        <h2 id="hi-1">1. संक्षेप में</h2>
+        <ul>
+          <li>न खाता, न पंजीकरण: aljana आपसे आपका नाम, ईमेल पता या फ़ोन नंबर नहीं माँगता।</li>
+          <li>Premium की ख़रीद App Store या Google Play के ज़रिए होती है: aljana न आपकी भुगतान जानकारी देखता है, न आपकी पहचान (देखें «Premium की ख़रीद»)।</li>
+          <li>न विज्ञापन, न ट्रैकर, न दर्शकों को मापने वाले टूल, और न ही क्रैश रिपोर्ट भेजी जाती है।</li>
+          <li>aljana के सर्वर न आपका स्थान दर्ज करते हैं, न आपकी सेटिंग, न यह कि आप ऐप का उपयोग कैसे करते हैं।</li>
+          <li>aljana आपका डेटा नहीं बेचता और अन्य ऐप या वेबसाइटों पर आपको ट्रैक करने के लिए उसका उपयोग नहीं करता।</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="hi-2">
+        <h2 id="hi-2">2. आपका स्थान</h2>
+        <h3>इसे कैसे प्राप्त किया जाता है</h3>
+        <p>आपके डिवाइस का स्थान केवल तभी पढ़ा जाता है जब आप स्थान बटन को छूते हैं, और केवल तभी जब आप इसकी अनुमति दें («ऐप का उपयोग करते समय» अनुमति)। आप अपना स्थान कभी साझा किए बिना भी कोई जगह चुन सकते हैं: किसी शहर को खोजकर, सुझाए गए शहरों में से कोई चुनकर, या निर्देशांक स्वयं दर्ज करके।</p>
+        <h3>इसका उपयोग किस लिए होता है</h3>
+        <p>नमाज़ के समय, क़िबला, आकाश, चंद्रमा, हिलाल और ग्रहण चुनी गई जगह के आधार पर आपके डिवाइस पर ही गणना किए जाते हैं। वर्तमान जगह और आपकी पिछली पाँच जगहें आपके डिवाइस पर सहेजी जाती हैं, ताकि आपसे दोबारा न पूछा जाए।</p>
+        <h3>क्या भेजा जाता है, और किसे</h3>
+        <p>कुछ जानकारी ऑफ़लाइन गणना नहीं की जा सकती। उसे प्राप्त करने के लिए ऐप चुनी गई जगह के निर्देशांक विशेष सेवाओं को भेजता है:</p>
+        <ul>
+          <li><strong>Open-Meteo</strong>: जगह का समय क्षेत्र और ऊँचाई, मौसम और बादल (आकाश, हिलाल और ग्रहण स्क्रीन), और जगह के आसपास क्षितिज की बनावट (हिलाल स्क्रीन)।</li>
+          <li><strong>BigDataCloud</strong>: आपके स्थान से मेल खाने वाले शहर का नाम, केवल तब जब आप स्थान बटन को छू चुके हों।</li>
+        </ul>
+        <p>जब आप कोई शहर खोजते हैं, तो आपका लिखा पाठ <strong>Open-Meteo</strong> (जगह खोज) को भेजा जाता है और, यदि कोई परिणाम न मिले, तो <strong>Photon</strong> को (Komoot की भौगोलिक खोज सेवा, जो OpenStreetMap पर आधारित है)।</p>
+        <p>aljana इन सेवाओं को न कोई नाम भेजता है, न कोई पहचानकर्ता, न आपके डिवाइस के बारे में कोई जानकारी। हर इंटरनेट कनेक्शन की तरह, इन्हें आपका IP पता भी मिलता है। ये इस डेटा को अपनी गोपनीयता नीतियों के अनुसार संसाधित करती हैं।</p>
+      </section>
+
+      <section aria-labelledby="hi-3">
+        <h2 id="hi-3">3. डाउनलोड की जाने वाली सामग्री</h2>
+        <p>मुसहफ़, उसके अर्थों के अनुवाद और तफ़सीर दिखाने के लिए ऐप पृष्ठ, फ़ॉन्ट और पाठ डाउनलोड करता है:</p>
+        <ul>
+          <li>aljana के सर्वरों से, जिनकी होस्टिंग <strong>Cloudflare</strong> करता है (मुसहफ़ के पृष्ठ, अनुवाद, तफ़सीर);</li>
+          <li><strong>Quran Foundation</strong> से (हफ़्स मुसहफ़ के पृष्ठों के फ़ॉन्ट)।</li>
+        </ul>
+        <p>इन अनुरोधों में केवल माँगा गया पृष्ठ क्रमांक, आयत या भाषा होती है। आपकी सेटिंग, आपका स्थान और आपका पठन नहीं भेजा जाता। aljana के सर्वर दुरुपयोग को सीमित करने के लिए (प्रति मिनट अनुरोधों की संख्या) आपके IP पते का कुछ क्षण के लिए उपयोग करते हैं; aljana इसका कोई रिकॉर्ड नहीं रखता। हमारा होस्टिंग प्रदाता Cloudflare अनुरोधों को पहुँचाने और सेवा की सुरक्षा के लिए आवश्यक तकनीकी कनेक्शन डेटा अपनी नीति के अनुसार संसाधित करता है।</p>
+      </section>
+
+      <section aria-labelledby="hi-4">
+        <h2 id="hi-4">4. जो आपके डिवाइस पर रहता है</h2>
+        <p>नीचे दी गई चीज़ें केवल आपके डिवाइस पर सहेजी जाती हैं और कभी aljana को नहीं भेजी जातीं:</p>
+        <ul>
+          <li>आपकी सेटिंग (गणना की विधि, अस्र के लिए मसलक, अज़ान, रिमाइंडर, भाषा, प्रदर्शन, सुगम्यता);</li>
+          <li>चुनी गई जगह और आपकी हाल की जगहें;</li>
+          <li>मुसहफ़ में आपका पृष्ठ, बुकमार्क और रात्रि मोड;</li>
+          <li>आपका तस्बीह काउंटर;</li>
+          <li>हिलाल के आपके अवलोकन और उन पर आपके नोट्स;</li>
+          <li>डाउनलोड किए गए पृष्ठ, फ़ॉन्ट, अनुवाद और तफ़सीर के पाठ;</li>
+          <li>आपकी Premium पहुँच की स्थिति, जिसे सहेजा जाता है ताकि Premium ऑफ़लाइन भी काम करे।</li>
+        </ul>
+        <p>आप ऐप का डेटा साफ़ करके या ऐप अनइंस्टॉल करके इन्हें हटा सकते हैं। आपके डिवाइस की सेटिंग के अनुसार, ये उसके स्वचालित बैकअप (iCloud या Google बैकअप) में शामिल हो सकती हैं, जिसका प्रबंधन आपके डिवाइस के ऑपरेटिंग सिस्टम का निर्माता करता है।</p>
+      </section>
+
+      <section aria-labelledby="hi-5">
+        <h2 id="hi-5">5. सूचनाएँ, अज़ान और कंपास</h2>
+        <ul>
+          <li>रिमाइंडर और अज़ान आपके डिवाइस पर, आपके डिवाइस पर गणना किए गए समयों के आधार पर, निर्धारित किए जाते हैं। aljana सर्वर से भेजी जाने वाली सूचनाओं का उपयोग नहीं करता और कोई सूचना पहचानकर्ता एकत्र नहीं करता।</li>
+          <li>सूचनाएँ या अलार्म भेजने की अनुमति केवल तब माँगी जाती है जब आप अज़ान या कोई रिमाइंडर चालू करते हैं।</li>
+          <li>क़िबला कंपास आपकी सहमति के बाद आपके डिवाइस के दिशा सेंसर पढ़ता है। ये माप आपके डिवाइस पर ही रहते हैं।</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="hi-achats">
+        <h2 id="hi-achats">6. Premium की ख़रीद</h2>
+        <p>Premium की ख़रीद Apple के App Store या Google Play के ज़रिए, आपके स्टोर के भुगतान साधनों से होती है। भुगतान आपका स्टोर संसाधित करता है: aljana को कभी आपकी भुगतान जानकारी, आपका नाम या आपके खाते का ईमेल पता नहीं मिलता। Apple और Google इसमें अपनी गोपनीयता नीतियों के अनुसार काम करते हैं।</p>
+        <p>आपकी ख़रीद की पुष्टि करने और आपके डिवाइसों पर Premium खोलने के लिए aljana <strong>RevenueCat</strong> की सहायता लेता है, जो हमारी ओर से काम करने वाला सेवा प्रदाता है। ऐप उसे यह भेजता है:</p>
+        <ul>
+          <li>ऐप द्वारा बनाया गया एक यादृच्छिक पहचानकर्ता; इसमें न आपका नाम होता है न ईमेल पता, लेकिन यह आपकी ख़रीदों को आपस में जोड़ता है, इसलिए यह छद्मनाम डेटा है;</li>
+          <li>आपके स्टोर द्वारा दी गई ख़रीद की जानकारी (ऑफ़र, तारीख़, मूल्य, मुद्रा, स्टोर का देश, नवीनीकरण, धनवापसी, लेनदेन संख्या);</li>
+          <li>तकनीकी जानकारी (डिवाइस का सिस्टम और संस्करण, ऐप का संस्करण, भाषा, IP पता)।</li>
+        </ul>
+        <p>Apple और Google नवीनीकरण, रद्दीकरण और धनवापसी की सूचना सीधे RevenueCat को भी देते हैं। iPhone पर «1 महीने का पास» के लिए aljana का सर्वर इसी पहचानकर्ता से RevenueCat में ख़रीद का इतिहास पढ़ता है, ताकि यह गणना कर सके कि आपकी पहुँच कब समाप्त होगी; वह कुछ भी सहेजता नहीं।</p>
+        <p>इस जानकारी का उपयोग केवल Premium देने, आपकी ख़रीद बहाल करने, धोखाधड़ी रोकने और aljana की बिक्री का समग्र रूप से अनुसरण करने के लिए होता है। इसका उपयोग न विज्ञापन के लिए होता है न आपको ट्रैक करने के लिए। RevenueCat इसे अपनी <a href="https://www.revenuecat.com/privacy">गोपनीयता नीति</a> के अनुसार संसाधित करता है।</p>
+      </section>
+
+      <section aria-labelledby="hi-6">
+        <h2 id="hi-6">7. साझा करना और बाहरी लिंक</h2>
+        <p>आपकी कार्रवाई के बिना कुछ भी साझा नहीं होता। जब आप «साझा करें» छूते हैं (क़िबला, ग्रहण, हिलाल का अवलोकन, आयत, दुआ, हदीस), तो आप सामग्री देखते हैं और प्राप्तकर्ता स्वयं चुनते हैं। स्क्रीन के अनुसार, इस सामग्री में आपके शहर का नाम या उसके निर्देशांक शामिल हो सकते हैं।</p>
+        <p>कुछ लिंक तीसरे पक्ष की वेबसाइटें खोलते हैं (उदाहरण के लिए Quran Foundation, QuranEnc, HadeethEnc, या अपने कैलेंडर में ग्रहण जोड़ने के लिए Google Calendar)। ये केवल तभी खुलते हैं जब आप इन्हें छूते हैं, और तब उन वेबसाइटों की अपनी गोपनीयता नीतियाँ लागू होती हैं।</p>
+      </section>
+
+      <section aria-labelledby="hi-7">
+        <h2 id="hi-7">8. वेबसाइट aljana.app</h2>
+        <ul>
+          <li><strong>दिखाया गया शहर</strong>: वेबसाइट पर दिखाया गया शहर हमारा होस्टिंग प्रदाता Cloudflare आपके IP पते से, शहर के स्तर पर, निकालता है। इसे न सहेजा जाता है न साझा किया जाता है। वेबसाइट कभी आपके डिवाइस का स्थान नहीं माँगती।</li>
+          <li><strong>फ़ॉन्ट</strong>: वेबसाइट अपने फ़ॉन्ट Google Fonts से लोड करती है; इसलिए Google को आपका IP पता मिलता है।</li>
+          <li><strong>आपके ब्राउज़र में संग्रहण</strong>: आपकी चुनी हुई भाषा आपका ब्राउज़र सहेजता है; शुरुआती स्क्रीन और स्क्रॉल की स्थिति केवल आपकी यात्रा के दौरान सहेजी जाती है।</li>
+          <li><strong>न कुकी, न दर्शकों का मापन</strong>। Cloudflare पृष्ठ प्रदान करने और वेबसाइट की सुरक्षा के लिए आवश्यक तकनीकी कनेक्शन डेटा संसाधित करता है।</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="hi-8">
+        <h2 id="hi-8">9. संग्रहण की अवधि और सुरक्षा</h2>
+        <ul>
+          <li><strong>आपके डिवाइस पर डेटा</strong>: जब तक आप उसे हटा न दें या ऐप अनइंस्टॉल न करें।</li>
+          <li><strong>खंड 2 की सेवाओं को भेजे गए निर्देशांक और खोजें</strong>: aljana उनकी कोई प्रति नहीं रखता; हर सेवा उन्हें अपनी नीति के अनुसार रखती है।</li>
+          <li><strong>aljana के सर्वरों पर IP पता</strong>: केवल अनुरोध संसाधित करने के लिए आवश्यक समय तक; aljana कोई रिकॉर्ड नहीं रखता।</li>
+          <li><strong>RevenueCat में ख़रीद का इतिहास</strong>: जब तक यह आपकी ख़रीद बहाल करने और किसी शिकायत के निपटारे के लिए उपयोगी हो, जब तक कि आप इसे हटाने का अनुरोध न करें (देखें «आपके अधिकार»)।</li>
+          <li><strong>SY-ONE के लेखा दस्तावेज़</strong>: ये Apple और Google की बिक्री रिपोर्टों से, आपकी पहचान के बिना, तैयार किए जाते हैं और फ़्रांसीसी वाणिज्यिक संहिता की अपेक्षा के अनुसार दस वर्ष तक रखे जाते हैं।</li>
+          <li><strong>आपके द्वारा हमें भेजे गए संदेश</strong>: आपको उत्तर देने और आपके अनुरोध पर कार्रवाई के लिए आवश्यक समय तक।</li>
+        </ul>
+        <p>ऐप और वेबसाइट के सभी कनेक्शन एन्क्रिप्टेड हैं (HTTPS)।</p>
+      </section>
+
+      <section aria-labelledby="hi-bases">
+        <h2 id="hi-bases">10. क़ानूनी आधार और यूरोप के बाहर स्थानांतरण</h2>
+        <h3>हम यह डेटा क्यों संसाधित कर सकते हैं</h3>
+        <ul>
+          <li><strong>आपकी माँगी गई सेवा प्रदान करना</strong> (चुनी गई जगह से जुड़ी गणनाएँ, डाउनलोड, Premium की ख़रीद और पहुँच): आपके द्वारा स्वीकार की गई उपयोग की शर्तों का पालन।</li>
+          <li><strong>आपके डिवाइस का स्थान पढ़ना</strong>: स्थान अनुमति के माध्यम से दी गई आपकी सहमति, जिसे आप कभी भी अपने डिवाइस की सेटिंग में वापस ले सकते हैं।</li>
+          <li><strong>सेवा को दुरुपयोग और धोखाधड़ी से बचाना</strong> (अनुरोधों की सीमा, ख़रीद का सत्यापन) और बिक्री का समग्र अनुसरण: SY-ONE का वैध हित।</li>
+          <li><strong>लेखा दस्तावेज़ रखना</strong>: क़ानूनी दायित्व।</li>
+        </ul>
+        <h3>यूरोपीय संघ के बाहर स्थानांतरण</h3>
+        <p>कुछ सेवा प्रदाता यूरोपीय संघ के बाहर स्थित हैं या वहाँ डेटा संसाधित करते हैं, जिनमें RevenueCat, Cloudflare और वेबसाइट के फ़ॉन्ट के लिए Google (संयुक्त राज्य अमेरिका), BigDataCloud (ऑस्ट्रेलिया) और Quran Foundation शामिल हैं। प्रदाता के अनुसार, ये स्थानांतरण GDPR में निर्धारित सुरक्षा उपायों पर आधारित हैं (पर्याप्तता निर्णय, जिसमें प्रमाणित कंपनियों के लिए यूरोपीय संघ और अमेरिका का डेटा गोपनीयता ढाँचा शामिल है, या यूरोपीय आयोग के मानक संविदात्मक खंड), या उस सेवा के लिए जिसे आप स्वयं माँगते हैं, उसे आप तक पहुँचाने की आवश्यकता पर।</p>
+      </section>
+
+      <section aria-labelledby="hi-9">
+        <h2 id="hi-9">11. आपके अधिकार</h2>
+        <p>लागू नियमों के अनुसार, विशेष रूप से यूरोपीय संघ के सामान्य डेटा संरक्षण विनियम (GDPR) के तहत, आपको पहुँच, सुधार, मिटाने, संसाधन को सीमित करने, आपत्ति और डेटा सुवाह्यता के अधिकार हैं, और कभी भी अपनी सहमति वापस लेने का अधिकार भी।</p>
+        <ul>
+          <li><strong>आपके डिवाइस पर डेटा</strong>: यह सीधे आपके नियंत्रण में रहता है और आप इसे कभी भी हटा सकते हैं।</li>
+          <li><strong>ख़रीद का डेटा</strong>: चूँकि aljana में खाते नहीं होते, अपनी रसीद (Apple या Google) के ऑर्डर नंबर के साथ हमें लिखें। RevenueCat में आपका इतिहास खोजने, आपको भेजने या हटाने के लिए यह पर्याप्त है। हम आवश्यकता से अधिक जानकारी नहीं माँगेंगे। हटाने से चल रही सदस्यता रद्द नहीं होती, जिसे आपके स्टोर में रद्द किया जाता है, और न ही उन लेखा दस्तावेज़ों पर असर पड़ता है जिन्हें रखना क़ानूनन हमारे लिए अनिवार्य है।</li>
+        </ul>
+        <p>हम एक महीने के भीतर उत्तर देते हैं। आप अपने देश के डेटा संरक्षण प्राधिकरण से शिकायत भी कर सकते हैं (फ़्रांस में CNIL)।</p>
+      </section>
+
+      <section aria-labelledby="hi-10">
+        <h2 id="hi-10">12. बच्चे</h2>
+        <p>aljana का उपयोग हर कोई कर सकता है। यह किसी से भी व्यक्तिगत डेटा नहीं माँगता, बच्चों से भी नहीं। किसी उपयोगकर्ता से जुड़ा एकमात्र डेटा ऊपर बताया गया ख़रीद का डेटा है; ख़रीदें आपके स्टोर के अभिभावकीय नियंत्रणों के अधीन हैं।</p>
+      </section>
+
+      <section aria-labelledby="hi-11">
+        <h2 id="hi-11">13. बदलाव</h2>
+        <p>यदि aljana में कोई बदलाव आपके डेटा को संसाधित करने का तरीक़ा बदलता है (उदाहरण के लिए कोई खाता या नई सेवा), तो यह नीति उस बदलाव के उपलब्ध होने से पहले अद्यतन की जाएगी, और पृष्ठ के ऊपर की तारीख़ बदल दी जाएगी।</p>
+      </section>
+
+      <section aria-labelledby="hi-12">
+        <h2 id="hi-12">14. डेटा नियंत्रक और संपर्क</h2>
+        <p>डेटा नियंत्रक SY-ONE है, जो aljana का प्रकाशक है। गोपनीयता से जुड़े किसी भी प्रश्न या अपने अधिकारों के उपयोग के लिए:</p>
+        <address class="pp-contact">
+          <strong>SY-ONE SAS</strong><br>
+          14 rue de la Viala, 03300 Creuzier-le-Vieux, France (फ़्रांस)<br>
+          SIREN 821 628 708<br>
+          ईमेल: <a href="mailto:contact@aljana.app">contact@aljana.app</a><br>
+          वेबसाइट: <a href="https://aljana.app">https://aljana.app</a>
         </address>
       </section>
     </article>
@@ -417,69 +2033,37 @@
   </main>
 
   <footer class="pp-footer">
-    <a href="/" data-l10n="back">Retour à aljana</a>
+    <a href="/terms" data-l10n="other">Conditions d’utilisation</a>
+    <a href="/" data-home data-l10n="back">Retour à aljana</a>
   </footer>
 
   <script>
     (function () {
-    /* Politique de confidentialité — bascule FR / EN sans rechargement.
-       Les deux versions sont dans le HTML (lisibles sans JavaScript, ancres #fr / #en) ;
-       le script n'affiche que la langue active et met à jour lang, title et descriptions.
-       Rien n'est enregistré : la langue vient de l'ancre (#en), sinon de la préférence
-       déjà choisie sur le site (lue seulement), sinon le français. */
-
-    const L10N = {
-      fr: {
-        title: 'aljana : politique de confidentialité',
-        description: 'Ce qu’aljana fait de vos données : pas de compte, pas de publicité ni de traceur, des calculs faits sur votre appareil.',
-        skip: 'Aller au contenu',
-        home: 'Accueil d’aljana',
-        back: 'Retour à aljana',
-      },
-      en: {
-        title: 'aljana: Privacy Policy',
-        description: 'What aljana does with your data: no account, no ads or trackers, calculations made on your device.',
-        skip: 'Skip to content',
-        home: 'aljana home page',
-        back: 'Back to aljana',
-      },
-    }
-
-    const root = document.documentElement
-    const setMeta = (sel, value) => document.querySelector(sel)?.setAttribute('content', value)
-
-    function apply(lang) {
-      const t = L10N[lang]
-      root.lang = lang
-      root.dataset.ppLang = lang
+    /* bascule de langue sans rechargement ; le choix est gardé comme sur le reste du site (aljana.site.lang) */
+    var UI = {"fr":{"title":"aljana : politique de confidentialité","description":"Ce qu’aljana fait de vos données : pas de compte, pas de publicité ni de traceur, des calculs faits sur votre appareil.","skip":"Aller au contenu","home":"Accueil d’aljana","back":"Retour à aljana","lang":"Langue","other":"Conditions d’utilisation"},"en":{"title":"aljana: Privacy Policy","description":"What aljana does with your data: no account, no ads or trackers, calculations made on your device.","skip":"Skip to content","home":"aljana home page","back":"Back to aljana","lang":"Language","other":"Terms of use"},"ar":{"title":"aljana: سياسة الخصوصية","description":"ما يفعله aljana ببياناتك: لا حساب، ولا إعلانات ولا أدوات تتبّع، والحسابات تجري على جهازك.","skip":"انتقل إلى المحتوى","home":"الصفحة الرئيسية لـ aljana","back":"العودة إلى aljana","lang":"اللغة","other":"شروط الاستخدام"},"es":{"title":"aljana: política de privacidad","description":"Lo que aljana hace con sus datos: sin cuenta, sin publicidad ni rastreadores, cálculos realizados en su dispositivo.","skip":"Ir al contenido","home":"Página de inicio de aljana","back":"Volver a aljana","lang":"Idioma","other":"Condiciones de uso"},"de":{"title":"aljana: Datenschutzerklärung","description":"Was aljana mit Ihren Daten macht: kein Konto, keine Werbung und keine Tracker, Berechnungen direkt auf Ihrem Gerät.","skip":"Zum Inhalt springen","home":"Startseite von aljana","back":"Zurück zu aljana","lang":"Sprache","other":"Nutzungsbedingungen"},"tr":{"title":"aljana: gizlilik politikası","description":"aljana verilerinizle ne yapar: hesap yok, reklam ve izleyici yok, hesaplamalar cihazınızda yapılır.","skip":"İçeriğe geç","home":"aljana ana sayfası","back":"aljana’ya dön","lang":"Dil","other":"Kullanım koşulları"},"id":{"title":"aljana: kebijakan privasi","description":"Apa yang dilakukan aljana dengan data Anda: tanpa akun, tanpa iklan dan pelacak, perhitungan dilakukan di perangkat Anda.","skip":"Langsung ke konten","home":"Beranda aljana","back":"Kembali ke aljana","lang":"Bahasa","other":"Ketentuan penggunaan"},"ur":{"title":"aljana: رازداری کی پالیسی","description":"aljana آپ کے ڈیٹا کے ساتھ کیا کرتا ہے: نہ اکاؤنٹ، نہ اشتہار نہ ٹریکر، حسابات آپ کے آلے پر ہوتے ہیں۔","skip":"مواد پر جائیں","home":"aljana کا صفحۂ اول","back":"aljana پر واپس","lang":"زبان","other":"شرائطِ استعمال"},"fa":{"title":"aljana: سیاست حریم خصوصی","description":"aljana با داده‌های شما چه می‌کند: بدون حساب کاربری، بدون تبلیغات و ردیاب، محاسبات روی دستگاه شما.","skip":"رفتن به محتوا","home":"صفحهٔ اصلی aljana","back":"بازگشت به aljana","lang":"زبان","other":"شرایط استفاده"},"ru":{"title":"aljana: политика конфиденциальности","description":"Что aljana делает с вашими данными: без учётной записи, без рекламы и трекеров, расчёты на вашем устройстве.","skip":"Перейти к содержанию","home":"Главная страница aljana","back":"Вернуться на aljana","lang":"Язык","other":"Условия использования"},"zh":{"title":"aljana：隐私政策","description":"aljana 如何处理您的数据：无需账户，没有广告和跟踪器，计算在您的设备上完成。","skip":"跳到正文","home":"aljana 首页","back":"返回 aljana","lang":"语言","other":"使用条款"},"hi":{"title":"aljana: गोपनीयता नीति","description":"aljana आपके डेटा के साथ क्या करता है: न खाता, न विज्ञापन, न ट्रैकर, गणनाएँ आपके डिवाइस पर होती हैं।","skip":"सामग्री पर जाएँ","home":"aljana का मुखपृष्ठ","back":"aljana पर वापस जाएँ","lang":"भाषा","other":"उपयोग की शर्तें"}}
+    var FONTS = { ar: 'IBM+Plex+Sans+Arabic:wght@400;500;600;700', fa: 'Vazirmatn:wght@400..700', ur: 'Noto+Naskh+Arabic:wght@400..700', hi: 'Noto+Sans+Devanagari:wght@400..700', zh: 'Noto+Sans+SC:wght@400..700' }
+    var root = document.documentElement, sel = document.getElementById('ppLang')
+    var setMeta = function (s, v) { var e = document.querySelector(s); if (e) e.setAttribute('content', v) }
+    function font (l) { if (!FONTS[l] || document.getElementById('font-' + l)) return; var k = document.createElement('link'); k.id = 'font-' + l; k.rel = 'stylesheet'; k.href = 'https://fonts.googleapis.com/css2?family=' + FONTS[l] + '&display=swap'; document.head.appendChild(k) }
+    function apply (l) {
+      var t = UI[l]
+      root.lang = l; root.dir = /^(ar|ur|fa)$/.test(l) ? 'rtl' : 'ltr'; root.setAttribute('data-pp-lang', l); font(l)
       document.title = t.title
-      setMeta('meta[name="description"]', t.description)
-      setMeta('meta[property="og:title"]', t.title)
-      setMeta('meta[property="og:description"]', t.description)
-      document.querySelectorAll('[data-lang]').forEach((el) => { el.hidden = el.dataset.lang !== lang })
-      document.querySelectorAll('[data-lang-switch]').forEach((a) => {
-        if (a.dataset.langSwitch === lang) a.setAttribute('aria-current', 'true')
-        else a.removeAttribute('aria-current')
-      })
-      document.querySelectorAll('[data-l10n]').forEach((el) => { el.textContent = t[el.dataset.l10n] })
-      document.querySelectorAll('[data-l10n-label]').forEach((el) => el.setAttribute('aria-label', t[el.dataset.l10nLabel]))
+      setMeta('meta[name="description"]', t.description); setMeta('meta[property="og:title"]', t.title); setMeta('meta[property="og:description"]', t.description)
+      document.querySelectorAll('[data-lang]').forEach(function (el) { el.hidden = el.getAttribute('data-lang') !== l })
+      document.querySelectorAll('[data-l10n]').forEach(function (el) { el.textContent = t[el.getAttribute('data-l10n')] })
+      document.querySelectorAll('[data-l10n-label]').forEach(function (el) { el.setAttribute('aria-label', t[el.getAttribute('data-l10n-label')]) })
+      /* liens vers le site et l'autre page légale : dans la même langue */
+      document.querySelectorAll('a[href^="/"]').forEach(function (a) { var p = a.getAttribute('href').split('?')[0].split('#')[0]; if (p === '/' || p === '/privacy' || p === '/terms') a.setAttribute('href', p + '?lang=' + l) })
+      sel.value = l
     }
-
-    const fromHash = () => (location.hash === '#en' ? 'en' : location.hash === '#fr' ? 'fr' : null)
-
-    apply(L10N[root.dataset.ppLang] ? root.dataset.ppLang : 'fr')
-
-    document.querySelectorAll('[data-lang-switch]').forEach((a) => {
-      a.addEventListener('click', (e) => {
-        e.preventDefault()
-        const lang = a.dataset.langSwitch
-        apply(lang)
-        /* URL partageable : /privacy (français) ou /privacy#en, sans saut de page */
-        history.replaceState(null, '', lang === 'en' ? '#en' : location.pathname + location.search)
-      })
+    apply(root.getAttribute('data-pp-lang') || 'en')
+    sel.addEventListener('change', function () {
+      var l = sel.value; apply(l)
+      try { var s = localStorage.getItem('aljana.site.lang') || ''; localStorage.setItem('aljana.site.lang', l === 'en' ? (/^en/.test(s) ? s : 'en-US') : l) } catch (e) { /* stockage indisponible */ }
+      history.replaceState(null, '', location.pathname + '?lang=' + l)
+      window.scrollTo(0, 0)
     })
-
-    window.addEventListener('hashchange', () => { const lang = fromHash(); if (lang) apply(lang) })
     })()
   </script>
 </body>
