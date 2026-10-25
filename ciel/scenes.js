@@ -32,7 +32,7 @@
     v3k: 'Maintenant, chez vous, {c}', npAt: 'à {t}', moP: 'lever {r}, coucher {s}', qbP: '{dir}, {km} km jusqu’à la Kaaba',
     prec: '<b>{c}</b>, lever du Soleil {when} à {r}, coucher {sw} à {s}, contrôlé face aux éphémérides JPL Horizons de la NASA',
     event: '<b>{e}</b> dans {n} jours, {d}{f}', forecast: ' (date prévisionnelle)',
-    salam: 'Assalamou Aleykoum', nextP: 'Prochaine prière', cur: 'Actuelle', last: 'Dernière', at: 'à', sun: 'SOLEIL', moon: 'LUNE', altitude: 'Altitude',
+    salam: 'Assalamou Aleykoum', nextP: 'Prochaine prière', cur: 'Actuelle', last: 'Dernière', at: 'à', sun: 'Soleil', moon: 'Lune', live: 'En direct', altitude: 'Altitude',
     cresc: 'Prochain croissant', qibla: 'Qibla', sunset: 'Coucher du soleil', sunrise: 'Lever du soleil', tonight: 'Ce soir', inDays: 'Dans {n} jours', tomorrow: 'Demain', observable: 'Observable',
     nav: ['Accueil', 'Prières', 'Ciel', 'Lune', 'Hilal', 'Qibla', 'Éclipses'],
     P: { fajr: 'Fajr', sunrise: 'Lever', zenith: 'Zénith', dhuhr: 'Dhuhr', asr: 'Asr', maghrib: 'Maghrib', isha: 'Isha', midnight: 'Minuit', qiyam: 'Qiyam' },
@@ -218,8 +218,8 @@
   function fmtCd(ms) { var s = Math.max(0, Math.floor(ms / 1000)); return dg(pad(Math.floor(s / 3600)) + ':' + pad(Math.floor(s / 60) % 60) + ':' + pad(s % 60)) }
   function updatePhone(ph, at) {
     ph.at = at; var q = ph.q, st = prayerState(at), sun = A.sunAltAz(at, place.lat, place.lon), mo = A.moonAltAz(at, place.lat, place.lon), qb = qibla()
-    q('.st-t').textContent = fmtT(at); q('.city').textContent = place.city; q('.ph-live').textContent = (T.live || 'LIVE') + ' ' + fmtT(at, true)
-    q('.ph-date').textContent = cap(fmtD(at, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })) + ' · ' + A.fmtHijri(A.hijriCivil({ y: st.c.y, m: st.c.m, d: st.c.d }, place.tz), HJ)
+    q('.st-t').textContent = fmtT(at); q('.city').textContent = place.city; q('.ph-live').textContent = T.live + ' ' + fmtT(at, true)
+    q('.ph-date').textContent = cap(fmtD(at, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })) + ', ' + A.fmtHijri(A.hijriCivil({ y: st.c.y, m: st.c.m, d: st.c.d }, place.tz), HJ)
     q('.cur').innerHTML = T.cur + ' : <b>' + T.P[st.cur.key] + '</b>'
     q('.v .n').textContent = T.P[st.next.key]; q('.v .c').textContent = fmtCd(st.next.at - at); q('.v .a').textContent = T.atT ? fill(T.atT, { t: fmtT(st.next.at) }) : T.at + ' ' + fmtT(st.next.at)
     q('.ph-bar i').style.width = (100 * clamp((at - st.cur.at) / (st.next.at - st.cur.at), 0, 1)).toFixed(1) + '%'
