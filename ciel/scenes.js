@@ -219,7 +219,7 @@
   function updatePhone(ph, at) {
     ph.at = at; var q = ph.q, st = prayerState(at), sun = A.sunAltAz(at, place.lat, place.lon), mo = A.moonAltAz(at, place.lat, place.lon), qb = qibla()
     q('.st-t').textContent = fmtT(at); q('.city').textContent = place.city; q('.ph-live').textContent = T.live + ' ' + fmtT(at, true)
-    q('.ph-date').textContent = cap(fmtD(at, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })) + ', ' + A.fmtHijri(A.hijriCivil({ y: st.c.y, m: st.c.m, d: st.c.d }, place.tz), HJ)
+    q('.ph-date').textContent = cap(fmtD(at, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })) + SEP + A.fmtHijri(A.hijriCivil({ y: st.c.y, m: st.c.m, d: st.c.d }, place.tz), HJ)
     q('.cur').innerHTML = T.cur + ' : <b>' + T.P[st.cur.key] + '</b>'
     q('.v .n').textContent = T.P[st.next.key]; q('.v .c').textContent = fmtCd(st.next.at - at); q('.v .a').textContent = T.atT ? fill(T.atT, { t: fmtT(st.next.at) }) : T.at + ' ' + fmtT(st.next.at)
     q('.ph-bar i').style.width = (100 * clamp((at - st.cur.at) / (st.next.at - st.cur.at), 0, 1)).toFixed(1) + '%'
