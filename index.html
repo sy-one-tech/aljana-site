@@ -623,7 +623,8 @@
   .film-fr video { display: block; width: 100%; height: 100%; object-fit: cover; cursor: pointer; }
   .film-btn { position: absolute; inset-inline-end: 14px; bottom: 16px; width: 46px; height: 46px; border: 0; border-radius: 50%; display: grid; place-items: center; color: var(--ink); background: rgba(6,11,24,0.55); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: inset 0 0 0 1px rgba(238,241,250,0.18); cursor: pointer; }
   .film-btn svg { width: 18px; height: 18px; display: none; }
-  .film-btn[data-s="play"] .i-play, .film-btn[data-s="pause"] .i-pause, .film-btn[data-s="replay"] .i-replay { display: block; }
+  .film-btn[data-s="play"] .i-play, .film-btn[data-s="pause"] .i-pause, .film-btn[data-s="replay"] .i-replay, .film-snd[data-s="off"] .i-off, .film-snd[data-s="on"] .i-on { display: block; }
+  .film-snd { inset-inline-end: 70px; } /* bouton du son, à côté de la lecture */
   .film-btn:focus-visible { outline: 2px solid var(--gold-soft); outline-offset: 3px; }
   .film-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(238,241,250,0.12); pointer-events: none; }
   .film-bar i { display: block; height: 100%; background: var(--gold-soft); transform: scaleX(0); transform-origin: 0 50%; }
@@ -800,10 +801,11 @@ Lune : NASA SVS (LRO/LROC/LOLA)</p>
     <div class="film-txt rv">
       <h2 id="fh" data-i="sh">Sept univers. Chacun répond à une question simple.</h2>
       <p class="u7-names" id="u7names">Accueil, Prières, Ciel, Lune, Hilal, Qibla, Éclipses</p>
-      <p class="film-meta" id="filmMeta">Film de 42 secondes, sans son</p>
+      <p class="film-meta" id="filmMeta">Film de 42 secondes</p>
     </div>
     <figure class="film-fr">
-      <video id="filmV" muted playsinline preload="none" disablepictureinpicture aria-label="Film de présentation d’aljana, 42 secondes, sans son"></video>
+      <video id="filmV" muted playsinline preload="none" disablepictureinpicture aria-label="Film de présentation d’aljana, 42 secondes"></video>
+      <button class="film-btn film-snd" id="filmSnd" type="button" data-s="off" aria-pressed="false" aria-label="Activer le son"><svg class="i-off" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 9h3.5L12 5v14l-4.5-4H4z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16 9.5l5 5m0-5l-5 5"/></svg><svg class="i-on" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 9h3.5L12 5v14l-4.5-4H4z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M15.5 9a4.5 4.5 0 0 1 0 6M18 6.5a8 8 0 0 1 0 11"/></svg></button>
       <button class="film-btn" id="filmBtn" type="button" data-s="play" aria-label="Lire le film"><svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 4.5v15l12.5-7.5z"/></svg><svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 4h4.2v16H6zm7.8 0H18v16h-4.2z"/></svg><svg class="i-replay" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M4 12a8 8 0 1 0 2.6-5.9M4 4v5h5"/></svg></button>
       <div class="film-bar" aria-hidden="true"><i></i></div>
     </figure>
@@ -899,6 +901,6 @@ Lune : NASA SVS (LRO/LROC/LOLA)</p>
 <script src="ciel/scenes-i18n.js?v=5"></script>
 <script src="ciel/eclipses.js?v=1" defer></script>
 <script src="ciel/scenes.js?v=19" defer></script>
-<script src="ciel/film.js?v=3" defer></script>
+<script src="ciel/film.js?v=4" defer></script>
 </body>
 </html>
