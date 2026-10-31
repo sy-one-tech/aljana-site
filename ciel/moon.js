@@ -110,19 +110,21 @@
     /* masse d'air (Kasten et Young) : près de l'horizon, la Lune jaunit, s'assombrit et tremble légèrement */
     var alt = opts.alt, X = alt == null ? 1 : 1 / (Math.sin(Math.max(0.5, alt) * RAD) + 0.50572 * Math.pow(Math.max(0.5, alt) + 6.07995, -1.6364))
     var k = [0.10, 0.17, 0.29], T = k.map(function (kk) { return Math.pow(10, -0.4 * kk * (X - 1) * 0.24) }), tm = Math.max(T[0], 1e-3)
-    var tint = [1, T[1] / tm, T[2] / tm]
+    var dayK = opts.sunAlt == null ? 0 : Math.min(1, Math.max(0, (opts.sunAlt + 4) / 10)) /* plein jour : la Lune s'ajoute à un ciel clair, elle est pâle et ne dore plus */
+    var tint = [1, T[1] / tm, T[2] / tm].map(function (t) { return t + (1 - t) * dayK * 0.85 }), dim = 1 - dayK * 0.3 * Math.min(1, (X - 1) / 12)
     ctx.save(); ctx.clearRect(0, 0, N, N)
     var seeing = Math.min(0.55, Math.max(0, (X - 3) * 0.035)) * dpr
     if (seeing > 0.05) ctx.filter = 'blur(' + seeing.toFixed(2) + 'px)'
     ctx.translate(N / 2, N / 2); ctx.rotate(state.limbAngleDeg * RAD - fr.theta); ctx.scale(s, s); ctx.drawImage(fr.img, -fr.cx, -fr.cy)
     ctx.restore()
     /* lumière cendrée : invisible dans un crépuscule clair, de plus en plus nette quand la nuit tombe */
-    var es = (opts.sunAlt == null ? 0.75 : Math.min(1, Math.max(0.04, (-opts.sunAlt - 6) / 10))) * Math.min(1, Math.max(0, 1 - state.illum / 0.4)) /* lumière cendrée : seulement sur les croissants */, thinK = Math.max(0, 1 - state.illum / 0.3), gain = 0.88 + 0.5 * thinK /* lumière de la NASA telle quelle ; seul un fin croissant, noyé dans le crépuscule, est rehaussé */
+    var es = (opts.sunAlt == null ? 0.75 : Math.min(1, Math.max(0.04, (-opts.sunAlt - 6) / 10))) * Math.min(1, Math.max(0, 1 - state.illum / 0.4)) /* lumière cendrée : seulement sur les croissants */, thinK = Math.max(0, 1 - state.illum / 0.3), gain = (0.88 + 0.5 * thinK) * dim /* lumière de la NASA telle quelle ; seul un fin croissant, noyé dans le crépuscule, est rehaussé */
+    var fullK = Math.min(1, Math.max(0, (state.illum - 0.3) / 0.3)), lo = 0.10 - 0.07 * fullK, wid = 0.22 - 0.10 * fullK /* phases larges : le terminateur reste continu */
     var img = ctx.getImageData(0, 0, N, N), d = img.data, R = N / 2
     for (var j = 0; j < N; j++) for (var i = 0; i < N; i++) {
       var o = (j * N + i) * 4, dx = (i + 0.5 - R) / R, dy = (j + 0.5 - R) / R, rr = dx * dx + dy * dy
       if (rr > 1) { d[o + 3] = 0; continue }
-      var v = Math.max(d[o], d[o + 1], d[o + 2]) / 255, w = es + (1 - es) * Math.min(1, Math.max(0, (v - 0.10) / 0.22))
+      var v = Math.max(d[o], d[o + 1], d[o + 2]) / 255, w = es + (1 - es) * Math.min(1, Math.max(0, (v - lo) / wid))
       /* lumière ajoutée au ciel : la partie sombre reste transparente, comme dans la réalité (alpha = intensité, couleur dé-prémultipliée) */
       var cr = Math.max(0, d[o] - 5) * w * tint[0] * gain, cg = Math.max(0, d[o + 1] - 5) * w * tint[1] * gain, cb = Math.max(0, d[o + 2] - 5) * w * tint[2] * gain /* point noir : le fond de l'image NASA ne voile pas le ciel */
       var a = Math.min(1, Math.max(cr, cg, cb) / 255 * (1 + 0.15 * thinK)), edge = Math.min(1, (1 - Math.sqrt(rr)) * R * 1.2)
@@ -131,7 +133,7 @@
     }
     ctx.putImageData(img, 0, 0)
     /* halo atmosphérique discret autour du croissant */
-    ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = 0.16; ctx.filter = 'blur(' + Math.max(2, N * 0.012).toFixed(1) + 'px)'; ctx.drawImage(canvas, 0, 0); ctx.restore()
+    ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = 0.16 * (1 - 0.7 * dayK); ctx.filter = 'blur(' + Math.max(2, N * 0.012).toFixed(1) + 'px)'; ctx.drawImage(canvas, 0, 0); ctx.restore()
     return true
   }
   /* opts.nasa + opts.at : image NASA de l'heure si l'année est publiée (rendu maison en attendant le chargement) */

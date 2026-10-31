@@ -25,8 +25,8 @@
   var smooth = function (k) { k = clamp(k, 0, 1); return k * k * (3 - 2 * k) }
   var LOC = 'fr-FR', pad = function (n) { return String(n).padStart(2, '0') }
   var T = {
-    kick: 'Votre ciel, maintenant, {c}', proof: 'Ciel calculé pour {c}, le {d}, vue vers le {dir}. Soleil {s}', above: 'à {n}° au-dessus de l’horizon', below: 'à {n}° sous l’horizon',
-    v2k: 'Maghrib {t}, {d}', lensH: 'Vue agrandie ×{n}, phase et orientation réelles', lensM: '<span class="look-l">{look}</span><span class="look-d">Vers {t}, à {a}° au-dessus de l’horizon et {z}° {side} du Soleil couché. Âge {h} h, {p} % éclairé. Vue agrandie ×{n}.</span>', ans: '{d}, avis aljana : {v}.', left: 'à gauche', right: 'à droite', moL: 'La Lune, ce soir', moW: '{t}, à {a}° au-dessus de l’horizon, vers le {d}.', moDown: 'Sous l’horizon à {t}, lever à {r}.', tagH: 'Premier croissant, {t}', tagL: '{a}° au-dessus de l’horizon, âge {h} h, {p} % éclairé', adv: 'Avis aljana : {v}',
+    kick: 'Votre ciel, maintenant, {c}', proof: 'Ciel calculé pour {c}, le {d}, vue vers {dir}. Soleil {s}', above: 'à {n}° au-dessus de l’horizon', below: 'à {n}° sous l’horizon',
+    v2k: 'Maghrib {t}, {d}', lensH: 'Vue agrandie ×{n}, phase et orientation réelles', lensM: '<span class="look-l">{look}</span><span class="look-d">Vers {t}, à {a}° au-dessus de l’horizon et {z}° {side} du Soleil couché. Âge {h} h, {p} % éclairé. Vue agrandie ×{n}.</span>', ans: '{d}, avis aljana : {v}.', left: 'à gauche', right: 'à droite', moL: 'La Lune, ce soir', moW: '{t}, à {a}° au-dessus de l’horizon, vers {d}.', moDown: 'Sous l’horizon à {t}, lever à {r}.', tagH: 'Premier croissant, {t}', tagL: '{a}° au-dessus de l’horizon, âge {h} h, {p} % éclairé', adv: 'Avis aljana : {v}',
     look: { low0: 'Un fin croissant, très bas sur l’horizon, ', low1: 'Un fin croissant, bas sur l’horizon, ', low2: 'Un fin croissant, ', near: 'juste au-dessus du Soleil couché.', bit: 'un peu {s} du Soleil couché.', far: '{s} du Soleil couché.' },
     advTxt: { A: 'visible à l’œil nu', B: 'visible à l’œil nu sous bonnes conditions', C: 'aide optique utile', D: 'visible seulement avec aide optique', E: 'non visible', F: 'non visible' },
     v3k: 'Maintenant, chez vous, {c}', npAt: 'à {t}', moP: 'lever {r}, coucher {s}', qbP: '{dir}, {km} km jusqu’à la Kaaba',
@@ -36,7 +36,7 @@
     cresc: 'Prochain croissant', qibla: 'Qibla', sunset: 'Coucher du soleil', sunrise: 'Lever du soleil', tonight: 'Ce soir', inDays: 'Dans {n} jours', tomorrow: 'Demain', observable: 'Observable',
     nav: ['Accueil', 'Prières', 'Ciel', 'Lune', 'Hilal', 'Qibla', 'Éclipses'],
     P: { fajr: 'Fajr', sunrise: 'Lever', zenith: 'Zénith', dhuhr: 'Dhuhr', asr: 'Asr', maghrib: 'Maghrib', isha: 'Isha', midnight: 'Minuit', qiyam: 'Qiyam' },
-    dir: ['Nord', 'Nord-Est', 'Est', 'Sud-Est', 'Sud', 'Sud-Ouest', 'Ouest', 'Nord-Ouest'], dirL: ['nord', 'nord-est', 'est', 'sud-est', 'sud', 'sud-ouest', 'ouest', 'nord-ouest'],
+    dir: ['Nord', 'Nord-Est', 'Est', 'Sud-Est', 'Sud', 'Sud-Ouest', 'Ouest', 'Nord-Ouest'], dirL: ['le nord', 'le nord-est', 'l’est', 'le sud-est', 'le sud', 'le sud-ouest', 'l’ouest', 'le nord-ouest'],
     phases: ['Nouvelle lune', 'Premier croissant', 'Premier quartier', 'Gibbeuse croissante', 'Pleine lune', 'Gibbeuse décroissante', 'Dernier quartier', 'Dernier croissant'],
     ev: { ramadan: 'Ramadan', fitr: 'L’Aïd al-Fitr', adha: 'L’Aïd al-Adha', muharram: 'Le nouvel an hégirien' },
     planets: { venus: 'Vénus', jupiter: 'Jupiter', mars: 'Mars', saturn: 'Saturne', mercury: 'Mercure' }, today: 'aujourd’hui', tomorrowL: 'demain',
@@ -81,7 +81,10 @@
   function phaseName(m) { var k = m.illum, w = m.elong < 180; return T.phases[k < 0.03 ? 0 : k > 0.97 ? 4 : Math.abs(k - 0.5) < 0.04 ? (w ? 2 : 6) : k < 0.5 ? (w ? 1 : 7) : (w ? 3 : 5)] }
   function preciseCross(approx, target) { if (!approx) return null; var lo = approx.getTime() - 180000, hi = approx.getTime() + 180000, up = A.sunAltAz(new Date(hi), place.lat, place.lon).alt > A.sunAltAz(new Date(lo), place.lat, place.lon).alt
     for (var i = 0; i < 30; i++) { var mid = (lo + hi) / 2, a = A.sunAltAz(new Date(mid), place.lat, place.lon).alt; if ((a < target) === up) lo = mid; else hi = mid } return new Date(Math.round(hi / 1000) * 1000) }
-  var lstDeg = function (at) { return ((280.16 + 360.9856235 * (A.jdFromDate(at) - 2451545.0) + place.lon) % 360 + 360) % 360 }
+  var lstDeg = function (at) { return ((A.gmst(A.jdFromDate(at) - 2451545.0) + place.lon) % 360 + 360) % 360 }
+  /* Lune vue du sol : le moteur la place depuis le centre de la Terre ; on retire la parallaxe (jusqu'à 1°, elle est proche) et on ajoute la réfraction (Sæmundsson). Lever et coucher restent calculés au seuil de Meeus (+0,125°) sur la position du moteur */
+  function moonSky(at) { var m = A.moonAltAz(at, place.lat, place.lon), g = m.alt - Math.asin(Math.cos(m.alt * RAD) * 6378.14 / m.distKm) / RAD
+    return Object.assign({}, m, { alt: g > -1 ? g + 1.02 / Math.tan((g + 10.3 / (g + 5.11)) * RAD) / 60 : g }) }
 
   /* ---------- astres : calque 2D (étoiles réelles, planètes) et Lune texturée ---------- */
   var SEP = /^(ar|ur|fa)$/.test(LANG) ? '، ' : LANG === 'zh' ? '，' : ', ' /* virgule de la langue, à la place des points médians */
@@ -130,7 +133,7 @@
     x.globalAlpha = 1; x.globalCompositeOperation = 'source-over'
   }
   function placeMoon(el, at, v, o) {
-    var m = A.moonAltAz(at, place.lat, place.lon); if (m.alt < -0.5) { el.style.display = 'none'; return null }
+    var m = moonSky(at); if (m.alt < -0.3) { el.style.display = 'none'; return null }
     var d = ((m.az - v.azC) % 360 + 540) % 360 - 180, x = v.W / 2 + d * v.ppd, y = v.hzY - m.alt * v.ppd
     var realPx = 2 * Math.asin(1737.4 / m.distKm) / RAD * v.ppd, px = Math.max(o.minPx || 7, realPx)
     el.style.display = ''; el.style.left = x + 'px'; el.style.top = y + 'px'
@@ -143,7 +146,7 @@
     var L = sec.querySelector('.lens'), cv = L.querySelector('canvas'), cp = sec.querySelector('.lens-cap'), ln = sec.querySelector('.lens-line')
     L.style.width = L.style.height = c.size + 'px'; L.style.left = c.cx + 'px'; L.style.top = c.cy + 'px'; if (c.halo != null) L.style.setProperty('--halo', c.halo)
     var mp = Math.round(c.size * 0.74)
-    if (c.drawMoon !== false) window.ALJ_MOON.render(cv, mp, A.moonOrientation(at, place.lat, place.lon), { ash: c.ash, gain: 1.15, bump: 1.4, nasa: true, at: at, alt: A.moonAltAz(at, place.lat, place.lon).alt, sunAlt: A.sunAltAz(at, place.lat, place.lon).alt })
+    if (c.drawMoon !== false) window.ALJ_MOON.render(cv, mp, A.moonOrientation(at, place.lat, place.lon), { ash: c.ash, gain: 1.15, bump: 1.4, nasa: true, at: at, alt: moonSky(at).alt, sunAlt: A.sunAltAz(at, place.lat, place.lon).alt })
     cp.innerHTML = fill(c.cap, Object.assign({ n: num(Math.round(mp / c.realPx)) }, c.vals || {}))
     cp.style.left = (c.capX != null ? c.capX : c.cx) + 'px'; cp.style.top = (c.capY != null ? c.capY : c.cy + mp / 2 + 18) + 'px'; cp.style.width = c.capW ? c.capW + 'px' : ''; cp.style.whiteSpace = c.capW ? 'normal' : ''
     cp.classList.toggle('side', !!c.side); cp.classList.toggle('look', !!c.look)
@@ -156,7 +159,7 @@
   function Scene(sec) { this.sec = sec; this.sky = new window.ALJ_SKY(sec.querySelector('canvas.sky'), 0.5); this.ov = sec.querySelector('canvas.ov'); this.moon = sec.querySelector('canvas.moon')
     var sc = sec.querySelector('canvas.stars'); if (sc && window.ALJ_STARS) try { this.stars = new window.ALJ_STARS(sc, '/textures/nasa/'); var st = this.stars; starsP.then(function () { st.setBright(BRIGHT()) }); var me = this; this.stars.onupgrade = function () { if (me.redraw) me.redraw() } } catch (e) { console.warn('étoiles', e) } }
   Scene.prototype.draw = function (at, frame, o) {
-    var W = this.sec.clientWidth, H = frame.H || this.sec.clientHeight, sun = A.sunAltAz(at, place.lat, place.lon), mo = A.moonAltAz(at, place.lat, place.lon)
+    var W = this.sec.clientWidth, H = frame.H || this.sec.clientHeight, sun = A.sunAltAz(at, place.lat, place.lon), mo = moonSky(at)
     var v = { W: W, H: this.sec.clientHeight, ppd: W / frame.fov, hzY: frame.hz * H, azC: 0 }
     v.azC = (frame.aim != null ? frame.aim - (frame.ax - 0.5) * W / v.ppd : sun.az) + (o.drift || 0)
     this.v = v
@@ -217,7 +220,7 @@
   var DG = LANG === 'ar' ? '٠١٢٣٤٥٦٧٨٩' : LANG === 'fa' ? '۰۱۲۳۴۵۶۷۸۹' : null, dg = function (x) { return DG ? String(x).replace(/\d/g, function (d) { return DG[+d] }) : String(x) }
   function fmtCd(ms) { var s = Math.max(0, Math.floor(ms / 1000)); return dg(pad(Math.floor(s / 3600)) + ':' + pad(Math.floor(s / 60) % 60) + ':' + pad(s % 60)) }
   function updatePhone(ph, at) {
-    ph.at = at; var q = ph.q, st = prayerState(at), sun = A.sunAltAz(at, place.lat, place.lon), mo = A.moonAltAz(at, place.lat, place.lon), qb = qibla()
+    ph.at = at; var q = ph.q, st = prayerState(at), sun = A.sunAltAz(at, place.lat, place.lon), mo = moonSky(at), qb = qibla()
     q('.st-t').textContent = fmtT(at); q('.city').textContent = place.city; q('.ph-live').textContent = T.live + ' ' + fmtT(at, true)
     q('.ph-date').textContent = cap(fmtD(at, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })) + SEP + A.fmtHijri(A.hijriCivil({ y: st.c.y, m: st.c.m, d: st.c.d }, place.tz), HJ)
     q('.cur').innerHTML = T.cur + ' : <b>' + T.P[st.cur.key] + '</b>'
@@ -326,7 +329,7 @@
     document.getElementById('np-n').textContent = T.P[st.next.key]; document.getElementById('np-c').textContent = fmtCd(st.next.at - at); document.getElementById('np-a').textContent = fill(T.npAt, { t: fmtT(st.next.at) })
     var sunUp = A.sunAltAz(at, place.lat, place.lon).alt >= -0.833, srToday = st.tt.sunrise > at, sr = srToday ? st.tt.sunrise : times(addDays(st.c, 1)).sunrise, ssToday = st.tt.sunset > at, ss = ssToday ? st.tt.sunset : st.tt.sunset
     document.getElementById('prec').innerHTML = fill(T.prec, { c: place.city, when: srToday ? T.today : T.tomorrowL, r: fmtT(preciseCross(sr, -0.833)), sw: T.today, s: fmtT(preciseCross(ss, -0.833)) })
-    var mo = A.moonAltAz(at, place.lat, place.lon), rs = moonEvents(at)
+    var mo = moonSky(at), rs = moonEvents(at)
     document.getElementById('mo-n').textContent = T.moN ? fill(T.moN, { ph: phaseName(mo), p: num(Math.round(mo.illum * 100)) }) : phaseName(mo) + SEP + num(Math.round(mo.illum * 100)) + ' % éclairée'
     var dirM = T.dirL[Math.round(mo.az / 45) % 8]
     document.getElementById('mo-w').textContent = mo.alt > 0 ? fill(T.moW, { t: fmtT(at), a: num(Math.round(mo.alt)), d: dirM }) : fill(T.moDown, { t: fmtT(at), r: rs.rise ? fmtT(rs.rise.time) : '—' })
@@ -347,15 +350,15 @@
   var mobile = function () { return window.innerWidth < 900 }
   var s1, s2, ph1, ph2, qGlobe, cres = null, drift = 0, heroDone = false
   function heroFrame(at) {
-    var mo = A.moonAltAz(at, place.lat, place.lon), M = mobile(), aim = mo.alt > 0 ? mo.az : null
-    if (M) { var fov = 62, ppd = window.innerWidth / fov, H = 860, hz = aim != null ? clamp((150 + mo.alt * ppd) / H, 0.26, 0.6) : 0.47; return { fov: fov, hz: hz, H: H, aim: aim, ax: 0.2 } }
+    var mo = moonSky(at), M = mobile(), aim = mo.alt > 0 ? mo.az : null
+    if (M) { var H = 860, top = 0.34 * H - 56, fov = aim != null ? clamp(window.innerWidth * mo.alt / top, 62, 130) : 62, ppd = window.innerWidth / fov, hz = aim != null ? clamp((150 + mo.alt * ppd) / H, 0.26, 0.34) : 0.34; return { fov: fov, hz: hz, H: H, aim: aim, ax: 0.2 } } /* l'horizon reste au-dessus du titre ; une Lune haute élargit le champ pour rester dans le cadre */
     return { fov: 132, hz: 0.82, aim: aim, ax: 0.47 }
   }
   function maghribFrame() { var M = mobile(); return M ? { fov: 34, hz: 0.66, H: 1250, aim: cres ? cres.ev.az : null, ax: 0.5 } : { fov: 50, hz: 0.72, aim: cres ? cres.ev.az : null, ax: RTL ? 0.4 : 0.6 } } /* en arabe et en ourdou, le texte est à droite : le cadre se décale pour que le croissant passe à gauche */
   function drawHero(at, full) {
     var M = mobile(), v = s1.draw(at, heroFrame(at), { labels: !M, minPx: 7, seed: 1.7, drift: drift, drawMoon: full })
     if (v.moon) { var mo = v.moon.m, W = v.W, H = v.H
-      lens(s1.sec, at, M ? { cx: W * 0.64, cy: 178, size: 200, from: { x: v.moon.x, y: v.moon.y }, realPx: v.moon.realPx, ash: 0.35, cap: RT[LANG] ? RT[LANG].lens : T.lensH, drawMoon: full, capW: 220, capX: W * 0.64, capY: 178 + 80 }
+      lens(s1.sec, at, M ? { cx: W * 0.64, cy: Math.min(178, v.hzY - 92), size: 200, from: { x: v.moon.x, y: v.moon.y }, realPx: v.moon.realPx, ash: 0.35, cap: RT[LANG] ? RT[LANG].lens : T.lensH, drawMoon: full, capW: 220, capX: W * 0.64, capY: v.hzY + 12 }
         : { cx: W * (RTL ? 0.465 : 0.535), cy: H * 0.26, size: 250, from: { x: v.moon.x, y: v.moon.y }, realPx: v.moon.realPx, ash: 0.35, cap: RT[LANG] ? RT[LANG].lens : T.lensH, drawMoon: full, side: true, capX: W * (RTL ? 0.465 : 0.535) + (RTL ? 112 : -112), capY: H * 0.26 - 20 }) }
     return v
   }

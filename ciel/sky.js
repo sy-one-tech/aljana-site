@@ -123,7 +123,7 @@
     gl.uniform1f(this.u.uAzC, v.azC); gl.uniform1f(this.u.uPpd, v.ppd * k); gl.uniform1f(this.u.uHzY, v.hzY * k)
     gl.uniform1f(this.u.uLat, v.lat); gl.uniform1f(this.u.uLST, v.lst)
     /* exposition adaptée (comme l œil) : plus le Soleil descend, plus on expose, jusqu à la nuit */
-    var alt = v.sunAlt, ex = alt >= 6 ? 1.25 : alt >= -1 ? 1.25 + (6 - alt) * 0.4 : 4 * Math.pow(10, Math.min(1.6, (-1 - alt) * 0.25))
+    var alt = v.sunAlt, ex = alt >= 6 ? 1.25 + 1.1 * Math.min(1, (alt - 6) / 18) : alt >= -1 ? 1.25 + (6 - alt) * 0.4 : 4 * Math.pow(10, Math.min(1.6, (-1 - alt) * 0.25))
     gl.uniform1f(this.u.uExp, ex)
     var P = palette(alt), lin = function (h) { return [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)].map(function (x) { return Math.pow(x / 255, 1.08) }) }
     gl.uniform3fv(this.u.uTop, lin(P[0])); gl.uniform3fv(this.u.uMid, lin(P[1])); gl.uniform3fv(this.u.uHor, lin(P[2]))
