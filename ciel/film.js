@@ -1,69 +1,106 @@
-/* aljana · scène « Le film » (bloc des sept univers) et lien du héros.
-   Vidéo verticale avec son, en trois versions : spot avec voix en fr (36 s) et en ar (40 s), film de 42 s en anglais pour toutes les autres langues.
-   Le spot finit sur sa propre carte avec les badges des stores : rien n'est ajouté par-dessus.
-   Rien n'est téléchargé avant que le visiteur approche de la scène ; lecture automatique (son coupé, comme l'exigent
-   les navigateurs) quand la vidéo est bien à l'écran ; un bouton rend le son, pause quand elle en sort. Animations réduites : pas de
-   lecture automatique, l'image d'aperçu et le bouton lecture suffisent.
+/* aljana : bloc « Sept univers », deux vidéos verticales côte à côte, et lien du héros.
+   Spot avec voix (fr 36 s, ar 40 s, wolof 45 s au choix sur la page fr) et film de 42 s (fr, ar, en pour les autres langues).
+   Le spot anglais n'existe pas encore : son emplacement reste masqué dans les autres langues tant que SPOT.en est vide.
+   Rien n'est téléchargé avant que le visiteur approche du bloc ; lecture automatique son coupé (comme l'exigent les navigateurs)
+   quand une vidéo est bien à l'écran, pause quand elle en sort, aucune lecture automatique si les animations sont réduites.
+   Une seule vidéo avec le son à la fois. Le spot finit sur sa propre carte avec les badges des stores : rien n'est ajouté par-dessus.
    Textes : traductions de travail, à faire relire par des locuteurs natifs. */
 (function () {
-  var sec = document.getElementById('univers'), v = document.getElementById('filmV')
-  if (!sec || !v) return
+  var sec = document.getElementById('univers')
+  if (!sec) return
   var code = (document.documentElement.lang || 'fr').toLowerCase(), two = code.slice(0, 2)
-  var FL = two === 'fr' ? 'fr' : two === 'ar' ? 'ar' : 'en', VER = FL === 'en' ? '2' : '3'
-  /* [lien, mention, lire, pause, revoir, description, activer le son, couper le son] */
+  var FL = two === 'fr' ? 'fr' : two === 'ar' ? 'ar' : 'en'
+  /* spots disponibles : langue de la voix → [durée en secondes, version des fichiers] ; en : à ajouter quand le spot anglais sera prêt */
+  var SPOT = { fr: [36, '1'], ar: [40, '1'], wo: [45, '1'] }
+  var SPOT_FOR = { fr: ['fr', 'wo'], ar: ['ar'], en: SPOT.en ? ['en'] : [] }[FL]
+  var FILM_V = '2', FILM_S = 42
+  /* chiffres de la page : arabes orientaux en ar, persans en fa, latins ailleurs (ourdou compris, règle du site) */
+  function num (n) { var d = two === 'ar' ? '٠١٢٣٤٥٦٧٨٩' : two === 'fa' ? '۰۱۲۳۴۵۶۷۸۹' : null; return d ? String(n).replace(/\d/g, function (c) { return d[c] }) : String(n) }
+  /* [lien du héros, légende du film, légende du spot, lire, pause, revoir, activer le son, couper le son, légende du spot en wolof] */
   var S = {
-    fr: ['Voir le film (36 s)', 'Film de 36 secondes', 'Lire le film', 'Mettre en pause', 'Revoir le film', 'Film de présentation d’aljana, 36 secondes', 'Activer le son', 'Couper le son'],
-    en: ['Watch the film (42 s)', '42-second film', 'Play the film', 'Pause', 'Watch again', 'aljana introduction film, 42 seconds', 'Turn sound on', 'Turn sound off'],
-    ar: ['شاهد الفيلم (٤٠ ثانية)', 'فيلم مدته ٤٠ ثانية', 'تشغيل الفيلم', 'إيقاف مؤقت', 'إعادة المشاهدة', 'فيلم تعريفي بـ aljana، مدته ٤٠ ثانية', 'تشغيل الصوت', 'كتم الصوت'],
-    es: ['Ver el vídeo (42 s)', 'Vídeo de 42 segundos, en inglés', 'Reproducir el vídeo', 'Pausa', 'Volver a verlo', 'Vídeo de presentación de aljana, 42 segundos, en inglés', 'Activar el sonido', 'Silenciar'],
-    de: ['Film ansehen (42 s)', 'Film von 42 Sekunden, auf Englisch', 'Film abspielen', 'Pause', 'Noch einmal ansehen', 'Vorstellungsfilm von aljana, 42 Sekunden, auf Englisch', 'Ton einschalten', 'Ton ausschalten'],
-    tr: ['Filmi izleyin (42 sn)', '42 saniyelik film, İngilizce', 'Filmi oynat', 'Duraklat', 'Yeniden izle', 'aljana tanıtım filmi, 42 saniye, İngilizce', 'Sesi aç', 'Sesi kapat'],
-    id: ['Tonton filmnya (42 dtk)', 'Film 42 detik, dalam bahasa Inggris', 'Putar film', 'Jeda', 'Tonton lagi', 'Film perkenalan aljana, 42 detik, dalam bahasa Inggris', 'Nyalakan suara', 'Matikan suara'],
-    ur: ['فلم دیکھیں (42 سیکنڈ)', '42 سیکنڈ کی فلم، انگریزی میں', 'فلم چلائیں', 'روکیں', 'دوبارہ دیکھیں', 'aljana کی تعارفی فلم، 42 سیکنڈ، انگریزی میں', 'آواز چلائیں', 'آواز بند کریں'],
-    fa: ['تماشای فیلم (۴۲ ثانیه)', 'فیلم ۴۲ ثانیه‌ای، به انگلیسی', 'پخش فیلم', 'توقف', 'تماشای دوباره', 'فیلم معرفی aljana، ۴۲ ثانیه، به انگلیسی', 'روشن کردن صدا', 'بستن صدا'],
-    ru: ['Смотреть фильм (42 с)', 'Фильм на 42 секунды, на английском', 'Воспроизвести фильм', 'Пауза', 'Посмотреть снова', 'Фильм о приложении aljana, 42 секунды, на английском', 'Включить звук', 'Выключить звук'],
-    zh: ['观看短片（42 秒）', '42 秒短片，英文', '播放短片', '暂停', '重新观看', 'aljana 介绍短片，42 秒，英文', '打开声音', '关闭声音'],
-    hi: ['फ़िल्म देखें (42 सेकंड)', '42 सेकंड की फ़िल्म, अंग्रेज़ी में', 'फ़िल्म चलाएँ', 'रोकें', 'फिर से देखें', 'aljana की परिचय फ़िल्म, 42 सेकंड, अंग्रेज़ी में', 'आवाज़ चालू करें', 'आवाज़ बंद करें']
+    fr: ['Voir le film ({n} s)', 'Film de {n} secondes', 'Spot de {n} secondes', 'Lire', 'Mettre en pause', 'Revoir', 'Activer le son', 'Couper le son', 'Spot de {n} secondes, en wolof'],
+    en: ['Watch the film ({n} s)', '{n}-second film', '{n}-second spot', 'Play', 'Pause', 'Watch again', 'Turn sound on', 'Turn sound off'],
+    ar: ['شاهد الفيلم ({n} ثانية)', 'فيلم مدته {n} ثانية', 'إعلان مدته {n} ثانية', 'تشغيل', 'إيقاف مؤقت', 'إعادة المشاهدة', 'تشغيل الصوت', 'كتم الصوت'],
+    es: ['Ver el vídeo ({n} s)', 'Vídeo de {n} segundos, en inglés', 'Anuncio de {n} segundos, en inglés', 'Reproducir', 'Pausa', 'Volver a verlo', 'Activar el sonido', 'Silenciar'],
+    de: ['Film ansehen ({n} s)', 'Film von {n} Sekunden, auf Englisch', 'Spot von {n} Sekunden, auf Englisch', 'Abspielen', 'Pause', 'Noch einmal ansehen', 'Ton einschalten', 'Ton ausschalten'],
+    tr: ['Filmi izleyin ({n} sn)', '{n} saniyelik film, İngilizce', '{n} saniyelik tanıtım, İngilizce', 'Oynat', 'Duraklat', 'Yeniden izle', 'Sesi aç', 'Sesi kapat'],
+    id: ['Tonton filmnya ({n} dtk)', 'Film {n} detik, dalam bahasa Inggris', 'Iklan {n} detik, dalam bahasa Inggris', 'Putar', 'Jeda', 'Tonton lagi', 'Nyalakan suara', 'Matikan suara'],
+    ur: ['فلم دیکھیں ({n} سیکنڈ)', '{n} سیکنڈ کی فلم، انگریزی میں', '{n} سیکنڈ کا اشتہار، انگریزی میں', 'چلائیں', 'روکیں', 'دوبارہ دیکھیں', 'آواز چلائیں', 'آواز بند کریں'],
+    fa: ['تماشای فیلم ({n} ثانیه)', 'فیلم {n} ثانیه‌ای، به انگلیسی', 'آگهی {n} ثانیه‌ای، به انگلیسی', 'پخش', 'توقف', 'تماشای دوباره', 'روشن کردن صدا', 'بستن صدا'],
+    ru: ['Смотреть фильм ({n} с)', 'Фильм на {n} секунды, на английском', 'Ролик на {n} секунд, на английском', 'Воспроизвести', 'Пауза', 'Посмотреть снова', 'Включить звук', 'Выключить звук'],
+    zh: ['观看短片（{n} 秒）', '{n} 秒短片，英文', '{n} 秒广告，英文', '播放', '暂停', '重新观看', '打开声音', '关闭声音'],
+    hi: ['फ़िल्म देखें ({n} सेकंड)', '{n} सेकंड की फ़िल्म, अंग्रेज़ी में', '{n} सेकंड का विज्ञापन, अंग्रेज़ी में', 'चलाएँ', 'रोकें', 'फिर से देखें', 'आवाज़ चालू करें', 'आवाज़ बंद करें']
   }
   var T = S[two] || S.en
-  var snd = document.getElementById('filmSnd'), btn = document.getElementById('filmBtn'), bar = sec.querySelector('.film-bar i'), meta = document.getElementById('filmMeta'), link = document.getElementById('filmLink')
+  function fill (t, n) { return t.replace('{n}', num(n)) }
   var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches
   var small = Math.min(screen.width, innerWidth) < 700 || (navigator.connection && navigator.connection.saveData)
-  var base = 'assets/film/' + FL + '/'
-  var loaded = false, inView = false, userPaused = false, wantPlay = false
+  var players = []
 
-  if (meta) meta.textContent = T[1]
-  if (link) link.textContent = T[0]
-  v.setAttribute('aria-label', T[5])
-
-  function load () { if (loaded) return; loaded = true; v.poster = base + 'poster.webp?v=' + VER; v.src = base + (small ? 'film-540.mp4' : 'film-720.mp4') + '?v=' + VER; v.preload = 'auto' }
-  function state () {
-    var s = v.ended ? 'replay' : v.paused ? 'play' : 'pause'
-    btn.dataset.s = s; btn.setAttribute('aria-label', s === 'replay' ? T[4] : s === 'play' ? T[2] : T[3])
+  /* un lecteur par figure ; src() rend [affiche, vidéo] selon la taille d'écran */
+  function Player (fig, src, label) {
+    var v = fig.querySelector('video'), snd = fig.querySelector('.film-snd'), btn = fig.querySelector('.film-play'), bar = fig.querySelector('.film-bar i')
+    var cap = fig.querySelector('figcaption'), sndL = snd.querySelector('.snd-l')
+    var p = { v: v, loaded: false, inView: false, userPaused: false, wantPlay: false }
+    function state () { var s = v.ended ? 'replay' : v.paused ? 'play' : 'pause'; btn.dataset.s = s; btn.setAttribute('aria-label', s === 'replay' ? T[5] : s === 'play' ? T[3] : T[4]) }
+    function sound () { var on = !v.muted; snd.dataset.s = on ? 'on' : 'off'; sndL.textContent = T[6]; snd.setAttribute('aria-label', on ? T[7] : T[6]); snd.setAttribute('aria-pressed', on ? 'true' : 'false') }
+    p.load = function () { if (p.loaded) return; p.loaded = true; var f = src(); v.poster = f[0]; v.src = f[1]; v.preload = 'auto' }
+    p.play = function () { p.load(); if (v.ended) v.currentTime = 0; var r = v.play(); if (r && r.catch) r.catch(state) }
+    /* changement de source (voix du spot) : même lecteur, on repart du début avec le même réglage du son */
+    p.swap = function (s2, l2) { src = s2; v.pause(); p.loaded = false; p.load(); p.setLabel(l2); p.userPaused = false; p.play() }
+    p.setLabel = function (l) { cap.textContent = l; v.setAttribute('aria-label', 'aljana, ' + l) }
+    var raf = 0
+    function tick () { if (v.duration) bar.style.transform = 'scaleX(' + (v.currentTime / v.duration) + ')'; raf = v.paused ? 0 : requestAnimationFrame(tick) }
+    snd.addEventListener('click', function () {
+      v.muted = !v.muted
+      /* une seule vidéo avec le son : activer celui-ci coupe les autres */
+      if (!v.muted) { players.forEach(function (o) { if (o !== p) o.v.muted = true }); p.userPaused = false; if (v.paused || v.ended) p.play() }
+    })
+    btn.addEventListener('click', function () { if (v.paused || v.ended) { p.userPaused = false; p.play() } else { p.userPaused = true; v.pause() } })
+    v.addEventListener('click', function () { btn.click() })
+    ;['play', 'pause', 'ended'].forEach(function (e) { v.addEventListener(e, state) })
+    v.addEventListener('volumechange', sound)
+    v.addEventListener('play', function () { if (!raf) raf = requestAnimationFrame(tick) })
+    v.addEventListener('seeked', tick)
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) { if (es[0].isIntersecting) p.load() }, { rootMargin: '900px 0px' }).observe(v)
+      new IntersectionObserver(function (es) {
+        var r = es[0].intersectionRatio; p.inView = r >= 0.55
+        if (p.inView && !p.userPaused && !v.ended && (p.wantPlay || !reduced)) { p.wantPlay = false; p.play() } else if (r < 0.2 && !v.paused) v.pause()
+      }, { threshold: [0, 0.2, 0.55, 0.8] }).observe(v)
+    } else p.load()
+    p.setLabel(label); state(); sound()
+    players.push(p)
+    return p
   }
-  /* son : coupé au départ ; le bouton le rend (et relance la lecture si besoin) */
-  var sndL = snd && snd.querySelector('.snd-l')
-  function sound () { var on = !v.muted; snd.dataset.s = on ? 'on' : 'off'; if (sndL) sndL.textContent = T[6]; snd.setAttribute('aria-label', on ? T[7] : T[6]); snd.setAttribute('aria-pressed', on ? 'true' : 'false') }
-  if (snd) { snd.addEventListener('click', function () { v.muted = !v.muted; if (!v.muted) { userPaused = false; if (v.paused || v.ended) play() } sound() }); v.addEventListener('volumechange', sound); sound() }
-  function play () { load(); if (v.ended) v.currentTime = 0; var p = v.play(); if (p && p.catch) p.catch(function () { state() }) }
-  btn.addEventListener('click', function () { if (v.paused || v.ended) { userPaused = false; play() } else { userPaused = true; v.pause() } })
-  v.addEventListener('click', function () { btn.click() })
-  ;['play', 'pause', 'ended'].forEach(function (e) { v.addEventListener(e, state) })
-  /* barre de progression : lissée par requestAnimationFrame pendant la lecture */
-  var raf = 0
-  function tick () { if (v.duration) bar.style.transform = 'scaleX(' + (v.currentTime / v.duration) + ')'; raf = v.paused ? 0 : requestAnimationFrame(tick) }
-  v.addEventListener('play', function () { if (!raf) raf = requestAnimationFrame(tick) })
-  v.addEventListener('seeked', tick)
 
-  if (link) link.addEventListener('click', function () { userPaused = false; wantPlay = true; load(); if (inView) play() })
+  function filmSrc () { var b = 'assets/film/' + FL + '/'; return [b + 'poster.webp?v=' + FILM_V, b + (small ? 'film-540.mp4' : 'film-720.mp4') + '?v=' + FILM_V] }
+  function spotSrc (l) { return function () { var b = 'assets/spot/' + l + '/'; return [b + 'poster.webp?v=' + SPOT[l][1], b + (small ? 'spot-540.mp4' : 'spot-720.mp4') + '?v=' + SPOT[l][1]] } }
+  function spotLabel (l) { return fill(l === 'wo' ? T[8] : T[2], SPOT[l][0]) }
 
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function (es) { if (es[0].isIntersecting) load() }, { rootMargin: '900px 0px' }).observe(v)
-    new IntersectionObserver(function (es) {
-      var r = es[0].intersectionRatio; inView = r >= 0.55
-      if (inView && !userPaused && !v.ended && (wantPlay || !reduced)) { wantPlay = false; play() } else if (r < 0.2 && !v.paused) v.pause()
-    }, { threshold: [0, 0.2, 0.55, 0.8] }).observe(v)
-  } else load()
-  document.addEventListener('visibilitychange', function () { if (document.hidden) { if (!v.paused) v.pause() } else if (inView && loaded && !userPaused && !v.ended && !reduced) play() })
-  state()
+  var spotFig = sec.querySelector('.vid[data-kind="spot"]'), filmFig = sec.querySelector('.vid[data-kind="film"]')
+  /* le spot passe en premier (il porte la voix) : il est déjà avant le film dans la page */
+  if (spotFig && SPOT_FOR.length) {
+    spotFig.hidden = false
+    var spot = Player(spotFig, spotSrc(SPOT_FOR[0]), spotLabel(SPOT_FOR[0]))
+    var vc = spotFig.querySelector('.voice')
+    if (vc && SPOT_FOR.length > 1) {
+      vc.hidden = false; vc.setAttribute('aria-label', 'Langue de la voix')
+      vc.addEventListener('click', function (e) {
+        var b = e.target.closest('button[data-v]'); if (!b || b.getAttribute('aria-pressed') === 'true') return
+        vc.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false') })
+        spot.swap(spotSrc(b.dataset.v), spotLabel(b.dataset.v))
+      })
+    }
+  }
+  var film = filmFig && Player(filmFig, filmSrc, fill(T[1], FILM_S))
+
+  var link = document.getElementById('filmLink')
+  if (link && film) {
+    link.textContent = fill(T[0], FILM_S)
+    link.addEventListener('click', function () { film.userPaused = false; film.wantPlay = true; film.load(); if (film.inView) film.play() })
+  }
+  document.addEventListener('visibilitychange', function () {
+    players.forEach(function (p) { if (document.hidden) { if (!p.v.paused) p.v.pause() } else if (p.inView && p.loaded && !p.userPaused && !p.v.ended && !reduced) p.play() })
+  })
 })()
