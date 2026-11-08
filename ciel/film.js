@@ -3,7 +3,8 @@
    Le spot anglais n'existe pas encore : son emplacement reste masqué dans les autres langues tant que SPOT.en est vide.
    Rien n'est téléchargé avant que le visiteur approche du bloc ; lecture automatique son coupé (comme l'exigent les navigateurs)
    quand une vidéo est bien à l'écran, pause quand elle en sort, aucune lecture automatique si les animations sont réduites.
-   Une seule vidéo avec le son à la fois. Le spot finit sur sa propre carte avec les badges des stores : rien n'est ajouté par-dessus.
+   Ordinateur et tablette (vidéos côte à côte) : seul le spot démarre seul ; le film attend son bouton ou la fin du spot.
+   Téléphone (vidéos l'une sous l'autre) : chacune démarre quand elle est à l'écran. Une seule vidéo avec le son à la fois. Le spot finit sur sa propre carte avec les badges des stores : rien n'est ajouté par-dessus.
    Textes : traductions de travail, à faire relire par des locuteurs natifs. */
 (function () {
   var sec = document.getElementById('univers')
@@ -35,13 +36,13 @@
   function fill (t, n) { return t.replace('{n}', num(n)) }
   var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches
   var small = Math.min(screen.width, innerWidth) < 700 || (navigator.connection && navigator.connection.saveData)
-  var players = []
+  var players = [], wide = window.matchMedia ? matchMedia('(min-width: 641px)') : { matches: true }
 
   /* un lecteur par figure ; src() rend [affiche, vidéo] selon la taille d'écran */
   function Player (fig, src, label) {
     var v = fig.querySelector('video'), snd = fig.querySelector('.film-snd'), btn = fig.querySelector('.film-play'), bar = fig.querySelector('.film-bar i')
     var cap = fig.querySelector('figcaption'), sndL = snd.querySelector('.snd-l')
-    var p = { v: v, loaded: false, inView: false, userPaused: false, wantPlay: false }
+    var p = { v: v, loaded: false, inView: false, userPaused: false, wantPlay: false, auto: function () { return true } }
     function state () { var s = v.ended ? 'replay' : v.paused ? 'play' : 'pause'; btn.dataset.s = s; btn.setAttribute('aria-label', s === 'replay' ? T[5] : s === 'play' ? T[3] : T[4]) }
     function sound () { var on = !v.muted; snd.dataset.s = on ? 'on' : 'off'; sndL.textContent = T[6]; snd.setAttribute('aria-label', on ? T[7] : T[6]); snd.setAttribute('aria-pressed', on ? 'true' : 'false') }
     p.load = function () { if (p.loaded) return; p.loaded = true; var f = src(); v.poster = f[0]; v.src = f[1]; v.preload = 'auto' }
@@ -66,7 +67,7 @@
       new IntersectionObserver(function (es) { if (es[0].isIntersecting) p.load() }, { rootMargin: '900px 0px' }).observe(v)
       new IntersectionObserver(function (es) {
         var r = es[0].intersectionRatio; p.inView = r >= 0.55
-        if (p.inView && !p.userPaused && !v.ended && (p.wantPlay || !reduced)) { p.wantPlay = false; p.play() } else if (r < 0.2 && !v.paused) v.pause()
+        if (p.inView && !p.userPaused && !v.ended && (p.wantPlay || (!reduced && p.auto()))) { p.wantPlay = false; p.play() } else if (r < 0.2 && !v.paused) v.pause()
       }, { threshold: [0, 0.2, 0.55, 0.8] }).observe(v)
     } else p.load()
     p.setLabel(label); state(); sound()
@@ -94,6 +95,15 @@
     }
   }
   var film = filmFig && Player(filmFig, filmSrc, fill(T[1], FILM_S))
+  /* côte à côte : le spot seul en lecture automatique, puis le film prend le relais (avec le son si le spot l'avait) */
+  if (spot && film) {
+    film.auto = function () { return !wide.matches }
+    spot.v.addEventListener('ended', function () {
+      if (!wide.matches || !film.inView || film.userPaused || !film.v.paused) return
+      if (!spot.v.muted) { spot.v.muted = true; film.v.muted = false }
+      film.play()
+    })
+  }
 
   var link = document.getElementById('filmLink')
   if (link && film) {
@@ -101,6 +111,6 @@
     link.addEventListener('click', function () { film.userPaused = false; film.wantPlay = true; film.load(); if (film.inView) film.play() })
   }
   document.addEventListener('visibilitychange', function () {
-    players.forEach(function (p) { if (document.hidden) { if (!p.v.paused) p.v.pause() } else if (p.inView && p.loaded && !p.userPaused && !p.v.ended && !reduced) p.play() })
+    players.forEach(function (p) { if (document.hidden) { if (!p.v.paused) p.v.pause() } else if (p.inView && p.loaded && !p.userPaused && !p.v.ended && !reduced && (p.auto() || p.v.currentTime > 0)) p.play() })
   })
 })()
