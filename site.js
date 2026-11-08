@@ -131,7 +131,7 @@
     document.title = t.title; meta('meta[name="description"]', t.desc);
     meta('meta[property="og:title"]', t.title); meta('meta[property="og:description"]', t.desc); meta('meta[name="twitter:title"]', t.title); meta('meta[name="twitter:description"]', t.desc);
     $$("[data-i]").forEach(function (el) { var v = t[el.dataset.i]; el.textContent = v != null ? v : el.dataset.i === "statsLead" ? "" : el.textContent; });
-    $("[data-stores]").forEach(function (el) { el.setAttribute("aria-label", t.open); el.innerHTML = storeBadges(code); });
+    $$("[data-stores]").forEach(function (el) { el.setAttribute("aria-label", t.open); el.innerHTML = storeBadges(code); });
     $$("[data-num]").forEach(function (el) { el.textContent = label(code, +el.dataset.num); });
     /* chiffres : valeur, unité, puis la légende. Bureau : intitulé + détail. Mobile, sous 20 et 12 : le détail seul (ou sa version courte). */
     $$(".stat[data-p]").forEach(function (s) { var k = s.dataset.p, p = t[k];
