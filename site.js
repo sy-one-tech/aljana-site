@@ -1,5 +1,5 @@
 /* Site aljana : langue (détection, mémoire, bascule sans perdre la position), captures synchronisées et chargées à l'approche,
-   boutons selon l'appareil, décompte des trois chiffres, orbites du Ciel, ronde des trois écrans du Compagnon. */
+   badges des stores (celui de l'appareil en premier), décompte des trois chiffres, orbites du Ciel, ronde des trois écrans du Compagnon. */
 (function () {
   const CONTACT = "contact@aljana.app";
 
@@ -8,6 +8,17 @@
   var CMP = { mushaf: 0, hadith: 1, tasbih: 2 }; /* rang dans I18N[..].cf */
   var $ = function (s, r) { return (r || document).querySelector(s); }, $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
   var ua = navigator.userAgent || "", device = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1) ? "ios" : /Android/.test(ua) ? "and" : "open";
+  /* stores : badges officiels dans la langue de la page. Apple n'en publie pas en ourdou, persan et hindi : badge anglais.
+     Dimensions = proportions des fichiers, pour réserver la place avant le chargement. */
+  var STORE = { ios: "https://apps.apple.com/app/id6817404092", and: "https://play.google.com/store/apps/details?id=app.aljana" }, BADGE_V = "1";
+  var APPLE_W = { fr: 126.5, en: 119.7, ar: 119.7, es: 119.7, de: 119.7, tr: 151.3, id: 119.7, ru: 119.7, zh: 108.9 };
+  var GOOGLE_S = { en: [564, 168], ar: [564, 168], ur: [564, 168], fa: [564, 168] };
+  function storeBadges(code) {
+    var l = code.slice(0, 2), a = APPLE_W[l] ? l : "en", g = GOOGLE_S[l] || [646, 192];
+    var ios = '<a href="' + STORE.ios + '" rel="noopener"><img src="assets/stores/apple-' + a + '.svg?v=' + BADGE_V + '" alt="App Store" width="' + Math.round(APPLE_W[a] * 3) + '" height="120"></a>';
+    var and = '<a href="' + STORE.and + '" rel="noopener"><img src="assets/stores/google-' + l + '.png?v=' + BADGE_V + '" alt="Google Play" width="' + g[0] + '" height="' + g[1] + '"></a>';
+    return device === "and" ? and + ios : ios + and;
+  }
   var has = function (c) { return LANGS.some(function (l) { return l.code === c; }); };
   var reduced = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
   var hasIO = "IntersectionObserver" in window;
@@ -120,7 +131,7 @@
     document.title = t.title; meta('meta[name="description"]', t.desc);
     meta('meta[property="og:title"]', t.title); meta('meta[property="og:description"]', t.desc); meta('meta[name="twitter:title"]', t.title); meta('meta[name="twitter:description"]', t.desc);
     $$("[data-i]").forEach(function (el) { var v = t[el.dataset.i]; el.textContent = v != null ? v : el.dataset.i === "statsLead" ? "" : el.textContent; });
-    $$("[data-cta]").forEach(function (el) { el.textContent = t[device]; });
+    $("[data-stores]").forEach(function (el) { el.setAttribute("aria-label", t.open); el.innerHTML = storeBadges(code); });
     $$("[data-num]").forEach(function (el) { el.textContent = label(code, +el.dataset.num); });
     /* chiffres : valeur, unité, puis la légende. Bureau : intitulé + détail. Mobile, sous 20 et 12 : le détail seul (ou sa version courte). */
     $$(".stat[data-p]").forEach(function (s) { var k = s.dataset.p, p = t[k];

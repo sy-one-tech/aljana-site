@@ -1,5 +1,6 @@
 /* aljana · scène « Le film » (bloc des sept univers) et lien du héros.
-   Film vertical 42 s, avec son, en trois versions : fr, ar, et en pour toutes les autres langues.
+   Vidéo verticale avec son, en trois versions : spot avec voix en fr (36 s) et en ar (40 s), film de 42 s en anglais pour toutes les autres langues.
+   Le spot finit sur sa propre carte avec les badges des stores : rien n'est ajouté par-dessus.
    Rien n'est téléchargé avant que le visiteur approche de la scène ; lecture automatique (son coupé, comme l'exigent
    les navigateurs) quand la vidéo est bien à l'écran ; un bouton rend le son, pause quand elle en sort. Animations réduites : pas de
    lecture automatique, l'image d'aperçu et le bouton lecture suffisent.
@@ -8,12 +9,12 @@
   var sec = document.getElementById('univers'), v = document.getElementById('filmV')
   if (!sec || !v) return
   var code = (document.documentElement.lang || 'fr').toLowerCase(), two = code.slice(0, 2)
-  var FL = two === 'fr' ? 'fr' : two === 'ar' ? 'ar' : 'en', VER = '2'
+  var FL = two === 'fr' ? 'fr' : two === 'ar' ? 'ar' : 'en', VER = FL === 'en' ? '2' : '3'
   /* [lien, mention, lire, pause, revoir, description, activer le son, couper le son] */
   var S = {
-    fr: ['Voir le film (42 s)', 'Film de 42 secondes', 'Lire le film', 'Mettre en pause', 'Revoir le film', 'Film de présentation d’aljana, 42 secondes', 'Activer le son', 'Couper le son'],
+    fr: ['Voir le film (36 s)', 'Film de 36 secondes', 'Lire le film', 'Mettre en pause', 'Revoir le film', 'Film de présentation d’aljana, 36 secondes', 'Activer le son', 'Couper le son'],
     en: ['Watch the film (42 s)', '42-second film', 'Play the film', 'Pause', 'Watch again', 'aljana introduction film, 42 seconds', 'Turn sound on', 'Turn sound off'],
-    ar: ['شاهد الفيلم (٤٢ ثانية)', 'فيلم مدته ٤٢ ثانية', 'تشغيل الفيلم', 'إيقاف مؤقت', 'إعادة المشاهدة', 'فيلم تعريفي بـ aljana، مدته ٤٢ ثانية', 'تشغيل الصوت', 'كتم الصوت'],
+    ar: ['شاهد الفيلم (٤٠ ثانية)', 'فيلم مدته ٤٠ ثانية', 'تشغيل الفيلم', 'إيقاف مؤقت', 'إعادة المشاهدة', 'فيلم تعريفي بـ aljana، مدته ٤٠ ثانية', 'تشغيل الصوت', 'كتم الصوت'],
     es: ['Ver el vídeo (42 s)', 'Vídeo de 42 segundos, en inglés', 'Reproducir el vídeo', 'Pausa', 'Volver a verlo', 'Vídeo de presentación de aljana, 42 segundos, en inglés', 'Activar el sonido', 'Silenciar'],
     de: ['Film ansehen (42 s)', 'Film von 42 Sekunden, auf Englisch', 'Film abspielen', 'Pause', 'Noch einmal ansehen', 'Vorstellungsfilm von aljana, 42 Sekunden, auf Englisch', 'Ton einschalten', 'Ton ausschalten'],
     tr: ['Filmi izleyin (42 sn)', '42 saniyelik film, İngilizce', 'Filmi oynat', 'Duraklat', 'Yeniden izle', 'aljana tanıtım filmi, 42 saniye, İngilizce', 'Sesi aç', 'Sesi kapat'],
@@ -41,7 +42,8 @@
     btn.dataset.s = s; btn.setAttribute('aria-label', s === 'replay' ? T[4] : s === 'play' ? T[2] : T[3])
   }
   /* son : coupé au départ ; le bouton le rend (et relance la lecture si besoin) */
-  function sound () { var on = !v.muted; snd.dataset.s = on ? 'on' : 'off'; snd.setAttribute('aria-label', on ? T[7] : T[6]); snd.setAttribute('aria-pressed', on ? 'true' : 'false') }
+  var sndL = snd && snd.querySelector('.snd-l')
+  function sound () { var on = !v.muted; snd.dataset.s = on ? 'on' : 'off'; if (sndL) sndL.textContent = T[6]; snd.setAttribute('aria-label', on ? T[7] : T[6]); snd.setAttribute('aria-pressed', on ? 'true' : 'false') }
   if (snd) { snd.addEventListener('click', function () { v.muted = !v.muted; if (!v.muted) { userPaused = false; if (v.paused || v.ended) play() } sound() }); v.addEventListener('volumechange', sound); sound() }
   function play () { load(); if (v.ended) v.currentTime = 0; var p = v.play(); if (p && p.catch) p.catch(function () { state() }) }
   btn.addEventListener('click', function () { if (v.paused || v.ended) { userPaused = false; play() } else { userPaused = true; v.pause() } })
