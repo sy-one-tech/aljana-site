@@ -2,79 +2,79 @@
 export default {
  "fr": {
   "title": "aljana : vos prières et votre ciel, là où vous êtes",
-  "desc": "Horaires de prière, ciel en direct, Lune, Hilal, Qibla et éclipses. Tout est calculé pour votre position et contrôlé face aux éphémérides de la NASA.",
+  "desc": "Disponible sur l'App Store et Google Play. Horaires de prière, ciel en direct, Lune, Hilal, Qibla et éclipses, calculés pour votre position.",
   "locale": "fr_FR",
   "rtl": false
  },
  "ar": {
   "title": "aljana: صلاتك وسماؤك حيث أنت",
-  "desc": "مواقيت الصلاة والسماء مباشرة والقمر والهلال والقبلة والكسوف. كل شيء محسوب لموقعك ومُراجَع على تقاويم ناسا الفلكية.",
+  "desc": "متوفر الآن على App Store و Google Play. مواقيت الصلاة والسماء مباشرة والقمر والهلال والقبلة والكسوف، محسوبة لموقعك.",
   "locale": "ar_AR",
   "rtl": true
  },
  "es": {
   "title": "aljana: tus oraciones y tu cielo, allí donde estás",
-  "desc": "Horarios de oración, cielo en directo, Luna, Hilal, Qibla y eclipses. Todo se calcula para tu posición y se contrasta con las efemérides de la NASA.",
+  "desc": "Disponible en App Store y Google Play. Horarios de oración, cielo en directo, Luna, Hilal, Qibla y eclipses, calculados para tu posición.",
   "locale": "es_ES",
   "rtl": false
  },
  "de": {
   "title": "aljana: deine Gebete und dein Himmel, genau dort, wo du bist",
-  "desc": "Gebetszeiten, Himmel live, Mond, Hilal, Qibla und Finsternisse. Alles wird für deinen Standort berechnet und mit den Ephemeriden der NASA abgeglichen.",
+  "desc": "Jetzt im App Store und bei Google Play. Gebetszeiten, Himmel live, Mond, Hilal, Qibla und Finsternisse, berechnet für deinen Standort.",
   "locale": "de_DE",
   "rtl": false
  },
  "tr": {
   "title": "aljana: namazların ve gökyüzün, tam bulunduğun yerde",
-  "desc": "Namaz vakitleri, canlı gökyüzü, Ay, Hilal, Kıble ve tutulmalar. Her şey konumuna göre hesaplanır ve NASA efemerisleriyle karşılaştırılır.",
+  "desc": "App Store ve Google Play'de yayında. Namaz vakitleri, canlı gökyüzü, Ay, Hilal, Kıble ve tutulmalar, konumuna göre hesaplanır.",
   "locale": "tr_TR",
   "rtl": false
  },
  "id": {
   "title": "aljana: salat dan langit Anda, tepat di tempat Anda berada",
-  "desc": "Waktu salat, langit langsung, Bulan, Hilal, Kiblat, dan gerhana. Semuanya dihitung untuk posisi Anda dan diperiksa dengan efemeris NASA.",
+  "desc": "Tersedia di App Store dan Google Play. Waktu salat, langit langsung, Bulan, Hilal, Kiblat, dan gerhana, dihitung untuk posisi Anda.",
   "locale": "id_ID",
   "rtl": false
  },
  "ur": {
   "title": "aljana: آپ کی نمازیں اور آپ کا آسمان، جہاں آپ ہیں",
-  "desc": "اوقاتِ نماز، براہِ راست آسمان، چاند، ہلال، قبلہ اور گرہن۔ سب کچھ آپ کے مقام کے لیے حساب کیا جاتا ہے اور ناسا کی فلکیاتی تقویم سے جانچا جاتا ہے۔",
+  "desc": "اب App Store اور Google Play پر دستیاب۔ اوقاتِ نماز، براہِ راست آسمان، چاند، ہلال، قبلہ اور گرہن، سب کچھ آپ کے مقام کے لیے حساب کیا جاتا ہے۔",
   "locale": "ur_PK",
   "rtl": true
  },
  "fa": {
   "title": "aljana: نمازها و آسمان شما، همان‌جا که هستید",
-  "desc": "اوقات نماز، آسمان زنده، ماه، هلال، قبله و گرفت‌ها. همه چیز برای موقعیت شما محاسبه و با تقویم‌های نجومی ناسا سنجیده می‌شود.",
+  "desc": "اکنون در App Store و Google Play. اوقات نماز، آسمان زنده، ماه، هلال، قبله و گرفت‌ها، همه برای موقعیت شما محاسبه می‌شود.",
   "locale": "fa_IR",
   "rtl": true
  },
  "ru": {
   "title": "aljana: ваши молитвы и ваше небо там, где вы находитесь",
-  "desc": "Время намаза, небо в реальном времени, Луна, хиляль, кибла и затмения. Всё рассчитывается для вашего местоположения и сверяется с эфемеридами NASA.",
+  "desc": "Уже в App Store и Google Play. Время намаза, небо в реальном времени, Луна, хиляль, кибла и затмения, рассчитанные для вашего местоположения.",
   "locale": "ru_RU",
   "rtl": false
  },
  "zh": {
   "title": "aljana：您的礼拜与星空，就在您所在之处",
-  "desc": "礼拜时间、实时星空、月亮、新月、朝向与日月食。一切都按您的位置计算，并与 NASA 星历核对。",
+  "desc": "现已登陆 App Store 和 Google Play。礼拜时间、实时星空、月亮、新月、朝向与日月食，一切都按您的位置计算。",
   "locale": "zh_CN",
   "rtl": false
  },
  "hi": {
   "title": "aljana: आपकी नमाज़ें और आपका आसमान, ठीक वहीं जहाँ आप हैं",
-  "desc": "नमाज़ के समय, लाइव आसमान, चाँद, हिलाल, क़िबला और ग्रहण। सब कुछ आपकी जगह के लिए गिना जाता है और NASA की खगोलीय तालिकाओं से जाँचा जाता है।",
+  "desc": "अब App Store और Google Play पर उपलब्ध। नमाज़ के समय, लाइव आसमान, चाँद, हिलाल, क़िबला और ग्रहण, सब कुछ आपकी जगह के लिए गिना जाता है।",
   "locale": "hi_IN",
   "rtl": false
  },
  "en-GB": {
   "title": "aljana: your prayers and your sky, right where you are",
-  "desc": "Prayer times, live sky, Moon, Hilal, Qibla and eclipses. Everything is computed for your location and checked against NASA ephemerides.",
+  "desc": "Available on the App Store and Google Play. Prayer times, live sky, Moon, Hilal, Qibla and eclipses, computed for your location.",
   "locale": "en_GB",
   "rtl": false
  },
  "en-US": {
   "title": "aljana: your prayers and your sky, right where you are",
-  "desc": "Prayer times, live sky, Moon, Hilal, Qibla and eclipses. Everything is computed for your location and checked against NASA ephemerides.",
+  "desc": "Available on the App Store and Google Play. Prayer times, live sky, Moon, Hilal, Qibla and eclipses, computed for your location.",
   "locale": "en_US",
   "rtl": false
  }

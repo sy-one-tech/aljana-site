@@ -12,7 +12,7 @@ window.LANGS = [
 window.I18N = {
   fr: {
     title: "aljana : vos prières et votre ciel, là où vous êtes",
-    desc: "Horaires de prière, ciel en direct, Lune, Hilal, Qibla et éclipses. Tout est calculé pour votre position et contrôlé face aux éphémérides de la NASA.",
+    desc: "Disponible sur l'App Store et Google Play. Horaires de prière, ciel en direct, Lune, Hilal, Qibla et éclipses, calculés pour votre position.",
     n1: "Les sept univers", n2: "Précision", open: "Télécharger aljana", pick: "Choisir la langue",
     kick: "Calculé en direct pour votre position", h1a: "Vos prières et votre ciel,", h1b: "à l'endroit exact où vous êtes.",
     lead: "aljana réunit les horaires de prière, le ciel en direct, la Lune, le Hilal, la Qibla et les éclipses. Chaque valeur est calculée pour votre position, à la seconde.",
@@ -43,7 +43,7 @@ window.I18N = {
   },
   en: {
     title: "aljana: your prayers and your sky, right where you are",
-    desc: "Prayer times, live sky, Moon, Hilal, Qibla and eclipses. Everything is computed for your location and checked against NASA ephemerides.",
+    desc: "Available on the App Store and Google Play. Prayer times, live sky, Moon, Hilal, Qibla and eclipses, computed for your location.",
     n1: "The seven worlds", n2: "Accuracy", open: "Download aljana", pick: "Choose language",
     kick: "Computed live for your location", h1a: "Your prayers and your sky,", h1b: "exactly where you are.",
     lead: "aljana brings together prayer times, the live sky, the Moon, the Hilal, the Qibla and eclipses. Every value is computed for your location, to the second.",
@@ -74,7 +74,7 @@ window.I18N = {
   },
   ar: {
     title: "aljana: صلاتك وسماؤك حيث أنت",
-    desc: "مواقيت الصلاة والسماء مباشرة والقمر والهلال والقبلة والكسوف. كل شيء محسوب لموقعك ومُراجَع على تقاويم ناسا الفلكية.",
+    desc: "متوفر الآن على App Store و Google Play. مواقيت الصلاة والسماء مباشرة والقمر والهلال والقبلة والكسوف، محسوبة لموقعك.",
     n1: "العوالم السبعة", n2: "الدقة", open: "حمّل aljana", pick: "اختر اللغة",
     kick: "محسوب مباشرة لموقعك", h1a: "صلاتك وسماؤك،", h1b: "في المكان الذي أنت فيه تماماً.",
     lead: "يجمع aljana مواقيت الصلاة والسماء مباشرة والقمر والهلال والقبلة والكسوف. كل قيمة محسوبة لموقعك، بالثانية.",
@@ -105,7 +105,7 @@ window.I18N = {
   },
   es: {
     title: "aljana: tus oraciones y tu cielo, allí donde estás",
-    desc: "Horarios de oración, cielo en directo, Luna, Hilal, Qibla y eclipses. Todo se calcula para tu posición y se contrasta con las efemérides de la NASA.",
+    desc: "Disponible en App Store y Google Play. Horarios de oración, cielo en directo, Luna, Hilal, Qibla y eclipses, calculados para tu posición.",
     n1: "Los siete universos", n2: "Precisión", open: "Descargar aljana", pick: "Elegir idioma",
     kick: "Calculado en directo para tu posición", h1a: "Tus oraciones y tu cielo,", h1b: "en el lugar exacto donde estás.",
     lead: "aljana reúne los horarios de oración, el cielo en directo, la Luna, el Hilal, la Qibla y los eclipses. Cada valor se calcula para tu posición, al segundo.",
@@ -136,7 +136,7 @@ window.I18N = {
   },
   de: {
     title: "aljana: deine Gebete und dein Himmel, genau dort, wo du bist",
-    desc: "Gebetszeiten, Himmel live, Mond, Hilal, Qibla und Finsternisse. Alles wird für deinen Standort berechnet und mit den Ephemeriden der NASA abgeglichen.",
+    desc: "Jetzt im App Store und bei Google Play. Gebetszeiten, Himmel live, Mond, Hilal, Qibla und Finsternisse, berechnet für deinen Standort.",
     n1: "Die sieben Welten", n2: "Genauigkeit", open: "aljana herunterladen", pick: "Sprache wählen",
     kick: "Live für deinen Standort berechnet", h1a: "Deine Gebete und dein Himmel,", h1b: "genau dort, wo du bist.",
     lead: "aljana vereint Gebetszeiten, den Himmel live, den Mond, den Hilal, die Qibla und Finsternisse. Jeder Wert wird für deinen Standort berechnet, auf die Sekunde.",
@@ -167,7 +167,7 @@ window.I18N = {
   },
   tr: {
     title: "aljana: namazların ve gökyüzün, tam bulunduğun yerde",
-    desc: "Namaz vakitleri, canlı gökyüzü, Ay, Hilal, Kıble ve tutulmalar. Her şey konumuna göre hesaplanır ve NASA efemerisleriyle karşılaştırılır.",
+    desc: "App Store ve Google Play'de yayında. Namaz vakitleri, canlı gökyüzü, Ay, Hilal, Kıble ve tutulmalar, konumuna göre hesaplanır.",
     n1: "Yedi evren", n2: "Hassasiyet", open: "aljana’yı indirin", pick: "Dil seç",
     kick: "Konumun için canlı hesaplanır", h1a: "Namazların ve gökyüzün,", h1b: "tam bulunduğun yerde.",
     lead: "aljana namaz vakitlerini, canlı gökyüzünü, Ay'ı, Hilal'i, Kıble'yi ve tutulmaları bir araya getirir. Her değer konumun için saniyesine kadar hesaplanır.",
@@ -198,7 +198,7 @@ window.I18N = {
   },
   id: {
     title: "aljana: salat dan langit Anda, tepat di tempat Anda berada",
-    desc: "Waktu salat, langit langsung, Bulan, Hilal, Kiblat, dan gerhana. Semuanya dihitung untuk posisi Anda dan diperiksa dengan efemeris NASA.",
+    desc: "Tersedia di App Store dan Google Play. Waktu salat, langit langsung, Bulan, Hilal, Kiblat, dan gerhana, dihitung untuk posisi Anda.",
     n1: "Tujuh semesta", n2: "Ketepatan", open: "Unduh aljana", pick: "Pilih bahasa",
     kick: "Dihitung langsung untuk posisi Anda", h1a: "Salat dan langit Anda,", h1b: "tepat di tempat Anda berada.",
     lead: "aljana menyatukan waktu salat, langit langsung, Bulan, Hilal, Kiblat, dan gerhana. Setiap nilai dihitung untuk posisi Anda, hingga hitungan detik.",
@@ -229,7 +229,7 @@ window.I18N = {
   },
   ur: {
     title: "aljana: آپ کی نمازیں اور آپ کا آسمان، جہاں آپ ہیں",
-    desc: "اوقاتِ نماز، براہِ راست آسمان، چاند، ہلال، قبلہ اور گرہن۔ سب کچھ آپ کے مقام کے لیے حساب کیا جاتا ہے اور ناسا کی فلکیاتی تقویم سے جانچا جاتا ہے۔",
+    desc: "اب App Store اور Google Play پر دستیاب۔ اوقاتِ نماز، براہِ راست آسمان، چاند، ہلال، قبلہ اور گرہن، سب کچھ آپ کے مقام کے لیے حساب کیا جاتا ہے۔",
     n1: "سات دنیائیں", n2: "درستگی", open: "aljana ڈاؤن لوڈ کریں", pick: "زبان منتخب کریں",
     kick: "آپ کے مقام کے لیے براہِ راست حساب", h1a: "آپ کی نمازیں اور آپ کا آسمان،", h1b: "ٹھیک اسی جگہ جہاں آپ ہیں۔",
     lead: "aljana اوقاتِ نماز، براہِ راست آسمان، چاند، ہلال، قبلہ اور گرہن کو یکجا کرتا ہے۔ ہر قدر آپ کے مقام کے لیے سیکنڈ تک حساب کی جاتی ہے۔",
@@ -260,7 +260,7 @@ window.I18N = {
   },
   fa: {
     title: "aljana: نمازها و آسمان شما، همان‌جا که هستید",
-    desc: "اوقات نماز، آسمان زنده، ماه، هلال، قبله و گرفت‌ها. همه چیز برای موقعیت شما محاسبه و با تقویم‌های نجومی ناسا سنجیده می‌شود.",
+    desc: "اکنون در App Store و Google Play. اوقات نماز، آسمان زنده، ماه، هلال، قبله و گرفت‌ها، همه برای موقعیت شما محاسبه می‌شود.",
     n1: "هفت جهان", n2: "دقت", open: "دانلود aljana", pick: "انتخاب زبان",
     kick: "محاسبهٔ زنده برای موقعیت شما", h1a: "نمازها و آسمان شما،", h1b: "دقیقاً همان‌جا که هستید.",
     lead: "aljana اوقات نماز، آسمان زنده، ماه، هلال، قبله و گرفت‌ها را یک‌جا می‌آورد. هر مقدار برای موقعیت شما، تا ثانیه، محاسبه می‌شود.",
@@ -291,7 +291,7 @@ window.I18N = {
   },
   ru: {
     title: "aljana: ваши молитвы и ваше небо там, где вы находитесь",
-    desc: "Время намаза, небо в реальном времени, Луна, хиляль, кибла и затмения. Всё рассчитывается для вашего местоположения и сверяется с эфемеридами NASA.",
+    desc: "Уже в App Store и Google Play. Время намаза, небо в реальном времени, Луна, хиляль, кибла и затмения, рассчитанные для вашего местоположения.",
     n1: "Семь миров", n2: "Точность", open: "Скачать aljana", pick: "Выбрать язык",
     kick: "Рассчитано для вашего местоположения", h1a: "Ваши молитвы и ваше небо", h1b: "именно там, где вы находитесь.",
     lead: "aljana объединяет время намаза, небо в реальном времени, Луну, хиляль, киблу и затмения. Каждое значение рассчитывается для вашего местоположения с точностью до секунды.",
@@ -322,7 +322,7 @@ window.I18N = {
   },
   zh: {
     title: "aljana：您的礼拜与星空，就在您所在之处",
-    desc: "礼拜时间、实时星空、月亮、新月、朝向与日月食。一切都按您的位置计算，并与 NASA 星历核对。",
+    desc: "现已登陆 App Store 和 Google Play。礼拜时间、实时星空、月亮、新月、朝向与日月食，一切都按您的位置计算。",
     n1: "七个世界", n2: "精确", open: "下载 aljana", pick: "选择语言",
     kick: "按您的位置实时计算", h1a: "您的礼拜与星空，", h1b: "就在您所在的确切位置。",
     lead: "aljana 汇集礼拜时间、实时星空、月亮、新月、朝向与日月食。每一个数值都按您的位置计算，精确到秒。",
@@ -353,7 +353,7 @@ window.I18N = {
   },
   hi: {
     title: "aljana: आपकी नमाज़ें और आपका आसमान, ठीक वहीं जहाँ आप हैं",
-    desc: "नमाज़ के समय, लाइव आसमान, चाँद, हिलाल, क़िबला और ग्रहण। सब कुछ आपकी जगह के लिए गिना जाता है और NASA की खगोलीय तालिकाओं से जाँचा जाता है।",
+    desc: "अब App Store और Google Play पर उपलब्ध। नमाज़ के समय, लाइव आसमान, चाँद, हिलाल, क़िबला और ग्रहण, सब कुछ आपकी जगह के लिए गिना जाता है।",
     n1: "सात दुनियाएँ", n2: "सटीकता", open: "aljana डाउनलोड करें", pick: "भाषा चुनें",
     kick: "आपकी जगह के लिए लाइव गणना", h1a: "आपकी नमाज़ें और आपका आसमान,", h1b: "ठीक वहीं जहाँ आप हैं।",
     lead: "aljana नमाज़ के समय, लाइव आसमान, चाँद, हिलाल, क़िबला और ग्रहण को एक जगह लाता है। हर मान आपकी जगह के लिए, सेकंड तक गिना जाता है।",
